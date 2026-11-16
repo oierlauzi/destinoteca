@@ -104,14 +104,19 @@ describe('concourse board settings', () => {
 });
 
 describe('the colon vinyl', () => {
-  it('is drawn only when asked for, in the colour of "min."', async () => {
-    const { vestibulo2: def } = await import('../src/lib/replicas/page-iberica-vestibulo/def');
+  it('is on every line at Tres Cantos and on the second at Cantoblanco, and can be set line by line', async () => {
+    const { vestibulo2: two, vestibulo4: four, colonLines } = await import('../src/lib/replicas/page-iberica-vestibulo/def');
     const { defaults } = await import('../src/lib/params');
-    const impl = await def.load();
-    const frame = defaults(def.frame!);
-    const plain = impl.renderToString(frame, defaults(def.options));
-    const withColon = impl.renderToString(frame, { ...defaults(def.options), colon: true });
-    expect(withColon.length).toBeGreaterThan(plain.length);
-    expect(withColon.match(/<rect [^>]*rx="0.2"/g)).toHaveLength(4);
+    const colons = async (def: typeof two, extra: Record<string, unknown> = {}) => {
+      const impl = await def.load();
+      const svg = impl.renderToString(defaults(def.frame!), { ...defaults(def.options), ...extra });
+      return (svg.match(/<rect [^>]*rx="0.2"/g) ?? []).length / 2;
+    };
+    expect(await colons(two)).toBe(2);
+    expect(await colons(four)).toBe(1);
+    expect(await colons(two, { colon: '' })).toBe(0);
+    expect(await colons(four, { colon: '1, 3' })).toBe(2);
+    expect([...colonLines('todas', 4)]).toEqual([0, 1, 2, 3]);
+    expect([...colonLines('2,9,x', 4)]).toEqual([1]);
   });
 });

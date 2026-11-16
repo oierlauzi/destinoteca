@@ -32,21 +32,23 @@ components:
     description: Fila de texto móvil bajo las líneas flip-dot, algo más ancha que ellas.
   - name: Rótulos fijos
     description: >-
-      «Vía» con el logotipo de Cercanías encima, «Destino» y un «min.» al final
-      de cada línea.
+      «Vía» con el logotipo de Cercanías encima, «Destino», un «min.» al final
+      de cada línea y, en algunos paneles, unos dos puntos antes de los dos
+      últimos caracteres.
 variants:
-  - id: dos-puntos
-    name: Con dos puntos
+  - id: tres-cantos
+    name: Tres Cantos
     description: >-
-      Algunos paneles llevan un vinilo de dos puntos, ámbar como «min.», entre
-      el penúltimo carácter y el anterior. No se sabe en cuáles.
+      Sin «Próxima Llegada», y con un vinilo de dos puntos, ámbar como
+      «min.», antes de los dos últimos caracteres de cada línea. Es el que
+      muestra la réplica.
+  - id: delicias
+    name: Delicias
+    description: >-
+      La cabecera lleva también «Próxima Llegada» sobre los minutos, como el
+      panel de cuatro líneas, y las líneas no tienen dos puntos.
     replicaPreset:
-      dospuntos: true
-  - id: proxima-llegada
-    name: Con «Próxima Llegada»
-    description: >-
-      En Delicias la cabecera lleva también «Próxima Llegada» sobre los
-      minutos, como el panel de cuatro líneas. En Tres Cantos no.
+      dospuntos: ''
 installations:
   - site: es/tres-cantos
     line: C-4

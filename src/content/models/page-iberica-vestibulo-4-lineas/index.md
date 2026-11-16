@@ -36,12 +36,11 @@ components:
       un «min.» al final de cada línea.
 variants:
   - id: dos-puntos
-    name: Con dos puntos
+    name: Dos puntos en algunas líneas
     description: >-
-      Algunos paneles llevan un vinilo de dos puntos, ámbar como «min.», entre
-      el penúltimo carácter y el anterior. No se sabe en cuáles.
-    replicaPreset:
-      dospuntos: true
+      En Cantoblanco Universidad, la segunda línea lleva un vinilo de dos
+      puntos, ámbar como «min.», antes de los dos últimos caracteres; las
+      demás no. La réplica lo muestra así, y deja elegir las líneas.
 installations:
   - site: es/cantoblanco
     line: C-4

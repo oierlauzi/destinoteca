@@ -146,8 +146,8 @@ export const player: Record<string, string> = {
   'vestibulo.frame.row2': 'Línea 2',
   'vestibulo.frame.row3': 'Línea 3',
   'vestibulo.frame.row4': 'Línea 4',
-  'vestibulo.opt.colon': 'Dos puntos antes de los dos últimos caracteres',
-  'vestibulo.opt.colon.help': 'Un vinilo ámbar, del color de «min.», que llevan algunos paneles.',
+  'vestibulo.opt.colon': 'Líneas con dos puntos',
+  'vestibulo.opt.colon.help': 'Un vinilo ámbar, del color de «min.», antes de los dos últimos caracteres. Números de línea separados por comas, «todas» o nada.',
 
   // --- Teleindicador de andén de PAGE Ibérica, matriz continua ---
   'continuo.frame.text': 'Línea flip-dot',

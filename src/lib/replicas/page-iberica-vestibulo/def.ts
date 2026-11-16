@@ -82,23 +82,43 @@ export type VestibuloOptions = FamilyOptions;
  * The family's settings, less the LED row's idle text: what the boards' LED
  * row showed is not known, so it is left dark rather than filled in.
  */
-export const optionsSchema: ParamSchema = {
+const optionsSchema = (colonLines: string): ParamSchema => ({
   ...familyOptionsSchema,
   fields: [
     ...familyOptionsSchema.fields.filter((field) => field.key !== 'ledIdle'),
-    { key: 'colon', urlKey: 'dospuntos', type: 'boolean', label: 'vestibulo.opt.colon', help: 'vestibulo.opt.colon.help', default: false, group: 'look' },
+    { key: 'colon', urlKey: 'dospuntos', type: 'text', label: 'vestibulo.opt.colon', help: 'vestibulo.opt.colon.help', default: colonLines, maxLength: 12, group: 'look' },
   ],
-};
+});
 
-/** `nextArrival`: whether "Próxima Llegada" is printed in the header (it is at Cantoblanco, not at Tres Cantos). */
-function board(id: string, lines: number, nextArrival: boolean, example: BoardRow[]): ReplicaDef {
+/**
+ * Which lines carry the ":" vinyl, from the setting: line numbers separated
+ * by commas, "todas" for every line, empty for none.
+ */
+export function colonLines(value: unknown, lines: number): Set<number> {
+  const text = String(value ?? '').trim().toLowerCase();
+  if (text === 'todas') return new Set(Array.from({ length: lines }, (_, i) => i));
+  return new Set(
+    text
+      .split(/[\s,;]+/)
+      .map(Number)
+      .filter((n) => Number.isInteger(n) && n >= 1 && n <= lines)
+      .map((n) => n - 1),
+  );
+}
+
+/**
+ * `nextArrival`: whether "Próxima Llegada" is printed in the header (it is at
+ * Cantoblanco, not at Tres Cantos). `colon`: the lines with a ":" vinyl, as
+ * photographed (every line at Tres Cantos, the second at Cantoblanco).
+ */
+function board(id: string, lines: number, nextArrival: boolean, colon: string, example: BoardRow[]): ReplicaDef {
   const { width, height } = boardGeometry(lines);
   return {
     id,
     viewBox: { width, height },
     accepts: 'board',
     needs: { services: lines, calls: false },
-    options: optionsSchema,
+    options: optionsSchema(colon),
     frame: frameSchema(lines, example),
     selection: () => selection(lines),
     load: async () => (await import('./index')).implementation(lines, nextArrival),
@@ -106,12 +126,12 @@ function board(id: string, lines: number, nextArrival: boolean, example: BoardRo
 }
 
 // Defaults for "texto libre": trains of line C-4, which served both stations.
-export const vestibulo2 = board('page-iberica-vestibulo-2-lineas', 2, false, [
+export const vestibulo2 = board('page-iberica-vestibulo-2-lineas', 2, false, 'todas', [
   { platform: '1', destination: 'CHAMARTIN', minutes: '2' },
   { platform: '2', destination: 'COLMENAR VIEJO', minutes: '13' },
 ]);
 
-export const vestibulo4 = board('page-iberica-vestibulo-4-lineas', 4, true, [
+export const vestibulo4 = board('page-iberica-vestibulo-4-lineas', 4, true, '2', [
   { platform: '2', destination: 'CHAMARTIN', minutes: '8' },
   { platform: '1', destination: 'COLMENAR VIEJO', minutes: '8' },
   { platform: '2', destination: 'ATOCHA', minutes: '15' },
