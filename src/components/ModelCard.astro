@@ -16,6 +16,9 @@ const { model, level = 3 } = Astro.props;
 const catalog = await getCatalog();
 const facts = catalog.facts(model);
 const cover = catalog.cover(model);
+// An entry with a replica is pictured by the replica itself, drawn at build
+// time: sharper than any period photograph, and it is what the card leads to.
+const poster = model.data.replica ? href(`posters/${model.id}.svg`).replace(/\/$/, '') : undefined;
 const Heading = `h${level}` as 'h3';
 const years = yearsLabel(facts.years, facts.status);
 // Read by the filter on the catalog page: one data attribute per facet.
@@ -24,9 +27,11 @@ const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
 ---
 
 <li class="card" data-model={model.id} data-search={search} {...data}>
-  <div class="card-media">
+  <div class:list={['card-media', { 'is-replica': poster }]}>
     {
-      cover ? (
+      poster ? (
+        <img src={poster} alt="" loading="lazy" decoding="async" />
+      ) : cover ? (
         <Image src={cover.src} alt="" widths={[320, 640]} sizes="(min-width: 40rem) 20rem, 100vw" width={640} loading="lazy" />
       ) : (
         <PlaceholderArt seed={model.id} />
@@ -64,3 +69,16 @@ const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
     </ul>
   </div>
 </li>
+
+<style>
+  /* The whole sign, on the same ground as the stage of its page, rather than a crop. */
+  .card-media.is-replica {
+    background: var(--sunken);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card-media.is-replica img {
+    object-fit: contain;
+    padding: 7%;
+  }
+</style>

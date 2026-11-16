@@ -29,6 +29,7 @@ export const player: Record<string, string> = {
   'player.status.live': 'En directo',
   'player.status.nodata': 'Sin datos',
   'player.status.error': 'Error',
+  'player.error.load': 'no se pudo cargar esta fuente de datos. Si el sitio se acaba de actualizar, recarga la página',
   'player.list.label': 'Próximos trenes',
   'player.list.empty': 'Sin trenes que mostrar.',
   'player.list.key': 'Resaltado: lo que muestra el cartel ahora. Punto verde: hora en tiempo real; sin él, según horario. Vía en gris: la habitual, aún sin confirmar; el cartel solo muestra la confirmada.',

@@ -1,4 +1,5 @@
 import { defaults } from '@/lib/params';
+import { RAW, readConfig } from '@/lib/player/config';
 import { getReplica } from '@/lib/replicas/registry';
 
 /**
@@ -17,4 +18,20 @@ export async function restingSvg(replicaId: string): Promise<string> {
   return svg
     .slice(svg.indexOf('<svg'))
     .replace(/^<svg([^>]*?)\swidth="[^"]*"\sheight="[^"]*"/, '<svg$1 width="100%"');
+}
+
+/**
+ * A replica showing a chosen frame, as a standalone SVG file: the picture of
+ * an entry on catalog cards. `params` are a hand-typed frame and appearance by
+ * URL key, exactly as in an embed URL; without any, the replica's own default
+ * frame is shown.
+ */
+export async function posterSvg(replicaId: string, params: Record<string, string | number | boolean> = {}): Promise<string> {
+  const def = getReplica(replicaId);
+  if (!def) return '';
+  const impl = await def.load();
+  const query = new URLSearchParams(Object.entries(params).map(([key, value]) => [key, String(value)]));
+  query.set('source', RAW);
+  const config = readConfig(def, query);
+  return impl.renderToString(config.frame, config.options);
 }

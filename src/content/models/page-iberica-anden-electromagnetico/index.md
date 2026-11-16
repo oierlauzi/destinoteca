@@ -156,17 +156,6 @@ photos:
     ownWork: true
     sourceUrl: https://github.com/oierlauzi/renfe-flipdot-re
     license: cc-by-sa-4.0
-  - id: etiqueta-pi-t100-m
-    src: ./etiqueta-pi-t100-m.jpg
-    alt: >-
-      Etiqueta gastada del chasis: PAGE Ibérica, S.A., Tres Cantos (Madrid);
-      modelo PI-T100-M; número de serie; «MAESTRA»; «1 línea de texto. Módulos
-      de PLACA MÓVIL de 100 mm».
-    caption: La etiqueta del chasis de la línea de texto.
-    author: Oier Lauzirika Zarrabeitia
-    ownWork: true
-    sourceUrl: https://github.com/oierlauzi/renfe-flipdot-re
-    license: cc-by-sa-4.0
 cover: via-libre-1997
 references:
   - title: renfe-flipdot-re. Ingeniería inversa de un teleindicador PAGE Ibérica PI-T100-M
@@ -180,6 +169,11 @@ references:
     note: Apartado de un reportaje sobre la información al viajero en Cercanías, con declaraciones de José María Navarro, de PAGE Ibérica.
 replica:
   id: page-iberica-anden-electromagnetico
+  poster:
+    text: CHAMARTIN
+    min: 6
+    via: 1
+    led: 'PARA EN: ATOCHA'
 stage: article
 ---
 

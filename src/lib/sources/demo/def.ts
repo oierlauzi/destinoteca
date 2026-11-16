@@ -1,4 +1,5 @@
 import type { SourceDef } from '../types';
+import * as module from './index';
 
 export const demoDef: SourceDef = {
   id: 'demo',
@@ -12,5 +13,6 @@ export const demoDef: SourceDef = {
       { key: 'station', type: 'text', label: 'demo.station', default: '', hidden: true },
     ],
   },
-  load: () => import('./index'),
+  // A couple of kilobytes: shipped with the page rather than fetched on first use.
+  load: async () => module,
 };

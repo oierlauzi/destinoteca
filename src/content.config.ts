@@ -147,6 +147,11 @@ const models = defineCollection({
           id: z.enum(REPLICA_IDS),
           /** Initial settings, by URL key, as in an embed URL. */
           params: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
+          /**
+           * What the replica shows in the still image used on catalog cards:
+           * a hand-typed frame and appearance, by URL key, as in an embed URL.
+           */
+          poster: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
         })
         .optional(),
       /** Former ids of this entry. Each leaves a redirect behind. */

@@ -66,8 +66,10 @@ export class SourceHub {
     let module: SourceModule;
     try {
       module = await def.load();
-    } catch (error) {
-      if (generation === this.generation) this.setStatus('error', error instanceof Error ? error.message : String(error));
+    } catch {
+      // The usual cause is a page left open across a new release of the site:
+      // the code it would fetch has been replaced. The message says so.
+      if (generation === this.generation) this.setStatus('error', 'player.error.load');
       return;
     }
     if (generation !== this.generation) return;

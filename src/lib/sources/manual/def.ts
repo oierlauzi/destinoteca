@@ -1,5 +1,6 @@
 import type { ParamSchema } from '../../params';
 import type { SourceDef } from '../types';
+import * as module from './index';
 
 /**
  * One hand-typed service. Short keys, because the whole list travels in the
@@ -63,5 +64,6 @@ export const manualDef: SourceDef = {
   description: 'manual.description',
   kind: 'manual',
   config: manualConfig,
-  load: () => import('./index'),
+  // A couple of kilobytes: shipped with the page rather than fetched on first use.
+  load: async () => module,
 };
