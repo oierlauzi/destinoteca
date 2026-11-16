@@ -106,6 +106,16 @@ describe('rendering', () => {
     expect(svg).not.toContain('<script');
   });
 
+  it('lights its flaps lime by default and keeps "min." amber whatever their colour', () => {
+    expect(options.dotColor).toBe('#aede5a');
+    for (const dotColor of ['#aede5a', '#d9e04a', '#ff0000']) {
+      const svg = renderToString(frame, { ...options, dotColor });
+      expect(svg).toMatch(/<text [^>]*fill="#e2d14a"[^>]*>min\.<\/text>/);
+      expect(svg).toContain(`<polygon points="` );
+      expect(svg.includes(`fill="${dotColor}"`)).toBe(true);
+    }
+  });
+
   it('describes itself in words', () => {
     expect(describeFrame(frame, options)).toBe('Vía 1 · CHAMARTIN · 6 min. · PARA EN: ATOCHA');
   });

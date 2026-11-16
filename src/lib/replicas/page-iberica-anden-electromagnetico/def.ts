@@ -5,6 +5,9 @@ import type { ReplicaDef } from '../types';
 /** Characters in the flip-dot line. */
 export const CELLS = 16;
 
+/** The colour of a lit flap. */
+export const FLAP_LIME = '#aede5a';
+
 /** What the sign shows, as its controller sent it: one line of text and what goes on the LED row. */
 export interface AndenFrame {
   /** The flip-dot line, up to 16 characters. */
@@ -53,10 +56,14 @@ export const optionsSchema: ParamSchema = {
   fields: [
     { key: 'showMinutes', urlKey: 'showmin', type: 'boolean', label: 'anden.opt.showMinutes', default: true, group: 'look' },
     {
-      key: 'dotColor', urlKey: 'dot', type: 'color', label: 'anden.opt.dotColor', default: '#e2d14a', group: 'look',
+      // The default is taken from photographs of a preserved unit, whose lit flaps are a lime green
+      // (hue near 88 degrees). The other two are the choices of the original replica, kept for the
+      // embeds that name them; pages made with it always state their colour, so they are unaffected.
+      key: 'dotColor', urlKey: 'dot', type: 'color', label: 'anden.opt.dotColor', default: FLAP_LIME, group: 'look',
       choices: [
-        { value: '#e2d14a', label: 'anden.color.amber' },
+        { value: FLAP_LIME, label: 'anden.color.lime' },
         { value: '#d9e04a', label: 'anden.color.yellowGreen' },
+        { value: '#e2d14a', label: 'anden.color.amber' },
       ],
     },
     { key: 'showOffDots', urlKey: 'showoff', type: 'boolean', label: 'anden.opt.showOffDots', default: true, group: 'look' },

@@ -126,6 +126,7 @@ export const player: Record<string, string> = {
   'anden.opt.hearts': 'Corazones aleatorios',
   'anden.opt.hearts.help': 'Un clásico de estos carteles: una celda que muestra ♥ en lugar de su letra.',
   'anden.opt.deadSeed': 'Aleatorizar qué puntos y celdas fallan',
+  'anden.color.lime': 'Verde lima',
   'anden.color.amber': 'Ámbar',
   'anden.color.yellowGreen': 'Verde amarillento',
   'anden.color.red': 'Rojo',

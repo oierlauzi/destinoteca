@@ -22,7 +22,7 @@
   /* The housing of a sign: used for the header and for stages replicas sit on. */
   --housing: #121212;
   --housing-ink: #f4f2e9;
-  --dot: #e2d14a;
+  --dot: #aede5a;
 
   --radius: 6px;
   --gutter: clamp(16px, 4vw, 32px);

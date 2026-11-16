@@ -55,6 +55,9 @@ const leds = new DotMatrix<RoundLedLook>({
 });
 
 const LEGEND = '#f4f2e9';
+// "min." is a legend of its own colour, an amber, whatever the colour of the
+// flaps beside it: on the preserved unit the two are plainly different.
+const MIN_LEGEND = '#e2d14a';
 const FONT = 'Helvetica Neue, Helvetica, Arial, sans-serif';
 
 /** The 16 characters of the flip-dot line: the text, with the minutes written over its end. */
@@ -103,7 +106,6 @@ export function describe(frame: AndenFrame, options: AndenOptions): string {
 
 interface Slots {
   title?: SVGElement;
-  minLabel?: SVGElement;
   platform?: SVGElement;
 }
 
@@ -120,13 +122,7 @@ function housing(frame: AndenFrame, options: AndenOptions, dots: VNode[], slots:
       h('g', { transform: `translate(${-ORIGIN.x},${-ORIGIN.y})` }, [
         h('rect', { x: ORIGIN.x, y: ORIGIN.y, width: WIDTH, height: HEIGHT, rx: 10, fill: '#121212' }),
         h('rect', { x: 12.080421, y: 11.557226, width: 176.00145, height: 67.75975, rx: 5, fill: '#303030', stroke: '#000000', 'stroke-width': 3 }),
-        // "min." is one of the fixed legends, in the colour of the dots it sits beside.
-        h(
-          'text',
-          { x: 215.77232, y: 38.647018, fill: options.dotColor, 'font-size': 5.65488, transform: 'scale(0.81099995,1.2330457)' },
-          ['min.'],
-          (element) => (slots.minLabel = element),
-        ),
+        h('text', { x: 215.77232, y: 38.647018, fill: MIN_LEGEND, 'font-size': 5.65488, transform: 'scale(0.81099995,1.2330457)' }, ['min.']),
         h('text', { x: 58.99646, y: 33.011734, fill: LEGEND, 'font-size': 23.2833, 'font-weight': 700, 'letter-spacing': 1 }, ['Vía']),
         h('text', { fill: LEGEND, 'font-size': 7.05556, 'font-weight': 700 }, [
           h('tspan', { x: 146.3284, y: 23.902781 }, ['Próxima']),
@@ -211,7 +207,6 @@ export function mount(host: Element, initial: AndenOptions, env: { ticker: Ticke
     else sweep.jump(target);
     flip.update(sweep.at(now), flipAppearance);
     if (slots.platform) slots.platform.textContent = frame.platform;
-    slots.minLabel?.setAttribute('fill', options.dotColor);
     if (slots.title) slots.title.textContent = describe(frame, options);
     drawLed(true);
   };
