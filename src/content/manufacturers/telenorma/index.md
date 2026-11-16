@@ -3,9 +3,9 @@ name: Telenorma
 alsoKnownAs:
   - Telefonbau und Normalzeit
 summary: >-
-  Fabricante alemán de Fráncfort, heredero de Telefonbau und Normalzeit. Diseñó
-  la electrónica, el panel flip-dot y el firmware de los teleindicadores que
-  PAGE Ibérica integró para Cercanías Madrid.
+  Fabricante alemán de Fráncfort, heredero de Telefonbau und Normalzeit:
+  telefonía y relojes públicos y de estación. Pasó a formar parte de Bosch
+  Telecom.
 country: de
 city: Fráncfort del Meno
 successor: Bosch Telecom
