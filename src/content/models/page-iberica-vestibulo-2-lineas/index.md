@@ -35,6 +35,13 @@ components:
       «Vía» con el logotipo de Cercanías encima, «Destino» y un «min.» al final
       de cada línea.
 variants:
+  - id: dos-puntos
+    name: Con dos puntos
+    description: >-
+      Algunos paneles llevan un vinilo de dos puntos, ámbar como «min.», entre
+      el penúltimo carácter y el anterior. No se sabe en cuáles.
+    replicaPreset:
+      dospuntos: true
   - id: proxima-llegada
     name: Con «Próxima Llegada»
     description: >-

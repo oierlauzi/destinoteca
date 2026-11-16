@@ -84,7 +84,10 @@ export type VestibuloOptions = FamilyOptions;
  */
 export const optionsSchema: ParamSchema = {
   ...familyOptionsSchema,
-  fields: familyOptionsSchema.fields.filter((field) => field.key !== 'ledIdle'),
+  fields: [
+    ...familyOptionsSchema.fields.filter((field) => field.key !== 'ledIdle'),
+    { key: 'colon', urlKey: 'dospuntos', type: 'boolean', label: 'vestibulo.opt.colon', help: 'vestibulo.opt.colon.help', default: false, group: 'look' },
+  ],
 };
 
 /** `nextArrival`: whether "Próxima Llegada" is printed in the header (it is at Cantoblanco, not at Tres Cantos). */

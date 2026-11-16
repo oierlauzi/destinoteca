@@ -95,10 +95,23 @@ describe('concourse board settings', () => {
     expect(readConfig(vestibulo2, writeConfig(vestibulo2, config))).toEqual(config);
   });
 
-  it('shares appearance and faults with the platform sign, less the LED idle text', () => {
+  it('shares appearance and faults with the platform sign, less the LED idle text, plus the colon vinyl', () => {
     const keys = (fields: { key: string }[]) => fields.map((field) => field.key);
-    expect(keys(vestibulo2.options.fields)).toEqual(keys(andenElectromagnetico.options.fields).filter((key) => key !== 'ledIdle'));
+    expect(keys(vestibulo2.options.fields)).toEqual([...keys(andenElectromagnetico.options.fields).filter((key) => key !== 'ledIdle'), 'colon']);
     expect(vestibulo2.needs.calls).toBe(false);
     expect(vestibulo4.selection(options)).toMatchObject({ platforms: 'any', window: { size: 4, mode: 'top' } });
+  });
+});
+
+describe('the colon vinyl', () => {
+  it('is drawn only when asked for, in the colour of "min."', async () => {
+    const { vestibulo2: def } = await import('../src/lib/replicas/page-iberica-vestibulo/def');
+    const { defaults } = await import('../src/lib/params');
+    const impl = await def.load();
+    const frame = defaults(def.frame!);
+    const plain = impl.renderToString(frame, defaults(def.options));
+    const withColon = impl.renderToString(frame, { ...defaults(def.options), colon: true });
+    expect(withColon.length).toBeGreaterThan(plain.length);
+    expect(withColon.match(/<rect [^>]*rx="0.2"/g)).toHaveLength(4);
   });
 });

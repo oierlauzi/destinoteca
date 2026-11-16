@@ -1,9 +1,9 @@
-import { h, overlay, toCells, type VNode } from '../../hardware';
+import { h, overlay, toCells, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { CELL_STEP, CELL_WIDTH } from '../page-iberica-electromagneticos/dimensions';
+import { CELL_GAP, CELL_STEP, CELL_WIDTH, LINE_HEIGHT } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
-import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
+import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, MIN_LEGEND, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
 import { PLATFORM_CELLS, type BoardRow, type VestibuloFrame } from './def';
 import { boardGeometry, CELLS } from './geometry';
 
@@ -54,13 +54,31 @@ export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFra
       ]),
     );
   }
-  const housing = (): VNode[] => [
+  // On some boards an amber ":" vinyl, the colour of "min.", stands in the gap before the last two characters.
+  const colonX = g.linesX + (CELLS - 2) * CELL_STEP - CELL_GAP / 2;
+  const colon = (ref?: (element: SVGElement) => void): VNode =>
+    h(
+      'g',
+      { fill: MIN_LEGEND },
+      g.lineTops.flatMap((top) => [0.32, 0.72].map((at) => h('rect', { x: colonX - 0.55, y: top + LINE_HEIGHT * at - 0.55, width: 1.1, height: 1.1, rx: 0.2 }))),
+      ref,
+    );
+  const housing = (_frame: VestibuloFrame, options: FamilyOptions, slots: Record<string, SVGElement>): VNode[] => [
     h('rect', { x: 0, y: 0, width: g.width, height: g.height, rx: 10, fill: HOUSING }),
     h('rect', { ...g.panel, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': 3 }),
     ...g.dividers.map((y) => h('line', { x1: g.panel.x, y1: y, x2: g.panel.x + g.panel.width, y2: y, stroke: '#000000', 'stroke-width': 0.2 })),
     ...header,
     ...g.lineTops.map((top) => minLegend(g.minX, top)),
+    ...(options.colon ? [colon((element) => (slots.colon = element))] : []),
   ];
+  // Live, the colon is added the first time it is asked for, then shown or hidden.
+  const fill = (_frame: VestibuloFrame, slots: Record<string, SVGElement>, options: FamilyOptions): void => {
+    if (options.colon && !slots.colon && slots.title?.parentNode) {
+      slots.colon = toDom(colon(), slots.title.ownerDocument);
+      slots.title.parentNode.appendChild(slots.colon);
+    }
+    if (slots.colon) slots.colon.style.display = options.colon ? '' : 'none';
+  };
   return {
     width: g.width,
     height: g.height,
@@ -73,6 +91,7 @@ export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFra
     ledText: (frame) => frame.led,
     describe,
     housing,
+    fill,
   };
 }
 

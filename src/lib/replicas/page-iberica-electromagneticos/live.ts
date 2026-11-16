@@ -33,7 +33,7 @@ export interface SignSpec<F, L = OctagonFlapLook> {
    * are refreshed by `fill`.
    */
   housing(frame: F, options: FamilyOptions, slots: Record<string, SVGElement>): VNode[];
-  fill?(frame: F, slots: Record<string, SVGElement>): void;
+  fill?(frame: F, slots: Record<string, SVGElement>, options: FamilyOptions): void;
 }
 
 function svg(spec: { width: number; height: number }, title: string, children: VNode[], slots: Record<string, SVGElement>): VNode {
@@ -114,7 +114,7 @@ export function mountSign<F, L>(spec: SignSpec<F, L>, blankFrame: F, host: Eleme
     if (options.animate) sweep.retarget(target);
     else sweep.jump(target);
     flip.update(sweep.at(now), flipAppearance);
-    spec.fill?.(frame, slots);
+    spec.fill?.(frame, slots, options);
     if (slots.title) slots.title.textContent = spec.describe(frame, options);
     drawLed(true);
   };
