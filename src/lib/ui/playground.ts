@@ -43,16 +43,25 @@ const editors: FormContext['editors'] = { services: servicesEditor };
 
 function initialConfig(def: ReplicaDef, root: HTMLElement): PlayerConfig {
   // A link carrying settings wins; then whatever the catalog entry asks for; then the simulation.
-  const fromUrl = new URLSearchParams(location.search);
-  if ([...fromUrl.keys()].length) return readConfig(def, fromUrl);
-  const preset = new URLSearchParams();
-  try {
-    for (const [key, value] of Object.entries(JSON.parse(root.dataset.params || '{}') as Values)) preset.set(key, String(value));
-  } catch {
-    // A malformed preset is the same as none.
+  let query = new URLSearchParams(location.search);
+  if (![...query.keys()].length) {
+    query = new URLSearchParams();
+    try {
+      for (const [key, value] of Object.entries(JSON.parse(root.dataset.params || '{}') as Values)) query.set(key, String(value));
+    } catch {
+      // A malformed preset is the same as none.
+    }
+    if (![...query.keys()].length && def.accepts === 'board') query.set('source', 'demo');
   }
-  if (![...preset.keys()].length && def.accepts === 'board') preset.set('source', 'demo');
-  return readConfig(def, preset);
+  const config = readConfig(def, query);
+  // Which dots and cells fail is drawn afresh for each visit, unless the link says which.
+  // The seed then travels in the embed code and the permalink like any other setting.
+  for (const field of def.options.fields) {
+    if (field.type === 'number' && field.shuffle && !query.has(field.urlKey ?? field.key)) {
+      config.options[field.key] = Math.floor(Math.random() * 1e9);
+    }
+  }
+  return config;
 }
 
 export function mountPlayground(root: HTMLElement): void {
@@ -246,27 +255,12 @@ export function mountPlayground(root: HTMLElement): void {
 
   // --- Appearance ---------------------------------------------------------------
   const optionsForm = renderForm(def.options, config.options, (options) => apply({ ...config, options }));
-  const shuffles = def.options.fields.filter((field) => field.type === 'number' && field.shuffle);
-  const appearance = el('details', { class: 'appearance' }, [
-    el('summary', { text: t('player.appearance') }),
-    optionsForm.element,
-    shuffles.length
-      ? el('button', {
-          class: 'button', text: t('player.shuffle'), attrs: { type: 'button', title: t('player.shuffle.title') },
-          on: {
-            click: () => {
-              const options = { ...config.options };
-              for (const field of shuffles) options[field.key] = Math.floor(Math.random() * 1e6);
-              apply({ ...config, options });
-            },
-          },
-        })
-      : null,
-  ]);
+  const appearance = el('details', { class: 'appearance' }, [el('summary', { text: t('player.appearance') }), optionsForm.element]);
   appearance.open = store.get('destinoteca-appearance-open') === '1';
   appearance.addEventListener('toggle', () => store.set('destinoteca-appearance-open', appearance.open ? '1' : '0'));
 
-  ui.replaceChildren(toolbar, embedBox, ...(tabIds.length > 1 ? [tablist] : []), panel, appearance);
+  // Appearance first, straight under the sign it changes; then where the data comes from.
+  ui.replaceChildren(toolbar, embedBox, appearance, ...(tabIds.length > 1 ? [tablist] : []), panel);
 
   replica.addEventListener('replica-status', (event) => {
     const { status: state, detail } = (event as CustomEvent<{ status: SourceStatus; detail?: string }>).detail;

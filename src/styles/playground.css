@@ -188,6 +188,14 @@
   display: none;
 }
 
+.field:has(input:disabled) {
+  opacity: 0.5;
+}
+
+.field input:disabled {
+  cursor: not-allowed;
+}
+
 .field output {
   font: 0.85rem var(--mono);
   min-width: 5ch;
@@ -557,6 +565,6 @@
   margin-bottom: 12px;
 }
 
-.appearance > .button {
-  margin-bottom: 10px;
+.appearance {
+  margin-bottom: 12px;
 }

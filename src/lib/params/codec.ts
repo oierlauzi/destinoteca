@@ -1,10 +1,12 @@
-import type { Field, ParamSchema, Values } from './schema';
+import { settingsOf, type ParamSchema, type SettingField, type Values } from './schema';
+
+type Field = SettingField;
 
 const urlKey = (field: Field): string => field.urlKey ?? field.key;
 
 export function defaults(schema: ParamSchema): Values {
   const out: Values = {};
-  for (const field of schema.fields) out[field.key] = field.default;
+  for (const field of settingsOf(schema)) out[field.key] = field.default;
   return out;
 }
 
@@ -73,7 +75,7 @@ function format(field: Field, value: unknown): string {
 /** Values for a schema out of a query string: defaults, overridden by whatever the URL states. */
 export function decode(schema: ParamSchema, query: URLSearchParams): Values {
   const out = defaults(schema);
-  for (const field of schema.fields) {
+  for (const field of settingsOf(schema)) {
     const raw = query.get(urlKey(field));
     if (raw !== null) out[field.key] = parse(field, raw);
   }
@@ -89,7 +91,7 @@ function same(a: unknown, b: unknown): boolean {
  * short and keep following the defaults if those are ever corrected.
  */
 export function encode(schema: ParamSchema, values: Values, into = new URLSearchParams()): URLSearchParams {
-  for (const field of schema.fields) {
+  for (const field of settingsOf(schema)) {
     const value = values[field.key];
     if (value === undefined || same(value, field.default)) into.delete(urlKey(field));
     else into.set(urlKey(field), format(field, value));
@@ -100,7 +102,7 @@ export function encode(schema: ParamSchema, values: Values, into = new URLSearch
 /** Brings arbitrary values back within what the schema allows. */
 export function sanitize(schema: ParamSchema, values: Values): Values {
   const out = defaults(schema);
-  for (const field of schema.fields) {
+  for (const field of settingsOf(schema)) {
     const value = values[field.key];
     if (value === undefined) continue;
     out[field.key] = field.type === 'json' ? value : parse(field, format(field, value));
@@ -110,5 +112,5 @@ export function sanitize(schema: ParamSchema, values: Values): Values {
 
 /** The query-string names a schema uses, to keep schemas that share a URL from colliding. */
 export function urlKeys(schema: ParamSchema): string[] {
-  return schema.fields.map(urlKey);
+  return settingsOf(schema).map(urlKey);
 }

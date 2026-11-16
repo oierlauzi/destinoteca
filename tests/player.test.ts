@@ -32,6 +32,14 @@ describe('settings codec', () => {
     expect(query.get('tint')).toBe('ff3b2e');
     expect(decode(schema, new URLSearchParams(query.toString()))).toEqual(values);
   });
+  it('gives form-only switches no value and no place in the URL', () => {
+    const withSwitch: ParamSchema = {
+      fields: [{ type: 'switch', key: 'worn', label: '', controls: ['speed'], on: { speed: 20 } }, ...schema.fields],
+    };
+    expect(defaults(withSwitch)).toEqual(defaults(schema));
+    expect(decode(withSwitch, new URLSearchParams('worn=1&speed=9'))).toEqual({ ...defaults(schema), speed: 9 });
+    expect(encode(withSwitch, { ...defaults(schema), speed: 9, worn: true }).toString()).toBe('speed=9');
+  });
   it('falls back to defaults on anything unusable, and clamps', () => {
     const query = new URLSearchParams('name=abcdefg&tint=javascript:1&speed=999&rows=%7Bnot-base64');
     expect(decode(schema, query)).toEqual({ name: 'abcd', on: true, tint: '#e2d14a', speed: 30, rows: [] });
@@ -54,6 +62,13 @@ describe('player configuration', () => {
   });
   it('shows the original defaults with no parameters at all', () => {
     expect(readConfig(anden, new URLSearchParams()).frame).toMatchObject({ text: 'SIN PARADA', minutes: '1', platform: '1' });
+  });
+  it('keeps the wear settings of the original embeds, with no key for the switch', () => {
+    const config = readConfig(anden, new URLSearchParams('deadon=5&deadoff=3&deadseed=7&hearts=10&deadPixels=0'));
+    expect(config.options).toMatchObject({ deadOn: 5, deadOff: 3, deadSeed: 7, hearts: 10 });
+    expect(config.options).not.toHaveProperty('deadPixels');
+    expect([...writeConfig(anden, config).keys()].sort()).toEqual(['deadoff', 'deadon', 'deadseed', 'hearts']);
+    expect(anden.options.fields.find((field) => field.type === 'switch')).toMatchObject({ controls: ['deadOn', 'deadOff'], on: { deadOn: 2, deadOff: 2 } });
   });
   it('round-trips', () => {
     for (const query of ['text=HOLA&via=3&speed=20', 'source=demo&via=1%2C2&deadon=2.5', 'source=mitren&station=18000&network=madrid_cercanias&cycle=0']) {

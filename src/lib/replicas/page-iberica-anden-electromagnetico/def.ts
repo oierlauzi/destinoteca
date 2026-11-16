@@ -72,6 +72,9 @@ export const optionsSchema: ParamSchema = {
     { key: 'ledScroll', urlKey: 'scroll', type: 'boolean', label: 'anden.opt.ledScroll', default: true, group: 'look' },
     { key: 'ledSpeed', urlKey: 'speed', type: 'range', label: 'anden.opt.ledSpeed', default: 14, min: 2, max: 30, step: 1, unit: 'col/s', group: 'look' },
     { key: 'ledIdle', urlKey: 'idle', type: 'text', label: 'anden.opt.ledIdle', help: 'anden.opt.ledIdle.help', default: '', group: 'look', glyphs: 'telenorma-cp437' },
+    // The switch of the original page: on, a few dots are stuck either way. It is a form control only;
+    // what travels in a URL is still the two amounts, so embeds made before it existed are unchanged.
+    { type: 'switch', key: 'deadPixels', label: 'anden.opt.deadPixels', controls: ['deadOn', 'deadOff'], on: { deadOn: 2, deadOff: 2 }, group: 'defects' },
     { key: 'deadOn', urlKey: 'deadon', type: 'range', label: 'anden.opt.deadOn', default: 0, min: 0, max: 20, step: 0.5, unit: '%', group: 'defects' },
     { key: 'deadOff', urlKey: 'deadoff', type: 'range', label: 'anden.opt.deadOff', default: 0, min: 0, max: 20, step: 0.5, unit: '%', group: 'defects' },
     { key: 'hearts', type: 'range', label: 'anden.opt.hearts', help: 'anden.opt.hearts.help', default: 0, min: 0, max: 25, step: 1, unit: '%', group: 'defects' },

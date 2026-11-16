@@ -88,7 +88,35 @@ export interface JsonField extends FieldBase {
   editor: string;
 }
 
-export type Field = TextField | NumberField | BooleanField | ColorField | SelectField | LookupField | JsonField;
+/**
+ * A checkbox in the form that is not a setting itself: it turns a few other
+ * settings on and off together ("dead pixels": the two stuck-dot amounts).
+ * It has no value and no place in a URL, so settings saved before the switch
+ * existed mean exactly what they did.
+ *
+ * It reads as on when any setting it controls differs from its default.
+ * Turning it off puts them back to their defaults and disables their
+ * controls; turning it on restores what they last were, or `on` the first
+ * time.
+ */
+export interface SwitchField {
+  type: 'switch';
+  /** Only identifies the control within the form. */
+  key: string;
+  label: string;
+  help?: string;
+  group?: string;
+  hidden?: boolean;
+  /** Keys of the settings it drives. */
+  controls: string[];
+  /** Their values when first switched on. */
+  on: Values;
+}
+
+/** A field that holds a value. */
+export type SettingField = TextField | NumberField | BooleanField | ColorField | SelectField | LookupField | JsonField;
+
+export type Field = SettingField | SwitchField;
 
 export interface ParamSchema {
   fields: Field[];
@@ -96,6 +124,11 @@ export interface ParamSchema {
 }
 
 export type Values = Record<string, unknown>;
+
+/** The fields of a schema that hold values, leaving out form-only controls. */
+export function settingsOf(schema: ParamSchema): SettingField[] {
+  return schema.fields.filter((field): field is SettingField => field.type !== 'switch');
+}
 
 /** One result of a lookup search. */
 export interface LookupItem {

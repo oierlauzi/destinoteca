@@ -151,7 +151,9 @@ URLs: never rename one.
 ## Settings and URLs
 
 `ParamSchema` (`src/lib/params/`) is a declarative list of fields. From one
-schema come the form, the query-string codec and validation. A replica on a
+schema come the form, the query-string codec and validation. A `switch` field
+is the one kind that is form-only: a checkbox that turns other settings on
+and off together, with no value or URL key of its own. A replica on a
 page is fully described by a `PlayerConfig` (`src/lib/player/config.ts`):
 
 | Group | Schema | Example keys |

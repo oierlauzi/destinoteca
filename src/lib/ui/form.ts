@@ -1,6 +1,6 @@
 import { getCharset } from '../hardware/fonts/charsets';
 import { has, t } from '../../i18n';
-import type { Field, Lookup, LookupField, ParamSchema, TextField, Values } from '../params';
+import type { Field, Lookup, LookupField, ParamSchema, SettingField, TextField, Values } from '../params';
 import { debounce, el, insertAtCursor, uid } from './dom';
 
 /**
@@ -153,9 +153,25 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
     onChange(values);
   };
   const commitSoon = debounce(commit, 250);
+  /** The controls of each setting, for switches that enable and disable them. */
+  const inputs = new Map<string, HTMLInputElement | HTMLSelectElement>();
+  const sync = (): void => {
+    for (const setter of setters) setter(values);
+  };
 
   const control = (field: Field): HTMLElement | undefined => {
-    if (field.hidden) return undefined;
+    if (field.hidden) {
+      // A seed is not something to type, but rolling a new one is worth a button.
+      if (field.type !== 'number' || !field.shuffle) return undefined;
+      return el('div', { class: 'field' }, [
+        el('button', {
+          class: 'button',
+          text: t('player.shuffle'),
+          attrs: { type: 'button', title: t(field.label) },
+          on: { click: () => commit({ [field.key]: Math.floor(Math.random() * 1e9) }) },
+        }),
+      ]);
+    }
     const id = uid('f');
     const caption = el('label', { text: label(field.label), attrs: { for: id } });
     const help = field.help ? el('small', { class: 'field-help', text: t(field.help) }) : null;
@@ -197,11 +213,40 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
             },
           },
         });
+        inputs.set(field.key, input);
         setters.push((next) => {
           input.value = String(next[field.key] ?? field.default);
           show(next[field.key] ?? field.default);
         });
         return row([el('span', { class: 'field-control' }, [input, output])]);
+      }
+      case 'switch': {
+        const controlled = schema.fields.filter((other): other is SettingField => other.type !== 'switch' && field.controls.includes(other.key));
+        const isOn = (current: Values): boolean => controlled.some((other) => current[other.key] !== other.default);
+        let remembered: Values | undefined;
+        const input = el('input', {
+          attrs: { id, type: 'checkbox' },
+          on: {
+            change: () => {
+              if (input.checked) {
+                commit(remembered ?? field.on);
+              } else {
+                remembered = Object.fromEntries(controlled.map((other) => [other.key, values[other.key]]));
+                commit(Object.fromEntries(controlled.map((other) => [other.key, other.default])));
+              }
+              sync();
+            },
+          },
+        });
+        setters.push((next) => {
+          input.checked = isOn(next);
+          // The amounts only matter while the switch is on.
+          for (const other of controlled) {
+            const target = inputs.get(other.key);
+            if (target) target.disabled = !input.checked;
+          }
+        });
+        return row([input], true);
       }
       case 'boolean': {
         const input = el('input', { attrs: { id, type: 'checkbox' }, on: { change: () => commit({ [field.key]: input.checked }) } });
@@ -267,7 +312,7 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
 
   const set = (next: Values): void => {
     values = { ...next };
-    for (const setter of setters) setter(values);
+    sync();
   };
   set(values);
   return { element, set };
