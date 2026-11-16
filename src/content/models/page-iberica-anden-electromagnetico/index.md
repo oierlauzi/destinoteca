@@ -74,6 +74,9 @@ installations:
     line: C-4
     status: unknown
     note: Sobre postes, uno por vía, con un reloj entre ambos.
+  - site: es/delicias
+    status: unknown
+    note: Colgado de la marquesina.
   - site: es/mendez-alvaro
     line: C-5
     status: in-service
@@ -220,6 +223,19 @@ photos:
     place: Tres Cantos
     author: Usuario de Google Maps
     sourceUrl: https://maps.app.goo.gl/9JGHJGjsfDJ6J5rG6
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: delicias
+    src: ./delicias-anden.jpg
+    alt: >-
+      El andén de Delicias desde arriba, mojado por la lluvia. Colgado de la
+      marquesina, un cartel dice «Vía 1» y «CHAMARTIN», con el tubo
+      fluorescente encendido bajo la línea flip-dot. Debajo, dos viajeras con
+      paraguas y un rótulo hacia Aeropuerto T4 por Atocha.
+    caption: Delicias, un día de lluvia. Bajo la línea flip-dot se ve encendido el tubo fluorescente que la ilumina.
+    place: Delicias
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/3C9QCBJMxTvG21Wx7
     source: Google Maps
     license: rights-reserved-credited
 cover: via-libre-1997
