@@ -1,5 +1,6 @@
 import { REPLICA_IDS, type ReplicaId } from './ids';
 import { andenElectromagnetico } from './page-iberica-anden-electromagnetico/def';
+import { vestibulo2, vestibulo4 } from './page-iberica-vestibulo/def';
 import type { ReplicaDef } from './types';
 
 /**
@@ -11,6 +12,8 @@ import type { ReplicaDef } from './types';
  */
 const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'page-iberica-anden-electromagnetico': andenElectromagnetico,
+  'page-iberica-vestibulo-2-lineas': vestibulo2,
+  'page-iberica-vestibulo-4-lineas': vestibulo4,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {

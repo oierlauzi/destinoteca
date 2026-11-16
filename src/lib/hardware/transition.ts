@@ -17,6 +17,12 @@ export interface DotTransitionOptions {
    * instead of waiting for a sweep to reach it.
    */
   differential?: boolean;
+  /**
+   * Which queue each module waits in. Modules of different queues change at
+   * the same time, as separate controllers would: one per line of text, say.
+   * By default all modules share one queue.
+   */
+  queue?: (module: number) => number;
 }
 
 /**
@@ -56,13 +62,18 @@ export class DotTransition {
 
   /** Queues the modules of the change from `from` to `to`, and works out how long it takes. */
   private plan(): void {
-    let queued = 0;
+    const queue = this.options.queue ?? (() => 0);
+    const queued = new Map<number, number>();
+    const seen = new Map<number, number>();
     let longest = 0;
     for (let m = 0; m < this.modules; m++) {
       const changed = this.differs(m);
-      this.turns[m] = this.options.differential ? queued : m;
+      const q = queue(m);
+      const place = seen.get(q) ?? 0;
+      seen.set(q, place + 1);
+      this.turns[m] = this.options.differential ? (queued.get(q) ?? 0) : place;
       if (!changed) continue;
-      queued++;
+      queued.set(q, (queued.get(q) ?? 0) + 1);
       for (let c = 0; c < this.cols; c++) {
         for (let r = 0; r < this.rows; r++) longest = Math.max(longest, this.delay(this.turns[m]!, c, r));
       }

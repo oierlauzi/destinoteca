@@ -1,12 +1,11 @@
 import type { SelectionPolicy } from '../../model';
 import type { ParamSchema } from '../../params';
+import { familyOptionsSchema, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
 import type { ReplicaDef } from '../types';
 
 /** Characters in the flip-dot line. */
 export const CELLS = 16;
 
-/** The colour of a lit flap. */
-export const FLAP_LIME = '#aede5a';
 
 /** What the sign shows, as its controller sent it: one line of text and what goes on the LED row. */
 export interface AndenFrame {
@@ -21,21 +20,7 @@ export interface AndenFrame {
   [key: string]: unknown;
 }
 
-export interface AndenOptions {
-  showMinutes: boolean;
-  dotColor: string;
-  showOffDots: boolean;
-  animate: boolean;
-  ledColor: string;
-  ledScroll: boolean;
-  ledSpeed: number;
-  ledIdle: string;
-  deadOn: number;
-  deadOff: number;
-  deadSeed: number;
-  hearts: number;
-  [key: string]: unknown;
-}
+export type AndenOptions = FamilyOptions;
 
 // URL keys are those of the original replica in renfe-flipdot-re, so that an
 // embed made for it keeps working here with its query string untouched.
@@ -48,46 +33,7 @@ export const frameSchema: ParamSchema = {
   ],
 };
 
-export const optionsSchema: ParamSchema = {
-  groups: [
-    { id: 'look', label: 'anden.group.look' },
-    { id: 'defects', label: 'anden.group.defects' },
-  ],
-  fields: [
-    { key: 'showMinutes', urlKey: 'showmin', type: 'boolean', label: 'anden.opt.showMinutes', default: true, group: 'look' },
-    {
-      // The default is taken from photographs of a preserved unit, whose lit flaps are a lime green
-      // (hue near 88 degrees). The other two are the choices of the original replica, kept for the
-      // embeds that name them; pages made with it always state their colour, so they are unaffected.
-      key: 'dotColor', urlKey: 'dot', type: 'color', label: 'anden.opt.dotColor', default: FLAP_LIME, group: 'look',
-      choices: [
-        { value: FLAP_LIME, label: 'anden.color.lime' },
-        { value: '#d9e04a', label: 'anden.color.yellowGreen' },
-        { value: '#e2d14a', label: 'anden.color.amber' },
-      ],
-    },
-    { key: 'showOffDots', urlKey: 'showoff', type: 'boolean', label: 'anden.opt.showOffDots', default: true, group: 'look' },
-    { key: 'animate', urlKey: 'anim', type: 'boolean', label: 'anden.opt.animate', help: 'anden.opt.animate.help', default: true, group: 'look' },
-    {
-      key: 'ledColor', urlKey: 'ledc', type: 'color', label: 'anden.opt.ledColor', default: '#ff3b2e', group: 'look',
-      choices: [
-        { value: '#ff3b2e', label: 'anden.color.red' },
-        { value: '#ff6a1a', label: 'anden.color.orange' },
-        { value: '#ff2b55', label: 'anden.color.pinkRed' },
-      ],
-    },
-    { key: 'ledScroll', urlKey: 'scroll', type: 'boolean', label: 'anden.opt.ledScroll', default: true, group: 'look' },
-    { key: 'ledSpeed', urlKey: 'speed', type: 'range', label: 'anden.opt.ledSpeed', default: 14, min: 2, max: 30, step: 1, unit: 'col/s', group: 'look' },
-    { key: 'ledIdle', urlKey: 'idle', type: 'text', label: 'anden.opt.ledIdle', help: 'anden.opt.ledIdle.help', default: '', group: 'look', glyphs: 'telenorma-cp437' },
-    // The switch of the original page: on, a few dots are stuck either way. It is a form control only;
-    // what travels in a URL is still the two amounts, so embeds made before it existed are unchanged.
-    { type: 'switch', key: 'deadPixels', label: 'anden.opt.deadPixels', controls: ['deadOn', 'deadOff'], on: { deadOn: 2, deadOff: 2 }, group: 'defects' },
-    { key: 'deadOn', urlKey: 'deadon', type: 'range', label: 'anden.opt.deadOn', default: 0, min: 0, max: 20, step: 0.5, unit: '%', group: 'defects' },
-    { key: 'deadOff', urlKey: 'deadoff', type: 'range', label: 'anden.opt.deadOff', default: 0, min: 0, max: 20, step: 0.5, unit: '%', group: 'defects' },
-    { key: 'hearts', type: 'range', label: 'anden.opt.hearts', help: 'anden.opt.hearts.help', default: 0, min: 0, max: 25, step: 1, unit: '%', group: 'defects' },
-    { key: 'deadSeed', urlKey: 'deadseed', type: 'number', label: 'anden.opt.deadSeed', default: 1, min: 0, max: 0xffffffff, group: 'defects', hidden: true, shuffle: true },
-  ],
-};
+export const optionsSchema = familyOptionsSchema;
 
 /** One platform, one train at a time, stepping through the next few. */
 const selection: SelectionPolicy = {

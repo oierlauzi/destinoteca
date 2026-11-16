@@ -20,11 +20,9 @@ import {
  * Dimensions are millimetres of the platform sign's artwork, measured from
  * the reference drawing in renfe-flipdot-re.
  */
-export const CELL_COLS = 5;
-export const CELL_ROWS = 7;
-const CELL_WIDTH = 7.9834499;
-const CELL_GAP = 1.4552071;
-const PITCH = CELL_WIDTH / CELL_COLS;
+import { CELL_COLS, CELL_GAP, CELL_ROWS, FLAP_PITCH as PITCH } from './dimensions';
+
+export { CELL_COLS, CELL_ROWS, CELL_STEP, CELL_WIDTH, CELL_GAP, LINE_HEIGHT, lineWidth } from './dimensions';
 const FLAP = 4.3 / 11;
 // The carrier of each module shows around its dots by this much.
 const MARGIN = PITCH - PITCH * FLAP * 2;
@@ -84,9 +82,15 @@ export const flipDotCharset = telenormaCp437;
 const CELL_MS = 62;
 const DOT_MS = 7;
 
-/** The transition with which a sign of this family goes from one text to the next. */
+/**
+ * The transition with which a sign of this family goes from one text to the
+ * next. Each line is a unit with its own controller (the platform sign's line
+ * is labelled MAESTRA, master), so on a board of several lines they all
+ * change at once, each at its own pace.
+ */
 export function flipDotSweep(lines: number, cells: number): DotTransition {
   return new DotTransition(lines * cells, CELL_COLS, CELL_ROWS, (turn, col, row) => turn * CELL_MS + (col + row) * DOT_MS, {
     differential: true,
+    queue: (module) => Math.floor(module / cells),
   });
 }

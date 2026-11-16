@@ -1,0 +1,135 @@
+import { MarqueeRun, scrolls, toDocument, toDom, type DotMatrix, type DotState, type DotTransition, type OctagonFlapLook, type VNode } from '../../hardware';
+import type { Ticker } from '../../player/ticker';
+import { FONT, flipLook, flipState, ledLook, ledState, ledStrip, type FamilyOptions, type LedRow } from './parts';
+
+/**
+ * Drawing a sign of this family, as a file or live in a page. A sign brings
+ * its housing (frame, legends, anything printed or stuck on) and says which
+ * characters go on its flip-dot lines and what goes on its LED row; this does
+ * the rest: the sweep with which the flaps change, the marquee, the faults.
+ */
+export interface SignSpec<F> {
+  width: number;
+  height: number;
+  /** What the export is credited as, in its first line. */
+  credit: string;
+  flipDots: DotMatrix<OctagonFlapLook>;
+  sweep(): DotTransition;
+  led: LedRow;
+  /** The characters of every flip-dot module, line after line. */
+  cells(frame: F, options: FamilyOptions): string[];
+  ledText(frame: F): string;
+  /** What a screen reader says instead of the dots. */
+  describe(frame: F, options: FamilyOptions): string;
+  /**
+   * The fixed part of the sign. Nodes whose content follows the frame (a
+   * platform number) register themselves in `slots` through their ref, and
+   * are refreshed by `fill`.
+   */
+  housing(frame: F, options: FamilyOptions, slots: Record<string, SVGElement>): VNode[];
+  fill?(frame: F, slots: Record<string, SVGElement>): void;
+}
+
+function svg(spec: SignSpec<never>, title: string, children: VNode[], slots: Record<string, SVGElement>): VNode {
+  return {
+    tag: 'svg',
+    attrs: { viewBox: `0 0 ${spec.width} ${spec.height}`, 'font-family': FONT, role: 'img' },
+    children: [{ tag: 'title', attrs: {}, children: [title], ref: (element) => (slots.title = element) }, ...children],
+  };
+}
+
+/** One frame as a standalone SVG file, with the LED text at its start and nothing moving. */
+export function renderSign<F>(spec: SignSpec<F>, frame: F, options: FamilyOptions): string {
+  const root = svg(spec as SignSpec<never>, spec.describe(frame, options), [
+    ...spec.housing(frame, options, {}),
+    spec.led.matrix.render(ledState(ledStrip(spec.ledText(frame)), spec.led.cols, 0), ledLook(options)),
+    spec.flipDots.render(flipStateOf(spec, frame, options), flipLook(options)),
+  ], {});
+  root.attrs.width = 1200;
+  root.attrs.height = Math.round(((1200 * spec.height) / spec.width) * 100) / 100;
+  return toDocument(root, `destinoteca · ${spec.credit} · https://oierlauzi.github.io/destinoteca/`);
+}
+
+
+const flipStateOf = <F>(spec: SignSpec<F>, frame: F, options: FamilyOptions): DotState => flipState(spec.cells(frame, options), options);
+
+export interface MountedSign<F> {
+  setFrame(frame: F): void;
+  setOptions(options: FamilyOptions): void;
+  destroy(): void;
+}
+
+export function mountSign<F>(spec: SignSpec<F>, blankFrame: F, host: Element, initial: FamilyOptions, env: { ticker: Ticker }): MountedSign<F> {
+  const doc = host.ownerDocument;
+  let frame = blankFrame;
+  let options = initial;
+  let flipAppearance = flipLook(options);
+  let ledAppearance = ledLook(options);
+  let text = spec.ledText(frame);
+  let strip = ledStrip(text);
+  let shownOffset = -1;
+  let now = 0;
+  const run = new MarqueeRun();
+  const sweep = spec.sweep();
+
+  const flip = spec.flipDots.mount(doc, sweep.at(0), flipAppearance);
+  const led = spec.led.matrix.mount(doc, ledState(strip, spec.led.cols, 0), ledAppearance);
+  const slots: Record<string, SVGElement> = {};
+  // The housing is built from the same tree as the export; the two dot
+  // matrices are live and go in after it, LED row first.
+  const root = toDom(svg(spec as SignSpec<never>, spec.describe(frame, options), spec.housing(frame, options, slots), slots), doc);
+  root.append(led.element, flip.element);
+  root.setAttribute('width', '100%');
+  root.style.display = 'block';
+  host.replaceChildren(root);
+
+  const drawLed = (force: boolean): void => {
+    const moving = options.ledScroll && scrolls(strip, spec.led.cols);
+    // A new announcement is read from its beginning; a redraw of the same one is not.
+    const offset = moving ? run.offset(now, text, options.ledSpeed) : 0;
+    if (!force && offset === shownOffset) return;
+    shownOffset = offset;
+    led.update(ledState(strip, spec.led.cols, offset), ledAppearance);
+  };
+
+  const draw = (): void => {
+    // New content is swept in; without animation it simply appears.
+    const target = flipStateOf(spec, frame, options);
+    if (options.animate) sweep.retarget(target);
+    else sweep.jump(target);
+    flip.update(sweep.at(now), flipAppearance);
+    spec.fill?.(frame, slots);
+    if (slots.title) slots.title.textContent = spec.describe(frame, options);
+    drawLed(true);
+  };
+
+  const unsubscribe = env.ticker.subscribe((time) => {
+    now = time;
+    if (!sweep.settled) flip.update(sweep.at(now), flipAppearance);
+    drawLed(false);
+  });
+  draw();
+
+  return {
+    setFrame(next: F): void {
+      const nextText = spec.ledText(next);
+      if (nextText !== text) {
+        text = nextText;
+        strip = ledStrip(text);
+      }
+      frame = next;
+      draw();
+    },
+    setOptions(next: FamilyOptions): void {
+      // Looks are compared by identity further down, so only replace them when they change.
+      if (next.dotColor !== options.dotColor || next.showOffDots !== options.showOffDots) flipAppearance = flipLook(next);
+      if (next.ledColor !== options.ledColor) ledAppearance = ledLook(next);
+      options = next;
+      draw();
+    },
+    destroy(): void {
+      unsubscribe();
+      root.remove();
+    },
+  };
+}

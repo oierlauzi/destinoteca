@@ -141,6 +141,14 @@ describe('transition', () => {
     transition.at(100);
     expect(transition.settled).toBe(true);
   });
+  it('runs separate queues side by side', () => {
+    // Two lines of two modules each: both lines start at once.
+    const transition = new DotTransition(4, 1, 1, (turn) => turn * 100, { differential: true, queue: (m) => Math.floor(m / 2) });
+    transition.retarget([[1], [1], [1], [1]]);
+    expect(transition.at(0)).toEqual([[1], [0], [1], [0]]);
+    expect(transition.at(100)).toEqual([[1], [1], [1], [1]]);
+    expect(transition.settled).toBe(true);
+  });
   it('can skip the animation', () => {
     const transition = make();
     transition.jump(full);

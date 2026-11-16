@@ -62,6 +62,14 @@ installations:
     to: 2026
     status: retired
     note: Una unidad desmontada sobre el andén en junio de 2026.
+  - site: es/tres-cantos
+    line: C-4
+    status: retired
+    note: Ya no están. En el vestíbulo hubo un panel de dos líneas de la misma familia.
+  - site: es/cantoblanco
+    line: C-4
+    status: retired
+    note: Ya no están. En el vestíbulo hubo un panel de cuatro líneas de la misma familia.
   - site: es/mendez-alvaro
     line: C-5
     status: in-service

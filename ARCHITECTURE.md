@@ -138,10 +138,15 @@ player asks for.
 | Motion | `marquee.ts`, `transition.ts` | Scrolling; the order and timing in which dots change |
 | Fonts and code pages | `fonts/` | `cp437` is the standard one; `telenorma-cp437` states that ROM's deviations explicitly |
 
-The first replica (`replicas/page-iberica-anden-electromagnetico/`) composes a
-housing with `replicas/page-iberica-electromagneticos/flip-dot-lines.ts`,
-which is parametric in lines and cells: a concourse board of the same family
-is that function with other numbers, a new housing and a presenter.
+The PAGE Ibérica family shows how a design language is shared.
+`replicas/page-iberica-electromagneticos/` holds what its signs have in
+common: sizes (`dimensions.ts`), the flip-dot lines (parametric in lines and
+cells), the LED row, legends, faults, the appearance settings (`parts.ts`)
+and the drawing and live updating of a sign (`live.ts`). Each member is then
+a housing, a layout of its characters and a presenter:
+`page-iberica-anden-electromagnetico/` (one line of 16) and
+`page-iberica-vestibulo/` (concourse boards of 2 or 4 lines of 20, two
+replica ids from one implementation).
 
 **Adding a replica:** a folder with `def.ts` and `index.ts`, its id in
 `src/lib/replicas/ids.ts`, a line in `registry.ts`, its strings, and
