@@ -3,6 +3,7 @@ import type { ReplicaDef } from '../replicas/types';
 import { getSource } from '../sources/registry';
 import type { SourceStatus } from '../sources/types';
 import { RAW, readConfig, type PlayerConfig } from './config';
+import { loadFresh } from './fresh';
 import { ReplicaSession, SourceHub, type SessionState } from './session';
 import { FrameTicker, type Ticker } from './ticker';
 
@@ -86,7 +87,7 @@ export class ReplicaElement extends HTMLElement {
     this.teardown();
     const def = getReplica(this.getAttribute('replica') ?? '');
     if (!def) return;
-    const impl = await def.load();
+    const impl = await loadFresh(`replica:${def.id}`, () => def.load());
     if (generation !== this.generation || !this.isConnected) return;
     this.def = def;
     this.ownsHub = !this.hub;

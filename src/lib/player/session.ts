@@ -11,6 +11,7 @@ import {
 import type { Values } from '../params';
 import type { Frame, MountedReplica, ReplicaDef, ReplicaImpl } from '../replicas/types';
 import type { Needs, SourceDef, SourceInstance, SourceModule, SourceStatus } from '../sources/types';
+import { loadFresh } from './fresh';
 import type { Ticker } from './ticker';
 
 export interface HubListener {
@@ -65,10 +66,10 @@ export class SourceHub {
     this.setStatus('connecting');
     let module: SourceModule;
     try {
-      module = await def.load();
+      module = await loadFresh(`source:${def.id}`, () => def.load());
     } catch {
-      // The usual cause is a page left open across a new release of the site:
-      // the code it would fetch has been replaced. The message says so.
+      // loadFresh has already tried reloading the page, which cures the usual
+      // cause (a page older than the latest release of the site).
       if (generation === this.generation) this.setStatus('error', 'player.error.load');
       return;
     }

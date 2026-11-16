@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { FixedClock, StationClock, type BoardSnapshot, type Service, type View } from '../src/lib/model';
 import { decode, defaults, encode, sanitize, type ParamSchema, type Values } from '../src/lib/params';
 import { RAW, readConfig, writeConfig } from '../src/lib/player/config';
+import { loadFresh } from '../src/lib/player/fresh';
 import { ReplicaSession, SourceHub } from '../src/lib/player/session';
 import { ManualTicker } from '../src/lib/player/ticker';
 import { andenElectromagnetico as anden } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
@@ -246,5 +247,53 @@ describe('demo source', () => {
     const times = board.map((service) => service.here!.departure!.estimated!);
     expect([...times].sort((a, b) => a - b)).toEqual(times);
     expect(times[0]).toBeGreaterThan(T0);
+  });
+});
+
+describe('loading code from a redeployed site', () => {
+  const env = () => {
+    const kept = new Map<string, string>();
+    let reloads = 0;
+    return {
+      storage: { getItem: (key: string) => kept.get(key) ?? null, setItem: (key: string, value: string) => void kept.set(key, value), removeItem: (key: string) => void kept.delete(key) },
+      reload: () => void reloads++,
+      reloads: () => reloads,
+    };
+  };
+  const gone = () => Promise.reject(new Error('error loading dynamically imported module'));
+
+  it('reloads the page once when a file has gone, then gives up', async () => {
+    const page = env();
+    let settled = false;
+    void loadFresh('source:x', gone, page).then(() => (settled = true), () => (settled = true));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(page.reloads()).toBe(1);
+    expect(settled).toBe(false);
+    // The reloaded page fails the same way: no second reload, the error surfaces.
+    await expect(loadFresh('source:x', gone, page)).rejects.toThrow('dynamically imported');
+    expect(page.reloads()).toBe(1);
+  });
+
+  it('is ready to recover again after a load that worked', async () => {
+    const page = env();
+    void loadFresh('source:x', gone, page);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await expect(loadFresh('source:x', async () => 'code', page)).resolves.toBe('code');
+    void loadFresh('source:x', gone, page);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(page.reloads()).toBe(2);
+  });
+
+  it('is not re-armed by something else loading fine after the reload', async () => {
+    const page = env();
+    void loadFresh('source:x', gone, page);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    await loadFresh('replica:y', async () => 'code', page);
+    await expect(loadFresh('source:x', gone, page)).rejects.toThrow();
+    expect(page.reloads()).toBe(1);
+  });
+
+  it('never reloads where it could not tell a second failure from a first', async () => {
+    await expect(loadFresh('source:x', gone, {})).rejects.toThrow();
   });
 });
