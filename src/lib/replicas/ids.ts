@@ -3,7 +3,7 @@
  * validated against this list. Ids end up in embed URLs on other people's
  * pages, so one is never renamed or reused.
  */
-export const REPLICA_IDS = ['page-iberica-anden-electromagnetico', 'page-iberica-vestibulo-2-lineas', 'page-iberica-vestibulo-4-lineas'] as const;
+export const REPLICA_IDS = ['page-iberica-anden-electromagnetico', 'page-iberica-vestibulo-2-lineas', 'page-iberica-vestibulo-4-lineas', 'page-iberica-anden-continuo'] as const;
 
 export type ReplicaId = (typeof REPLICA_IDS)[number];
 

@@ -12,7 +12,7 @@ que se alimenta de datos simulados, de trenes reales o de lo que escribas a
 mano, y que se puede insertar en otra página, ver a pantalla completa o
 descargar como SVG.
 
-La primera ficha es el teleindicador de andén electromagnético de PAGE
+La primera ficha es el teleindicador electromagnético de andén de PAGE
 Ibérica, el cartel flip-dot de Cercanías Madrid, cuya ingeniería inversa está
 en [renfe-flipdot-re](https://github.com/oierlauzi/renfe-flipdot-re).
 

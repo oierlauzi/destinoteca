@@ -103,7 +103,7 @@ export const player: Record<string, string> = {
   'manual.split.first': 'Primera parte',
   'manual.split.other': 'Otra parte',
 
-  // --- Teleindicador de andén electromagnético de PAGE Ibérica ---
+  // --- Teleindicador electromagnético de andén de PAGE Ibérica ---
   'anden.frame.text': 'Fila flip-dot',
   'anden.frame.minutes': 'Minutos',
   'anden.frame.platform': 'Vía',
@@ -142,4 +142,11 @@ export const player: Record<string, string> = {
   'vestibulo.frame.row2': 'Línea 2',
   'vestibulo.frame.row3': 'Línea 3',
   'vestibulo.frame.row4': 'Línea 4',
+
+  // --- Teleindicador de andén de PAGE Ibérica, matriz continua ---
+  'continuo.frame.text': 'Línea flip-dot',
+  'continuo.frame.time': 'Hora',
+  'continuo.opt.showTime': 'Mostrar la hora',
+  'continuo.opt.pixelLeds': 'LED de los puntos',
+  'continuo.opt.pixelLeds.help': 'El LED junto a cada punto ilumina los que muestran su cara clara.',
 };

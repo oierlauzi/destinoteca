@@ -2,8 +2,8 @@ import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import { LINE_HEIGHT, MIN_GAP, lineWidth } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
-import { mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
-import { cercaniasRoundel, HOUSING, LEGEND, ledRow, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
+import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
+import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
 import { CELLS, type AndenFrame, type AndenOptions } from './def';
 
 // Everything is in millimetres of the reference drawing (renfe-flipdot-re,
@@ -73,11 +73,12 @@ function housing(frame: AndenFrame, _options: FamilyOptions, slots: Record<strin
 const spec: SignSpec<AndenFrame> = {
   width: WIDTH,
   height: HEIGHT,
-  credit: 'teleindicador de andén electromagnético de PAGE Ibérica',
+  credit: 'teleindicador electromagnético de andén de PAGE Ibérica',
   flipDots: flipDotLines({ lines: 1, cells: CELLS, x: ROW.x, y: ROW.y }),
   sweep: () => flipDotSweep(1, CELLS),
   led,
-  cells: lineCells,
+  dots: (frame, options) => characterDots(lineCells(frame, options), options),
+  look: flipLook,
   ledText: (frame) => frame.led,
   describe,
   housing,

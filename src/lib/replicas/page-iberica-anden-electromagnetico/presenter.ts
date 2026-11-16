@@ -18,7 +18,7 @@ import { CELLS, type AndenFrame, type AndenOptions } from './def';
 const fold = telenormaCp437.fold;
 
 /** A sign bolted to one platform always reads that number; one serving several has none to read. */
-function boltedPlatform(view: View): string {
+export function boltedPlatform(view: View): string {
   const [only, ...others] = view.placement.platforms;
   if (only === undefined || others.length > 0) return '';
   return platformDigits(only) ?? only;
@@ -43,7 +43,7 @@ const POSITION: Record<string, string> = { front: 'CABEZA', middle: 'CENTRO', re
  * That last layout is this replica's own; no photograph shows what the real
  * sign did with such a train.
  */
-function callingPoints(service: Service): string {
+export function callingPoints(service: Service): string {
   const portions = portionsOf(service).filter((portion) => portion.status !== 'cancelled' || service.status === 'cancelled');
   if (portions.length < 2) {
     const names = stops(portions[0]?.callsAfter);
@@ -63,7 +63,7 @@ function callingPoints(service: Service): string {
     .join(' / ');
 }
 
-function announcements(view: View, options: AndenOptions): string {
+export function announcements(view: View, options: AndenOptions): string {
   const notices = view.notices.map((notice) => fold(text(notice.text))).filter(Boolean);
   return notices.length ? notices.join(' - ') : options.ledIdle;
 }

@@ -20,6 +20,10 @@ Se han visto en servicio tres montajes de esta generación:
   de LED debajo. Es el
   [teleindicador de andén](../../catalogo/page-iberica-anden-electromagnetico/)
   documentado en este catálogo.
+- **Cartel de andén de matriz continua**, una
+  [versión posterior](../../catalogo/page-iberica-anden-continuo/) con la
+  misma caja, una matriz flip-dot continua iluminada por LED y la hora de
+  salida en lugar de los minutos. Visto en Alcalá de Henares.
 - **Cartel de andén de dos caras**, para andenes centrales.
 - **Paneles de vestíbulo**, que apilan de dos a cuatro filas de 20 caracteres
   para anunciar los trenes de toda la estación: el de

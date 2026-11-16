@@ -2,8 +2,8 @@ import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import { CELL_STEP, CELL_WIDTH } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
-import { mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
-import { cercaniasRoundel, HOUSING, LEGEND, ledRow, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
+import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
+import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
 import { PLATFORM_CELLS, type BoardRow, type VestibuloFrame } from './def';
 import { boardGeometry, CELLS } from './geometry';
 
@@ -68,7 +68,8 @@ export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFra
     flipDots: flipDotLines({ lines, cells: CELLS, x: g.linesX, y: g.lineTops[0]!, lineGap: g.lineGap }),
     sweep: () => flipDotSweep(lines, CELLS),
     led: ledRow(g.led.x, g.led.y, g.led.width),
-    cells: (frame, options) => Array.from({ length: lines }, (_, i) => rowCells(frame.rows[i] ?? blankRow, options)).flat(),
+    dots: (frame, options) => characterDots(Array.from({ length: lines }, (_, i) => rowCells(frame.rows[i] ?? blankRow, options)).flat(), options),
+    look: flipLook,
     ledText: (frame) => frame.led,
     describe,
     housing,

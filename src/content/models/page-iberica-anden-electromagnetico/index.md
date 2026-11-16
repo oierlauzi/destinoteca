@@ -1,5 +1,5 @@
 ---
-name: Teleindicador de andén electromagnético de PAGE Ibérica
+name: Teleindicador electromagnético de andén de PAGE Ibérica
 summary: >-
   Cartel de andén de Renfe Cercanías Madrid, instalado desde mediados de los
   años noventa: una línea flip-dot de 16 caracteres para el destino y los
@@ -265,6 +265,9 @@ de Madrid miraba hacia este cartel: una caja negra colgada sobre el andén que
 decía, en puntos amarillos, adónde iba el próximo tren y cuántos minutos
 faltaban. Se instalaron desde mediados de los años noventa y se están
 retirando a medida que se reforman las estaciones.
+
+Más tarde se instaló una [versión con matriz continua](../page-iberica-anden-continuo/)
+en la misma caja.
 
 ## Qué muestra
 

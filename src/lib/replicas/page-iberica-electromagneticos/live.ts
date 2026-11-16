@@ -1,23 +1,28 @@
 import { MarqueeRun, scrolls, toDocument, toDom, type DotMatrix, type DotState, type DotTransition, type OctagonFlapLook, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { FONT, flipLook, flipState, ledLook, ledState, ledStrip, type FamilyOptions, type LedRow } from './parts';
+import { FONT, flipState, ledLook, ledState, ledStrip, type FamilyOptions, type LedRow } from './parts';
 
 /**
  * Drawing a sign of this family, as a file or live in a page. A sign brings
- * its housing (frame, legends, anything printed or stuck on) and says which
- * characters go on its flip-dot lines and what goes on its LED row; this does
- * the rest: the sweep with which the flaps change, the marquee, the faults.
+ * its housing (frame, legends, anything printed or stuck on), its flip-dot
+ * matrix, and says which dots go on it and what goes on its LED row; this
+ * does the rest: the sweep with which the flaps change, the marquee.
+ *
+ * The matrix may be character modules or one continuous grid, with any dot
+ * skin: `L` is the look its skin takes.
  */
-export interface SignSpec<F> {
+export interface SignSpec<F, L = OctagonFlapLook> {
   width: number;
   height: number;
   /** What the export is credited as, in its first line. */
   credit: string;
-  flipDots: DotMatrix<OctagonFlapLook>;
+  flipDots: DotMatrix<L>;
   sweep(): DotTransition;
   led: LedRow;
-  /** The characters of every flip-dot module, line after line. */
-  cells(frame: F, options: FamilyOptions): string[];
+  /** The dots of the flip-dot matrix for a frame, faults included. */
+  dots(frame: F, options: FamilyOptions): DotState;
+  /** How the flip-dot matrix looks with these options. */
+  look(options: FamilyOptions): L;
   ledText(frame: F): string;
   /** What a screen reader says instead of the dots. */
   describe(frame: F, options: FamilyOptions): string;
@@ -30,7 +35,7 @@ export interface SignSpec<F> {
   fill?(frame: F, slots: Record<string, SVGElement>): void;
 }
 
-function svg(spec: SignSpec<never>, title: string, children: VNode[], slots: Record<string, SVGElement>): VNode {
+function svg(spec: { width: number; height: number }, title: string, children: VNode[], slots: Record<string, SVGElement>): VNode {
   return {
     tag: 'svg',
     attrs: { viewBox: `0 0 ${spec.width} ${spec.height}`, 'font-family': FONT, role: 'img' },
@@ -39,19 +44,19 @@ function svg(spec: SignSpec<never>, title: string, children: VNode[], slots: Rec
 }
 
 /** One frame as a standalone SVG file, with the LED text at its start and nothing moving. */
-export function renderSign<F>(spec: SignSpec<F>, frame: F, options: FamilyOptions): string {
-  const root = svg(spec as SignSpec<never>, spec.describe(frame, options), [
+export function renderSign<F, L>(spec: SignSpec<F, L>, frame: F, options: FamilyOptions): string {
+  const root = svg(spec, spec.describe(frame, options), [
     ...spec.housing(frame, options, {}),
     spec.led.matrix.render(ledState(ledStrip(spec.ledText(frame)), spec.led.cols, 0), ledLook(options)),
-    spec.flipDots.render(flipStateOf(spec, frame, options), flipLook(options)),
+    spec.flipDots.render(spec.dots(frame, options), spec.look(options)),
   ], {});
   root.attrs.width = 1200;
   root.attrs.height = Math.round(((1200 * spec.height) / spec.width) * 100) / 100;
   return toDocument(root, `destinoteca · ${spec.credit} · https://oierlauzi.github.io/destinoteca/`);
 }
 
-
-const flipStateOf = <F>(spec: SignSpec<F>, frame: F, options: FamilyOptions): DotState => flipState(spec.cells(frame, options), options);
+/** The dots of character modules, with the faults of the Telenorma controller: for `SignSpec.dots`. */
+export const characterDots = (cells: string[], options: FamilyOptions): DotState => flipState(cells, options);
 
 export interface MountedSign<F> {
   setFrame(frame: F): void;
@@ -59,11 +64,11 @@ export interface MountedSign<F> {
   destroy(): void;
 }
 
-export function mountSign<F>(spec: SignSpec<F>, blankFrame: F, host: Element, initial: FamilyOptions, env: { ticker: Ticker }): MountedSign<F> {
+export function mountSign<F, L>(spec: SignSpec<F, L>, blankFrame: F, host: Element, initial: FamilyOptions, env: { ticker: Ticker }): MountedSign<F> {
   const doc = host.ownerDocument;
   let frame = blankFrame;
   let options = initial;
-  let flipAppearance = flipLook(options);
+  let flipAppearance = spec.look(options);
   let ledAppearance = ledLook(options);
   let text = spec.ledText(frame);
   let strip = ledStrip(text);
@@ -77,7 +82,7 @@ export function mountSign<F>(spec: SignSpec<F>, blankFrame: F, host: Element, in
   const slots: Record<string, SVGElement> = {};
   // The housing is built from the same tree as the export; the two dot
   // matrices are live and go in after it, LED row first.
-  const root = toDom(svg(spec as SignSpec<never>, spec.describe(frame, options), spec.housing(frame, options, slots), slots), doc);
+  const root = toDom(svg(spec, spec.describe(frame, options), spec.housing(frame, options, slots), slots), doc);
   root.append(led.element, flip.element);
   root.setAttribute('width', '100%');
   root.style.display = 'block';
@@ -94,7 +99,7 @@ export function mountSign<F>(spec: SignSpec<F>, blankFrame: F, host: Element, in
 
   const draw = (): void => {
     // New content is swept in; without animation it simply appears.
-    const target = flipStateOf(spec, frame, options);
+    const target = spec.dots(frame, options);
     if (options.animate) sweep.retarget(target);
     else sweep.jump(target);
     flip.update(sweep.at(now), flipAppearance);
@@ -122,7 +127,9 @@ export function mountSign<F>(spec: SignSpec<F>, blankFrame: F, host: Element, in
     },
     setOptions(next: FamilyOptions): void {
       // Looks are compared by identity further down, so only replace them when they change.
-      if (next.dotColor !== options.dotColor || next.showOffDots !== options.showOffDots) flipAppearance = flipLook(next);
+      // Looks are compared by identity when redrawing, so a new one is made only when it differs.
+      const nextLook = spec.look(next);
+      if (JSON.stringify(nextLook) !== JSON.stringify(flipAppearance)) flipAppearance = nextLook;
       if (next.ledColor !== options.ledColor) ledAppearance = ledLook(next);
       options = next;
       draw();
