@@ -4,16 +4,18 @@ import type { Charset } from './types';
 /**
  * Code page 437 as the character generator of Telenorma's flip-dot terminals
  * has it (ROM of a PAGE Ibérica PI-T100-M, firmware AK0052.139U1). It is not
- * standard CP437: three codes of the ASCII half were given other glyphs, so
- * that Spanish text survives a 7-bit serial link.
+ * standard CP437: three codes of the ASCII half were given other glyphs.
  *
  *   0x23  a solid block, instead of #
  *   0x24  ñ, instead of $
  *   0x25  Ñ, instead of %
  *
- * ñ and Ñ are also where CP437 puts them, at 0xA4 and 0xA5, and text typed
- * here is sent there. A controller on a 7-bit link would have used the low
- * pair instead; `sevenBit()` below spells text that way.
+ * The two eñes are there for 7-bit serial links. CP437's own ñ and Ñ are at
+ * 0xA4 and 0xA5; a link that carries seven bits drops the top one, and they
+ * arrive as 0x24 and 0x25 ($ and %). Drawing ñ and Ñ at those two codes as
+ * well makes Spanish text read right either way. Text typed here is sent to
+ * the native 8-bit codes; `sevenBit()` below spells it as a 7-bit link would
+ * deliver it.
  *
  * The three displaced characters are passed through as their ASCII codes
  * rather than refused: a controller sending "100%" did get "100Ñ" on the

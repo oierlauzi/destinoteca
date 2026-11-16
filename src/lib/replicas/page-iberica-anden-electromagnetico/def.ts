@@ -9,7 +9,7 @@ export const CELLS = 16;
 export interface AndenFrame {
   /** The flip-dot line, up to 16 characters. */
   text: string;
-  /** Written right-aligned over the end of the same line, beside the "min." printed on the glass. */
+  /** Written right-aligned over the end of the same line, beside the fixed "min." legend. */
   minutes: string;
   /** The vinyl number after "Vía". Not every sign had one. */
   platform: string;

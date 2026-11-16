@@ -1,7 +1,5 @@
 ---
 name: Teleindicador de andén electromagnético de PAGE Ibérica
-alsoKnownAs:
-  - Teleindicador flip-dot de Cercanías Madrid
 summary: >-
   Cartel de andén de Renfe Cercanías Madrid, instalado desde mediados de los
   años noventa: una línea flip-dot de 16 caracteres para el destino y los
@@ -36,16 +34,19 @@ components:
     designation: PI-T100-M
     description: >-
       Una línea de 16 caracteres de 5 × 7 puntos y 100 mm de altura, con su
-      electrónica de control. Muestra el destino y los minutos.
+      electrónica de control. Muestra el destino y los minutos. Recibe el
+      texto por un enlace serie RS-422.
     manufacturer: telenorma
   - name: Matriz de LED
     description: >-
       Fila de texto móvil bajo la línea flip-dot, para las paradas y los
       avisos. Modelo desconocido: no se conserva en la unidad estudiada.
   - name: Tubo fluorescente
-    description: Ilumina el panel de noche. Tiene su propia alimentación de red.
-  - name: Cristal serigrafiado
-    description: Lleva los rótulos fijos «Vía», «Próxima Llegada» y «min.», y el logotipo de Cercanías.
+    description: Ilumina solo la línea flip-dot, para leerla de noche. Tiene su propia alimentación de red.
+  - name: Chapa rotulada
+    description: >-
+      Chapa metálica montada detrás del cristal. Lleva en vinilo los rótulos
+      fijos «Vía», «Próxima Llegada» y «min.», y el logotipo de Cercanías.
 installations:
   - site: es/mostoles
     status: unknown
@@ -83,8 +84,8 @@ photos:
   - id: via-libre-1997
     src: ./via-libre-1997.jpg
     alt: >-
-      Cartel de andén visto de cerca: «Vía 1» y «Próxima Llegada» en blanco
-      sobre el cristal, el logotipo de Cercanías y, en puntos amarillos,
+      Cartel de andén visto de cerca: «Vía 1» y «Próxima Llegada» en letras
+      blancas, el logotipo de Cercanías y, en puntos amarillos,
       «ATOCH-CHAMAR».
     caption: El cartel en servicio, tal como lo publicó *Vía Libre* en 1997.
     date: '1997'
@@ -189,19 +190,20 @@ El cartel es un conjunto de varias piezas, cada una con su papel:
 
 | Elemento | Contenido |
 | --- | --- |
-| Rótulos fijos en el cristal | «Vía», «Próxima Llegada» y «min.» |
+| Rótulos fijos | «Vía», «Próxima Llegada» y «min.»: vinilos sobre una chapa metálica montada detrás del cristal |
 | Número de vía | Un vinilo, colocado junto a «Vía» en cada instalación |
 | Línea flip-dot | Destino del próximo tren y minutos que faltan |
 | Fila de LED | Texto móvil con las estaciones en las que para, y avisos |
-| Tubo fluorescente | Ilumina el panel de noche |
+| Tubo fluorescente | Ilumina de noche la línea flip-dot, y solo esa línea |
 
-Como «min.» está impreso en el cristal y no dibujado con puntos, la línea se
+Como «min.» es un rótulo fijo y no está dibujado con puntos, la línea se
 compone con el destino a la izquierda y la cifra empujada al extremo derecho.
 Es una convención de quien enviaba el texto, no algo que el cartel sepa.
 
 El cartel, de hecho, no calcula nada. No formatea números ni lleva la cuenta
 atrás: la línea completa de 16 caracteres le llegaba ya hecha desde un equipo
 situado aguas arriba, que volvía a enviarla cada vez que cambiaba el minuto.
+La comunicación con el cartel es un enlace serie RS-422.
 
 ## La línea flip-dot: PI-T100-M
 
@@ -282,19 +284,20 @@ destino. El juego de caracteres del cartel tiene un corazón en la posición
 mensaje.
 
 **La eñe duplicada.** El juego de caracteres es el CP437 de los primeros PC,
-con un cambio: la `ñ` y la `Ñ` están repetidas en las posiciones `0x24` y
-`0x25`, donde deberían estar `$` y `%`. Así sobreviven a un enlace serie de
-siete bits.
+con un cambio pensado para enlaces serie de 7 bits. En CP437 la `ñ` y la `Ñ`
+están en las posiciones `0xA4` y `0xA5`. Un enlace de 7 bits no transmite el
+bit más significativo, así que esos dos códigos llegan convertidos en `0x24` y
+`0x25`, que en CP437 son `$` y `%`. Para que la eñe se lea bien también en ese
+caso, el cartel tiene dibujadas una `ñ` y una `Ñ` en esas dos posiciones, en
+lugar de `$` y `%`, además de las que ya tiene en su sitio.
 
 **El último mensaje.** Los puntos flip-dot son mecánicos y conservan su
 posición sin corriente. Un cartel desmontado sigue mostrando el último destino
 que recibió, como el de Aravaca de la fotografía.
 
-**El barrido de arranque.** Al dar tensión, un zumbido recorre el panel de un
-extremo a otro: todos los puntos se llevan a negro, por grupos.
-
-**Legible de día.** El panel se lee con luz natural sin iluminación propia. El
-tubo fluorescente solo es una luz de lectura para la noche.
+**Legible de día.** La línea flip-dot se lee con luz natural sin iluminación
+propia. El tubo fluorescente, que solo la alumbra a ella, es una luz de lectura
+para la noche.
 
 ## Retirada
 
@@ -306,5 +309,6 @@ la línea C-5.
 
 Una unidad de la línea PI-T100-M se ha recuperado y documentado en el proyecto
 [renfe-flipdot-re](https://github.com/oierlauzi/renfe-flipdot-re), que describe
-su electrónica, su firmware y el protocolo serie con el que se le envía texto.
+su electrónica, su firmware y el protocolo con el que se le envía texto por su
+enlace RS-422.
 De su memoria salen los caracteres que usa la réplica de esta página.

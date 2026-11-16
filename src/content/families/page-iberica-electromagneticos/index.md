@@ -9,8 +9,8 @@ manufacturers:
   - telenorma
 ---
 
-Todos comparten el mismo lenguaje: caja negra, rótulos blancos serigrafiados
-en el cristal y texto en puntos flip-dot amarillos de 5 × 7, con electrónica
+Todos comparten el mismo lenguaje: caja negra, rótulos blancos fijos
+y texto en puntos flip-dot amarillos de 5 × 7, con electrónica
 de [Telenorma](../../fabricantes/telenorma/) integrada por
 [PAGE Ibérica](../../fabricantes/page-iberica/).
 

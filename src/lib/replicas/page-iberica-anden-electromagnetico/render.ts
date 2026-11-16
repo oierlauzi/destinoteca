@@ -107,7 +107,10 @@ interface Slots {
   platform?: SVGElement;
 }
 
-/** The fixed part of the sign: frame, glass, and the legends printed on it. */
+/**
+ * The fixed part of the sign: its frame, and the legends. On the real thing
+ * those are vinyls on a sheet of metal mounted behind the glass.
+ */
 function housing(frame: AndenFrame, options: AndenOptions, dots: VNode[], slots: Slots = {}): VNode {
   return h(
     'svg',
@@ -117,7 +120,7 @@ function housing(frame: AndenFrame, options: AndenOptions, dots: VNode[], slots:
       h('g', { transform: `translate(${-ORIGIN.x},${-ORIGIN.y})` }, [
         h('rect', { x: ORIGIN.x, y: ORIGIN.y, width: WIDTH, height: HEIGHT, rx: 10, fill: '#121212' }),
         h('rect', { x: 12.080421, y: 11.557226, width: 176.00145, height: 67.75975, rx: 5, fill: '#303030', stroke: '#000000', 'stroke-width': 3 }),
-        // "min." is printed on the glass, in the colour of the dots it sits beside.
+        // "min." is one of the fixed legends, in the colour of the dots it sits beside.
         h(
           'text',
           { x: 215.77232, y: 38.647018, fill: options.dotColor, 'font-size': 5.65488, transform: 'scale(0.81099995,1.2330457)' },
