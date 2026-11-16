@@ -1,4 +1,4 @@
-import { LED_HEIGHT, LINE_HEIGHT, MIN_GAP, MIN_WIDTH, lineWidth } from '../page-iberica-electromagneticos/dimensions';
+import { LED_HEIGHT, LINE_HEIGHT, MIN_GAP, lineWidth } from '../page-iberica-electromagneticos/dimensions';
 
 /**
  * Where everything goes on a concourse board of `lines` lines, in the units
@@ -17,13 +17,13 @@ const LED_MARGIN = { side: 8, bottom: 7.6 };
  * Sizes measured against the height of a line of characters in photographs
  * of the boards at Tres Cantos and Cantoblanco. Under each line runs a
  * fluorescent tube (not drawn), which is why the lines are far apart: one
- * line starts about 2.25 line-heights below the previous one.
+ * line starts about two line-heights below the previous one.
  */
 const HEADER_HEIGHT = 25.5;
 /** From the bottom of a line to the rule under it: the tube's place. */
-const BELOW_LINE = 9.5;
+const BELOW_LINE = 7.5;
 /** From a rule to the top of the next line. */
-const ABOVE_LINE = 4.5;
+const ABOVE_LINE = 3.7;
 const LED_AFTER_DIVIDER = 3.65318;
 
 export interface BoardGeometry {
@@ -49,9 +49,9 @@ export function boardGeometry(lines: number): BoardGeometry {
   const panelX = FRAME.side;
   const panelY = FRAME.top;
   const ledX = panelX + LED_MARGIN.side;
-  // The lines and the "min." beside them are centred over the LED row.
-  const block = lineWidth(CELLS) + MIN_GAP + MIN_WIDTH;
-  const linesX = ledX + (LED_WIDTH - block) / 2;
+  // The lines are centred over the LED row on their own; the "min." beside
+  // them sticks out to the right, as in the photographs.
+  const linesX = ledX + (LED_WIDTH - lineWidth(CELLS)) / 2;
   const headerBottom = panelY + HEADER_HEIGHT;
   const firstTop = headerBottom + ABOVE_LINE;
   const lineGap = BELOW_LINE + ABOVE_LINE;

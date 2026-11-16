@@ -37,9 +37,13 @@ export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFra
   // at Cantoblanco only, "Próxima Llegada" over the minutes.
   const via = span(0, PLATFORM_CELLS);
   const destino = span(6, 13);
+  // Middle anchoring counts the spacing after the last letter, hence the half-spacing shift.
+  const VIA_SPACING = 1.2;
+  const viaCentre = via.x + 11.2;
   const header: VNode[] = [
-    cercaniasRoundel(via.x + 5, g.headerTop + 6.6, 5),
-    h('text', { x: via.x, y: g.headerBottom - 3.4, fill: LEGEND, 'font-size': 12.5, 'font-weight': 700, 'letter-spacing': 1.2 }, ['Vía']),
+    // The roundel sits on the same centre line as "Vía", whose left edge is at the first character.
+    cercaniasRoundel(viaCentre, g.headerTop + 6.6, 5),
+    h('text', { x: viaCentre + VIA_SPACING / 2, y: g.headerBottom - 3.4, fill: LEGEND, 'font-size': 12.5, 'font-weight': 700, 'letter-spacing': VIA_SPACING, 'text-anchor': 'middle' }, ['Vía']),
     h('text', { x: (destino.x + destino.end) / 2, y: g.headerBottom - 3.9, fill: LEGEND, 'font-size': 15.5, 'font-weight': 700, 'text-anchor': 'middle', 'letter-spacing': 0.4 }, ['Destino']),
   ];
   if (nextArrival) {

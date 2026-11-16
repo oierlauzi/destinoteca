@@ -32,9 +32,11 @@ describe('concourse board layout', () => {
     expect(two.width).toBe(four.width);
     expect(four.height).toBeGreaterThan(two.height);
     expect(vestibulo2.viewBox).toEqual({ width: two.width, height: two.height });
-    // The LED row is a little wider than the lines, which fit inside it with their "min.".
+    // The LED row is a little wider than the lines, which are centred over it on their own.
     expect(two.led.x).toBeLessThan(two.linesX);
-    expect(two.minX + 8.4).toBeLessThanOrEqual(two.led.x + two.led.width + 0.01);
+    const lineEnd = two.minX - 0.76992;
+    expect(two.linesX - two.led.x).toBeCloseTo(two.led.x + two.led.width - lineEnd, 6);
+    expect(two.minX + 8.4).toBeLessThan(two.panel.x + two.panel.width);
   });
 });
 
@@ -73,8 +75,8 @@ describe('concourse board presenter', () => {
   it('leaves room under each line for its tube', () => {
     const g = boardGeometry(4);
     const step = g.lineTops[1]! - g.lineTops[0]!;
-    expect(step / 11.181).toBeGreaterThan(2.1);
-    expect(step / 11.181).toBeLessThan(2.6);
+    expect(step / 11.181).toBeGreaterThan(1.8);
+    expect(step / 11.181).toBeLessThan(2.2);
   });
 });
 
