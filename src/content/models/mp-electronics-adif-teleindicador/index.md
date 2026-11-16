@@ -2,7 +2,7 @@
 name: Teleindicador LED de salidas y llegadas de MP Electronics para ADIF
 summary: >-
   El tablero de salidas y llegadas de las estaciones de largo recorrido de
-  ADIF: siete trenes en paneles de LED rojos y verdes, con hora, destino o
+  ADIF: siete trenes en paneles de LED, con hora, destino o
   procedencia, tren, vía y observaciones, y una fila ancha de avisos. Poco a
   poco lo sustituyen pantallas de vídeo.
 kind: departure-board
@@ -22,31 +22,6 @@ operators:
 countries:
   - es
 status: retiring
-components:
-  - name: Cabecera
-    description: >-
-      Una franja verde con «Salidas» o «Llegadas» en castellano, en la lengua
-      cooficial si la hay y en inglés, y el logotipo de adif a la derecha. En
-      algunas estaciones el título va sobre una pestaña gris claro.
-  - name: Rótulos de las columnas
-    description: >-
-      «Hora», «Destino» o «Procedencia», «Tren», «Vía» y «Observaciones»:
-      castellano, lengua cooficial en negrita e inglés en versalitas.
-  - name: Filas de trenes
-    description: >-
-      Siete, cada una de cinco paneles de LED separados: la hora (5
-      caracteres), el destino o la procedencia (18), el tren (13: el producto
-      a la izquierda y el número a la derecha), la vía (4) y las observaciones
-      (14).
-  - name: Fila ancha
-    description: >-
-      Bajo los trenes, desde la columna del destino hasta más o menos la mitad
-      de la de las observaciones:
-      avisos que se desplazan, casi siempre en rojo, o el título del tablero.
-  - name: LED
-    description: >-
-      Bicolores, rojos y verdes: el texto puede ser verde, rojo o ámbar, con
-      los dos encendidos. Los paneles tienen 11 filas de LED.
 variants:
   - id: castellano
     name: Castellano e inglés
@@ -137,15 +112,14 @@ stage: stub
 Es el tablero de salidas y llegadas que se ve en las estaciones de largo
 recorrido de ADIF, a menudo en grupo: en las grandes estaciones cuelgan
 varios uno al lado del otro, o uno encima de otro, y cada uno sigue con los
-trenes del anterior, a menudo con un
-[reloj Festina](../festina-adif-reloj/) cuadrado entre ellos. Sigue en servicio, pero poco a poco lo sustituyen
-pantallas de vídeo.
+trenes del anterior. Entre ellos suele colgar un
+[reloj Festina](../festina-adif-reloj/) cuadrado. Sigue en servicio, pero
+poco a poco lo sustituyen pantallas de vídeo.
 
 Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/), de Palamós
 (Girona), cuyo nombre aparece en una pequeña placa bajo los paneles. La
 empresa cuenta las estaciones de ADIF de Atocha, Sants y Chamartín entre sus
-grandes encargos. Como ADIF se creó en 2005, los tableros son de ese año o
-posteriores.
+grandes encargos.
 
 ## Cómo es
 
@@ -168,11 +142,7 @@ la primera letra.
 Debajo, una fila más ancha da avisos que se desplazan de derecha a izquierda,
 casi siempre en rojo; sin avisos, repite el título del tablero.
 
-## Los LED y la tipografía
-
-Los LED son bicolores, rojos y verdes. Cada estación eligió su color para las
-filas: ámbar (los dos encendidos) en Madrid, verde en Barcelona, rojo en la
-Comunitat Valenciana.
+## La tipografía
 
 Cada carácter ocupa 7 columnas y una en blanco, en paneles de 11 filas que
 las mayúsculas llenan de arriba abajo. Los trazos verticales tienen dos LED de
@@ -190,28 +160,14 @@ cabecera toda verde y otros llevan el título en una pestaña gris claro. Los
 más antiguos no tienen el logotipo de adif. El rótulo inglés de las
 observaciones tampoco es el mismo en todos.
 
-## Averías
-
-En las fotografías se ven paneles enteros apagados y, sobre todo, filas de LED
-de un panel que no se encienden y dejan las letras a medias. La réplica puede
-mostrar las dos cosas.
-
-## La réplica
-
-Está medida sobre fotografías y dibujada a escuadra. La tipografía se ha
-reconstruido con la regla de los trazos descrita arriba: la L, la ó y
-el cero se han leído punto por punto, y el resto puede diferir en detalles de
-los reales. Las observaciones salen de los retrasos y las cancelaciones; los
-avisos propios de cada estación solo se pueden escribir a mano.
-
 ## Lo que no se sabe
 
 - **Los rótulos en euskera y en gallego.** La réplica usa las palabras
   habituales, pero no se han visto en ninguna fotografía.
-- **Cuándo se instalaron.** No antes de 2005, cuando se creó ADIF. La
-  historia de la empresa menciona estos encargos antes de los cambios de
-  2008, pero no da fechas; tampoco se sabe en qué año llegó cada estación,
-  ni si alguno es un equipo anterior reformado.
+- **Cuándo se instalaron.** La historia de la empresa menciona estos
+  encargos antes de los cambios de 2008, pero no da fechas; tampoco se sabe
+  en qué año llegó cada estación, ni si alguno es un equipo anterior
+  reformado.
 - **En qué otras estaciones hay o hubo.**
 - **Qué deciden las observaciones**: desde cuántos minutos de retraso se
   avisa, y cuándo se da la hora estimada y cuándo solo el retraso.

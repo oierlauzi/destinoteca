@@ -184,7 +184,6 @@ export const player: Record<string, string> = {
   'adif.opt.logo.help': 'Los tableros más antiguos no lo llevan.',
   'adif.opt.remarksEn': '«Observaciones» en inglés',
   'adif.opt.color': 'Color de las filas',
-  'adif.opt.color.help': 'Los LED son rojos y verdes; con los dos encendidos, ámbar.',
   'adif.color.amber': 'Ámbar',
   'adif.color.green': 'Verde',
   'adif.color.red': 'Rojo',

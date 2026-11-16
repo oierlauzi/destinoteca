@@ -23,17 +23,6 @@ family: page-iberica-electromagneticos
 countries:
   - es
 status: retiring
-components:
-  - name: Líneas de texto flip-dot
-    description: >-
-      4 líneas de 20 caracteres de 5 × 7 puntos. Cada una muestra la vía, el
-      destino y los minutos de un tren.
-  - name: Matriz de LED
-    description: Fila de texto móvil bajo las líneas flip-dot, algo más ancha que ellas.
-  - name: Rótulos fijos
-    description: >-
-      «Vía» con el logotipo de Cercanías encima, «Destino», «Próxima Llegada» y
-      un «min.» al final de cada línea.
 variants:
   - id: dos-puntos
     name: Dos puntos en algunas líneas

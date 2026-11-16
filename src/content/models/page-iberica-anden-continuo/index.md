@@ -23,18 +23,6 @@ family: page-iberica-electromagneticos
 countries:
   - es
 status: retired
-components:
-  - name: Matriz flip-dot continua
-    description: >-
-      Una sola matriz de 7 filas de puntos, sin módulos separados por
-      carácter. Junto a cada punto, en la esquina inferior derecha, hay un LED
-      que lo ilumina.
-  - name: Matriz de LED
-    description: Fila de texto móvil bajo la matriz flip-dot, como en la versión anterior.
-  - name: Rótulos fijos
-    description: >-
-      El logotipo de Cercanías y «Vía» con el número del andén. No lleva
-      «Próxima Llegada» ni «min.».
 installations:
   - site: es/alcala-de-henares
     status: retired

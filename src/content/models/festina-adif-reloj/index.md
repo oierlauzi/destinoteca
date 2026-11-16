@@ -18,23 +18,6 @@ operators:
 countries:
   - es
 status: in-service
-components:
-  - name: Esfera
-    description: >-
-      Blanca e iluminada por dentro, con números solo en el 12, el 3, el 6 y el
-      9, una barra por cada minuto, más ancha en las horas, y la marca de
-      Festina bajo las 12. La tinta es de un azul muy oscuro.
-  - name: Agujas
-    description: >-
-      La de las horas y la de los minutos tienen la base maciza y la punta
-      dibujada solo en contorno. El segundero es fino y lleva un aro cerca de
-      la punta; en algunos es azul.
-  - name: Caja
-    description: >-
-      Redonda, con un aro pulido que refleja lo que tiene alrededor, a veces
-      con piezas azules en un tercio del aro; redonda con un aro oscuro; o cuadrada y
-      negra. Las redondas cuelgan a menudo de un brazo, con esfera por las dos
-      caras.
 variants:
   - id: redondo-pulido
     name: Redondo, con aro pulido
@@ -136,17 +119,9 @@ es azul.
 No es el único reloj que Festina ha hecho para ADIF: hay otros modelos, que
 todavía no están en el catálogo.
 
-## La réplica
-
-Muestra la hora de la estación, así que coincide con cualquier panel de la
-misma página, y con la fuente manual se puede poner a la hora que se quiera,
-en marcha o parada. Las proporciones de la esfera y la forma de las agujas
-están medidas sobre fotografías; la marca de Festina es un calco vectorial de
-su logotipo.
-
 ## Lo que no se sabe
 
-- **Cuándo se instalaron.** No antes de 2005, cuando se creó ADIF.
+- **Cuándo se instalaron.**
 - **Cómo se mueven las agujas**: si cada reloj tiene su propio mecanismo de
   cuarzo o si obedecen a un reloj maestro, y si el segundero avanza a saltos
   o de forma continua.

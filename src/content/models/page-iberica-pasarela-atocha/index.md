@@ -22,16 +22,6 @@ family: page-iberica-electromagneticos
 countries:
   - es
 status: in-service
-components:
-  - name: Pantallas flip-dot
-    description: >-
-      Dos, una junto a otra, de cinco líneas cada una. Cada línea muestra la
-      vía, el destino y los minutos que faltan, con la tipografía de
-      trazo fino de los demás carteles de la estación.
-  - name: Rótulos fijos
-    description: «Vía», «Destino» y «Próximo tren» sobre cada pantalla.
-  - name: Fila inferior
-    description: Una franja roja bajo las dos pantallas, probablemente una fila de LED.
 installations:
   - site: es/madrid-atocha-cercanias
     status: in-service

@@ -23,23 +23,6 @@ family: page-iberica-electromagneticos
 countries:
   - es
 status: in-service
-components:
-  - name: Línea flip-dot
-    description: >-
-      Una matriz continua de 7 filas, de unas 104 columnas, con un LED junto a
-      cada punto. El destino a la izquierda y los minutos a la derecha, en una tipografía proporcional de trazo fino.
-  - name: Panel LED
-    description: >-
-      Una matriz de 28 filas de LED bicolores, rojo y verde, que encendidos a
-      la vez dan el ámbar con que se suele ver. Caben dos líneas de 12 puntos
-      de alto, separadas por 4 filas: arriba qué se anuncia, abajo las paradas,
-      que se desplazan.
-  - name: Rótulos fijos
-    description: >-
-      En la cabecera, el logotipo de Cercanías, «Vía» con el número del andén
-      y «Próximo tren» en dos líneas.
-  - name: Placa del fabricante
-    description: El logotipo de PAGE, con el globo a la izquierda, en una placa blanca centrada bajo la pantalla.
 installations:
   - site: es/madrid-atocha-cercanias
     status: in-service

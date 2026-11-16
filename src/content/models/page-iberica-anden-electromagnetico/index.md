@@ -29,24 +29,6 @@ years:
   from: 1996
   circa: true
 status: retiring
-components:
-  - name: Línea de texto flip-dot
-    designation: PI-T100-M
-    description: >-
-      Una línea de 16 caracteres de 5 × 7 puntos y 100 mm de altura, con su
-      electrónica de control. Muestra el destino y los minutos. Recibe el
-      texto por un enlace serie RS-422.
-    manufacturer: telenorma
-  - name: Matriz de LED
-    description: >-
-      Fila de texto móvil bajo la línea flip-dot, para las paradas y los
-      avisos. Modelo desconocido: no se conserva en la unidad estudiada.
-  - name: Tubo fluorescente
-    description: Ilumina solo la línea flip-dot, para leerla de noche. Tiene su propia alimentación de red.
-  - name: Chapa rotulada
-    description: >-
-      Chapa metálica montada detrás del cristal. Lleva en vinilo los rótulos
-      fijos «Vía», «Próxima Llegada» y «min.», y el logotipo de Cercanías.
 installations:
   - site: es/mostoles
     status: unknown

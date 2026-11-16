@@ -27,25 +27,6 @@ family: page-iberica-electromagneticos
 countries:
   - es
 status: retired
-components:
-  - name: Columna de Cercanías
-    description: >-
-      A la izquierda, bajo el logotipo de Cercanías y la cabecera «Vía»,
-      «Destino» y «Próximo tren»: diez líneas flip-dot, cada una con la vía,
-      el destino y los minutos o la hora, y una fila de LED debajo.
-  - name: Columna de Largo Recorrido y Regionales
-    description: >-
-      A la derecha, bajo el logotipo de Renfe: cuatro líneas de salidas
-      («Vía», «Destino», «Próximo tren») con su fila de LED, y cuatro de
-      llegadas («Vía», «Procedencia», «Próximo tren») con la suya.
-  - name: Reloj y pantallas
-    description: >-
-      En el centro, un reloj analógico y, debajo, cuatro pantallas de cristal
-      líquido en dos filas, con listas de salidas.
-  - name: Matriz de LED inferior
-    description: Una fila de LED grande que ocupa todo el ancho del panel, por debajo de las tres columnas.
-  - name: Caja
-    description: Gris metálico, como los demás carteles de PAGE Ibérica de Atocha Cercanías.
 installations:
   - site: es/madrid-atocha-cercanias
     status: retired

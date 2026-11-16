@@ -8,8 +8,8 @@ import type { Mode, Regional } from './labels';
  * The LED departure and arrival board that MP Electronics made for ADIF's
  * long-distance stations: a printed header, seven rows of five LED panels
  * (time, destination or origin, train, platform, remarks) and a wide row
- * underneath. The LEDs are red and green, so text can be either or both
- * (amber). Large stations hang several side by side or one above another.
+ * underneath. Rows have been photographed in amber, green and red. Large
+ * stations hang several side by side or one above another.
  */
 export interface AdifRow {
   time: string;
@@ -91,7 +91,7 @@ export const optionsSchema: ParamSchema = {
       key: 'remarksEn', urlKey: 'obs', type: 'select', label: 'adif.opt.remarksEn', default: 'REMARKS', group: 'look', literal: true,
       choices: [{ value: 'REMARKS', label: 'REMARKS' }, { value: 'OBSERVATIONS', label: 'OBSERVATIONS' }],
     },
-    { key: 'color', type: 'color', label: 'adif.opt.color', help: 'adif.opt.color.help', default: AMBER, group: 'look', choices: colorChoices },
+    { key: 'color', type: 'color', label: 'adif.opt.color', default: AMBER, group: 'look', choices: colorChoices },
     { key: 'wideColor', urlKey: 'colorfila', type: 'color', label: 'adif.opt.wideColor', default: RED, group: 'look', choices: colorChoices },
     { key: 'wideScroll', urlKey: 'scroll', type: 'boolean', label: 'adif.opt.wideScroll', default: true, group: 'look' },
     { key: 'wideSpeed', urlKey: 'speed', type: 'range', label: 'adif.opt.wideSpeed', default: 24, min: 4, max: 60, step: 1, unit: 'col/s', group: 'look' },
