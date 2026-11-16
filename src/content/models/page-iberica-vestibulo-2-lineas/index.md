@@ -22,7 +22,7 @@ operators:
 family: page-iberica-electromagneticos
 countries:
   - es
-status: unknown
+status: retiring
 components:
   - name: Líneas de texto flip-dot
     description: >-
@@ -84,5 +84,8 @@ demás comparte su lenguaje: la caja negra, los rótulos fijos en blanco, los
 puntos flip-dot de 5 × 7 y la fila de LED roja. Es probable que también
 comparta piezas, empezando por los módulos de cada carácter, pero no se ha
 comprobado en ninguna unidad.
+
+Como los carteles de andén, estos paneles se han ido retirando, y es probable
+que ya no quede ninguno en servicio.
 
 Si tienes más fotografías o datos de estos paneles, [puedes aportarlos](../../contribuir/).
