@@ -27,9 +27,9 @@ variants:
   - id: tres-cantos
     name: Tres Cantos
     description: >-
-      Sin «Próxima Llegada», y con un vinilo de dos puntos, ámbar como
-      «min.», antes de los dos últimos caracteres de cada línea. Es el que
-      muestra la réplica.
+      Sin «Próxima Llegada», con un vinilo de dos puntos, ámbar como «min.»,
+      antes de los dos últimos caracteres de cada línea, y las vías de una
+      cifra escritas a la izquierda. Es el que muestra la réplica.
   - id: delicias
     name: Delicias
     description: >-

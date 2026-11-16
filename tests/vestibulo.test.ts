@@ -24,6 +24,10 @@ describe('concourse board layout', () => {
   it('puts the platform in the first two cells, the destination after, the minutes at the end', () => {
     expect(rowCells({ platform: '2', destination: 'CHAMARTIN', minutes: '8' }, options).join('')).toBe(' 2CHAMARTIN        8');
     expect(rowCells({ platform: '12', destination: 'X', minutes: '' }, options).join('')).toBe('12X                 ');
+    // A single digit goes to the left of its two cells at Tres Cantos, to the right at Cantoblanco.
+    expect(rowCells({ platform: '2', destination: 'CHAMARTIN', minutes: '8' }, { ...options, platformAlign: 'left' }).join('')).toBe('2 CHAMARTIN        8');
+    expect(defaults(vestibulo2.options).platformAlign).toBe('left');
+    expect(defaults(vestibulo4.options).platformAlign).toBe('right');
   });
 
   it('is the same width for both sizes and taller with more lines', () => {
@@ -95,9 +99,9 @@ describe('concourse board settings', () => {
     expect(readConfig(vestibulo2, writeConfig(vestibulo2, config))).toEqual(config);
   });
 
-  it('shares appearance and faults with the platform sign, less the LED idle text, plus the colon vinyl', () => {
+  it('shares appearance and faults with the platform sign, less the LED idle text, plus platform alignment and the colon vinyl', () => {
     const keys = (fields: { key: string }[]) => fields.map((field) => field.key);
-    expect(keys(vestibulo2.options.fields)).toEqual([...keys(andenElectromagnetico.options.fields).filter((key) => key !== 'ledIdle'), 'colon']);
+    expect(keys(vestibulo2.options.fields)).toEqual([...keys(andenElectromagnetico.options.fields).filter((key) => key !== 'ledIdle'), 'platformAlign', 'colon']);
     expect(vestibulo2.needs.calls).toBe(false);
     expect(vestibulo4.selection(options)).toMatchObject({ platforms: 'any', window: { size: 4, mode: 'top' } });
   });

@@ -7,10 +7,14 @@ import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, MIN_LEGEND, minLeg
 import { colonLines, PLATFORM_CELLS, type BoardRow, type VestibuloFrame } from './def';
 import { boardGeometry, CELLS } from './geometry';
 
-/** The 20 characters of a line: platform right-aligned in the first two, then the destination, minutes at the end. */
+/**
+ * The 20 characters of a line: the platform in the first two (a single digit
+ * to the left or to the right of them, as each board is set up), then the
+ * destination, minutes at the end.
+ */
 export function rowCells(row: BoardRow, options: FamilyOptions): string[] {
   let cells = toCells('', CELLS);
-  cells = overlay(cells, row.platform, 'right', 0, PLATFORM_CELLS);
+  cells = overlay(cells, row.platform, options.platformAlign === 'left' ? 'left' : 'right', 0, PLATFORM_CELLS);
   cells = overlay(cells, row.destination, 'left', PLATFORM_CELLS, CELLS);
   return options.showMinutes ? overlay(cells, row.minutes, 'right') : cells;
 }

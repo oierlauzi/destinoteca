@@ -82,10 +82,14 @@ export type VestibuloOptions = FamilyOptions;
  * The family's settings, less the LED row's idle text: what the boards' LED
  * row showed is not known, so it is left dark rather than filled in.
  */
-const optionsSchema = (colonLines: string): ParamSchema => ({
+const optionsSchema = (colonLines: string, platformAlign: 'left' | 'right'): ParamSchema => ({
   ...familyOptionsSchema,
   fields: [
     ...familyOptionsSchema.fields.filter((field) => field.key !== 'ledIdle'),
+    {
+      key: 'platformAlign', urlKey: 'alinvia', type: 'select', label: 'vestibulo.opt.platformAlign', help: 'vestibulo.opt.platformAlign.help', default: platformAlign, group: 'look',
+      choices: [{ value: 'left', label: 'vestibulo.align.left' }, { value: 'right', label: 'vestibulo.align.right' }],
+    },
     { key: 'colon', urlKey: 'dospuntos', type: 'text', label: 'vestibulo.opt.colon', help: 'vestibulo.opt.colon.help', default: colonLines, maxLength: 12, group: 'look' },
   ],
 });
@@ -111,14 +115,14 @@ export function colonLines(value: unknown, lines: number): Set<number> {
  * Cantoblanco, not at Tres Cantos). `colon`: the lines with a ":" vinyl, as
  * photographed (every line at Tres Cantos, the second at Cantoblanco).
  */
-function board(id: string, lines: number, nextArrival: boolean, colon: string, example: BoardRow[]): ReplicaDef {
+function board(id: string, lines: number, nextArrival: boolean, colon: string, platformAlign: 'left' | 'right', example: BoardRow[]): ReplicaDef {
   const { width, height } = boardGeometry(lines);
   return {
     id,
     viewBox: { width, height },
     accepts: 'board',
     needs: { services: lines, calls: false },
-    options: optionsSchema(colon),
+    options: optionsSchema(colon, platformAlign),
     frame: frameSchema(lines, example),
     selection: () => selection(lines),
     load: async () => (await import('./index')).implementation(lines, nextArrival),
@@ -126,12 +130,12 @@ function board(id: string, lines: number, nextArrival: boolean, colon: string, e
 }
 
 // Defaults for "texto libre": trains of line C-4, which served both stations.
-export const vestibulo2 = board('page-iberica-vestibulo-2-lineas', 2, false, 'todas', [
+export const vestibulo2 = board('page-iberica-vestibulo-2-lineas', 2, false, 'todas', 'left', [
   { platform: '1', destination: 'CHAMARTIN', minutes: '2' },
   { platform: '2', destination: 'COLMENAR VIEJO', minutes: '13' },
 ]);
 
-export const vestibulo4 = board('page-iberica-vestibulo-4-lineas', 4, true, '2', [
+export const vestibulo4 = board('page-iberica-vestibulo-4-lineas', 4, true, '2', 'right', [
   { platform: '2', destination: 'CHAMARTIN', minutes: '8' },
   { platform: '1', destination: 'COLMENAR VIEJO', minutes: '8' },
   { platform: '2', destination: 'ATOCHA', minutes: '15' },

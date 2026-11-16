@@ -146,6 +146,10 @@ export const player: Record<string, string> = {
   'vestibulo.frame.row2': 'Línea 2',
   'vestibulo.frame.row3': 'Línea 3',
   'vestibulo.frame.row4': 'Línea 4',
+  'vestibulo.opt.platformAlign': 'Vías de una cifra',
+  'vestibulo.opt.platformAlign.help': 'En qué lado de sus dos caracteres se escribe una vía de una sola cifra: a la izquierda en Tres Cantos, a la derecha en Cantoblanco.',
+  'vestibulo.align.left': 'A la izquierda',
+  'vestibulo.align.right': 'A la derecha',
   'vestibulo.opt.colon': 'Líneas con dos puntos',
   'vestibulo.opt.colon.help': 'Un vinilo ámbar, del color de «min.», antes de los dos últimos caracteres. Números de línea separados por comas, «todas» o nada.',
 
