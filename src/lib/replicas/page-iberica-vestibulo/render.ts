@@ -64,7 +64,7 @@ export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFra
   return {
     width: g.width,
     height: g.height,
-    credit: `panel de vestíbulo electromagnético de PAGE Ibérica, ${lines} líneas`,
+    credit: `panel electromagnético de vestíbulo de PAGE Ibérica, ${lines} líneas`,
     flipDots: flipDotLines({ lines, cells: CELLS, x: g.linesX, y: g.lineTops[0]!, lineGap: g.lineGap }),
     sweep: () => flipDotSweep(lines, CELLS),
     led: ledRow(g.led.x, g.led.y, g.led.width),

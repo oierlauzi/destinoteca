@@ -133,7 +133,7 @@ export const player: Record<string, string> = {
   'pageib.color.orange': 'Naranja',
   'pageib.color.pinkRed': 'Rojo rosado',
 
-  // --- Paneles de vestíbulo electromagnéticos de PAGE Ibérica ---
+  // --- Paneles electromagnéticos de vestíbulo de PAGE Ibérica ---
   'vestibulo.frame.via': 'Vía',
   'vestibulo.frame.dest': 'Destino',
   'vestibulo.frame.min': 'Minutos',

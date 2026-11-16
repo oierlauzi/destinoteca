@@ -1,5 +1,5 @@
 ---
-name: Panel de vestíbulo electromagnético de PAGE Ibérica, 2 líneas
+name: Panel electromagnético de vestíbulo de PAGE Ibérica, 2 líneas
 summary: >-
   Panel de vestíbulo de Renfe Cercanías Madrid con dos líneas flip-dot de 20
   caracteres, una por tren, para anunciar las próximas salidas de toda la
