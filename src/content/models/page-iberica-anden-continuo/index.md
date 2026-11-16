@@ -52,6 +52,18 @@ photos:
     sourceUrl: https://maps.app.goo.gl/H5NzRqnCifdzj52T7
     source: Google Maps
     license: rights-reserved-credited
+  - id: alcala-via-1
+    src: ./alcala-via-1.jpg
+    alt: >-
+      Cartel colgado de la marquesina de un andén, sobre un tren de Cercanías
+      que pasa en primer plano, movido. Dice «Vía 1» y, en la matriz flip-dot,
+      «GUADALAJARA» en puntos amarillos verdosos.
+    caption: Vía 1, con un tren hacia Guadalajara. Publicada por la Cadena SER en mayo de 2019.
+    place: Alcalá de Henares
+    author: SER Guadalajara
+    sourceUrl: https://cadenaser.com/emisora/2019/05/09/ser_guadalajara/1557400293_287651.html
+    source: Cadena SER
+    license: rights-reserved-credited
   - id: alcala-via-4
     src: ./alcala-via-4.jpg
     alt: >-
@@ -59,19 +71,7 @@ photos:
       de estación, sobre un andén lleno de gente y de personal de seguridad. Dice
       «Vía 4» y «SIN SERVICIO» en puntos amarillos verdosos; la fila de LED
       está apagada.
-    caption: Alcalá de Henares, vía 4, fuera de servicio tras un accidente.
-    place: Alcalá de Henares
-    author: Dream Alcalá
-    sourceUrl: https://www.dream-alcala.com/accidente-tren-la-estacion-renfe-alcala-henares/
-    source: Dream Alcalá
-    license: rights-reserved-credited
-  - id: alcala-via-4-cerca
-    src: ./alcala-via-4-cerca.jpg
-    alt: >-
-      El mismo cartel visto desde más cerca y desde abajo, con «Vía 4» y «SIN
-      SERVICIO». Detrás, dos trenes de Cercanías en el andén y servicios de
-      emergencia atendiendo a viajeros.
-    caption: El mismo cartel, de cerca. Cada letra ocupa una anchura distinta.
+    caption: Vía 4, fuera de servicio tras un accidente. Cada letra ocupa una anchura distinta.
     place: Alcalá de Henares
     author: Dream Alcalá
     sourceUrl: https://www.dream-alcala.com/accidente-tren-la-estacion-renfe-alcala-henares/
