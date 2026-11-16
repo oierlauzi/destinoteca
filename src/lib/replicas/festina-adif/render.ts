@@ -44,13 +44,15 @@ function caseNodes(options: FestinaOptions, ids: { ring: string; edge: string })
   // Some round cases carry dark blue pieces on the ring, at the hours, over
   // about a third of it: from 12 to 4, as photographed at Zaragoza-Delicias.
   if (options.inlays) {
+    // Each piece is a segment of the ring, across its whole width, about 12 degrees long.
+    const inner = r(1.075);
+    const outer = r(1.17);
+    const half = (6 * Math.PI) / 180;
+    const at = (radius: number, angle: number) => `${fmt(C + radius * Math.sin(angle))},${fmt(C - radius * Math.cos(angle))}`;
     for (let hour = 0; hour <= 4; hour++) {
-      nodes.push(
-        h('rect', {
-          x: C - r(0.035), y: C - r(1.165), width: r(0.07), height: r(0.08), rx: r(0.01), fill: '#24318c',
-          transform: `rotate(${hour * 30} ${C} ${C})`,
-        }),
-      );
+      const mid = (hour * 30 * Math.PI) / 180;
+      const d = `M${at(outer, mid - half)}A${fmt(outer)},${fmt(outer)} 0 0 1 ${at(outer, mid + half)}L${at(inner, mid + half)}A${fmt(inner)},${fmt(inner)} 0 0 0 ${at(inner, mid - half)}Z`;
+      nodes.push(h('path', { d, fill: '#24318c' }));
     }
   }
   return nodes;
