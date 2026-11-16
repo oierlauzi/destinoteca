@@ -41,10 +41,10 @@ export const optionsSchema: ParamSchema = {
     },
     { key: 'inlays', urlKey: 'azul', type: 'boolean', label: 'festina.opt.inlays', help: 'festina.opt.inlays.help', default: false },
     {
-      key: 'secondHand', urlKey: 'segundero', type: 'select', label: 'festina.opt.secondHand', default: 'blue',
+      key: 'secondHand', urlKey: 'segundero', type: 'select', label: 'festina.opt.secondHand', default: 'dark',
       choices: [
-        { value: 'blue', label: 'festina.second.blue' },
         { value: 'dark', label: 'festina.second.dark' },
+        { value: 'blue', label: 'festina.second.blue' },
         { value: 'none', label: 'festina.second.none' },
       ],
     },

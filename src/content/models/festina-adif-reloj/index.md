@@ -27,9 +27,10 @@ variants:
     name: Redondo, con piezas azules
     description: >-
       El aro pulido lleva piezas azules en las horas, solo en un tercio del
-      aro, como en Zaragoza-Delicias.
+      aro, y el segundero es azul, como en Zaragoza-Delicias.
     replicaPreset:
       azul: true
+      segundero: blue
   - id: redondo-oscuro
     name: Redondo, con aro oscuro
     replicaPreset:

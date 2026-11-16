@@ -33,7 +33,10 @@ describe('the Festina clock', () => {
     expect(renderToString({}, { ...options, case: 'square' })).not.toContain('linearGradient');
     // From 12 to 4 o'clock: about a third of the ring.
     expect(renderToString({}, { ...options, inlays: true }).match(/fill="#24318c"/g)).toHaveLength(5);
-    expect(renderToString({}, options)).toContain('#2a34a8');
-    expect(renderToString({}, { ...options, secondHand: 'none' })).not.toContain('#2a34a8');
+    // Dark by default; blue as at Zaragoza-Delicias.
+    expect(options.secondHand).toBe('dark');
+    expect(renderToString({}, options)).not.toContain('#2a34a8');
+    expect(renderToString({}, { ...options, secondHand: 'blue' })).toContain('#2a34a8');
+    expect(renderToString({}, { ...options, secondHand: 'none' }).match(/stroke="#1b1d33" stroke-width="1.3"/g)).toHaveLength(2);
   });
 });
