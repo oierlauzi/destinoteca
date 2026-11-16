@@ -100,6 +100,28 @@ photos:
     author: Oier Lauzirika Zarrabeitia
     ownWork: true
     license: cc-by-sa-4.0
+  - id: reloj-cuatro-tableros-2026
+    src: ./reloj-cuatro-tableros-2026.jpg
+    alt: >-
+      El acceso a las vías de alta velocidad de una estación. Encima, cuatro
+      tableros de salidas y llegadas, dos a cada lado de un reloj Festina.
+    caption: Cuatro tableros de alta velocidad con un reloj Festina en medio, enero de 2026.
+    date: '2026-01-20'
+    author: Agent Travel
+    sourceUrl: https://agenttravel.es/Fotos/AVE%20Madrid%20Sevilla%2020ene26.jpg
+    source: Agent Travel
+    license: rights-reserved-credited
+  - id: reloj-entre-tableros-2026
+    src: ./reloj-entre-tableros-2026.jpg
+    alt: >-
+      Vestíbulo de una estación lleno de viajeros, con una fila de tableros de
+      llegadas y de salidas sobre el acceso a las vías.
+    caption: Una fila de tableros de llegadas y de salidas, noviembre de 2026.
+    date: '2026-11'
+    author: El Mundo
+    sourceUrl: https://e01-phantom-elmundo.uecdn.es/90003b1470ca7293765f921209945da9/crop/0x0/3072x2048/resize/828/f/jpg/assets/multimedia/imagenes/2026/11/09/17942568096223.jpg
+    source: El Mundo
+    license: rights-reserved-credited
 cover: chamartin-vestibulo-inferior
 references:
   - title: Sobre nosotros
@@ -114,7 +136,8 @@ stage: stub
 Es el tablero de salidas y llegadas que se ve en las estaciones de largo
 recorrido de ADIF, a menudo en grupo: en las grandes estaciones cuelgan
 varios uno al lado del otro, o uno encima de otro, y cada uno sigue con los
-trenes del anterior. Sigue en servicio, pero poco a poco lo sustituyen
+trenes del anterior, a menudo con un
+[reloj Festina](../festina-adif-reloj/) cuadrado entre ellos. Sigue en servicio, pero poco a poco lo sustituyen
 pantallas de vídeo.
 
 Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/), de Palamós

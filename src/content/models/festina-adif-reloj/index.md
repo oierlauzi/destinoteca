@@ -63,6 +63,43 @@ installations:
     status: in-service
   - site: es/huesca
     status: in-service
+photos:
+  - id: reloj-cuadrado-2021
+    src: ./reloj-cuadrado-2021.jpg
+    alt: >-
+      Un reloj Festina cuadrado y grande, de cerca, entre dos tableros de LED
+      de adif.
+    caption: El reloj cuadrado entre dos tableros, mayo de 2021.
+    date: '2021-05-14'
+    author: Un relojista
+    sourceUrl: https://unrelojista.wordpress.com/wp-content/uploads/2021/05/img_20210514_163247.jpeg
+    source: Un relojista
+    license: rights-reserved-credited
+  - id: reloj-cuatro-tableros-2026
+    src: ./reloj-cuatro-tableros-2026.jpg
+    alt: >-
+      El acceso a las vías de alta velocidad de una estación, con controles
+      de seguridad. Encima, un reloj Festina cuadrado entre cuatro tableros de
+      salidas y llegadas.
+    caption: Entre cuatro tableros de salidas y llegadas, enero de 2026.
+    date: '2026-01-20'
+    author: Agent Travel
+    sourceUrl: https://agenttravel.es/Fotos/AVE%20Madrid%20Sevilla%2020ene26.jpg
+    source: Agent Travel
+    license: rights-reserved-credited
+  - id: reloj-entre-tableros-2026
+    src: ./reloj-entre-tableros-2026.jpg
+    alt: >-
+      Vestíbulo de una estación lleno de viajeros. Sobre el acceso a las vías,
+      una fila de tableros de llegadas y de salidas con un reloj Festina
+      cuadrado entre ellos.
+    caption: En la fila de tableros de un vestíbulo, noviembre de 2026.
+    date: '2026-11'
+    author: El Mundo
+    sourceUrl: https://e01-phantom-elmundo.uecdn.es/90003b1470ca7293765f921209945da9/crop/0x0/3072x2048/resize/828/f/jpg/assets/multimedia/imagenes/2026/11/09/17942568096223.jpg
+    source: El Mundo
+    license: rights-reserved-credited
+cover: reloj-cuadrado-2021
 replica:
   id: festina-adif
 stage: stub
