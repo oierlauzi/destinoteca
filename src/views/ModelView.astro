@@ -61,6 +61,26 @@ const installations = data.installations.map((installation) => {
       <p class="eyebrow">{t(`catalog.kind.${data.kind}`)}</p>
       <h1>{data.name}</h1>
       <p class="lead">{data.summary}</p>
+      <ul class="badges">
+        {
+          data.technologies.map((ref) => (
+            <li>
+              <a class="badge" href={href(`tecnologias/${ref.id}/`)}>
+                {catalog.technology(ref.id).data.name}
+              </a>
+            </li>
+          ))
+        }
+        {
+          facts.manufacturers.map((manufacturer) => (
+            <li>
+              <a class="badge" href={href(`fabricantes/${manufacturer}/`)}>
+                {catalog.manufacturer(manufacturer).data.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </header>
 
     {
@@ -157,6 +177,10 @@ const installations = data.installations.map((installation) => {
 <style>
   .model-header {
     margin-bottom: 24px;
+  }
+
+  .model-header .badges {
+    margin-top: 12px;
   }
 
   .stub-note {

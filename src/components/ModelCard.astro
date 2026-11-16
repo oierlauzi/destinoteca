@@ -21,7 +21,7 @@ const cover = catalog.cover(model);
 const poster = model.data.replica ? href(`posters/${model.id}.svg`).replace(/\/$/, '') : undefined;
 const Heading = `h${level}` as 'h3';
 const years = yearsLabel(facts.years, facts.status);
-const meta = [t(`catalog.kind.${facts.kind}`), years, facts.stage === 'stub' ? t('catalog.stage.stub') : ''].filter(Boolean).join(' · ');
+const meta = [years, facts.stage === 'stub' ? t('catalog.stage.stub') : ''].filter(Boolean).join(' · ');
 // Read by the filter on the catalog page: one data attribute per facet.
 const data = Object.fromEntries(Object.entries(catalog.facetData(model)).map(([key, value]) => [`data-f-${key}`, value]));
 const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
@@ -42,17 +42,19 @@ const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
   <div class="card-body">
     <Heading class="card-title"><a href={href(`catalogo/${model.id}/`)}>{facts.name}</a></Heading>
     <p class="card-text">{facts.summary}</p>
-    <p class="card-meta">
-      {meta}
+    {meta && <p class="card-meta">{meta}</p>}
+    <ul class="badges">
+      <li>
+        <span class="badge">{t(`catalog.kind.${facts.kind}`)}</span>
+      </li>
       {
         facts.hasReplica && (
-          <>
-            {' '}
+          <li>
             <span class="badge is-dot">{t('catalog.replica.si')}</span>
-          </>
+          </li>
         )
       }
-    </p>
+    </ul>
   </div>
 </li>
 
