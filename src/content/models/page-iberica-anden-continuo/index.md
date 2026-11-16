@@ -22,7 +22,7 @@ operators:
 family: page-iberica-electromagneticos
 countries:
   - es
-status: unknown
+status: retired
 components:
   - name: Matriz flip-dot continua
     description: >-
@@ -37,8 +37,8 @@ components:
       «Próxima Llegada» ni «min.».
 installations:
   - site: es/alcala-de-henares
-    status: unknown
-    note: Fotografiados los de las vías 2 y 4.
+    status: retired
+    note: El único lugar donde se conoce esta versión. Fotografiados los de las vías 1, 2 y 4; ya retirados.
 photos:
   - id: alcala-via-2
     src: ./alcala-via-2.jpg
@@ -89,7 +89,7 @@ stage: stub
 
 Es una versión posterior del
 [teleindicador de andén](../page-iberica-anden-electromagnetico/) de la misma
-familia. Conserva la caja, el logotipo de Cercanías, el vinilo con el número
+familia, que solo se conoce en Alcalá de Henares, donde ya se ha retirado. Conserva la caja, el logotipo de Cercanías, el vinilo con el número
 de vía y la fila de LED roja de debajo, pero cambia casi todo lo demás.
 
 ## Qué cambia
@@ -118,6 +118,6 @@ las reales.
   ancho. Encaja con «CHAMARTIN 10:12», pero en la fotografía de «SIN SERVICIO»
   el texto ocupa casi toda la matriz, lo que apuntaría a menos columnas.
 - **Qué mostraba la fila de LED.** Está apagada en todas las fotografías.
-- **Cuándo se instalaron y si siguen en servicio.**
+- **Cuándo se instalaron y cuándo se retiraron**, y si hubo más en otras estaciones.
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).
