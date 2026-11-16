@@ -106,18 +106,4 @@ puntos flip-dot de 5 × 7 y la fila de LED roja. Es probable que también
 comparta piezas, empezando por los módulos de cada carácter, pero no se ha
 comprobado en ninguna unidad.
 
-## La réplica
-
-La réplica reutiliza las piezas de la del cartel de andén: los mismos puntos,
-el mismo juego de caracteres, la misma fila de LED y los mismos defectos. Sus
-medidas, en cambio, son una estimación hecha a partir de las fotografías de
-esta ficha, tomadas en ángulo: no se ha medido ninguna unidad. El tubo
-fluorescente de cada línea no se dibuja, pero sí el espacio que ocupa. Cada línea se actualiza a la
-vez que las demás, como si cada una tuviera su propio controlador; es una
-suposición basada en que la línea del cartel de andén se identifica como
-«MAESTRA».
-
-Lo que muestra la fila de LED cuando hay trenes (las paradas del primero) es
-una elección de la réplica: no hay fotografías que lo muestren.
-
 Si tienes más fotografías o datos de estos paneles, [puedes aportarlos](../../contribuir/).
