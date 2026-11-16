@@ -110,3 +110,17 @@ describe('rendering', () => {
     expect(describeFrame(frame, options)).toBe('Vía 1 · CHAMARTIN · 6 min. · PARA EN: ATOCHA');
   });
 });
+
+describe('flip sweep', () => {
+  it('rewrites a whole line of 16 in one second', async () => {
+    const { flipDotSweep } = await import('../src/lib/replicas/page-iberica-electromagneticos/flip-dot-lines');
+    const sweep = flipDotSweep(1, 16);
+    const full = Array.from({ length: 16 }, () => [0x7f, 0x7f, 0x7f, 0x7f, 0x7f]);
+    sweep.retarget(full);
+    sweep.at(0);
+    sweep.at(999);
+    expect(sweep.settled).toBe(false);
+    expect(sweep.at(1000)).toEqual(full);
+    expect(sweep.settled).toBe(true);
+  });
+});

@@ -79,10 +79,10 @@ export const flipDotCharset = telenormaCp437;
 // characters that changed (established from the firmware in
 // renfe-flipdot-re, docs/5-the-panel.md), one after another from left to
 // right, and within a character the flaps turn in a wave from the top-left
-// corner. A whole line of 16 takes about a second and a half; a minute
-// ticking over takes a blink.
-const CELL_MS = 90;
-const DOT_MS = 8;
+// corner. A whole line of 16 takes one second (15 steps between characters
+// plus the wave across the last one); a minute ticking over takes a blink.
+const CELL_MS = 62;
+const DOT_MS = 7;
 
 /** The transition with which a sign of this family goes from one text to the next. */
 export function flipDotSweep(lines: number, cells: number): DotTransition {
