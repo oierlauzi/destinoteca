@@ -1,0 +1,63 @@
+---
+// The list of every manufacturer, operator or technology, with how many
+// models each has.
+import { t } from '@/i18n';
+import Base from '@/layouts/Base.astro';
+import type { CollectionName } from '@/lib/catalog';
+import { counted, getCatalog } from '@/site/catalog';
+import { ENTITY_PAGES } from '@/site/entities';
+import { href } from '@/site/url';
+
+interface Props {
+  collection: CollectionName;
+  locale: string;
+}
+
+const { collection } = Astro.props;
+const catalog = await getCatalog();
+const page = ENTITY_PAGES[collection];
+const entries = catalog.entities(collection).map((entry) => {
+  return { entry, count: counted('catalog.count.models', catalog.modelsWith(page.facet, entry.id).length) };
+});
+---
+
+<Base title={t(`${page.strings}.title`)} description={t(`${page.strings}.lead`)}>
+  <div class="container page">
+    <h1>{t(`${page.strings}.title`)}</h1>
+    <p class="lead">{t(`${page.strings}.lead`)}</p>
+    <ul class="card-grid entities">
+      {
+        entries.map(({ entry, count }) => (
+          <li class="card">
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href={href(`${page.segment}/${entry.id}/`)}>{entry.data.name}</a>
+              </h2>
+              <p class="card-text">{entry.data.summary}</p>
+              <ul class="badges">
+                <li>
+                  <span class="badge">{count}</span>
+                </li>
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .entities {
+    margin-top: 24px;
+  }
+
+  .entities .card-body {
+    height: 100%;
+  }
+
+  .entities .badges {
+    margin-top: auto;
+    padding-top: 6px;
+  }
+</style>

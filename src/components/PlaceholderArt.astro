@@ -1,0 +1,28 @@
+---
+// Stands in for a photograph on cards of entries that have none yet: a strip
+// of dots, some lit, the same for a given seed so that a card does not change
+// between builds.
+interface Props {
+  seed: string;
+}
+const { seed } = Astro.props;
+
+let state = 0;
+for (const ch of seed) state = (Math.imul(state ^ ch.charCodeAt(0), 16777619) >>> 0) || 1;
+const next = () => {
+  state ^= state << 13;
+  state ^= state >>> 17;
+  state ^= state << 5;
+  state >>>= 0;
+  return state / 4294967296;
+};
+const COLS = 32;
+const ROWS = 18;
+const dots: { x: number; y: number; on: boolean }[] = [];
+for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++) dots.push({ x, y, on: y > 5 && y < 12 && next() < 0.45 });
+---
+
+<svg viewBox={`0 0 ${COLS} ${ROWS}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width={COLS} height={ROWS} fill="#121212"></rect>
+  {dots.map((dot) => <circle cx={dot.x + 0.5} cy={dot.y + 0.5} r="0.32" fill={dot.on ? '#e2d14a' : '#26261e'} />)}
+</svg>

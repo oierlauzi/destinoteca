@@ -1,0 +1,141 @@
+---
+// The page of one manufacturer, operator, family or technology: what it is,
+// and every model of the catalog that belongs to it.
+import { render } from 'astro:content';
+import ModelGrid from '@/components/ModelGrid.astro';
+import { t } from '@/i18n';
+import Base from '@/layouts/Base.astro';
+import type { CollectionName } from '@/lib/catalog';
+import { countryName, getCatalog, type Family, type Manufacturer, type Operator } from '@/site/catalog';
+import { ENTITY_PAGES } from '@/site/entities';
+import { href } from '@/site/url';
+
+interface Props {
+  collection: CollectionName;
+  id: string;
+  locale: string;
+}
+
+const { collection, id } = Astro.props;
+const catalog = await getCatalog();
+const page = ENTITY_PAGES[collection];
+const entry = catalog.entity(collection, id);
+const { Content } = await render(entry);
+const models = catalog.modelsWith(page.facet, id);
+
+const facts: { label: string; value?: string; links?: { href: string; text: string }[] }[] = [];
+const alsoKnownAs = 'alsoKnownAs' in entry.data ? entry.data.alsoKnownAs : [];
+if (alsoKnownAs.length > 0) facts.push({ label: t('catalog.entity.alsoKnownAs'), value: alsoKnownAs.join(' · ') });
+
+if (collection === 'manufacturers') {
+  const data = (entry as Manufacturer).data;
+  const based = [data.city, data.country && countryName(data.country)].filter(Boolean).join(', ');
+  if (based) facts.push({ label: t('catalog.entity.based'), value: based });
+  if (data.successor) facts.push({ label: t('catalog.entity.successor'), value: data.successor });
+  if (data.website) facts.push({ label: t('catalog.entity.website'), links: [{ href: data.website, text: new URL(data.website).host }] });
+}
+if (collection === 'operators') {
+  const data = (entry as Operator).data;
+  if (data.parent) {
+    const parent = catalog.operator(data.parent.id);
+    facts.push({ label: t('catalog.entity.parent'), links: [{ href: href(`operadores/${parent.id}/`), text: parent.data.name }] });
+  }
+  const children = catalog.operatorChildren(id);
+  if (children.length > 0) {
+    facts.push({
+      label: t('catalog.entity.children'),
+      links: children.map((child) => ({ href: href(`operadores/${child.id}/`), text: child.data.name })),
+    });
+  }
+  if (data.website) facts.push({ label: t('catalog.entity.website'), links: [{ href: data.website, text: new URL(data.website).host }] });
+}
+if (collection === 'families') {
+  const makers = (entry as Family).data.manufacturers.map((ref) => catalog.manufacturer(ref.id));
+  if (makers.length > 0) {
+    facts.push({
+      label: t('catalog.entity.familyMakers'),
+      links: makers.map((maker) => ({ href: href(`fabricantes/${maker.id}/`), text: maker.data.name })),
+    });
+  }
+}
+---
+
+<Base title={entry.data.name} description={entry.data.summary} source={`src/content/${collection}/${entry.id}/index.md`}>
+  <div class="container page">
+    <header>
+      <p class="eyebrow">
+        {
+          page.hasIndex ? (
+            <a href={href(`${page.segment}/`)}>{t(`${page.strings}.eyebrow`)}</a>
+          ) : (
+            t(`${page.strings}.eyebrow`)
+          )
+        }
+      </p>
+      <h1>{entry.data.name}</h1>
+      <p class="lead">{entry.data.summary}</p>
+    </header>
+
+    <div class="entity-body">
+      {
+        facts.length > 0 && (
+          <aside class="infobox">
+            <dl>
+              {facts.map((fact) => (
+                <>
+                  <dt>{fact.label}</dt>
+                  <dd>
+                    {fact.value}
+                    {fact.links?.map((link, index) => (
+                      <>
+                        {index > 0 && ', '}
+                        <a href={link.href}>{link.text}</a>
+                      </>
+                    ))}
+                  </dd>
+                </>
+              ))}
+            </dl>
+          </aside>
+        )
+      }
+      <article class="prose">
+        <Content />
+      </article>
+    </div>
+
+    <section aria-labelledby="fichas">
+      <h2 id="fichas">{t('catalog.entity.models')}</h2>
+      <ModelGrid models={models} />
+    </section>
+  </div>
+</Base>
+
+<style>
+  .eyebrow a {
+    color: inherit;
+  }
+
+  .entity-body {
+    display: grid;
+    gap: 24px 40px;
+    align-items: start;
+    margin-top: 24px;
+  }
+
+  @media (min-width: 62rem) {
+    .entity-body {
+      grid-template-columns: minmax(0, var(--measure)) minmax(17rem, 1fr);
+    }
+
+    .entity-body .infobox {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .entity-body .prose {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+</style>

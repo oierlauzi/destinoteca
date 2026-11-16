@@ -1,0 +1,52 @@
+---
+import { formatPartialDate, inlineMarkdown } from '@/lib/catalog';
+import type { Model } from '@/site/catalog';
+
+interface Props {
+  references: Model['data']['references'];
+}
+
+const { references } = Astro.props;
+---
+
+<ol class="references">
+  {
+    references.map((reference) => (
+      <li>
+        {reference.author && <>{reference.author}. </>}
+        {reference.url ? (
+          <a href={reference.url} rel="noopener noreferrer">
+            {reference.title}
+          </a>
+        ) : (
+          <span class="title">«{reference.title}»</span>
+        )}
+        {reference.publication && (
+          <>
+            {'. '}
+            <cite>{reference.publication}</cite>
+          </>
+        )}
+        {reference.date && <>, {formatPartialDate(reference.date)}</>}
+        {'.'}
+        {reference.note && <p class="muted" set:html={inlineMarkdown(reference.note)} />}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .references {
+    max-width: var(--measure);
+    padding-left: 1.4em;
+  }
+
+  .references li {
+    margin-bottom: 0.7em;
+  }
+
+  .references p {
+    margin: 2px 0 0;
+    font-size: 0.9rem;
+  }
+</style>

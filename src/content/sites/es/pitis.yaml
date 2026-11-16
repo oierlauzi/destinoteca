@@ -1,0 +1,7 @@
+name: Pitis
+type: station
+country: es
+region: ES-MD
+town: Madrid
+codes:
+  adif: "97100"

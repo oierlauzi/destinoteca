@@ -1,0 +1,29 @@
+---
+// A page that only sends the visitor somewhere else. Left behind at the old
+// address when an entry is renamed, because a static site cannot answer with
+// an HTTP redirect.
+import { t } from '@/i18n';
+
+interface Props {
+  /** Site-absolute path, already built with href(). */
+  to: string;
+}
+
+const { to } = Astro.props;
+const target = new URL(to, Astro.site);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0;url=${to}`} />
+    <link rel="canonical" href={target} />
+    <title>{t('catalog.redirect.title')}</title>
+  </head>
+  <body>
+    <p>{t('catalog.redirect.body')} <a href={to}>{target.pathname}</a>.</p>
+  </body>
+</html>

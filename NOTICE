@@ -1,0 +1,24 @@
+destinoteca
+Copyright (c) 2026 Oier Lauzirika Zarrabeitia and contributors
+
+Code: MIT (LICENSE). Texts: CC BY-SA 4.0 (LICENSE-CONTENT).
+
+This project includes or derives from the following.
+
+renfe-flipdot-re
+  https://github.com/oierlauzi/renfe-flipdot-re  (MIT, same author)
+  The first replica, its artwork geometry and the mitren.app client were
+  ported from its web replica. The 5x7 character set in
+  src/lib/hardware/fonts/telenorma-5x7.ts was read out of the ROM of a PAGE
+  Ibérica PI-T100-M (Telenorma firmware AK0052.139U1) by that project; the
+  glyph shapes are reproduced for interoperability research and
+  preservation.
+
+¿Dónde está mi tren? (dondeestamitren, mitren.app)
+  https://github.com/jotaelediaz/dondeestamitren  (Apache-2.0)
+  src/lib/sources/mitren/stations.data.json is generated from the station
+  data that project ships, by tools/build_stations.py. The live source
+  reads the public WebSocket of its deployment at https://mitren.app/.
+
+Photographs
+  Credited one by one in the catalog entries under src/content/models/.

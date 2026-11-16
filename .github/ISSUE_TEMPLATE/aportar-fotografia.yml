@@ -1,0 +1,73 @@
+name: Aportar una fotografía
+description: Una foto de un equipo en servicio, desmontado o preservado.
+title: 'Fotografía: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Toda fotografía del catálogo indica su autor, su origen y su licencia. Con estos datos se puede publicar correctamente.
+  - type: input
+    id: ficha
+    attributes:
+      label: Ficha
+      description: Enlace o nombre de la ficha a la que corresponde. Si el equipo no está en el catálogo, dilo.
+    validations:
+      required: true
+  - type: textarea
+    id: foto
+    attributes:
+      label: Fotografía
+      description: Arrástrala aquí. Mejor por debajo de 1,5 MB.
+    validations:
+      required: true
+  - type: input
+    id: descripcion
+    attributes:
+      label: Qué se ve
+      description: Una frase que la describa, incluido el texto que muestra el cartel.
+    validations:
+      required: true
+  - type: input
+    id: lugar
+    attributes:
+      label: Lugar
+      description: Estación, andén o tren.
+  - type: input
+    id: fecha
+    attributes:
+      label: Fecha
+      description: Tan precisa como se sepa (año, mes o día).
+  - type: input
+    id: autor
+    attributes:
+      label: Autor
+      description: Quién la hizo. Nombre o alias con el que quiere figurar.
+    validations:
+      required: true
+  - type: dropdown
+    id: propia
+    attributes:
+      label: ¿Es tuya?
+      options:
+        - Sí, la hice yo
+        - No, es de otra persona
+    validations:
+      required: true
+  - type: dropdown
+    id: licencia
+    attributes:
+      label: Licencia
+      description: Si es tuya, elige una licencia libre. Si es de otra persona, la que conste en su origen.
+      options:
+        - CC BY-SA 4.0 (recomendada)
+        - CC BY 4.0
+        - CC0 / dominio público
+        - No tiene licencia libre (se reproduciría con crédito)
+        - No lo sé
+    validations:
+      required: true
+  - type: input
+    id: origen
+    attributes:
+      label: De dónde sale
+      description: Si no es tuya, el enlace o la publicación de origen, y si cuentas con permiso del autor.

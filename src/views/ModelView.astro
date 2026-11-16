@@ -1,0 +1,279 @@
+---
+import { getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Infobox from '@/components/Infobox.astro';
+import ModelGrid from '@/components/ModelGrid.astro';
+import PhotoGallery from '@/components/PhotoGallery.astro';
+import References from '@/components/References.astro';
+import ReplicaPlayground from '@/components/ReplicaPlayground.astro';
+import { t } from '@/i18n';
+import Base from '@/layouts/Base.astro';
+import { inlineMarkdown, yearsLabel } from '@/lib/catalog';
+import { getCatalog } from '@/site/catalog';
+import { href } from '@/site/url';
+
+interface Props {
+  id: string;
+  locale: string;
+}
+
+const { id } = Astro.props;
+const catalog = await getCatalog();
+const model = catalog.model(id);
+const data = model.data;
+const facts = catalog.facts(model);
+const { Content } = await render(model);
+
+const cover = catalog.cover(model);
+const social = cover ? (await getImage({ src: cover.src, width: Math.min(cover.src.width, 1200) })).src : undefined;
+const years = yearsLabel(facts.years, facts.status);
+const siblings = facts.family ? catalog.modelsWith('familia', facts.family).filter((other) => other.id !== model.id) : [];
+
+/** "1996–2026", "desde 1996", "hasta 2026": whatever is known of a period. */
+function span(from?: number, to?: number): string {
+  if (from !== undefined && to !== undefined) return from === to ? String(from) : `${from}–${to}`;
+  if (from !== undefined) return t('catalog.model.installations.since', { year: from });
+  if (to !== undefined) return t('catalog.model.installations.until', { year: to });
+  return '';
+}
+
+const installations = data.installations.map((installation) => {
+  const site = installation.site ? catalog.site(installation.site.id) : undefined;
+  return {
+    place: site?.data.name ?? installation.placeName ?? installation.fleet ?? '',
+    town: site && site.data.town !== site.data.name ? site.data.town : undefined,
+    line: installation.line,
+    years: span(installation.from, installation.to),
+    status: installation.status,
+    note: installation.note,
+  };
+});
+---
+
+<Base title={data.name} description={data.summary} source={`src/content/models/${model.id}/index.md`} image={social}>
+  <div class="container page">
+    <header class="model-header">
+      <p class="eyebrow">{t(`catalog.kind.${data.kind}`)}</p>
+      <h1>{data.name}</h1>
+      <p class="lead">{data.summary}</p>
+      <ul class="badges">
+        {
+          data.technologies.map((ref) => (
+            <li>
+              <a class="badge" href={href(`tecnologias/${ref.id}/`)}>
+                {catalog.technology(ref.id).data.name}
+              </a>
+            </li>
+          ))
+        }
+        {
+          facts.manufacturers.map((manufacturer) => (
+            <li>
+              <a class="badge" href={href(`fabricantes/${manufacturer}/`)}>
+                {catalog.manufacturer(manufacturer).data.name}
+              </a>
+            </li>
+          ))
+        }
+        {
+          years && (
+            <li>
+              <span class="badge">{years}</span>
+            </li>
+          )
+        }
+        <li>
+          <span class="badge">{t(`catalog.status.${data.status}`)}</span>
+        </li>
+      </ul>
+    </header>
+
+    {
+      data.stage === 'stub' && (
+        <p class="stub-note">
+          {t('catalog.model.stub')} <a href={href('contribuir/')}>{t('catalog.model.stubLink')}</a>.
+        </p>
+      )
+    }
+
+    {
+      data.replica && (
+        <section class="replica" aria-labelledby="replica-title">
+          <h2 id="replica-title" class="visually-hidden">
+            {t('catalog.model.replica')}
+          </h2>
+          <ReplicaPlayground replicaId={data.replica.id} params={data.replica.params} />
+        </section>
+      )
+    }
+
+    <div class="model-body">
+      <Infobox model={model} />
+      <article class="prose">
+        <Content />
+      </article>
+    </div>
+
+    {
+      installations.length > 0 && (
+        <section aria-labelledby="instalaciones">
+          <h2 id="instalaciones">{t('catalog.model.installations')}</h2>
+          <ul class="installations">
+            {installations.map((installation) => (
+              <li>
+                <p class="where">
+                  <strong>{installation.place}</strong>
+                  {installation.town && <span class="muted"> · {installation.town}</span>}
+                </p>
+                <ul class="badges">
+                  {installation.line && <li><span class="badge">{installation.line}</span></li>}
+                  {installation.years && <li><span class="badge">{installation.years}</span></li>}
+                  {installation.status !== 'unknown' && (
+                    <li>
+                      <span class:list={['badge', { 'is-dot': installation.status === 'in-service' }]}>
+                        {t(`catalog.status.${installation.status}`)}
+                      </span>
+                    </li>
+                  )}
+                </ul>
+                {installation.note && <p class="note muted" set:html={inlineMarkdown(installation.note)} />}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      data.variants.length > 0 && (
+        <section aria-labelledby="variantes">
+          <h2 id="variantes">{t('catalog.model.variants')}</h2>
+          <dl class="variants">
+            {data.variants.map((variant) => (
+              <div id={`variante-${variant.id}`}>
+                <dt>{variant.name}</dt>
+                {variant.description && <dd set:html={inlineMarkdown(variant.description)} />}
+              </div>
+            ))}
+          </dl>
+        </section>
+      )
+    }
+
+    {
+      data.photos.length > 0 && (
+        <section aria-labelledby="fotografias">
+          <h2 id="fotografias">{t('catalog.model.photos')}</h2>
+          <PhotoGallery photos={data.photos} />
+        </section>
+      )
+    }
+
+    {
+      data.references.length > 0 && (
+        <section aria-labelledby="fuentes">
+          <h2 id="fuentes">{t('catalog.model.references')}</h2>
+          <References references={data.references} />
+        </section>
+      )
+    }
+
+    {
+      siblings.length > 0 && (
+        <section aria-labelledby="familia">
+          <h2 id="familia">{t('catalog.model.sameFamily')}</h2>
+          <ModelGrid models={siblings} />
+        </section>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .model-header {
+    margin-bottom: 24px;
+  }
+
+  .model-header .badges {
+    margin-top: 12px;
+  }
+
+  .stub-note {
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    max-width: var(--measure);
+  }
+
+  .replica {
+    margin-block: 8px 32px;
+  }
+
+  /* Facts first on a phone, beside the article on a wide screen. */
+  .model-body {
+    display: grid;
+    gap: 24px 40px;
+    align-items: start;
+  }
+
+  @media (min-width: 62rem) {
+    .model-body {
+      grid-template-columns: minmax(0, var(--measure)) minmax(17rem, 1fr);
+    }
+
+    .model-body :global(.infobox) {
+      grid-column: 2;
+      grid-row: 1;
+      position: sticky;
+      top: 16px;
+    }
+
+    .model-body .prose {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  .installations {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: 12px;
+  }
+
+  .installations > li {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 14px 12px;
+    display: grid;
+    gap: 6px;
+    align-content: start;
+  }
+
+  .installations p {
+    margin: 0;
+  }
+
+  .installations .note {
+    font-size: 0.9rem;
+  }
+
+  .variants {
+    display: grid;
+    gap: 12px;
+    max-width: var(--measure);
+  }
+
+  .variants dt {
+    font-weight: 600;
+  }
+
+  .variants dd {
+    margin: 0;
+    color: var(--muted);
+  }
+</style>

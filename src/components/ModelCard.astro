@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import PlaceholderArt from './PlaceholderArt.astro';
+import { t } from '@/i18n';
+import { yearsLabel } from '@/lib/catalog';
+import { getCatalog, type Model } from '@/site/catalog';
+import { href } from '@/site/url';
+
+interface Props {
+  model: Model;
+  /** Heading level of the card title, to fit the page outline. */
+  level?: 2 | 3 | 4;
+}
+
+const { model, level = 3 } = Astro.props;
+const catalog = await getCatalog();
+const facts = catalog.facts(model);
+const cover = catalog.cover(model);
+const Heading = `h${level}` as 'h3';
+const years = yearsLabel(facts.years, facts.status);
+// Read by the filter on the catalog page: one data attribute per facet.
+const data = Object.fromEntries(Object.entries(catalog.facetData(model)).map(([key, value]) => [`data-f-${key}`, value]));
+const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
+---
+
+<li class="card" data-model={model.id} data-search={search} {...data}>
+  <div class="card-media">
+    {
+      cover ? (
+        <Image src={cover.src} alt="" widths={[320, 640]} sizes="(min-width: 40rem) 20rem, 100vw" width={640} loading="lazy" />
+      ) : (
+        <PlaceholderArt seed={model.id} />
+      )
+    }
+  </div>
+  <div class="card-body">
+    <Heading class="card-title"><a href={href(`catalogo/${model.id}/`)}>{facts.name}</a></Heading>
+    <p class="card-text">{facts.summary}</p>
+    <ul class="badges">
+      <li>
+        <span class="badge">{t(`catalog.kind.${facts.kind}`)}</span>
+      </li>
+      {
+        years && (
+          <li>
+            <span class="badge">{years}</span>
+          </li>
+        )
+      }
+      {
+        facts.hasReplica && (
+          <li>
+            <span class="badge is-dot">{t('catalog.replica.si')}</span>
+          </li>
+        )
+      }
+      {
+        facts.stage === 'stub' && (
+          <li>
+            <span class="badge">{t('catalog.stage.stub')}</span>
+          </li>
+        )
+      }
+    </ul>
+  </div>
+</li>

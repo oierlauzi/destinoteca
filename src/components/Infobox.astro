@@ -1,0 +1,198 @@
+---
+import { t } from '@/i18n';
+import { yearsLabel } from '@/lib/catalog';
+import { countryName, getCatalog, type Model } from '@/site/catalog';
+import { href } from '@/site/url';
+
+interface Props {
+  model: Model;
+}
+
+const { model } = Astro.props;
+const catalog = await getCatalog();
+const data = model.data;
+const facts = catalog.facts(model);
+const years = yearsLabel(facts.years, facts.status);
+
+const technologies = data.technologies.map((ref) => catalog.technology(ref.id));
+const manufacturers = data.manufacturers.map((link) => ({ entry: catalog.manufacturer(link.ref.id), role: link.role }));
+const operators = data.operators.map((link) => ({ entry: catalog.operator(link.ref.id), link }));
+const family = data.family ? catalog.family(data.family.id) : undefined;
+const span = (from?: number, to?: number) => (from || to ? ` (${from ?? '?'}–${to ?? ''})` : '');
+---
+
+<aside class="infobox" aria-label={t('catalog.model.facts')}>
+  <dl>
+    <dt>{t('catalog.model.kind')}</dt>
+    <dd>{t(`catalog.kind.${data.kind}`)}</dd>
+
+    <dt>{t('catalog.model.technologies')}</dt>
+    <dd>
+      <ul class="plain">
+        {technologies.map((entry) => <li><a href={href(`tecnologias/${entry.id}/`)}>{entry.data.name}</a></li>)}
+      </ul>
+    </dd>
+
+    <dt>{t('catalog.model.manufacturers')}</dt>
+    <dd>
+      {
+        manufacturers.length > 0 ? (
+          <ul class="plain">
+            {manufacturers.map(({ entry, role }) => (
+              <li>
+                <a href={href(`fabricantes/${entry.id}/`)}>{entry.data.name}</a>{' '}
+                <span class="muted">({t(`catalog.role.${role}`)})</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <span class="muted">{t('catalog.model.manufacturerUnknown')}</span>
+        )
+      }
+    </dd>
+
+    {
+      operators.length > 0 && (
+        <>
+          <dt>{t('catalog.model.operators')}</dt>
+          <dd>
+            <ul class="plain">
+              {operators.map(({ entry, link }) => (
+                <li>
+                  <a href={href(`operadores/${entry.id}/`)}>{entry.data.name}</a>
+                  {link.role !== 'operator' && <span class="muted"> ({t(`catalog.operatorRole.${link.role}`)})</span>}
+                  <span class="muted">{span(link.from, link.to)}</span>
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </>
+      )
+    }
+
+    {
+      family && (
+        <>
+          <dt>{t('catalog.model.family')}</dt>
+          <dd>
+            <a href={href(`familias/${family.id}/`)}>{family.data.name}</a>
+          </dd>
+        </>
+      )
+    }
+
+    <dt>{t('catalog.model.countries')}</dt>
+    <dd>
+      <ul class="plain inline">
+        {facts.countries.map((code) => <li><a href={href(`paises/${code}/`)}>{countryName(code)}</a></li>)}
+      </ul>
+    </dd>
+
+    <dt>{t('catalog.model.modes')}</dt>
+    <dd>{data.transportModes.map((mode) => t(`catalog.mode.${mode}`)).join(', ')}</dd>
+
+    {
+      years && (
+        <>
+          <dt>{t('catalog.model.years')}</dt>
+          <dd>{years}</dd>
+        </>
+      )
+    }
+
+    <dt>{t('catalog.model.status')}</dt>
+    <dd>{t(`catalog.status.${data.status}`)}</dd>
+
+    {
+      data.features.length > 0 && (
+        <>
+          <dt>{t('catalog.model.features')}</dt>
+          <dd>{data.features.map((feature) => t(`catalog.feature.${feature}`)).join(', ')}</dd>
+        </>
+      )
+    }
+
+    {
+      data.alsoKnownAs.length > 0 && (
+        <>
+          <dt>{t('catalog.model.alsoKnownAs')}</dt>
+          <dd>{data.alsoKnownAs.join(' · ')}</dd>
+        </>
+      )
+    }
+  </dl>
+
+  {
+    data.components.length > 0 && (
+      <section class="components">
+        <h2>{t('catalog.model.components')}</h2>
+        <ul>
+          {data.components.map((component) => (
+            <li>
+              <strong>{component.name}</strong>
+              {component.designation && (
+                <>
+                  {' '}
+                  <code>{component.designation}</code>
+                </>
+              )}
+              {component.manufacturer && (
+                <>
+                  {' · '}
+                  <a href={href(`fabricantes/${component.manufacturer.id}/`)}>
+                    {catalog.manufacturer(component.manufacturer.id).data.name}
+                  </a>
+                </>
+              )}
+              {component.description && <p>{component.description}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</aside>
+
+<style>
+  .plain {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .plain.inline li {
+    display: inline;
+  }
+
+  .plain.inline li + li::before {
+    content: ', ';
+  }
+
+  .components {
+    border-top: 1px solid var(--line);
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .components h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0 0 0.6em;
+    font-weight: 600;
+  }
+
+  .components ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  .components p {
+    margin: 2px 0 0;
+    color: var(--muted);
+  }
+</style>

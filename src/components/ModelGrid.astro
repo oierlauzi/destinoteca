@@ -1,0 +1,25 @@
+---
+import ModelCard from './ModelCard.astro';
+import { t } from '@/i18n';
+import type { Model } from '@/site/catalog';
+
+interface Props {
+  models: Model[];
+  level?: 2 | 3 | 4;
+  /** Shown instead of the grid when there is nothing to list. */
+  empty?: string;
+  id?: string;
+}
+
+const { models, level = 3, empty = t('catalog.entity.noModels'), id } = Astro.props;
+---
+
+{
+  models.length > 0 ? (
+    <ul class="card-grid" id={id}>
+      {models.map((model) => <ModelCard model={model} level={level} />)}
+    </ul>
+  ) : (
+    <p class="muted">{empty}</p>
+  )
+}

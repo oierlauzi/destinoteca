@@ -1,0 +1,22 @@
+---
+import FacetFilter from '@/components/FacetFilter.astro';
+import ModelGrid from '@/components/ModelGrid.astro';
+import { t } from '@/i18n';
+import Base from '@/layouts/Base.astro';
+import { getCatalog } from '@/site/catalog';
+
+interface Props {
+  locale: string;
+}
+
+const catalog = await getCatalog();
+---
+
+<Base title={t('catalog.list.title')} description={t('catalog.list.lead')}>
+  <div class="container page">
+    <h1>{t('catalog.list.title')}</h1>
+    <p class="lead">{t('catalog.list.lead')}</p>
+    <FacetFilter target="fichas" />
+    <ModelGrid models={catalog.models} level={2} id="fichas" empty={t('catalog.home.empty')} />
+  </div>
+</Base>

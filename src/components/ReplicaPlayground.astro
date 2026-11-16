@@ -1,0 +1,44 @@
+---
+// A replica with its controls: where the data comes from, how it looks, and
+// how to take it elsewhere. All behaviour is in src/lib/ui/playground.ts; this
+// only lays out the stage and hands over what the script needs.
+import '@/styles/playground.css';
+import { t } from '@/i18n';
+import { getReplica } from '@/lib/replicas/registry';
+import { restingSvg } from '@/site/replica';
+import { href } from '@/site/url';
+
+interface Props {
+  /** One of REPLICA_IDS. */
+  replicaId: string;
+  /** Initial settings, by URL key, as in an embed URL. */
+  params?: Record<string, string | number | boolean>;
+  /** What the replica is, for the title of the embed. */
+  title?: string;
+}
+
+const { replicaId, params = {}, title = t('player.stage') } = Astro.props;
+const def = getReplica(replicaId);
+if (!def) throw new Error(`ReplicaPlayground: no replica is called "${replicaId}"`);
+const svg = await restingSvg(replicaId);
+---
+
+<section
+  class="playground"
+  aria-label={t('player.stage')}
+  data-replica={replicaId}
+  data-embed={href(`embed/${replicaId}/`)}
+  data-params={JSON.stringify(params)}
+  data-title={title}
+>
+  <div class="stage" style={`--ratio:${def.viewBox.width / def.viewBox.height}`}>
+    <destinoteca-replica replica={replicaId} set:html={svg} />
+  </div>
+  <noscript><p class="muted">{t('player.noscript')}</p></noscript>
+  <div class="playground-ui"></div>
+</section>
+
+<script>
+  import { mountPlaygrounds } from '@/lib/ui/playground';
+  mountPlaygrounds();
+</script>

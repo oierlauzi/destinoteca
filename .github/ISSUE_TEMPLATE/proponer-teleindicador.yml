@@ -1,0 +1,69 @@
+name: Proponer un teleindicador
+description: Un cartel, panel o reloj que todavía no está en el catálogo. Basta con lo que sepas.
+title: 'Nueva ficha: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por ayudar a completar el catálogo. No hace falta rellenarlo todo: una ficha puede empezar como esbozo.
+        Indica solo lo que sepas con seguridad y di de dónde sale cada dato.
+  - type: input
+    id: nombre
+    attributes:
+      label: Nombre o descripción
+      description: El modelo si lo conoces; si no, una descripción ("panel de salidas de láminas de la estación de…").
+    validations:
+      required: true
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo
+      options:
+        - Teleindicador de andén
+        - Panel de salidas y llegadas
+        - Panel de vestíbulo
+        - Reloj
+        - Indicador a bordo
+        - Otro
+    validations:
+      required: true
+  - type: input
+    id: tecnologia
+    attributes:
+      label: Tecnología
+      description: Flip-dot, láminas (split-flap), LED, LCD, tubo de rayos catódicos, TFT, reloj analógico…
+  - type: input
+    id: fabricante
+    attributes:
+      label: Fabricante
+      description: Si lo sabes. Indica también dónde lo has visto (etiqueta, catálogo, artículo).
+  - type: input
+    id: operador
+    attributes:
+      label: Operador o red
+      description: Renfe Cercanías Madrid, Metro de Madrid, FGC, Euskotren…
+  - type: input
+    id: lugares
+    attributes:
+      label: Dónde estuvo o está instalado
+      description: Estaciones, líneas o trenes, con los años si los conoces.
+  - type: input
+    id: anos
+    attributes:
+      label: Años de servicio
+      description: Aproximados si hace falta ("desde mediados de los 90").
+  - type: textarea
+    id: historia
+    attributes:
+      label: Qué sabes de él
+      description: Qué mostraba, cómo funcionaba, curiosidades, cuándo se retiró.
+  - type: textarea
+    id: fuentes
+    attributes:
+      label: Fuentes
+      description: Enlaces, revistas, libros o manuales de donde salen los datos.
+  - type: textarea
+    id: fotos
+    attributes:
+      label: Fotografías
+      description: Puedes arrastrarlas aquí. De cada una indica autor, fecha y lugar, y si es tuya.

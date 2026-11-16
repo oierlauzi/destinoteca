@@ -1,0 +1,13 @@
+---
+import { getCatalog } from '@/site/catalog';
+import CountryView from '@/views/CountryView.astro';
+
+export async function getStaticPaths() {
+  const catalog = await getCatalog();
+  return catalog.facetValues('pais').map((country) => ({ params: { code: country.value } }));
+}
+
+const { code } = Astro.params;
+---
+
+<CountryView code={code} locale="es" />

@@ -1,0 +1,64 @@
+---
+// A replica and nothing else, for iframes on other people's pages. Everything
+// it shows comes from the query string; see src/lib/player/config.ts.
+import { t } from '@/i18n';
+import { REPLICA_IDS } from '@/lib/replicas/ids';
+import { getReplica } from '@/lib/replicas/registry';
+import { restingSvg } from '@/site/replica';
+import { href } from '@/site/url';
+
+export function getStaticPaths() {
+  return REPLICA_IDS.map((id) => ({ params: { id } }));
+}
+
+const { id } = Astro.params;
+const def = getReplica(id)!;
+const svg = await restingSvg(id);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t('site.name')}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(href(), Astro.site)} />
+    <style define:vars={{ ratio: def.viewBox.width / def.viewBox.height }}>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: transparent;
+      }
+      body {
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+      destinoteca-replica {
+        display: block;
+        /* As large as the frame allows in both directions, at the sign's own proportions. */
+        width: min(100vw, calc(100vh * var(--ratio)));
+      }
+      destinoteca-replica :global(svg) {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <destinoteca-replica replica={id} set:html={svg} />
+    <script>
+      import { defineReplicaElement, REPLICA_TAG } from '@/lib/player/element';
+
+      const query = new URLSearchParams(location.search);
+      // `bg` paints behind the sign, for frames that are not its exact shape.
+      const bg = query.get('bg')?.replace(/^#/, '');
+      if (bg && /^([0-9a-f]{3}|[0-9a-f]{6})$/i.test(bg)) document.body.style.background = `#${bg}`;
+      document.querySelector(REPLICA_TAG)?.setAttribute('query', query.toString());
+      defineReplicaElement();
+    </script>
+  </body>
+</html>

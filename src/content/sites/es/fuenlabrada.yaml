@@ -1,0 +1,7 @@
+name: Fuenlabrada
+type: station
+country: es
+region: ES-MD
+town: Fuenlabrada
+codes:
+  adif: "35002"

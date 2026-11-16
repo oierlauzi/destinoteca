@@ -1,0 +1,29 @@
+name: Corregir un dato
+description: Un error, un dato que falta o un crédito mal atribuido.
+title: 'Corrección: '
+body:
+  - type: input
+    id: pagina
+    attributes:
+      label: Página
+      description: Enlace a la ficha o página afectada.
+    validations:
+      required: true
+  - type: textarea
+    id: que
+    attributes:
+      label: Qué hay que cambiar
+      description: Lo que dice ahora y lo que debería decir.
+    validations:
+      required: true
+  - type: textarea
+    id: fuente
+    attributes:
+      label: Cómo lo sabes
+      description: Una fuente, una fotografía o tu propia experiencia. Ayuda a que el dato pueda sostenerse.
+  - type: checkboxes
+    id: autor
+    attributes:
+      label: Fotografías
+      options:
+        - label: Soy autor de una fotografía y quiero que se retire o que se corrija su crédito.

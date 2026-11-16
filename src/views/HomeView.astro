@@ -1,0 +1,161 @@
+---
+import ModelGrid from '@/components/ModelGrid.astro';
+import { t } from '@/i18n';
+import Base from '@/layouts/Base.astro';
+import { FACETS } from '@/lib/catalog';
+import { counted, getCatalog } from '@/site/catalog';
+import { href } from '@/site/url';
+
+interface Props {
+  locale: string;
+}
+
+const catalog = await getCatalog();
+const withReplica = catalog.modelsWith('replica', 'si');
+const withoutReplica = catalog.models.filter((model) => !withReplica.includes(model));
+const photos = catalog.models.reduce((sum, model) => sum + model.data.photos.length, 0);
+
+// Every axis is a way in. A value with a page of its own links there; the
+// others open the catalog already filtered.
+const axes = FACETS.filter((facet) => facet.id !== 'replica')
+  .map((facet) => ({
+    facet,
+    values: catalog.facetValues(facet.id).map((value) => ({
+      ...value,
+      href: value.path ? href(value.path) : `${href('catalogo/')}?${new URLSearchParams({ [facet.id]: value.value })}`,
+    })),
+  }))
+  .filter(({ values }) => values.length > 0);
+---
+
+<Base>
+  <div class="hero">
+    <div class="container">
+      <h1>{t('catalog.home.title')}</h1>
+      <p class="lead">{t('catalog.home.lead')}</p>
+      <p class="actions">
+        <a class="button is-primary" href={href('catalogo/')}>{t('catalog.home.browse')}</a>
+        <a class="button" href={href('contribuir/')}>{t('catalog.home.contribute')}</a>
+      </p>
+      <p class="counts muted">
+        {
+          [
+            counted('catalog.count.models', catalog.models.length),
+            counted('catalog.count.replicas', withReplica.length),
+            counted('catalog.count.photos', photos),
+          ].join(' · ')
+        }
+      </p>
+    </div>
+  </div>
+
+  <div class="container page">
+    {
+      withReplica.length > 0 && (
+        <section aria-labelledby="con-replica">
+          <h2 id="con-replica">{t('catalog.home.replicas')}</h2>
+          <p class="muted intro">{t('catalog.home.replicasLead')}</p>
+          <ModelGrid models={withReplica} />
+        </section>
+      )
+    }
+
+    {
+      withoutReplica.length > 0 && (
+        <section aria-labelledby="en-el-catalogo">
+          <h2 id="en-el-catalogo">{t('catalog.home.recent')}</h2>
+          <ModelGrid models={withoutReplica} />
+        </section>
+      )
+    }
+
+    {catalog.models.length === 0 && <p class="muted">{t('catalog.home.empty')}</p>}
+
+    {
+      axes.length > 0 && (
+        <section aria-labelledby="explorar">
+          <h2 id="explorar">{t('catalog.home.explore')}</h2>
+          <dl class="axes">
+            {axes.map(({ facet, values }) => (
+              <div>
+                <dt>{t(facet.label)}</dt>
+                <dd>
+                  <ul class="badges">
+                    {values.map((value) => (
+                      <li>
+                        <a class="badge" href={value.href}>
+                          {value.label} <span class="n">{value.count}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .hero {
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(32px, 7vw, 72px);
+    background: var(--surface);
+  }
+
+  .hero h1 {
+    max-width: 22ch;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1.5em;
+  }
+
+  .counts {
+    font-size: 0.9rem;
+    margin: 1.2em 0 0;
+  }
+
+  .page > section:first-child h2 {
+    margin-top: 0;
+  }
+
+  .intro {
+    max-width: var(--measure);
+  }
+
+  .axes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: 18px 32px;
+    margin: 0;
+  }
+
+  .axes dt {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .axes dd {
+    margin: 0;
+  }
+
+  .axes .badge {
+    font-size: 0.85rem;
+    padding: 0.1em 0.7em;
+  }
+
+  .n {
+    opacity: 0.6;
+    margin-left: 0.2em;
+  }
+</style>

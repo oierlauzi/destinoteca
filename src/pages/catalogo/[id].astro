@@ -1,0 +1,16 @@
+---
+import Redirect from '@/components/Redirect.astro';
+import { getCatalog } from '@/site/catalog';
+import { pathsWithAliases, type AliasProps } from '@/site/paths';
+import { href } from '@/site/url';
+import ModelView from '@/views/ModelView.astro';
+
+export async function getStaticPaths() {
+  return pathsWithAliases((await getCatalog()).models);
+}
+
+type Props = AliasProps;
+const { id, alias } = Astro.props;
+---
+
+{alias ? <Redirect to={href(`catalogo/${id}/`)} /> : <ModelView id={id} locale="es" />}

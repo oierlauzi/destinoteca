@@ -1,0 +1,81 @@
+{
+  "type": "arrivals_update",
+  "station_id": "17000",
+  "arrivals": [
+    {
+      "epoch": 1794826920,
+      "display_destination_name": "Parla",
+      "destination_name": "Parla",
+      "service_state": "scheduled",
+      "is_realtime": true,
+      "is_origin": false,
+      "presence": "at_station",
+      "platform": { "value": "8", "confirmed": true, "pair": null },
+      "line": { "short_name": "C4", "color_bg": "#2C2A86", "color_fg": "#FFFFFF" },
+      "identity": { "public_number": "23545", "technical_id": "C4-23545" }
+    },
+    {
+      "epoch": 1794827100,
+      "display_destination_name": "Alcobendas-San Sebastián de los Reyes",
+      "destination_name": "Alcobendas-San Sebastián de los Reyes",
+      "service_state": "scheduled",
+      "is_realtime": true,
+      "is_origin": false,
+      "presence": "arriving",
+      "platform": { "value": "04", "confirmed": true, "pair": ["3", "4"] },
+      "line": { "short_name": "C4", "color_bg": "#2C2A86", "color_fg": "#FFFFFF" },
+      "identity": { "public_number": "23412", "technical_id": "C4-23412" }
+    },
+    {
+      "epoch": 1794827400,
+      "display_destination_name": "Aeropuerto T4",
+      "destination_name": "Aeropuerto T4",
+      "service_state": "scheduled",
+      "is_realtime": false,
+      "is_origin": true,
+      "presence": null,
+      "platform": { "value": "3", "confirmed": false, "pair": ["3", "4"] },
+      "line": { "short_name": "C1", "color_bg": "#66AEDE", "color_fg": "#FFFFFF" },
+      "identity": { "public_number": "21117", "technical_id": "LOC-21117-1794827400" }
+    },
+    {
+      "epoch": 1794827520,
+      "display_destination_name": "Chamartín-Clara Campoamor",
+      "destination_name": "Chamartín",
+      "service_state": "scheduled",
+      "is_realtime": true,
+      "is_origin": false,
+      "presence": null,
+      "platform": { "value": "10", "confirmed": true, "pair": null },
+      "line": { "short_name": "C2", "color_bg": "#00943D", "color_fg": "#FFFFFF" },
+      "identity": { "public_number": "28078", "technical_id": "C2-28078" }
+    },
+    {
+      "epoch": 1794827700,
+      "display_destination_name": "Alcalá de Henares",
+      "destination_name": "Alcalá de Henares",
+      "service_state": "canceled",
+      "is_realtime": true,
+      "is_origin": false,
+      "presence": null,
+      "platform": null,
+      "line": { "short_name": "C2", "color_bg": "#00943D", "color_fg": "#FFFFFF" },
+      "identity": { "public_number": "28081", "technical_id": "C2-28081" }
+    },
+    {
+      "epoch": 1794828000,
+      "display_destination_name": "Colmenar Viejo",
+      "service_state": "scheduled",
+      "is_realtime": false,
+      "platform": { "value": null, "confirmed": false, "pair": null },
+      "short_name": "C4",
+      "identity": {}
+    },
+    {
+      "epoch": 0,
+      "display_destination_name": "Fuencarral",
+      "is_realtime": false,
+      "identity": { "public_number": "99999" }
+    }
+  ]
+}

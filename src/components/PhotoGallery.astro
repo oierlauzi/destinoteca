@@ -1,0 +1,131 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { t } from '@/i18n';
+import { LICENSE_URLS, formatPartialDate, inlineMarkdown } from '@/lib/catalog';
+import type { Photo } from '@/site/catalog';
+import { REPO_URL } from '@/site/url';
+
+interface Props {
+  photos: Photo[];
+}
+
+const { photos } = Astro.props;
+
+// Each thumbnail links to a larger rendition, capped so that a phone photo
+// straight from the camera does not become a multi-megabyte download.
+const items = await Promise.all(
+  photos.map(async (photo) => ({
+    photo,
+    full: await getImage({ src: photo.src, width: Math.min(photo.src.width, 1800) }),
+  })),
+);
+---
+
+<ul class="gallery">
+  {
+    items.map(({ photo, full }) => (
+      <li id={`foto-${photo.id}`}>
+        <figure>
+          <a href={full.src} title={t('catalog.photo.open')}>
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              widths={[360, 720, Math.min(photo.src.width, 1080)]}
+              sizes="(min-width: 60rem) 22rem, (min-width: 36rem) 50vw, 100vw"
+              loading="lazy"
+            />
+          </a>
+          <figcaption>
+            {photo.caption && <p class="caption" set:html={inlineMarkdown(photo.caption)} />}
+            <p class="credit">
+              {photo.author && <span>{t('catalog.photo.by', { author: photo.author })}</span>}
+              {photo.ownWork && <span>{t('catalog.photo.ownWork')}</span>}
+              {photo.date && <span>{formatPartialDate(photo.date)}</span>}
+              {photo.source && <span>{photo.source}</span>}
+              {photo.sourceUrl && (
+                <span>
+                  <a href={photo.sourceUrl} rel="noopener noreferrer">
+                    {t('catalog.photo.source')}
+                  </a>
+                </span>
+              )}
+              <span>
+                {LICENSE_URLS[photo.license] ? (
+                  <a href={LICENSE_URLS[photo.license]} rel="license noopener noreferrer">
+                    {t(`catalog.license.${photo.license}`)}
+                  </a>
+                ) : (
+                  t(`catalog.license.${photo.license}`)
+                )}
+              </span>
+              {photo.permission && <span>{photo.permission}</span>}
+            </p>
+          </figcaption>
+        </figure>
+      </li>
+    ))
+  }
+</ul>
+<p class="takedown muted">
+  {t('catalog.photo.takedown')}{' '}
+  <a href={`${REPO_URL}/issues/new/choose`}>{t('catalog.photo.takedownLink')}</a>.
+</p>
+
+<style>
+  .gallery {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1em;
+    columns: 3 18rem;
+    column-gap: 16px;
+  }
+
+  .gallery li {
+    break-inside: avoid;
+    margin-bottom: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .gallery a:has(img) {
+    display: block;
+    background: var(--housing);
+    line-height: 0;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  figcaption {
+    padding: 10px 12px 12px;
+    font-size: 0.9rem;
+  }
+
+  .caption {
+    margin: 0 0 6px;
+  }
+
+  .credit {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .credit span + span::before {
+    content: ' · ';
+  }
+
+  .takedown {
+    font-size: 0.85rem;
+    max-width: var(--measure);
+  }
+</style>

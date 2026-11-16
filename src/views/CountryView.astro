@@ -1,0 +1,26 @@
+---
+import ModelGrid from '@/components/ModelGrid.astro';
+import { t } from '@/i18n';
+import Base from '@/layouts/Base.astro';
+import { countryName, getCatalog } from '@/site/catalog';
+
+interface Props {
+  code: string;
+  locale: string;
+}
+
+const { code } = Astro.props;
+const catalog = await getCatalog();
+const name = countryName(code);
+const models = catalog.modelsWith('pais', code);
+const lead = t('catalog.country.lead', { country: name });
+---
+
+<Base title={name} description={lead}>
+  <div class="container page">
+    <p class="eyebrow">{t('catalog.countries.eyebrow')}</p>
+    <h1>{name}</h1>
+    <p class="lead">{lead}</p>
+    <ModelGrid models={models} level={2} />
+  </div>
+</Base>

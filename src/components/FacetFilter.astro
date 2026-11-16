@@ -1,0 +1,159 @@
+---
+// Filters a list of ModelCards in place. The list is complete in the HTML, so
+// it works (unfiltered) without JavaScript and search engines see everything;
+// the script only hides cards and keeps the choice in the query string, where
+// it can be linked to.
+import { t } from '@/i18n';
+import { FACETS } from '@/lib/catalog';
+import { getCatalog } from '@/site/catalog';
+
+interface Props {
+  /** Id of the <ul> of cards this filters. */
+  target: string;
+}
+
+const { target } = Astro.props;
+const catalog = await getCatalog();
+// Every axis in use is offered, even while the catalog is small enough for all
+// its entries to agree on one: links from elsewhere on the site filter by any.
+const facets = FACETS.map((facet) => ({ facet, values: catalog.facetValues(facet.id) })).filter(
+  ({ values }) => values.length > 0,
+);
+---
+
+<form
+  class="filters"
+  role="search"
+  aria-label={t('catalog.list.filters')}
+  data-filter-target={target}
+  data-count-template={t('catalog.list.count')}
+>
+  <label class="search">
+    <span>{t('catalog.list.search')}</span>
+    <input type="search" name="q" placeholder={t('catalog.list.searchPlaceholder')} autocomplete="off" />
+  </label>
+  {
+    facets.map(({ facet, values }) => (
+      <label>
+        <span>{t(facet.label)}</span>
+        <select name={facet.id}>
+          <option value="">{t('catalog.list.any')}</option>
+          {values.map((value) => (
+            <option value={value.value}>
+              {value.label} ({value.count})
+            </option>
+          ))}
+        </select>
+      </label>
+    ))
+  }
+  <div class="filters-end">
+    <output aria-live="polite"></output>
+    <button type="reset" class="button">{t('catalog.list.clear')}</button>
+  </div>
+</form>
+<p class="muted filters-none" hidden>{t('catalog.list.none')}</p>
+
+<script>
+  /** Lower case without accents, so that "mostoles" finds "Móstoles". */
+  const fold = (value: string): string =>
+    value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '');
+
+  for (const form of document.querySelectorAll<HTMLFormElement>('form[data-filter-target]')) {
+    const list = document.getElementById(form.dataset.filterTarget ?? '');
+    if (!list) continue;
+    const cards = [...list.querySelectorAll<HTMLElement>('[data-model]')];
+    const controls = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[name]')];
+    const output = form.querySelector('output');
+    const none = form.nextElementSibling instanceof HTMLElement ? form.nextElementSibling : null;
+    const template = form.dataset.countTemplate ?? '{shown} / {total}';
+
+    const apply = (): void => {
+      const query = new URLSearchParams();
+      for (const control of controls) if (control.value.trim()) query.set(control.name, control.value.trim());
+      const words = fold(query.get('q') ?? '')
+        .split(/\s+/)
+        .filter(Boolean);
+      let shown = 0;
+      for (const card of cards) {
+        const haystack = fold(card.dataset.search ?? '');
+        let visible = words.every((word) => haystack.includes(word));
+        for (const [key, value] of query) {
+          if (key === 'q' || !visible) continue;
+          // One attribute per facet, holding the card's values separated by spaces.
+          visible = (card.getAttribute(`data-f-${key}`) ?? '').split(' ').includes(value);
+        }
+        card.hidden = !visible;
+        if (visible) shown++;
+      }
+      if (output) output.textContent = template.replace('{shown}', String(shown)).replace('{total}', String(cards.length));
+      if (none) none.hidden = shown > 0;
+      const search = query.toString();
+      history.replaceState(null, '', search ? `?${search}` : location.pathname);
+    };
+
+    // Start from the URL, so that a filtered view can be linked to.
+    const initial = new URLSearchParams(location.search);
+    for (const control of controls) {
+      const value = initial.get(control.name);
+      if (value === null) continue;
+      control.value = value;
+      // A value this list does not offer leaves a <select> blank; treat it as no filter.
+      if (control.value !== value) control.value = '';
+    }
+    form.addEventListener('input', apply);
+    form.addEventListener('submit', (event) => event.preventDefault());
+    form.addEventListener('reset', () => setTimeout(apply));
+    apply();
+  }
+</script>
+
+<style>
+  /* Cards are flex containers, which would otherwise win over the hidden attribute. */
+  :global([data-model][hidden]) {
+    display: none;
+  }
+
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+    gap: 12px 16px;
+    align-items: end;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-block: 24px;
+  }
+
+  .filters label {
+    display: grid;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+
+  .search {
+    grid-column: 1 / -1;
+  }
+
+  .filters-end {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+</style>

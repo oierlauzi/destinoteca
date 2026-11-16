@@ -1,0 +1,29 @@
+---
+// A page of running text (about, contributing). The text is a Markdown file
+// per language under src/texts/<locale>/, so translating the page is adding a
+// file, not editing a template.
+import type { MarkdownInstance } from 'astro';
+import Base from '@/layouts/Base.astro';
+
+interface Props {
+  /** File name under src/texts/<locale>/, without extension. */
+  text: string;
+  title: string;
+  locale: string;
+}
+
+const { text, title, locale } = Astro.props;
+const texts = import.meta.glob<MarkdownInstance<Record<string, never>>>('../texts/*/*.md', { eager: true });
+const found = texts[`../texts/${locale}/${text}.md`];
+if (!found) throw new Error(`There is no text "${text}" in "${locale}"`);
+const { Content } = found;
+---
+
+<Base title={title} source={`src/texts/${locale}/${text}.md`}>
+  <div class="container page">
+    <h1>{title}</h1>
+    <article class="prose">
+      <Content />
+    </article>
+  </div>
+</Base>

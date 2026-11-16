@@ -1,0 +1,9 @@
+name: Atocha Cercanías
+alsoKnownAs:
+  - Atocha
+type: station
+country: es
+region: ES-MD
+town: Madrid
+codes:
+  adif: "18000"

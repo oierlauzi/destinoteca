@@ -1,0 +1,16 @@
+---
+import Redirect from '@/components/Redirect.astro';
+import { getCatalog } from '@/site/catalog';
+import { pathsWithAliases, type AliasProps } from '@/site/paths';
+import { href } from '@/site/url';
+import EntityView from '@/views/EntityView.astro';
+
+export async function getStaticPaths() {
+  return pathsWithAliases((await getCatalog()).families);
+}
+
+type Props = AliasProps;
+const { id, alias } = Astro.props;
+---
+
+{alias ? <Redirect to={href(`familias/${id}/`)} /> : <EntityView collection="families" id={id} locale="es" />}

@@ -1,0 +1,84 @@
+---
+import '@/styles/global.css';
+import Wordmark from '@/components/Wordmark.astro';
+import { t } from '@/i18n';
+import { href, editUrl, REPO_URL } from '@/site/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Repository path of the file behind this page, for the "edit" link. */
+  source?: string;
+  /** Social preview image, absolute or site-relative. */
+  image?: string;
+}
+
+const { title, description = t('site.description'), source, image } = Astro.props;
+const fullTitle = title ? `${title} · ${t('site.name')}` : `${t('site.name')} · ${t('site.tagline')}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const nav = [
+  { path: 'catalogo/', label: t('site.nav.catalog') },
+  { path: 'fabricantes/', label: t('site.nav.manufacturers') },
+  { path: 'operadores/', label: t('site.nav.operators') },
+  { path: 'tecnologias/', label: t('site.nav.technologies') },
+  { path: 'contribuir/', label: t('site.nav.contribute') },
+  { path: 'acerca/', label: t('site.nav.about') },
+];
+const here = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={href('favicon.svg').replace(/\/$/, '')} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    <meta name="theme-color" content="#121212" />
+  </head>
+  <body>
+    <a class="skip" href="#contenido">{t('site.skip')}</a>
+    <header class="site-header">
+      <div class="container">
+        <a class="site-title" href={href()} aria-label={t('site.name')}><Wordmark /></a>
+        <nav class="site-nav" aria-label={t('site.nav.label')}>
+          {
+            nav.map((item) => (
+              <a href={href(item.path)} aria-current={here.startsWith(href(item.path)) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+    <main id="contenido">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <p>{t('site.footer.disclaimer')}</p>
+        <p>{t('site.footer.license')}</p>
+        <p>
+          <a href={REPO_URL}>{t('site.footer.source')}</a>
+          {
+            source && (
+              <>
+                {' · '}
+                <a href={editUrl(source)}>{t('site.footer.edit')}</a>
+              </>
+            )
+          }
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

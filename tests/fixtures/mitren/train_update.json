@@ -1,0 +1,15 @@
+{
+  "type": "train_update",
+  "train_id": "C4-23412",
+  "data": {
+    "stops": [
+      { "station_id": "18000", "name": "Atocha Cercanías", "short_name": "Atocha", "times": { "display": { "service_state": "scheduled" } } },
+      { "station_id": "18002", "name": "Nuevos Ministerios", "times": { "display": { "service_state": "scheduled" } } },
+      { "station_id": "17000", "name": "Chamartín-Clara Campoamor", "short_name": "Chamartín", "times": { "display": { "service_state": "scheduled" } } },
+      { "station_id": "17001", "name": "Fuencarral", "times": { "display": { "service_state": "skipped" } } },
+      { "station_id": "17009", "name": "Universidad-Cantoblanco", "times": { "display": { "service_state": "scheduled" } } },
+      { "station_id": "19002", "name": "Valdelasfuentes", "skipped_side": "both", "times": { "display": { "service_state": "scheduled" } } },
+      { "station_id": "19003", "name": "Alcobendas-San Sebastián de los Reyes", "short_name": "Alcobendas-S.S. Reyes", "times": { "display": { "service_state": "scheduled" } } }
+    ]
+  }
+}

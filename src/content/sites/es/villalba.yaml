@@ -1,0 +1,7 @@
+name: Villalba
+type: station
+country: es
+region: ES-MD
+town: Collado Villalba
+codes:
+  adif: "10200"

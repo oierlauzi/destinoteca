@@ -1,0 +1,7 @@
+name: Móstoles
+type: station
+country: es
+region: ES-MD
+town: Móstoles
+codes:
+  adif: "35606"

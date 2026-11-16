@@ -1,0 +1,18 @@
+---
+import { t } from '@/i18n';
+import Base from '@/layouts/Base.astro';
+import { href } from '@/site/url';
+
+interface Props {
+  locale: string;
+}
+---
+
+<Base title={t('site.notFound.title')}>
+  <div class="container page">
+    <p class="eyebrow">404</p>
+    <h1>{t('site.notFound.title')}</h1>
+    <p class="lead">{t('site.notFound.body')}</p>
+    <p><a class="button is-primary" href={href('catalogo/')}>{t('site.notFound.back')}</a></p>
+  </div>
+</Base>
