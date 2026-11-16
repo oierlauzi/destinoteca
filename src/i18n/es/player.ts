@@ -212,4 +212,19 @@ export const player: Record<string, string> = {
   'adif.frame.row5': 'Fila 5',
   'adif.frame.row6': 'Fila 6',
   'adif.frame.row7': 'Fila 7',
+
+  // --- Reloj Festina de ADIF ---
+  'festina.opt.case': 'Caja',
+  'festina.case.chrome': 'Redonda, aro pulido',
+  'festina.case.dark': 'Redonda, aro oscuro',
+  'festina.case.square': 'Cuadrada',
+  'festina.opt.inlays': 'Piezas azules en el aro',
+  'festina.opt.inlays.help': 'En las horas de las 12 a las 4, como en Zaragoza-Delicias. Solo en las cajas redondas.',
+  'festina.opt.secondHand': 'Segundero',
+  'festina.second.blue': 'Azul',
+  'festina.second.dark': 'Oscuro',
+  'festina.second.none': 'Sin segundero',
+  'festina.opt.motion': 'Marcha del segundero',
+  'festina.motion.step': 'A saltos, uno por segundo',
+  'festina.motion.sweep': 'Continua',
 };
