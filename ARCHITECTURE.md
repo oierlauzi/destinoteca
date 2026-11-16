@@ -96,7 +96,7 @@ services are on show.
 
 | Source | Kind | Notes |
 | --- | --- | --- |
-| `demo` | simulated | A made-up board that exercises long names, delays, unconfirmed platforms and a dividing train |
+| `demo` | simulated | A made-up board that exercises long names, delays, unconfirmed platforms and a dividing train; Cercanías, or long-distance trains (`red=long-distance`) |
 | `mitren` | live | Renfe Cercanías and Rodalies from mitren.app's WebSocket; bundled station list |
 | `manual` | manual | Services typed by hand in model terms, stored in the URL |
 
@@ -153,6 +153,14 @@ Atocha Cercanías signs (`page-iberica-acceso-atocha/`,
 `page-iberica-anden-atocha/`) share their grey enclosure, header and
 makers' plate (a vector tracing of PAGE's logo, `page-logo.ts`) through
 `atocha.ts`.
+
+A replica whose shape follows its settings declares `size(options)` next
+to its default `viewBox` (the ADIF boards, hung several together); one that
+wants a source started differently declares `sourceDefaults` (the same
+boards start the demo on long-distance trains). The ADIF boards
+(`mp-electronics-adif/`) also show a way to draw tens of thousands of LEDs:
+each panel is a pattern of unlit LEDs under a pattern of lit ones, clipped
+to the runs of lit dots, so a change of text rewrites only those paths.
 
 **Adding a replica:** a folder with `def.ts` and `index.ts`, its id in
 `src/lib/replicas/ids.ts`, a line in `registry.ts`, its strings, and

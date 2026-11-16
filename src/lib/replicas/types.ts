@@ -41,6 +41,10 @@ export interface ReplicaDef {
   id: string;
   /** Intrinsic size, for layout before the code arrives. */
   viewBox: { width: number; height: number };
+  /** The size with these options, for a display whose shape depends on them (boards hung together). Defaults to `viewBox`. */
+  size?(options: Values): { width: number; height: number };
+  /** Settings of a source that suit this display better than the source's own defaults, by source id. */
+  sourceDefaults?: Record<string, Values>;
   /** `none` is a display that needs no data, such as a clock. */
   accepts: 'board' | 'none';
   needs: Needs;

@@ -16,3 +16,4 @@ export * from './fonts/proportional';
 export { pageIbericaBold7, SEEN_IN_PHOTOGRAPHS } from './fonts/page-iberica-bold-7';
 export { pageIbericaThin7, pageIbericaThin7Own, THIN_SEEN_IN_PHOTOGRAPHS } from './fonts/page-iberica-thin-7';
 export { pageIbericaLed12 } from './fonts/page-iberica-led-12';
+export { mpElectronicsAdif, MP_ADVANCE, MP_SEEN_IN_PHOTOGRAPHS } from './fonts/mp-electronics-adif';

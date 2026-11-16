@@ -53,7 +53,17 @@ const svg = await restingSvg(id);
     <script>
       import { defineReplicaElement, REPLICA_TAG } from '@/lib/player/element';
 
+      import { getReplica } from '@/lib/replicas/registry';
+      import { readConfig, replicaSize } from '@/lib/player/config';
+
       const query = new URLSearchParams(location.search);
+      // A display whose shape follows its settings (boards hung together) takes it from the query.
+      const element = document.querySelector('destinoteca-replica');
+      const def = getReplica(element?.getAttribute('replica') ?? '');
+      if (def?.size) {
+        const size = replicaSize(def, readConfig(def, query).options);
+        document.documentElement.style.setProperty('--ratio', String(size.width / size.height));
+      }
       // `bg` paints behind the sign, for frames that are not its exact shape.
       const bg = query.get('bg')?.replace(/^#/, '');
       if (bg && /^([0-9a-f]{3}|[0-9a-f]{6})$/i.test(bg)) document.body.style.background = `#${bg}`;

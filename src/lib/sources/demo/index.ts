@@ -1,4 +1,4 @@
-import { DEFAULT_TIME_ZONE, type BoardSnapshot, type Place, type Service } from '../../model';
+import { DEFAULT_TIME_ZONE, type BoardSnapshot, type Notice, type Place, type Service } from '../../model';
 import type { Values } from '../../params';
 import type { SourceEnv, SourceHandlers, SourceInstance } from '../types';
 
@@ -78,8 +78,84 @@ export function buildBoard(seed: number, now: number): Service[] {
   return services;
 }
 
+interface LongRun {
+  name: string;
+  names?: string[];
+  product: string;
+  /** Minutes the train takes from the previous call to here, for arrivals. */
+  from: string;
+  fromNames?: string[];
+}
+
+/** Long-distance and regional trains, as at a large station: AVE, IRYO, OUIGO, ALVIA, MD... */
+const LONG_RUNS: LongRun[] = [
+  { name: 'Madrid Puerta de Atocha', names: ['Madrid Pta. Atocha'], product: 'IRYO', from: 'Barcelona Sants' },
+  { name: 'Figueres-Vilafant', product: 'AVE', from: 'Sevilla Santa Justa', fromNames: ['Sevilla Sta. Justa'] },
+  { name: 'Sevilla Santa Justa', names: ['Sevilla Sta. Justa'], product: 'AVLO', from: 'Madrid Puerta de Atocha', fromNames: ['Madrid Pta. Atocha'] },
+  { name: 'València Joaquín Sorolla', names: ['Valencia J.Sorolla'], product: 'OUIGO', from: 'Málaga María Zambrano', fromNames: ['Malaga M. Zambrano'] },
+  { name: 'Bilbao Abando Indalecio Prieto', names: ['Bilbao Abando-I.P.', 'Bilbao'], product: 'ALVIA', from: 'Salamanca' },
+  { name: 'Málaga María Zambrano', names: ['Malaga M. Zambrano'], product: 'AVE', from: 'Barcelona Sants' },
+  { name: 'Castelló de la Plana', names: ['Castelló la Plana'], product: 'EUROMED', from: 'Alacant/Alicante Terminal', fromNames: ['Alacant/Alicante T'] },
+  { name: 'Toledo', product: 'AVANT', from: 'Toledo' },
+  { name: 'Zaragoza Delicias', product: 'MD', from: 'Huesca' },
+  { name: 'A Coruña', product: 'ALVIA', from: 'Vigo Urzáiz', fromNames: ['Vigo Urzaiz'] },
+  { name: 'León', product: 'AVLO', from: 'Valladolid Campo Grande', fromNames: ['Valladolid C. Gr.'] },
+  { name: 'Alacant/Alicante Terminal', names: ['Alacant/Alicante T'], product: 'INTERCITY', from: 'Murcia del Carmen', fromNames: ['Murcia'] },
+];
+
+const SHORT: Record<string, string> = { INTERCITY: 'INTCITY' };
+
+const named = (name: string, names?: string[]): Place => ({ name, names, country: 'es' });
+
+/** Twelve trains ahead of `now` at a large station, the same ones for the same seed. */
+export function buildLongDistanceBoard(seed: number, now: number): Service[] {
+  const services: Service[] = [];
+  for (let i = 0; i < 12; i++) {
+    const pick = (seed + i * 5) % LONG_RUNS.length;
+    const run = LONG_RUNS[pick]!;
+    const at = now + (240 + i * 420 + ((seed + i * 31) % 300)) * 1000;
+    const roll = (seed + i * 13) % 11;
+    const late = roll === 0 || roll === 4 ? 6 + ((seed + i) % 25) : 0;
+    const cancelled = roll === 7 && i > 1;
+    const number = String(1000 + ((seed + i * 137) % 9000)).padStart(5, '0');
+    const service: Service = {
+      id: `demo-ld-${seed}-${i}`,
+      mode: 'rail',
+      operator: { id: run.product === 'IRYO' ? 'iryo' : run.product === 'OUIGO' ? 'ouigo' : 'renfe', name: run.product },
+      product: { id: run.product.toLowerCase(), name: run.product, shortName: SHORT[run.product] ?? run.product, category: 'high-speed' },
+      number,
+      origin: named(run.from, run.fromNames),
+      destination: named(run.name, run.names),
+      status: cancelled ? 'cancelled' : late ? 'delayed' : 'on-time',
+      here: {
+        activity: 'calls',
+        arrival: { scheduled: at - 3 * 60000 - late * 60000, estimated: at - 3 * 60000 },
+        departure: { scheduled: at - late * 60000, estimated: at },
+        // Long-distance platforms are announced shortly before the train.
+        platform: { name: String(1 + ((seed + i * 3) % 14)), confirmed: i < 3 },
+      },
+    };
+    // Now and then two trains run coupled under two numbers.
+    if ((seed + i * 7) % 6 === 0) {
+      service.product = { id: 'alvia', name: 'ALVIA', shortName: 'ALVIA', category: 'long-distance' };
+      service.portions = [
+        { number, destination: service.destination },
+        { number: String(30000 + ((seed + i * 71) % 9999)), destination: service.destination },
+      ];
+    }
+    services.push(service);
+  }
+  return services;
+}
+
+const LONG_NOTICES: Notice[] = [
+  { text: 'Acceso a la sala de embarque 30 minutos antes de la salida', severity: 'info' },
+];
+
 export function create(config: Values, env: SourceEnv): SourceInstance {
   let timer: ReturnType<typeof setInterval> | undefined;
+  const long = config.network === 'long-distance';
+  const board = long ? buildLongDistanceBoard : buildBoard;
   return {
     start(handlers: SourceHandlers): void {
       // Seeded from the station, so that each has its own stable board, and
@@ -91,17 +167,18 @@ export function create(config: Values, env: SourceEnv): SourceInstance {
         const now = env.clock.now();
         // Trains are fixed in time when the board is built and then leave one
         // by one; when few remain, a new board is drawn.
-        let services = buildBoard(seed, origin).filter((s) => (s.here?.departure?.estimated ?? 0) > now - 30000);
-        if (services.length < 3) {
+        let services = board(seed, origin).filter((s) => (s.here?.departure?.estimated ?? 0) > now - 30000);
+        if (services.length < (long ? 8 : 3)) {
           seed += 1;
           origin = now;
-          services = buildBoard(seed, origin);
+          services = board(seed, origin);
         }
         const snapshot: BoardSnapshot = {
           kind: 'board',
           generatedAt: now,
           station: { name: 'Estación de pruebas', country: 'es', timeZone: DEFAULT_TIME_ZONE },
           services,
+          notices: long ? LONG_NOTICES : undefined,
         };
         handlers.onSnapshot(snapshot);
       };

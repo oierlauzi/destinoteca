@@ -2,6 +2,7 @@ import type { Placement } from '../model';
 import { decode, defaults, encode, type ParamSchema, type Values } from '../params';
 import type { ReplicaDef } from '../replicas/types';
 import { getSource } from '../sources/registry';
+import type { SourceDef } from '../sources/types';
 
 /**
  * Everything that decides what one replica shows, as it travels in the query
@@ -30,6 +31,25 @@ export const placementSchema: ParamSchema = {
   ],
 };
 
+/**
+ * A source's settings as this replica wants them by default: a long-distance
+ * board starts the demo on long-distance trains. Only defaults change, so a
+ * URL that states a value keeps it.
+ */
+export function sourceSchema(def: ReplicaDef, source: SourceDef): ParamSchema {
+  const overrides = def.sourceDefaults?.[source.id];
+  if (!overrides) return source.config;
+  return {
+    ...source.config,
+    fields: source.config.fields.map((field) =>
+      field.type !== 'switch' && field.key in overrides ? ({ ...field, default: overrides[field.key] } as typeof field) : field,
+    ),
+  };
+}
+
+/** The size of a replica with these options. */
+export const replicaSize = (def: ReplicaDef, options: Values): { width: number; height: number } => def.size?.(options) ?? def.viewBox;
+
 function toPlacement(values: Values): Placement {
   const platforms = String(values.platforms ?? '')
     .split(',')
@@ -56,7 +76,7 @@ export function readConfig(def: ReplicaDef, query: URLSearchParams): PlayerConfi
   const sourceDef = source === RAW ? undefined : getSource(source);
   return {
     source,
-    sourceConfig: sourceDef ? decode(sourceDef.config, query) : {},
+    sourceConfig: sourceDef ? decode(sourceSchema(def, sourceDef), query) : {},
     placement: toPlacement(decode(placementSchema, source === RAW ? new URLSearchParams() : query)),
     options: decode(def.options, query),
     frame: def.frame ? decode(def.frame, source === RAW ? query : new URLSearchParams()) : {},
@@ -71,7 +91,7 @@ export function writeConfig(def: ReplicaDef, config: PlayerConfig): URLSearchPar
     if (def.frame) encode(def.frame, config.frame, query);
   } else {
     query.set('source', config.source);
-    if (sourceDef) encode(sourceDef.config, config.sourceConfig, query);
+    if (sourceDef) encode(sourceSchema(def, sourceDef), config.sourceConfig, query);
     encode(placementSchema, fromPlacement(config.placement), query);
   }
   encode(def.options, config.options, query);
@@ -82,7 +102,7 @@ export function defaultConfig(def: ReplicaDef, source: string): PlayerConfig {
   const sourceDef = source === RAW ? undefined : getSource(source);
   return {
     source,
-    sourceConfig: sourceDef ? defaults(sourceDef.config) : {},
+    sourceConfig: sourceDef ? defaults(sourceSchema(def, sourceDef)) : {},
     placement: { platforms: [], cycle: true },
     options: defaults(def.options),
     frame: def.frame ? defaults(def.frame) : {},

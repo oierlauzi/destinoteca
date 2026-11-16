@@ -1,6 +1,6 @@
 import { t } from '../../i18n';
 import type { Values } from '../params';
-import { defaultConfig, placementSchema, RAW, readConfig, writeConfig, type PlayerConfig } from '../player/config';
+import { defaultConfig, placementSchema, RAW, readConfig, replicaSize, sourceSchema, writeConfig, type PlayerConfig } from '../player/config';
 import { defineReplicaElement, REPLICA_TAG, type ReplicaElement } from '../player/element';
 import type { SessionState } from '../player/session';
 import { getReplica } from '../replicas/registry';
@@ -72,6 +72,10 @@ export function mountPlayground(root: HTMLElement): void {
   if (!def || !replica || !ui || !stage) return;
 
   let config = initialConfig(def, root);
+  {
+    const size = replicaSize(def, config.options);
+    stage.style.setProperty('--ratio', String(size.width / size.height));
+  }
   // What was set under each tab is kept while the visitor tries another.
   const remembered = new Map<string, Values>([[config.source, config.sourceConfig]]);
   let touched = false;
@@ -82,7 +86,7 @@ export function mountPlayground(root: HTMLElement): void {
     return url.toString();
   };
   const embedCode = (): string => {
-    const { width, height } = def.viewBox;
+    const { width, height } = replicaSize(def, config.options);
     const title = root.dataset.title ?? '';
     return `<iframe src="${embedUrl().replace(/&/g, '&amp;')}" title="${title.replace(/"/g, '&quot;')}" width="1200" height="${Math.round((1200 * height) / width)}" style="border:0;max-width:100%;height:auto;aspect-ratio:${width}/${height}" allow="fullscreen" loading="lazy"></iframe>`;
   };
@@ -144,6 +148,9 @@ export function mountPlayground(root: HTMLElement): void {
     config = next;
     remembered.set(config.source, config.sourceConfig);
     replica.configure(config);
+    // A display whose shape follows its settings (boards hung together) resizes its stage.
+    const size = replicaSize(def, config.options);
+    stage.style.setProperty('--ratio', String(size.width / size.height));
     embedText.value = embedCode();
     if (fromVisitor) touched = true;
     // The address bar follows the settings once the visitor has changed one,
@@ -189,7 +196,7 @@ export function mountPlayground(root: HTMLElement): void {
     const module = await source.load().catch(() => undefined);
     if (turn !== drawing) return;
 
-    const sourceForm = renderForm(source.config, config.sourceConfig, (sourceConfig) => apply({ ...config, sourceConfig }), { lookups: module?.lookups, editors });
+    const sourceForm = renderForm(sourceSchema(def, source), config.sourceConfig, (sourceConfig) => apply({ ...config, sourceConfig }), { lookups: module?.lookups, editors });
     const policy = def.selection(config.options);
     const placement = {
       fields: placementSchema.fields.filter((field) => {

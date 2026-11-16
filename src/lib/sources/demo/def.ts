@@ -11,6 +11,13 @@ export const demoDef: SourceDef = {
       // Seeds the board, so that each station shows its own. Shared with the live source on purpose:
       // switching between the two keeps the station.
       { key: 'station', type: 'text', label: 'demo.station', default: '', hidden: true },
+      {
+        key: 'network', urlKey: 'red', type: 'select', label: 'demo.network', default: 'commuter',
+        choices: [
+          { value: 'commuter', label: 'demo.network.commuter' },
+          { value: 'long-distance', label: 'demo.network.long-distance' },
+        ],
+      },
     ],
   },
   // A couple of kilobytes: shipped with the page rather than fetched on first use.

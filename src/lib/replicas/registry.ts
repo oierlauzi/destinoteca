@@ -3,6 +3,7 @@ import { andenElectromagnetico } from './page-iberica-anden-electromagnetico/def
 import { accesoAtocha } from './page-iberica-acceso-atocha/def';
 import { andenAtocha } from './page-iberica-anden-atocha/def';
 import { andenContinuo } from './page-iberica-anden-continuo/def';
+import { mpElectronicsAdif } from './mp-electronics-adif/def';
 import { vestibulo2, vestibulo4 } from './page-iberica-vestibulo/def';
 import type { ReplicaDef } from './types';
 
@@ -20,6 +21,7 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'page-iberica-anden-continuo': andenContinuo,
   'page-iberica-acceso-atocha': accesoAtocha,
   'page-iberica-anden-atocha': andenAtocha,
+  'mp-electronics-adif': mpElectronicsAdif,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {
