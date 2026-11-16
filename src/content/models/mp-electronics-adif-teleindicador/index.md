@@ -120,8 +120,8 @@ pantallas de vídeo.
 Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/), de Palamós
 (Girona), cuyo nombre aparece en una pequeña placa bajo los paneles. La
 empresa cuenta las estaciones de ADIF de Atocha, Sants y Chamartín entre sus
-grandes encargos, entre los teleindicadores de la M-30 de Madrid (1992) y su
-cierre en 2010; se refundó en 2013.
+grandes encargos. Como ADIF se creó en 2005, los tableros son de ese año o
+posteriores.
 
 ## Cómo es
 
@@ -184,8 +184,10 @@ avisos propios de cada estación solo se pueden escribir a mano.
 
 - **Los rótulos en euskera y en gallego.** La réplica usa las palabras
   habituales, pero no se han visto en ninguna fotografía.
-- **Cuándo se instalaron.** Por la historia de la empresa, entre 1992 y
-  2010; no se sabe en qué año llegó cada estación.
+- **Cuándo se instalaron.** No antes de 2005, cuando se creó ADIF. La
+  historia de la empresa menciona estos encargos antes de los cambios de
+  2008, pero no da fechas; tampoco se sabe en qué año llegó cada estación,
+  ni si alguno es un equipo anterior reformado.
 - **En qué otras estaciones hay o hubo.**
 - **Qué deciden las observaciones**: desde cuántos minutos de retraso se
   avisa, y cuándo se da la hora estimada y cuándo solo el retraso.
