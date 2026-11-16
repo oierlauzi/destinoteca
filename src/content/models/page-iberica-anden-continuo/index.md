@@ -105,9 +105,9 @@ de vía y la fila de LED roja de debajo, pero cambia casi todo lo demás.
 ## La tipografía
 
 Las letras tienen entre 4 y 7 puntos de ancho (la I y el 1 son estrechos; la
-M, la S y la V, anchos) y se separan por una columna en blanco. Las que
-aparecen en las fotografías de esta ficha (C, E, H, A, I, M, N, O, R, S, T y V,
-los dígitos 0, 1 y 2 y los dos puntos) se han copiado punto por punto en la
+D, la M, la S y la V, anchos) y se separan por una columna en blanco. Las que
+aparecen en fotografías (A, C, D, E, G, H, I, J, L, M, N, O, R, S, T y V, los
+dígitos 0, 1 y 2 y los dos puntos) se han copiado punto por punto en la
 réplica; el resto se han dibujado en el mismo estilo y pueden no coincidir con
 las reales.
 

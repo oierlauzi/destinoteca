@@ -15,7 +15,7 @@ describe('the bold proportional typeface', () => {
   it('has the widths read from the photographs', () => {
     const width = (char: string) => font.glyph(char)!.length;
     expect([...'CHANRTEO0'].map(width)).toEqual([6, 6, 6, 6, 6, 6, 6, 6, 6]);
-    expect([...'MSV'].map(width)).toEqual([7, 7, 7]);
+    expect([...'MSVD'].map(width)).toEqual([7, 7, 7, 7]);
     expect([width('I'), width('1'), width(':')]).toEqual([4, 4, 2]);
   });
 
@@ -33,13 +33,14 @@ describe('the bold proportional typeface', () => {
   });
 
   it('knows which glyphs come from photographs', () => {
-    expect(SEEN_IN_PHOTOGRAPHS).toEqual(expect.arrayContaining(['C', 'H', 'A', 'M', 'R', 'T', 'I', 'N', 'S', 'E', 'V', 'O', '0', '1', '2', ':']));
-    expect(SEEN_IN_PHOTOGRAPHS).not.toContain('G');
+    expect(SEEN_IN_PHOTOGRAPHS).toEqual(expect.arrayContaining(['C', 'H', 'A', 'M', 'R', 'T', 'I', 'N', 'S', 'E', 'V', 'O', '0', '1', '2', ':', 'D', 'G', 'J', 'L']));
+    expect(SEEN_IN_PHOTOGRAPHS).not.toContain('U');
+    expect(font.glyph('U')).toBeDefined();
   });
 
   it('fits a name by its width in dots, cutting the last form if nothing fits', () => {
-    expect(measure('ALCOBENDAS', font)).toBe(70);
-    expect(fitText(['Alcobendas-San Sebastián de los Reyes', 'Alcobendas-S.S.R.', 'Alcobendas'], font, 70)).toBe('ALCOBENDAS');
+    expect(measure('ALCOBENDAS', font)).toBe(71);
+    expect(fitText(['Alcobendas-San Sebastián de los Reyes', 'Alcobendas-S.S.R.', 'Alcobendas'], font, 71)).toBe('ALCOBENDAS');
     expect(fitText(['Guadalajara'], font, 200)).toBe('GUADALAJARA');
     expect(measure(fitText(['Guadalajara'], font, 30), font)).toBeLessThanOrEqual(30);
     expect(fitText(['Puerta de Atocha'], font, 60)).toBe('PUERTA DE');
