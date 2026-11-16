@@ -302,7 +302,7 @@ export function renderToString(frame: AdifFrame, options: AdifOptions): string {
   const { width, height } = sizeOf(options);
   svg.attrs.width = 1200;
   svg.attrs.height = Math.round(((1200 * height) / width) * 100) / 100;
-  return toDocument(svg, 'destinoteca · teleindicador LED de MP Electronics para ADIF · https://oierlauzi.github.io/destinoteca/');
+  return toDocument(svg, 'destinoteca · panel LED de MP Electronics para ADIF · https://oierlauzi.github.io/destinoteca/');
 }
 
 let instances = 0;

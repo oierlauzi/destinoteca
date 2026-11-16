@@ -25,7 +25,7 @@ y la electrónica al firmware.
 Su nombre aparece en una pequeña placa bajo los equipos que hizo para ADIF,
 con un mismo diseño:
 
-- el [teleindicador de salidas y llegadas](../../catalogo/mp-electronics-adif-teleindicador/);
+- el [panel LED](../../catalogo/mp-electronics-adif-teleindicador/) de salidas y llegadas;
 - el [teleindicador de andén](../../catalogo/mp-electronics-adif-anden/), sin reloj;
 - el [teleindicador de andén con reloj](../../catalogo/mp-electronics-adif-anden-reloj/) al lado;
 - el [teleindicador de andén vertical](../../catalogo/mp-electronics-adif-anden-vertical/), con un reloj propio encima de las filas.

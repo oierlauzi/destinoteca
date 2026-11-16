@@ -1,5 +1,5 @@
 ---
-name: Teleindicador LED de salidas y llegadas de MP Electronics para ADIF
+name: Panel LED de MP Electronics para ADIF
 summary: >-
   El tablero de salidas y llegadas de las estaciones de largo recorrido de
   ADIF: siete trenes en paneles de LED, con hora, destino o
