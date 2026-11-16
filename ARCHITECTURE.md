@@ -136,7 +136,7 @@ player asks for.
 | Dot matrix | `dot-matrix.ts` | Geometry, and a `DotSkin` for how a dot looks (`skins/`) |
 | Character display | `character-display.ts` | Lines × cells, fonts, fields, garbled cells |
 | Motion | `marquee.ts`, `transition.ts` | Scrolling; the order and timing in which dots change |
-| Fonts and code pages | `fonts/` | `cp437` is the standard one; `telenorma-cp437` states that ROM's deviations explicitly |
+| Fonts and code pages | `fonts/` | `cp437` is the standard one; `telenorma-cp437` states that ROM's deviations explicitly; proportional fonts read from photographs say which glyphs were seen |
 
 The PAGE Ibérica family shows how a design language is shared.
 `replicas/page-iberica-electromagneticos/` holds what its signs have in
@@ -146,7 +146,13 @@ and the drawing and live updating of a sign (`live.ts`). Each member is then
 a housing, a layout of its characters and a presenter:
 `page-iberica-anden-electromagnetico/` (one line of 16) and
 `page-iberica-vestibulo/` (concourse boards of 2 or 4 lines of 20, two
-replica ids from one implementation).
+replica ids from one implementation). The LED part of a sign is a panel of
+one or more lines (`LedRow`), so the red row under a flip-dot line and the
+two-line bicolour panel of Atocha Cercanías go through the same code. The
+Atocha Cercanías signs (`page-iberica-acceso-atocha/`,
+`page-iberica-anden-atocha/`) share their grey enclosure, header and
+makers' plate (a vector tracing of PAGE's logo, `page-logo.ts`) through
+`atocha.ts`.
 
 **Adding a replica:** a folder with `def.ts` and `index.ts`, its id in
 `src/lib/replicas/ids.ts`, a line in `registry.ts`, its strings, and

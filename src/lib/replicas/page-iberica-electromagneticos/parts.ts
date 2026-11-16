@@ -134,9 +134,21 @@ const LED_PITCH = (LED_HEIGHT * 12) / 95;
 const LED_GAP = 24;
 const LED_UNLIT = '#40101a';
 
+/**
+ * An LED panel: the red row under the flip-dots, or a matrix that holds
+ * several lines of text. Each line is a strip of columns that stands still
+ * when it fits and runs right to left when it does not.
+ */
 export interface LedRow {
   matrix: DotMatrix<RoundLedLook>;
   cols: number;
+  /** The top row of each line of text. A row of LEDs has one, at 0. */
+  lines: number[];
+  /** A text as columns, in the panel's own typeface. */
+  strip(text: string): number[];
+  /** Where a text that fits stands. */
+  align: 'center' | 'left';
+  look(options: FamilyOptions): RoundLedLook;
 }
 
 /**
@@ -153,12 +165,28 @@ export function ledRow(x: number, y: number, width: number): LedRow {
     skin: roundLed(),
     backing: () => [h('rect', { x, y, width, height: LED_HEIGHT, fill: '#2c0a11', stroke: '#000000', 'stroke-width': 0.2 })],
   });
-  return { matrix, cols };
+  return { matrix, cols, lines: [0], strip: ledStrip, align: 'center', look: ledLook };
 }
 
 export const ledLook = (options: FamilyOptions): RoundLedLook => ({ lit: options.ledColor, unlit: LED_UNLIT });
 
 export const ledStrip = (text: string): number[] => textColumns(text, flipDotFont, flipDotCharset, 1);
+
+/** The columns of one line seen through a window `cols` wide, `offset` columns into its run. */
+export function ledWindow(strip: number[], cols: number, offset: number, align: LedRow['align'] = 'center'): number[] {
+  if (align === 'left' && strip.length <= cols) return Array.from({ length: cols }, (_, c) => strip[c] ?? 0);
+  return marqueeWindow(strip, cols, offset, LED_GAP);
+}
+
+/** The whole panel: each line's window moved down to its row. */
+export function panelState(panel: LedRow, strips: number[][], offsets: number[]): DotState {
+  const columns: number[] = Array.from({ length: panel.cols }, () => 0);
+  panel.lines.forEach((top, i) => {
+    const window = ledWindow(strips[i] ?? [], panel.cols, offsets[i] ?? 0, panel.align);
+    window.forEach((byte, c) => (columns[c] = (columns[c] ?? 0) | (byte << top)));
+  });
+  return [columns];
+}
 
 export const ledState = (strip: number[], cols: number, offset: number): DotState => [marqueeWindow(strip, cols, offset, LED_GAP)];
 

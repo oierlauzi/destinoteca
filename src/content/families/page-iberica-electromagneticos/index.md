@@ -14,7 +14,7 @@ y texto en puntos flip-dot de color verde lima de 5 × 7, con electrónica
 de [Telenorma](../../fabricantes/telenorma/) integrada por
 [PAGE Ibérica](../../fabricantes/page-iberica/).
 
-Se han visto en servicio tres montajes de esta generación:
+Se han visto en servicio estos montajes de esta generación:
 
 - **Cartel de andén de una cara**, con una línea de 16 caracteres y una fila
   de LED debajo. Es el
@@ -26,6 +26,16 @@ Se han visto en servicio tres montajes de esta generación:
   salida en lugar de los minutos. Solo se conoce en Alcalá de Henares, ya
   retirado.
 - **Cartel de andén de dos caras**, para andenes centrales.
+- **Los carteles de Atocha Cercanías**, de caja gris y con la placa de PAGE
+  bajo la pantalla. Sus líneas flip-dot son matrices continuas iluminadas por
+  LED, con una tipografía de trazo fino: el
+  [teleindicador de andén](../../catalogo/page-iberica-anden-atocha/), con un
+  panel LED bicolor de dos líneas debajo; el de
+  [acceso a andén](../../catalogo/page-iberica-acceso-anden-atocha/), con una
+  fila de LED roja; el [panel de la pasarela](../../catalogo/page-iberica-pasarela-atocha/),
+  con dos pantallas de cinco líneas, y el antiguo
+  [panel del vestíbulo](../../catalogo/page-iberica-vestibulo-atocha/), ya
+  retirado, con columnas para Cercanías y para Largo Recorrido y Regionales.
 - **Paneles de vestíbulo**, que apilan de dos a cuatro filas de 20 caracteres
   para anunciar los trenes de toda la estación: el de
   [dos líneas](../../catalogo/page-iberica-vestibulo-2-lineas/), visto en Tres

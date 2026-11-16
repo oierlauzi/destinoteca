@@ -14,3 +14,5 @@ export { roundLed, type RoundLedLook } from './skins/round-led';
 export { litFlap, type LitFlapLook } from './skins/lit-flap';
 export * from './fonts/proportional';
 export { pageIbericaBold7, SEEN_IN_PHOTOGRAPHS } from './fonts/page-iberica-bold-7';
+export { pageIbericaThin7, pageIbericaThin7Own, THIN_SEEN_IN_PHOTOGRAPHS } from './fonts/page-iberica-thin-7';
+export { pageIbericaLed12 } from './fonts/page-iberica-led-12';

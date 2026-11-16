@@ -25,3 +25,8 @@ transmisión multimedia, centralización y control de parámetros en coches
 Talgo, tratamiento de señal, torres de control de tráfico aéreo y marítimo,
 centros de comunicaciones para emergencias, cableados estructurados y
 edificios inteligentes.
+
+Los carteles de [Atocha Cercanías](../../catalogo/page-iberica-anden-atocha/),
+de caja gris, llevan bajo la pantalla una pequeña placa blanca con el
+logotipo de la empresa: un globo cuya mitad derecha es un óvalo blanco dentro
+de un rectángulo azul, seguido de «PAGE» en cursiva.

@@ -132,6 +132,7 @@ export const player: Record<string, string> = {
   'pageib.color.red': 'Rojo',
   'pageib.color.orange': 'Naranja',
   'pageib.color.pinkRed': 'Rojo rosado',
+  'pageib.color.green': 'Verde',
 
   // --- Paneles electromagnéticos de vestíbulo de PAGE Ibérica ---
   'vestibulo.frame.via': 'Vía',
@@ -149,4 +150,8 @@ export const player: Record<string, string> = {
   'continuo.opt.showTime': 'Mostrar la hora',
   'continuo.opt.pixelLeds': 'LED de los puntos',
   'continuo.opt.pixelLeds.help': 'El LED junto a cada punto ilumina los que muestran su cara clara.',
+
+  // --- Teleindicador de andén de PAGE Ibérica, Atocha Cercanías ---
+  'atocha.frame.label': 'Panel LED, línea 1',
+  'atocha.frame.led': 'Panel LED, línea 2',
 };
