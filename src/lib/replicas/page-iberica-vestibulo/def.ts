@@ -61,8 +61,8 @@ function frameSchema(lines: number, example: BoardRow[]): ParamSchema {
       { key: `min${i}`, type: 'text', label: 'vestibulo.frame.min', default: row.minutes, maxLength: 3, group },
     );
   }
-  fields.push({ key: 'led', type: 'text', label: 'vestibulo.frame.led', default: 'PROHIBIDO CRUZAR LAS VIAS', glyphs: 'telenorma-cp437' });
-  return { fields, groups: Array.from({ length: lines }, (_, i) => ({ id: `row${i + 1}`, label: `vestibulo.frame.row${i + 1}` })) };
+  fields.push({ key: 'led', type: 'text', label: 'vestibulo.frame.led', default: '', glyphs: 'telenorma-cp437' });
+  return { fields, groups: Array.from({ length: lines }, (_, i) => ({ id: `row${i + 1}`, label: `vestibulo.frame.row${i + 1}`, layout: 'row' as const })) };
 }
 
 /** The whole station, the next trains first, as many as there are lines. */
@@ -78,6 +78,15 @@ const selection = (lines: number): SelectionPolicy => ({
 
 export type VestibuloOptions = FamilyOptions;
 
+/**
+ * The family's settings, less the LED row's idle text: what the boards' LED
+ * row showed is not known, so it is left dark rather than filled in.
+ */
+export const optionsSchema: ParamSchema = {
+  ...familyOptionsSchema,
+  fields: familyOptionsSchema.fields.filter((field) => field.key !== 'ledIdle'),
+};
+
 /** `nextArrival`: whether "Próxima Llegada" is printed in the header (it is at Cantoblanco, not at Tres Cantos). */
 function board(id: string, lines: number, nextArrival: boolean, example: BoardRow[]): ReplicaDef {
   const { width, height } = boardGeometry(lines);
@@ -85,8 +94,8 @@ function board(id: string, lines: number, nextArrival: boolean, example: BoardRo
     id,
     viewBox: { width, height },
     accepts: 'board',
-    needs: { services: lines, calls: true },
-    options: familyOptionsSchema,
+    needs: { services: lines, calls: false },
+    options: optionsSchema,
     frame: frameSchema(lines, example),
     selection: () => selection(lines),
     load: async () => (await import('./index')).implementation(lines, nextArrival),
@@ -103,5 +112,5 @@ export const vestibulo4 = board('page-iberica-vestibulo-4-lineas', 4, true, [
   { platform: '2', destination: 'CHAMARTIN', minutes: '8' },
   { platform: '1', destination: 'COLMENAR VIEJO', minutes: '8' },
   { platform: '2', destination: 'ATOCHA', minutes: '15' },
-  { platform: '1', destination: 'ALCOBENDAS-S.S.R.', minutes: '22' },
+  { platform: '1', destination: 'ALCOBENDAS', minutes: '22' },
 ]);

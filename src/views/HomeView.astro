@@ -80,12 +80,10 @@ const axes = FACETS.filter((facet) => facet.id !== 'replica')
               <div>
                 <dt>{t(facet.label)}</dt>
                 <dd>
-                  <ul class="badges">
+                  <ul class="links">
                     {values.map((value) => (
                       <li>
-                        <a class="badge" href={value.href}>
-                          {value.label} <span class="n">{value.count}</span>
-                        </a>
+                        <a href={value.href}>{value.label}</a> <span class="n">({value.count})</span>
                       </li>
                     ))}
                   </ul>
@@ -149,9 +147,19 @@ const axes = FACETS.filter((facet) => facet.id !== 'replica')
     margin: 0;
   }
 
-  .axes .badge {
-    font-size: 0.85rem;
-    padding: 0.1em 0.7em;
+  .axes .links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 0;
+  }
+
+  .axes .links li:not(:last-child)::after {
+    content: '·';
+    margin: 0 0.5em;
+    color: var(--muted);
   }
 
   .n {

@@ -49,13 +49,21 @@ describe('concourse board presenter', () => {
       via1: '2', dest1: 'CHAMARTIN', min1: '8',
       via2: '', dest2: 'COLMENAR VIEJO', min2: '13',
       via3: '', dest3: '', min3: '',
-      led: 'CHAMARTIN: PARA EN NUEVOS MINISTERIOS, ATOCHA',
+      led: '',
     });
   });
 
   it('fits a long name between the platform and the minutes', () => {
     const frame = impl.present(view([train('a', 'Alcobendas-San Sebastián de los Reyes', 22, '1')]), options);
     expect(String((frame as Record<string, unknown>).dest1).length).toBeLessThanOrEqual(20 - 2 - 3);
+  });
+
+  it('keeps the LED row dark, notices included, but shows what is typed by hand', () => {
+    const withNotice = { ...view([train('a', 'Chamartín', 8, '2')]), notices: [{ text: 'Aviso' }] };
+    expect(impl.present(withNotice, { ...options, ledIdle: 'X' } as never)).toMatchObject({ led: '' });
+    const svg = (led: string) => impl.renderToString({ ...(impl.blank(view([]), options) as Record<string, unknown>), led }, options);
+    expect(svg('').match(/fill="#ff3b2e"/g)).toBeNull();
+    expect(svg('HOLA').match(/fill="#ff3b2e"/g)?.length).toBeGreaterThan(20);
   });
 
   it('goes blank with nothing to show', () => {
@@ -87,8 +95,10 @@ describe('concourse board settings', () => {
     expect(readConfig(vestibulo2, writeConfig(vestibulo2, config))).toEqual(config);
   });
 
-  it('shares appearance and faults with the platform sign', () => {
-    expect(vestibulo2.options).toBe(andenElectromagnetico.options);
+  it('shares appearance and faults with the platform sign, less the LED idle text', () => {
+    const keys = (fields: { key: string }[]) => fields.map((field) => field.key);
+    expect(keys(vestibulo2.options.fields)).toEqual(keys(andenElectromagnetico.options.fields).filter((key) => key !== 'ledIdle'));
+    expect(vestibulo2.needs.calls).toBe(false);
     expect(vestibulo4.selection(options)).toMatchObject({ platforms: 'any', window: { size: 4, mode: 'top' } });
   });
 });

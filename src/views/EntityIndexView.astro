@@ -34,11 +34,7 @@ const entries = catalog.entities(collection).map((entry) => {
                 <a href={href(`${page.segment}/${entry.id}/`)}>{entry.data.name}</a>
               </h2>
               <p class="card-text">{entry.data.summary}</p>
-              <ul class="badges">
-                <li>
-                  <span class="badge">{count}</span>
-                </li>
-              </ul>
+              <p class="card-meta muted">{count}</p>
             </div>
           </li>
         ))
@@ -56,8 +52,8 @@ const entries = catalog.entities(collection).map((entry) => {
     height: 100%;
   }
 
-  .entities .badges {
-    margin-top: auto;
-    padding-top: 6px;
+  .entities .card-meta {
+    margin: auto 0 0;
+    font-size: 0.85rem;
   }
 </style>

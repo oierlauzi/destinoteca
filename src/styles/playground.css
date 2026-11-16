@@ -166,6 +166,59 @@
   color: var(--ink);
 }
 
+/* Groups laid out as the rows of a table, e.g. the lines of a board. */
+.form-rows {
+  flex-basis: 100%;
+  display: grid;
+  grid-template-columns: max-content repeat(var(--columns, 3), max-content);
+  gap: 6px 14px;
+  align-items: end;
+}
+
+.form-row {
+  display: contents;
+}
+
+.form-row-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  align-self: end;
+  padding-bottom: 0.45em;
+}
+
+/* Only the first row shows the field labels, as column headings. */
+.form-row + .form-row .field > label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 40rem) {
+  .form-rows {
+    grid-template-columns: max-content var(--narrow, repeat(var(--columns, 3), max-content));
+    gap: 6px 8px;
+  }
+
+  .form-row .field,
+  .form-row .field-control {
+    min-width: 0;
+  }
+
+  .form-row .field-control {
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+
+  .form-row input.is-grow {
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+}
+
 .field.is-wide {
   flex-basis: 100%;
 }

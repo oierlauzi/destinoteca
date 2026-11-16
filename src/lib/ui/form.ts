@@ -26,14 +26,15 @@ export interface Form {
 const label = (key: string): string => t(key);
 const literalOrKey = (text: string): string => (has(text) ? t(text) : text);
 
-function glyphPicker(field: TextField, input: HTMLInputElement): HTMLElement | undefined {
+function glyphPicker(field: TextField, input: HTMLInputElement, compact = false): HTMLElement | undefined {
   const charset = field.glyphs ? getCharset(field.glyphs) : undefined;
   if (!charset) return undefined;
   const panel = el('div', { class: 'glyphs', attrs: { hidden: true } });
   const toggle = el('button', {
     class: 'button glyphs-toggle',
-    text: t('player.glyphs'),
-    attrs: { type: 'button', title: t('player.glyphs.title'), 'aria-expanded': 'false' },
+    // In a table row there is room for the symbol only.
+    text: compact ? 'Ω' : t('player.glyphs'),
+    attrs: { type: 'button', title: t('player.glyphs.title'), 'aria-label': compact ? t('player.glyphs.title') : undefined, 'aria-expanded': 'false' },
     on: {
       click: () => {
         // Built on first use: it is a couple of hundred buttons.
@@ -159,7 +160,7 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
     for (const setter of setters) setter(values);
   };
 
-  const control = (field: Field): HTMLElement | undefined => {
+  const control = (field: Field, inRow = false): HTMLElement | undefined => {
     if (field.hidden) {
       // A seed is not something to type, but rolling a new one is worth a button.
       if (field.type !== 'number' || !field.shuffle) return undefined;
@@ -181,13 +182,20 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
     switch (field.type) {
       case 'text': {
         const input = el('input', {
-          attrs: { id, type: 'text', maxlength: field.maxLength, placeholder: field.placeholder, size: field.maxLength && field.maxLength < 8 ? field.maxLength + 1 : undefined, spellcheck: 'false', autocomplete: 'off' },
+          // A short field is drawn as wide as what it holds, so a row of them reads like the display.
+          attrs: {
+            id, type: 'text', maxlength: field.maxLength, placeholder: field.placeholder, spellcheck: 'false', autocomplete: 'off',
+            size: field.maxLength && field.maxLength <= 24 ? field.maxLength + 1 : undefined,
+            // In a table row, a box of two or three characters is drawn exactly that wide.
+            style: inRow && field.maxLength && field.maxLength <= 6 ? `width:calc(${field.maxLength + 1}ch + 1.2em)` : undefined,
+            class: inRow && !(field.maxLength && field.maxLength <= 6) ? 'is-grow' : undefined,
+          },
           on: { input: () => commitSoon({ [field.key]: input.value }) },
         });
         setters.push((next) => {
           if (document.activeElement !== input) input.value = String(next[field.key] ?? '');
         });
-        return row([el('span', { class: 'field-control' }, [input, glyphPicker(field, input)])]);
+        return row([el('span', { class: 'field-control' }, [input, glyphPicker(field, input, inRow)])]);
       }
       case 'number': {
         const input = el('input', {
@@ -300,14 +308,47 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
     }
   };
 
+  // Fields and groups appear in the order of the schema: a group where its first field is.
   const element = el('div', { class: 'form' });
   const groups = schema.groups ?? [];
-  const ungrouped = schema.fields.filter((field) => !field.group || !groups.some((group) => group.id === field.group));
-  const fields = (list: Field[]): HTMLElement[] => list.map(control).filter((node): node is HTMLElement => node !== undefined);
-  element.append(...fields(ungrouped));
-  for (const group of groups) {
-    const inner = fields(schema.fields.filter((field) => field.group === group.id));
-    if (inner.length) element.append(el('fieldset', {}, [el('legend', { text: t(group.label) }), ...inner]));
+  const fields = (list: Field[], inRow = false): HTMLElement[] =>
+    list.map((field) => control(field, inRow)).filter((node): node is HTMLElement => node !== undefined);
+  const drawn = new Set<string>();
+  let table: HTMLElement | undefined;
+  for (const field of schema.fields) {
+    const group = groups.find((candidate) => candidate.id === field.group);
+    if (!group) {
+      table = undefined;
+      element.append(...fields([field]));
+      continue;
+    }
+    if (drawn.has(group.id)) continue;
+    drawn.add(group.id);
+    const members = schema.fields.filter((other) => other.group === group.id);
+    if (group.layout === 'row') {
+      const inner = fields(members, true);
+      if (!inner.length) continue;
+      // Consecutive row groups make one table; the field labels of the first row head the columns.
+      if (!table) {
+        // On a narrow screen the long fields take what is left of the width; short ones keep theirs.
+        const narrow = members
+          .filter((member) => !member.hidden)
+          .map((member) => (member.type === 'text' && member.maxLength !== undefined && member.maxLength <= 6 ? 'max-content' : 'minmax(0, 1fr)'))
+          .join(' ');
+        table = el('div', { class: 'form-rows', attrs: { style: `--columns:${inner.length};--narrow:${narrow}` } });
+        element.append(table);
+      }
+      table.append(
+        el('div', { class: 'form-row', attrs: { role: 'group', 'aria-label': t(group.label) } }, [
+          el('span', { class: 'form-row-label', text: t(group.label), attrs: { 'aria-hidden': 'true' } }),
+          ...inner,
+        ]),
+      );
+    } else {
+      table = undefined;
+      const inner = fields(members);
+      if (inner.length) element.append(el('fieldset', {}, [el('legend', { text: t(group.label) }), ...inner]));
+    }
   }
 
   const set = (next: Values): void => {

@@ -120,7 +120,12 @@ export type Field = SettingField | SwitchField;
 
 export interface ParamSchema {
   fields: Field[];
-  groups?: { id: string; label: string }[];
+  /**
+   * `layout: 'row'` draws a group as one row of a table, its fields side by
+   * side under headings shared with the neighbouring row groups: for things
+   * that repeat, such as the lines of a board.
+   */
+  groups?: { id: string; label: string; layout?: 'row' }[];
 }
 
 export type Values = Record<string, unknown>;

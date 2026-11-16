@@ -8,7 +8,7 @@ import References from '@/components/References.astro';
 import ReplicaPlayground from '@/components/ReplicaPlayground.astro';
 import { t } from '@/i18n';
 import Base from '@/layouts/Base.astro';
-import { inlineMarkdown, yearsLabel } from '@/lib/catalog';
+import { inlineMarkdown } from '@/lib/catalog';
 import { getCatalog } from '@/site/catalog';
 import { href } from '@/site/url';
 
@@ -26,7 +26,6 @@ const { Content } = await render(model);
 
 const cover = catalog.cover(model);
 const social = cover ? (await getImage({ src: cover.src, width: Math.min(cover.src.width, 1200) })).src : undefined;
-const years = yearsLabel(facts.years, facts.status);
 const siblings = facts.family ? catalog.modelsWith('familia', facts.family).filter((other) => other.id !== model.id) : [];
 
 /** "1996–2026", "desde 1996", "hasta 2026": whatever is known of a period. */
@@ -36,6 +35,12 @@ function span(from?: number, to?: number): string {
   if (to !== undefined) return t('catalog.model.installations.until', { year: to });
   return '';
 }
+
+/** "C-4 · hasta 2026 · Retirado": what is known of an installation, as one line of text. */
+const installationFacts = (installation: { line?: string; years: string; status: string }): string =>
+  [installation.line, installation.years, installation.status !== 'unknown' ? t(`catalog.status.${installation.status}`) : '']
+    .filter(Boolean)
+    .join(' · ');
 
 const installations = data.installations.map((installation) => {
   const site = installation.site ? catalog.site(installation.site.id) : undefined;
@@ -56,36 +61,6 @@ const installations = data.installations.map((installation) => {
       <p class="eyebrow">{t(`catalog.kind.${data.kind}`)}</p>
       <h1>{data.name}</h1>
       <p class="lead">{data.summary}</p>
-      <ul class="badges">
-        {
-          data.technologies.map((ref) => (
-            <li>
-              <a class="badge" href={href(`tecnologias/${ref.id}/`)}>
-                {catalog.technology(ref.id).data.name}
-              </a>
-            </li>
-          ))
-        }
-        {
-          facts.manufacturers.map((manufacturer) => (
-            <li>
-              <a class="badge" href={href(`fabricantes/${manufacturer}/`)}>
-                {catalog.manufacturer(manufacturer).data.name}
-              </a>
-            </li>
-          ))
-        }
-        {
-          years && (
-            <li>
-              <span class="badge">{years}</span>
-            </li>
-          )
-        }
-        <li>
-          <span class="badge">{t(`catalog.status.${data.status}`)}</span>
-        </li>
-      </ul>
     </header>
 
     {
@@ -125,17 +100,7 @@ const installations = data.installations.map((installation) => {
                   <strong>{installation.place}</strong>
                   {installation.town && <span class="muted"> · {installation.town}</span>}
                 </p>
-                <ul class="badges">
-                  {installation.line && <li><span class="badge">{installation.line}</span></li>}
-                  {installation.years && <li><span class="badge">{installation.years}</span></li>}
-                  {installation.status !== 'unknown' && (
-                    <li>
-                      <span class:list={['badge', { 'is-dot': installation.status === 'in-service' }]}>
-                        {t(`catalog.status.${installation.status}`)}
-                      </span>
-                    </li>
-                  )}
-                </ul>
+                {installationFacts(installation) && <p class="facts muted">{installationFacts(installation)}</p>}
                 {installation.note && <p class="note muted" set:html={inlineMarkdown(installation.note)} />}
               </li>
             ))}
@@ -192,10 +157,6 @@ const installations = data.installations.map((installation) => {
 <style>
   .model-header {
     margin-bottom: 24px;
-  }
-
-  .model-header .badges {
-    margin-top: 12px;
   }
 
   .stub-note {
@@ -256,6 +217,11 @@ const installations = data.installations.map((installation) => {
 
   .installations p {
     margin: 0;
+  }
+
+  .installations .facts {
+    margin: 0;
+    font-size: 0.9rem;
   }
 
   .installations .note {

@@ -61,7 +61,6 @@ replica:
     via2: 2
     dest2: COLMENAR VIEJO
     min2: 13
-    led: 'PROHIBIDO CRUZAR LAS VIAS'
 stage: stub
 ---
 

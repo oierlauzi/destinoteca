@@ -4,7 +4,6 @@ import {
   destinationsOf,
   fitNames,
   minutesUntil,
-  nameLadder,
   platformDigits,
   text,
   type Service,
@@ -31,35 +30,19 @@ function row(service: Service, view: View, options: VestibuloOptions): BoardRow 
 
 const blankRow: BoardRow = { platform: '', destination: '', minutes: '' };
 
-function announcements(view: View, options: VestibuloOptions): string {
-  const notices = view.notices.map((notice) => fold(text(notice.text))).filter(Boolean);
-  return notices.length ? notices.join(' - ') : options.ledIdle;
-}
-
 /**
- * The LED row: notices first; otherwise where the first train calls. No
- * photograph shows what the real boards ran on it, so this is the replica's
- * own choice, worded like the platform signs.
+ * The LED row stays dark: no photograph shows what the real boards ran on
+ * it, so the replica does not make it up. Text typed in "texto libre" still
+ * reaches it.
  */
-function ledText(view: View, options: VestibuloOptions): string {
-  const notices = announcements(view, options);
-  if (view.notices.length) return notices;
-  const first = view.services[0];
-  const stops = (first?.callsAfter ?? []).filter((call) => !call.status).map((call) => fold(nameLadder(call.place)[1] ?? call.place.name));
-  if (first && stops.length) {
-    const ladder = destinationsOf(first).map((place) => nameLadder(place).map(fold));
-    const name = ladder.map((forms) => forms[forms.length - 1] ?? '').join('/');
-    return `${name}: PARA EN ${stops.join(', ')}`;
-  }
-  return notices;
-}
+const ledText = (): string => '';
 
-export function blank(view: View, options: VestibuloOptions, lines: number): VestibuloFrame {
-  return { rows: Array.from({ length: lines }, () => blankRow), led: announcements(view, options) };
+export function blank(_view: View, _options: VestibuloOptions, lines: number): VestibuloFrame {
+  return { rows: Array.from({ length: lines }, () => blankRow), led: ledText() };
 }
 
 export function present(view: View, options: VestibuloOptions, lines: number): VestibuloFrame {
   const rows = view.services.slice(0, lines).map((service) => row(service, view, options));
   while (rows.length < lines) rows.push(blankRow);
-  return { rows, led: ledText(view, options) };
+  return { rows, led: ledText() };
 }

@@ -79,9 +79,8 @@ replica:
     dest3: ATOCHA
     min3: 15
     via4: 1
-    dest4: ALCOBENDAS-S.S.R.
+    dest4: ALCOBENDAS
     min4: 22
-    led: 'PROHIBIDO CRUZAR LAS VIAS'
 stage: stub
 ---
 
