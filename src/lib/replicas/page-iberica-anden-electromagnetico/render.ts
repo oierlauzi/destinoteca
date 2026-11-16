@@ -1,6 +1,6 @@
 import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { MIN_GAP, lineWidth } from '../page-iberica-electromagneticos/dimensions';
+import { LINE_HEIGHT, MIN_GAP, lineWidth } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
 import { cercaniasRoundel, HOUSING, LEGEND, ledRow, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
@@ -13,7 +13,12 @@ export const WIDTH = 190.87605;
 export const HEIGHT = 81.160835;
 const at = (x: number, y: number) => ({ x: x - ORIGIN.x, y: y - ORIGIN.y });
 
-const ROW = at(24.658236, 39.877911);
+// The line keeps the drawing's left edge, and sits higher than in the
+// drawing to leave room under it for the fluorescent tube (not drawn) before
+// the rule above the LED row, which stays where the drawing has it.
+const LED_RULE = 56.89837;
+const TUBE_GAP = 7.4;
+const ROW = at(24.658236, LED_RULE - TUBE_GAP - LINE_HEIGHT);
 const LED = at(20.358263, 60.55167);
 const led = ledRow(LED.x, LED.y, 158.50243);
 export const LED_COLS = led.cols;
@@ -58,7 +63,7 @@ function housing(frame: AndenFrame, _options: FamilyOptions, slots: Record<strin
       h('tspan', { x: next.x, y: next.y + 7.761116, 'letter-spacing': 0.15875 }, ['Llegada']),
     ]),
     divider(35.448382),
-    divider(56.89837),
+    divider(LED_RULE),
     cercaniasRoundel(at(21.284002, 16.007592).x + 8.218758, at(21.284002, 16.007592).y + 8.218758, 8.218758),
     // The platform number: a vinyl stuck on beside "Vía".
     h('text', { x: platform.x, y: platform.y, ...big }, [frame.platform], (element) => (slots.platform = element)),

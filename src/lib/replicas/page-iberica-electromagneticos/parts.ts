@@ -15,7 +15,7 @@ import {
   type VNode,
 } from '../../hardware';
 import type { ParamSchema } from '../../params';
-import { LED_HEIGHT } from './dimensions';
+import { LED_HEIGHT, LINE_HEIGHT, MIN_BASELINE } from './dimensions';
 import { CELL_COLS, CELL_ROWS, FLIP_DOT_UNLIT, flipDotCharset, flipDotFont } from './flip-dot-lines';
 
 export { LED_HEIGHT };
@@ -180,7 +180,7 @@ export function cercaniasRoundel(cx: number, cy: number, radius: number): VNode 
 export function minLegend(x: number, top: number): VNode {
   return h(
     'text',
-    { transform: `translate(${x},${top + 7.775527}) scale(0.81099995,1.2330457)`, fill: MIN_LEGEND, 'font-size': 5.65488 },
+    { transform: `translate(${x},${top + LINE_HEIGHT * MIN_BASELINE}) scale(0.81099995,1.2330457)`, fill: MIN_LEGEND, 'font-size': 5.65488 },
     ['min.'],
   );
 }
