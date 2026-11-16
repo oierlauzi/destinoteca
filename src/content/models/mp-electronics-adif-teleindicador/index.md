@@ -80,12 +80,33 @@ variants:
     replicaPreset:
       logo: false
 installations:
+  - site: es/madrid-chamartin
+    status: in-service
+    note: En el vestíbulo inferior, dos tableros de salidas uno junto al otro.
   - site: es/madrid-puerta-de-atocha
     status: in-service
     note: Según las fuentes de las fotografías.
   - site: es/leon
     status: in-service
     note: Un tablero de llegadas, según la fuente de la fotografía.
+photos:
+  - id: chamartin-vestibulo-inferior
+    src: ./chamartin-vestibulo-inferior.jpg
+    alt: >-
+      Dos tableros de salidas de adif, uno junto al otro, en lo alto de una
+      pared blanca con las letras «MADRID-CHAMARTÍN - CLARA CAMPOAMOR» y, a la
+      derecha, un reloj. El de la derecha anuncia trenes a Badajoz, Albacete
+      Los Llanos, Soria, Jaén, Cercedilla y Alcázar de San Juan, con «BUS» en
+      la columna de la vía de uno de ellos, «ACCESO A» y «POR OBRA» en las
+      observaciones y «SALIDAS / DEPARTURES» en rojo.
+    caption: >-
+      Dos tableros de salidas en el vestíbulo inferior de Chamartín, cada uno
+      con sus siete trenes. En uno, la vía dice «BUS».
+    place: Madrid Chamartín-Clara Campoamor
+    author: Oier Lauzirika Zarrabeitia
+    ownWork: true
+    license: cc-by-sa-4.0
+cover: chamartin-vestibulo-inferior
 replica:
   id: mp-electronics-adif
 stage: stub
@@ -94,7 +115,7 @@ stage: stub
 Es el tablero de salidas y llegadas que se ve en las estaciones de largo
 recorrido de ADIF, a menudo en grupo: en las grandes estaciones cuelgan
 varios uno al lado del otro, o uno encima de otro, y cada uno sigue con los
-trenes del anterior. Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/),
+trenes del anterior, como los dos del vestíbulo inferior de Chamartín. Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/),
 cuyo nombre aparece en una pequeña placa bajo los paneles. Sigue en servicio,
 pero poco a poco lo sustituyen pantallas de vídeo.
 
@@ -109,7 +130,7 @@ pantalla, sino cinco paneles de LED separados, uno por columna:
 | Hora | 5 | `10:45` |
 | Destino o procedencia | 18 | `MADRID PTA. ATOCHA` |
 | Tren | 13 | `IRYO    06110`, `A 03073/34073` |
-| Vía | 4 | `   3`, o `-` si aún no se sabe |
+| Vía | 4 | `   3`, `-` si aún no se sabe, `BUS` si el tren es un autobús |
 | Observaciones | 14 | `ESTIMADO 15:41`, `CANCELADO` |
 
 En el tren, el producto va a la izquierda y el número a la derecha. Cuando
