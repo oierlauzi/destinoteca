@@ -1,6 +1,6 @@
 # Cómo contribuir
 
-Gracias por querer aportar. El catálogo entero vive en este repositorio, así
+Gracias por querer aportar. El archivo entero vive en este repositorio, así
 que contribuir es proponer un cambio en un archivo de texto. Hay tres maneras,
 de menos a más técnica:
 
@@ -14,7 +14,7 @@ de menos a más técnica:
 Antes de publicarse, cada cambio pasa unas comprobaciones automáticas y una
 revisión.
 
-## Las reglas del catálogo
+## Las reglas del archivo
 
 - **Una ficha por diseño.** Un tamaño de matriz o una caja distintos son una
   ficha nueva dentro de la misma familia. Un cambio de rotulación, de montaje

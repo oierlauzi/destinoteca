@@ -1,7 +1,12 @@
-**destinoteca** es un catálogo de los carteles electrónicos que anuncian
-trenes: teleindicadores de andén, paneles de salidas y llegadas y relojes de
-estación, históricos y actuales. Empieza por los ferrocarriles españoles y está
-pensado para crecer hacia otros países y otros medios de transporte.
+**destinoteca** es un archivo para documentar y preservar la memoria de los
+carteles electrónicos que anuncian trenes: teleindicadores de andén, paneles de
+salidas y llegadas y relojes de estación, históricos y actuales. Muchos se
+retiran sin que quede constancia de cómo eran ni de cómo funcionaban; este
+proyecto intenta que no se pierdan. Empieza por los ferrocarriles españoles y
+está pensado para crecer hacia otros países y otros medios de transporte.
+
+No es una tienda ni un mercado: no vende, compra ni tasa ningún equipo, y no
+tiene ánimo de lucro.
 
 Cada ficha reúne dos cosas:
 
@@ -14,7 +19,7 @@ Cada ficha reúne dos cosas:
 
 ## De dónde sale
 
-El catálogo nació de [renfe-flipdot-re](https://github.com/oierlauzi/renfe-flipdot-re),
+El archivo nació de [renfe-flipdot-re](https://github.com/oierlauzi/renfe-flipdot-re),
 un proyecto de ingeniería inversa y preservación de uno de los teleindicadores
 flip-dot de Cercanías Madrid. Aquella primera réplica es hoy la
 [primera ficha](../catalogo/page-iberica-anden-electromagnetico/): los

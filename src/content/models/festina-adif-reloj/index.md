@@ -118,7 +118,7 @@ es azul.
   o entre dos de ellos.
 
 No es el único reloj que Festina ha hecho para ADIF: hay otros modelos, que
-todavía no están en el catálogo.
+todavía no están en el archivo.
 
 ## Lo que no se sabe
 

@@ -43,4 +43,4 @@ sobrecalienta.
 No hay un único aspecto flip-dot. Los puntos pueden ser redondos, cuadrados u
 octogonales; pueden formar una matriz continua o agruparse en módulos de un
 carácter separados entre sí; y el color de la cara visible cambia de un
-fabricante a otro. Cada ficha del catálogo describe los de su equipo.
+fabricante a otro. Cada ficha del archivo describe los de su equipo.

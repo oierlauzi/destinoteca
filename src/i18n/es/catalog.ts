@@ -60,12 +60,12 @@ export const catalog: Record<string, string> = {
   // Home
   'catalog.home.title': 'Teleindicadores, paneles y relojes de estación',
   'catalog.home.lead':
-    'Un catálogo de los carteles electrónicos que han anunciado trenes: su historia, sus fotografías en servicio y, cuando es posible, una réplica que funciona en el navegador.',
-  'catalog.home.browse': 'Ver el catálogo',
+    'Un archivo para documentar y preservar la memoria de los carteles electrónicos que han anunciado trenes en las estaciones, antes de que desaparezcan: su historia, sus fotografías en servicio y, cuando es posible, una réplica que funciona en el navegador.',
+  'catalog.home.browse': 'Ver el archivo',
   'catalog.home.contribute': 'Cómo contribuir',
   'catalog.home.replicas': 'Con réplica web',
   'catalog.home.replicasLead': 'Fichas con una réplica interactiva: escribe en ella, conéctala a los trenes reales o insértala en tu web.',
-  'catalog.home.recent': 'En el catálogo',
+  'catalog.home.recent': 'En el archivo',
   'catalog.home.explore': 'Explorar por',
   'catalog.home.empty': 'Todavía no hay fichas.',
   'catalog.count.models': '{count} fichas',
@@ -76,8 +76,8 @@ export const catalog: Record<string, string> = {
   'catalog.count.photos.one': '1 fotografía',
 
   // Catalog list
-  'catalog.list.title': 'Catálogo',
-  'catalog.list.lead': 'Todos los equipos documentados. Filtra por fabricante, operador, tecnología, país o época.',
+  'catalog.list.title': 'Archivo',
+  'catalog.list.lead': 'Todos los equipos documentados hasta ahora, en servicio o ya desaparecidos. Filtra por fabricante, operador, tecnología, país o época.',
   'catalog.list.search': 'Buscar',
   'catalog.list.searchPlaceholder': 'Nombre, modelo o descripción',
   'catalog.list.any': 'Todos',
@@ -126,7 +126,7 @@ export const catalog: Record<string, string> = {
 
   // Taxonomy pages
   'catalog.manufacturers.title': 'Fabricantes',
-  'catalog.manufacturers.lead': 'Las empresas que diseñaron, construyeron o integraron los equipos del catálogo.',
+  'catalog.manufacturers.lead': 'Las empresas que diseñaron, construyeron o integraron los equipos documentados en el archivo.',
   'catalog.operators.title': 'Operadores',
   'catalog.operators.lead': 'Las compañías y redes para las que se instalaron.',
   'catalog.technologies.title': 'Tecnologías',
@@ -136,7 +136,7 @@ export const catalog: Record<string, string> = {
   'catalog.operators.eyebrow': 'Operador',
   'catalog.technologies.eyebrow': 'Tecnología',
   'catalog.countries.eyebrow': 'País',
-  'catalog.entity.models': 'En el catálogo',
+  'catalog.entity.models': 'En el archivo',
   'catalog.entity.noModels': 'Todavía no hay fichas aquí.',
   'catalog.entity.based': 'Sede',
   'catalog.entity.successor': 'Sucesora',

@@ -19,7 +19,7 @@ Se han visto en servicio estos montajes de esta generación:
 - **Cartel de andén de una cara**, con una línea de 16 caracteres y una fila
   de LED debajo. Es el
   [teleindicador de andén](../../catalogo/page-iberica-anden-electromagnetico/)
-  documentado en este catálogo.
+  documentado en este archivo.
 - **Cartel de andén de matriz continua**, una
   [versión posterior](../../catalogo/page-iberica-anden-continuo/) con la
   misma caja, una matriz flip-dot continua iluminada por LED y la hora de

@@ -1,8 +1,9 @@
 # destinoteca
 
-Catálogo de teleindicadores, paneles de salidas y relojes de estación: su
-historia, fotografías en servicio y, cuando es posible, una **réplica web**
-que funciona en el navegador.
+Archivo para documentar y preservar los teleindicadores, paneles de salidas y
+relojes de estación: su historia, fotografías en servicio y, cuando es posible,
+una **réplica web** que funciona en el navegador. Es un proyecto sin ánimo de
+lucro: no vende ni compra ningún equipo.
 
 **<https://oierlauzi.github.io/destinoteca/>**
 
@@ -18,7 +19,7 @@ en [renfe-flipdot-re](https://github.com/oierlauzi/renfe-flipdot-re).
 
 ## Contribuir
 
-El repositorio es el catálogo: cada ficha es un archivo de texto en
+El repositorio es el archivo: cada ficha es un archivo de texto en
 `src/content/`. Se puede aportar una fotografía, un dato, una fuente o un
 equipo nuevo sin saber programar. Empieza por
 [CONTRIBUTING.md](CONTRIBUTING.md) o por la página

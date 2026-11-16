@@ -5,7 +5,7 @@ alsoKnownAs:
   - Red Nacional de los Ferrocarriles Españoles
 summary: >-
   Operador ferroviario público español. Sus estaciones y trenes han llevado
-  buena parte de los teleindicadores de este catálogo.
+  buena parte de los teleindicadores de este archivo.
 country: es
 transportModes:
   - rail

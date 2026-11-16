@@ -1,4 +1,4 @@
-El catálogo es un repositorio público: cada ficha es un archivo de texto y
+El archivo es un repositorio público: cada ficha es un archivo de texto y
 cualquiera puede proponer cambios. No hace falta saber programar.
 
 ## Qué se puede aportar
@@ -29,7 +29,7 @@ archivo `index.md` y sus fotografías al lado. La cabecera del archivo contiene
 los datos estructurados (tipo, tecnología, fabricantes, años, fotografías,
 fuentes) y el resto es el artículo, escrito en Markdown.
 
-## Reglas del catálogo
+## Reglas del archivo
 
 **Una ficha por diseño.** Un tamaño de matriz o una caja distintos son una
 ficha nueva dentro de la misma familia. Un cambio de rotulación, de montaje o
