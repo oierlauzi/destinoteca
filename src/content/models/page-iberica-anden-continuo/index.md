@@ -44,9 +44,8 @@ photos:
     src: ./alcala-via-2.jpg
     alt: >-
       Cartel colgado de la marquesina de un andén de Alcalá de Henares, con
-      trenes de Cercanías al fondo. Dice «Vía 2» y, en la matriz flip-dot,
-      «CHAMARTIN» a la izquierda y «10:12» a la derecha.
-    caption: Alcalá de Henares. En lugar de los minutos que faltan, la hora de salida.
+      trenes de Cercanías al fondo, anunciando un tren y su hora de salida.
+    caption: Vía 2, Alcalá de Henares.
     place: Alcalá de Henares
     author: Usuario de Google Maps
     sourceUrl: https://maps.app.goo.gl/H5NzRqnCifdzj52T7
@@ -56,9 +55,8 @@ photos:
     src: ./alcala-via-1.jpg
     alt: >-
       Cartel colgado de la marquesina de un andén, sobre un tren de Cercanías
-      que pasa en primer plano, movido. Dice «Vía 1» y, en la matriz flip-dot,
-      «GUADALAJARA» en puntos amarillos verdosos.
-    caption: Vía 1, con un tren hacia Guadalajara. Publicada por la Cadena SER en mayo de 2019.
+      que pasa en primer plano, movido.
+    caption: Vía 1, mayo de 2019.
     place: Alcalá de Henares
     author: SER Guadalajara
     sourceUrl: https://cadenaser.com/emisora/2019/05/09/ser_guadalajara/1557400293_287651.html
@@ -68,10 +66,8 @@ photos:
     src: ./alcala-via-4.jpg
     alt: >-
       Cartel colgado bajo la marquesina de Alcalá de Henares, junto a un reloj
-      de estación, sobre un andén lleno de gente y de personal de seguridad. Dice
-      «Vía 4» y «SIN SERVICIO» en puntos amarillos verdosos; la fila de LED
-      está apagada.
-    caption: Vía 4, fuera de servicio tras un accidente. Cada letra ocupa una anchura distinta.
+      de estación, sobre un andén lleno de gente y de personal de seguridad.
+    caption: Vía 4, fuera de servicio tras un accidente.
     place: Alcalá de Henares
     author: Dream Alcalá
     sourceUrl: https://www.dream-alcala.com/accidente-tren-la-estacion-renfe-alcala-henares/
@@ -115,8 +111,8 @@ las reales.
 
 - **El ancho exacto de la matriz.** La réplica supone 96 columnas: el mismo
   paso de punto que los módulos de la versión anterior a lo largo del mismo
-  ancho. Encaja con «CHAMARTIN 10:12», pero en la fotografía de «SIN SERVICIO»
-  el texto ocupa casi toda la matriz, lo que apuntaría a menos columnas.
+  ancho. Encaja con una de las fotografías, pero en otra el texto ocupa casi
+  toda la matriz, lo que apuntaría a menos columnas.
 - **Qué mostraba la fila de LED.** Está apagada en todas las fotografías.
 - **Cuándo se instalaron y cuándo se retiraron**, y si hubo más en otras estaciones.
 

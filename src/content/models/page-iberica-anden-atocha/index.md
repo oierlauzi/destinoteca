@@ -49,11 +49,9 @@ photos:
   - id: atocha-via-4
     src: ./atocha-via-4.jpg
     alt: >-
-      Cartel de caja gris colgado junto a un reloj de estación. Arriba, el
-      logotipo de Cercanías, «Vía 4» y «Próximo tren»; en puntos verdes,
-      «P.PIO-VILLAL» y «7 min»; debajo, en un panel gris claro, «PARA EN:» y
-      «ECTOR C» en LED ámbar.
-    caption: Vía 4. La segunda línea del panel LED está a mitad de su recorrido.
+      Cartel de caja gris colgado junto a un reloj de estación, con la línea
+      flip-dot en verde y, debajo, el panel LED en ámbar.
+    caption: Vía 4.
     place: Atocha Cercanías
     author: Usuario de X
     sourceUrl: https://pbs.twimg.com/media/HSGoJ7RasAAfm8b?format=jpg&name=large
@@ -63,10 +61,8 @@ photos:
     src: ./atocha-vias-9-10.jpg
     alt: >-
       Andén de Atocha Cercanías con trenes a ambos lados y gente caminando.
-      Arriba, dos carteles con un reloj entre ellos: el de la vía 10 dice
-      «HUMANES» y, en LED, «ESTE TREN:» y «TO. ZARZAQUEMAD»; el de la vía 9,
-      «ESTE TREN:» y «MOSTOLES, MOST/».
-    caption: Vías 10 y 9, con los trenes ya en el andén. El panel LED dice «ESTE TREN:» y la línea flip-dot no da minutos.
+      Arriba, dos carteles con un reloj entre ellos.
+    caption: Vías 10 y 9, con los trenes en el andén.
     date: '2026-03'
     place: Atocha Cercanías
     author: Miguel Bustos
@@ -76,9 +72,8 @@ photos:
   - id: atocha-via-8
     src: ./atocha-via-8.jpg
     alt: >-
-      Cartel de la vía 8 en la penumbra: «MOST/EL SOTO» en puntos verdes y, en
-      LED ámbar, «PROXIMO TREN:» y «S. S.J.VALDERAS».
-    caption: Vía 8, con «PROXIMO TREN:» en la primera línea del panel LED.
+      Cartel de la vía 8 en la penumbra, encendido.
+    caption: Vía 8.
     place: Atocha Cercanías
     author: Telemadrid
     sourceUrl: https://static.telemadrid.es/clip/c48fbfc0-18d2-4e5c-b5cd-fa53c487cc2a_16-9-aspect-ratio_850w_0.webp
@@ -105,12 +100,11 @@ Tiene dos pantallas:
 - **Una línea flip-dot** iluminada por LED, como la del
   [cartel de Alcalá de Henares](../page-iberica-anden-continuo/), pero con
   otra tipografía, de trazo fino, y los minutos que faltan en lugar de la
-  hora: «7 min», con «min» en minúsculas.
+  hora, con «min» en minúsculas.
 - **Un panel LED** integrado debajo, de LED bicolores rojos y verdes, que
   encendidos a la vez dan el ámbar con que aparece en casi todas las
   fotografías. Tiene sitio para dos líneas de texto: la primera dice qué
-  anuncia la segunda («PARA EN:», «ESTE TREN:», «PROXIMO TREN:») y la segunda
-  recorre las paradas.
+  anuncia la segunda, y la segunda recorre las paradas.
 
 ## La tipografía de la línea flip-dot
 
@@ -129,18 +123,18 @@ la J, la M, la T, la U y la barra. El resto se ha dibujado en el mismo estilo.
 Tiene 28 filas: dos líneas de 12 puntos de alto con 4 filas entre ellas. La
 réplica le da 120 columnas, que es lo que cabe en la proporción del panel con
 puntos cuadrados: 15 caracteres de 7 columnas y una en blanco detrás de cada
-uno, que es lo que se ve en «MOSTOLES, MOST/» y «S. S.J.VALDERAS».
+uno, que es lo que cabe en las fotografías.
 
 Las letras son gruesas, con trazos de dos puntos en vertical y en horizontal,
 y todas ocupan el mismo ancho. La P, la A, la R, la E, la N y los dos puntos
-de «PARA EN:» se han leído punto por punto; para las demás la réplica sigue
-la misma construcción, y pueden no coincidir con las reales.
+se han leído punto por punto; para las demás la réplica sigue la misma
+construcción, y pueden no coincidir con las reales.
 
 ## Lo que no se sabe
 
-- **Cuándo cambia la primera línea del panel.** Con el tren en el andén se ha
-  visto «ESTE TREN:», y la réplica lo pone cuando el tren está a cero minutos;
-  si no, «PARA EN:». No se sabe cuándo dice «PROXIMO TREN:».
+- **Cuándo cambia la primera línea del panel.** La réplica la cambia cuando
+  el tren está a cero minutos, como en la fotografía con los trenes en el
+  andén; no se sabe qué más la hace cambiar.
 - **Cuándo se instalaron.**
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

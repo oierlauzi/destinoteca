@@ -45,11 +45,9 @@ photos:
   - id: atocha-acceso-via-7
     src: ./atocha-acceso-via-7.jpg
     alt: >-
-      Cartel de caja gris montado en una pared. Arriba, el logotipo de
-      Cercanías, «Vía 7» y «Próximo tren»; debajo, en puntos verdes, «SIN
-      SERVICIO» y «04:35»; abajo, en rojo, «PROXIMA SALIDA». Bajo la pantalla,
-      una pequeña placa de PAGE.
-    caption: Vía 7, de madrugada. Publicada por Europa Press en octubre de 2026.
+      Cartel de caja gris montado en una pared, con la línea flip-dot en verde
+      y la fila de LED en rojo, y la placa de PAGE bajo la pantalla.
+    caption: Vía 7, octubre de 2026.
     date: '2026-10'
     place: Atocha Cercanías
     author: Europa Press
@@ -85,7 +83,7 @@ anteriores de la familia, tan ancha como la línea flip-dot.
 
 Está medida sobre la fotografía de la vía 7. La línea flip-dot tiene en ella
 104 columnas: es lo que da la fotografía suponiendo el mismo paso de punto que
-el cartel de Alcalá. «SIN SERVICIO» empieza en la segunda columna y «04:35»
+el cartel de Alcalá. El texto empieza en la segunda columna y la hora
 termina a dos del final.
 
 Las letras S, I, N, E, R, V, C, O y los dígitos 0, 3, 4 y 5 se han copiado punto por punto

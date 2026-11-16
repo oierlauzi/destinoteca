@@ -59,7 +59,7 @@ photos:
       El vestíbulo de Cantoblanco Universidad desde más lejos, con la escalera
       a la izquierda y las puertas de los andenes. Arriba, el panel de cuatro
       líneas con la fila de LED encendida en rojo.
-    caption: Cantoblanco Universidad, junio de 2023. La fila de LED está encendida.
+    caption: Cantoblanco Universidad, junio de 2023.
     date: '2023-06'
     place: Cantoblanco Universidad
     author: Usuario de Google Maps

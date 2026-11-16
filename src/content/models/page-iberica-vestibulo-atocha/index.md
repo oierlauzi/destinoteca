@@ -55,12 +55,10 @@ photos:
     src: ./atocha-vestibulo.jpg
     alt: >-
       Vestíbulo de Atocha Cercanías, con gente pasando delante de las
-      taquillas. Encima, el panel gris: a la izquierda diez líneas de
-      Cercanías con trenes a Parla, Móstoles-El Soto, Alcobendas, Alcalá,
-      Chamartín, Humanes y Aranjuez; en el centro un reloj y cuatro pantallas;
-      a la derecha salidas a Coruña, Segovia, Bilbao y Alicante y llegadas de
-      Alicante y Santander; abajo, una fila de LED a todo lo ancho.
-    caption: El panel en servicio, con la columna de Cercanías a la izquierda y la de Largo Recorrido a la derecha.
+      taquillas. Encima, el panel gris, con las líneas de Cercanías a la
+      izquierda, un reloj y cuatro pantallas en el centro, las de Largo
+      Recorrido a la derecha y una fila de LED a todo lo ancho.
+    caption: El vestíbulo de Atocha Cercanías.
     place: Atocha Cercanías
     author: Gonzalo Vázquez Hidalgo
     license: rights-reserved-credited
@@ -74,11 +72,10 @@ taquillas. Reunía en una sola caja gris lo que en otras estaciones de la
 carteles:
 
 - **Cercanías**, a la izquierda: diez líneas flip-dot con la vía, el destino
-  y el tiempo que falta («2min») o la hora («13:32»), y una fila de LED
-  debajo.
+  y los minutos que faltan o la hora, y una fila de LED debajo.
 - **Largo Recorrido y Regionales**, a la derecha: cuatro líneas de salidas y
   cuatro de llegadas, cada bloque con su propia fila de LED. Las llegadas
-  dicen de dónde viene el tren («PRC.ALICANTE»).
+  dicen de dónde viene el tren.
 - **En medio**, un reloj y cuatro pantallas de cristal líquido.
 - **Abajo**, una fila de LED que ocupa todo el ancho.
 

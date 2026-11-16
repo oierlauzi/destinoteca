@@ -149,7 +149,7 @@ photos:
       Cartel colgado de la marquesina de Pitis que dice «Vía» sin número y
       «SI PARADA», con una letra perdida. En la vía, un tren de coches azules
       y amarillos y viajeros en el andén.
-    caption: Pitis, 2026, unos meses antes de su retirada, junto al *Tren de los 80*. A «SIN PARADA» le falta una letra.
+    caption: Pitis, 2026, unos meses antes de su retirada, junto al *Tren de los 80*.
     date: '2026'
     place: Pitis
     author: Gonzalo Vázquez Hidalgo
@@ -206,7 +206,7 @@ photos:
       Andén de El Goloso a pleno sol: dos carteles sobre postes, «Vía 1» y
       «Vía 2», con un reloj de estación entre ambos. Las líneas flip-dot
       muestran la misma letra repetida.
-    caption: "El Goloso: un cartel por vía, sobre postes, con el reloj de la estación en medio. Las líneas muestran una letra repetida en todos los caracteres."
+    caption: "El Goloso: un cartel por vía, sobre postes, con el reloj de la estación en medio."
     place: El Goloso
     author: Usuario de Google Maps
     sourceUrl: https://maps.app.goo.gl/8u8ANUAXZNPJ1wGW9
@@ -232,7 +232,7 @@ photos:
       Cercanías en la vía 2 y marquesinas rojas onduladas sobre los andenes.
       Dos carteles encendidos, uno por andén: «Vía 2, P.PIO-VILLAL» y «Vía 1,
       RECOL-F.MORA, 4», cada uno con su fila de LED roja también encendida.
-    caption: "Delicias, marzo de 2016: los carteles de los dos andenes, encendidos, con destinos abreviados para caber en 16 caracteres."
+    caption: "Delicias, marzo de 2016: los carteles de los dos andenes."
     date: '2016-03-05'
     place: Delicias
     author: Malopez 21

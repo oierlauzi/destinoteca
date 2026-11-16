@@ -40,12 +40,9 @@ photos:
   - id: atocha-pasarela
     src: ./atocha-pasarela.jpg
     alt: >-
-      Panel gris colgado del techo de la pasarela, con dos pantallas lado a
-      lado bajo «Vía», «Destino» y «Próximo tren». En la de la izquierda,
-      trenes a Cáceres, Parla, Móstoles-El Soto, Chamartín y Príncipe
-      Pío-Villalba; en la de la derecha, a Aranjuez, Chamartín, Fuenlabrada,
-      Colmenar y Móstoles-El Soto, con los minutos que faltan.
-    caption: Diez trenes en dos pantallas de cinco.
+      Panel gris colgado del techo de la pasarela, con dos pantallas de cinco
+      líneas, una junto a la otra.
+    caption: La pasarela de Atocha Cercanías.
     place: Atocha Cercanías
     author: Citymapper
     sourceUrl: https://citymapper.com/news/1376/por-que-nadie-entiende-el-cercanias-de-madrid
@@ -63,7 +60,7 @@ misma generación de caja gris que los
 [de acceso a andén](../page-iberica-acceso-anden-atocha/) de la estación.
 
 Como en el antiguo [panel del vestíbulo](../page-iberica-vestibulo-atocha/),
-los minutos se escriben con el número y «min» en minúsculas («10min»).
+los minutos se escriben con «min» en minúsculas.
 
 ## Lo que no se sabe
 
