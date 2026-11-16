@@ -2,14 +2,14 @@ import { describe, expect, it } from 'vitest';
 import type { Service, View } from '../src/lib/model';
 import { defaults } from '../src/lib/params';
 import { readConfig, writeConfig } from '../src/lib/player/config';
-import { vestibulo2, vestibulo4 } from '../src/lib/replicas/page-iberica-vestibulo/def';
+import { vestibulo2, vestibulo4, type VestibuloOptions } from '../src/lib/replicas/page-iberica-vestibulo/def';
 import { boardGeometry } from '../src/lib/replicas/page-iberica-vestibulo/geometry';
 import { implementation } from '../src/lib/replicas/page-iberica-vestibulo/index';
 import { rowCells } from '../src/lib/replicas/page-iberica-vestibulo/render';
 import { andenElectromagnetico } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
 
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
-const options = defaults(vestibulo4.options) as never;
+const options = defaults(vestibulo4.options) as VestibuloOptions;
 const train = (id: string, dest: string, minutes: number, platform: string, confirmed = true): Service => ({
   id,
   destination: { name: dest },
@@ -60,7 +60,7 @@ describe('concourse board presenter', () => {
 
   it('keeps the LED row dark, notices included, but shows what is typed by hand', () => {
     const withNotice = { ...view([train('a', 'Chamartín', 8, '2')]), notices: [{ text: 'Aviso' }] };
-    expect(impl.present(withNotice, { ...options, ledIdle: 'X' } as never)).toMatchObject({ led: '' });
+    expect(impl.present(withNotice, { ...options, ledIdle: 'X' })).toMatchObject({ led: '' });
     const svg = (led: string) => impl.renderToString({ ...(impl.blank(view([]), options) as Record<string, unknown>), led }, options);
     expect(svg('').match(/fill="#ff3b2e"/g)).toBeNull();
     expect(svg('HOLA').match(/fill="#ff3b2e"/g)?.length).toBeGreaterThan(20);
