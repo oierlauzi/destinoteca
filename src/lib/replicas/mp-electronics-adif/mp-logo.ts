@@ -1,0 +1,70 @@
+import { h, type VNode } from '../../hardware';
+
+/**
+ * MP Electronics' logo, as vectors: a mark of five parallel slanted stripes,
+ * the last one half as tall, then the name. The mark is measured on the
+ * company's own artwork. On the boards the name is in capitals; it is set
+ * here in Inter Bold (SIL Open Font License) turned into outlines, which is
+ * close to, but not exactly, the lettering of the plate.
+ */
+const STRIPE = { width: 10.8, step: 13, height: 45.5, slant: 26 / 45.5 };
+
+function mark(): string {
+  let d = '';
+  for (let i = 0; i < 5; i++) {
+    // The fifth stripe stops halfway down.
+    const height = i < 4 ? STRIPE.height : 23;
+    const top = STRIPE.slant * STRIPE.height + i * STRIPE.step;
+    const bottom = top - STRIPE.slant * height;
+    d += `M${top},0H${top + STRIPE.width}L${bottom + STRIPE.width},${height}H${bottom}Z`;
+  }
+  return d;
+}
+const MARK = mark();
+const MARK_WIDTH = STRIPE.slant * STRIPE.height + 4 * STRIPE.step + STRIPE.width;
+
+/** "MP ELECTRONICS", capitals 1490 units tall, 18695 wide. */
+const WORD =
+  'M135 1490H438V787C438 675 430 456 427 275C480 475 540 684 575 787L826 1490H1083L1330 787C1365 681 14' +
+  '28 464 1478 263C1475 451 1467 675 1467 787V1490H1774V0H1304L1066 684C1036 779 990 978 956 1139C921 9' +
+  '77 875 778 845 684L603 0H135ZM2084 1490H2389V1003H2658C3001 1003 3198 798 3198 503C3198 210 3004 0 2' +
+  '665 0H2084ZM2389 757V252H2608C2795 252 2883 353 2883 503C2883 653 2795 757 2609 757ZM3978 1490H4977V' +
+  '1237H4283V862H4923V613H4283V253H4975V0H3978ZM5263 1490H6211V1237H5568V0H5263ZM6462 1490H7461V1237H67' +
+  '67V862H7407V613H6767V253H7459V0H6462ZM8398 1510C8774 1510 9006 1257 9040 980H8731C8701 1142 8573 123' +
+  '9 8403 1239C8173 1239 8016 1069 8016 746C8016 430 8171 251 8404 251C8574 251 8702 347 8730 509H9039C' +
+  '8995 174 8737 -20 8398 -20C8005 -20 7706 259 7706 746C7706 1230 8001 1510 8398 1510ZM9243 253H9699V1' +
+  '490H10005V253H10460V0H9243ZM10711 1490H11016V958H11256L11540 1490H11878L11561 909C11731 836 11825 68' +
+  '9 11825 485C11825 192 11631 0 11292 0H10711ZM11016 711V252H11235C11422 252 11510 335 11510 485C11510' +
+  ' 634 11422 711 11236 711ZM12751 1510C13146 1510 13446 1231 13446 746C13446 259 13146 -20 12751 -20C1' +
+  '2356 -20 12056 259 12056 746C12056 1230 12356 1510 12751 1510ZM12751 1239C12520 1239 12366 1065 1236' +
+  '6 746C12366 426 12520 251 12751 251C12982 251 13136 425 13136 746C13136 1065 12982 1239 12751 1239ZM' +
+  '13716 1490H14028V805C14028 717 14019 557 14008 377C14100 563 14155 672 14238 806L14666 1490H15007V0H' +
+  '14695V715C14695 813 14703 973 14714 1119C14649 964 14586 851 14527 754L14056 0H13716ZM15623 0H15318V' +
+  '1490H15623ZM16585 1510C16961 1510 17193 1257 17227 980H16918C16888 1142 16760 1239 16590 1239C16360 ' +
+  '1239 16203 1069 16203 746C16203 430 16358 251 16591 251C16761 251 16889 347 16917 509H17226C17182 17' +
+  '4 16924 -20 16585 -20C16192 -20 15893 259 15893 746C15893 1230 16188 1510 16585 1510ZM18035 1512C183' +
+  '97 1512 18610 1337 18610 1066C18610 816 18416 688 18165 630L18030 597C17904 567 17792 520 17792 409C' +
+  '17792 309 17880 237 18036 237C18189 237 18284 306 18295 425H18590C18585 163 18369 -20 18039 -20C1771' +
+  '5 -20 17479 160 17479 429C17479 646 17630 773 17882 834L18046 875C18208 915 18303 962 18303 1064C183' +
+  '03 1177 18195 1254 18032 1254C17867 1254 17746 1179 17736 1028H17439C17448 1345 17677 1512 18035 151' +
+  '2Z';
+const WORD_CAP = 1490;
+const WORD_WIDTH = 18695;
+
+/**
+ * The logo with its right edge at `right` and its letters `cap` tall,
+ * standing on `baseline`. The mark is a little taller than the letters.
+ */
+export function mpLogo(right: number, baseline: number, cap: number, fill: string): VNode {
+  const markHeight = cap * 1.15;
+  const markScale = markHeight / STRIPE.height;
+  const wordScale = cap / WORD_CAP;
+  const wordWidth = WORD_WIDTH * wordScale;
+  const gap = cap * 0.7;
+  const wordX = right - wordWidth;
+  const markX = wordX - gap - MARK_WIDTH * markScale;
+  return h('g', { fill }, [
+    h('path', { d: MARK, transform: `translate(${markX},${baseline - markHeight}) scale(${markScale})` }),
+    h('path', { d: WORD, transform: `translate(${wordX},${baseline - cap}) scale(${wordScale})` }),
+  ]);
+}

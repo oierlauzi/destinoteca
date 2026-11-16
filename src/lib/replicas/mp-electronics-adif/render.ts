@@ -1,6 +1,7 @@
 import { h, hash01, marqueeWindow, MarqueeRun, mpElectronicsAdif as font, scrolls, textStrip, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import { adifLogo } from './adif-logo';
+import { mpLogo } from './mp-logo';
 import type { AdifFrame, AdifOptions, AdifRow } from './def';
 import {
   BOARD_GAP,
@@ -225,7 +226,7 @@ function board(options: AdifOptions): VNode[] {
     h('rect', { x: 0, y: 0, width: BOARD_WIDTH, height: layoutOf(options).height, rx: 2, fill: BODY, stroke: BODY_EDGE, 'stroke-width': 0.6 }),
     ...header(options),
     ...legends(options),
-    h('text', { x: BOARD_WIDTH - 12, y: layoutOf(options).height - 4, 'font-size': 2.4, 'font-weight': 700, 'text-anchor': 'end', fill: '#8a8e90', 'letter-spacing': 0.2 }, ['MP ELECTRONICS']),
+    mpLogo(BOARD_WIDTH - 12, layoutOf(options).height - 4, 1.9, '#8a8e90'),
   ];
 }
 

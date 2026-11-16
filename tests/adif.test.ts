@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { mpElectronicsAdif as font, MP_SEEN_IN_PHOTOGRAPHS, textStrip } from '../src/lib/hardware';
+import { mpElectronicsAdif as font, MP_SEEN_IN_PHOTOGRAPHS, textStrip, toString } from '../src/lib/hardware';
+import { mpLogo } from '../src/lib/replicas/mp-electronics-adif/mp-logo';
 import type { Service, View } from '../src/lib/model';
 import { defaults, type ParamSchema } from '../src/lib/params';
 import { readConfig, replicaSize, writeConfig } from '../src/lib/player/config';
@@ -78,7 +79,9 @@ describe('the board', () => {
     expect(svg).toContain('>Sortides<');
     expect(svg).toContain('>Destinació<');
     expect(svg).toContain(`fill="${GREEN}"`);
-    expect(svg).toContain('MP ELECTRONICS');
+    // The maker's logo is drawn as outlines, not as text.
+    expect(svg).not.toContain('>MP ELECTRONICS<');
+    expect(svg).toContain(toString(mpLogo(BOARD_WIDTH - 12, layout().height - 4, 1.9, '#8a8e90')));
     const plain = renderToString(fromFlat(frame), options);
     expect(plain).not.toContain('Sortides');
     expect(plain).toContain(`fill="${AMBER}"`);
