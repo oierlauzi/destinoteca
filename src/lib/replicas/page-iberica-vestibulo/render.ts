@@ -28,23 +28,28 @@ export function describe(frame: VestibuloFrame, options: FamilyOptions): string 
 
 const blankRow: BoardRow = { platform: '', destination: '', minutes: '' };
 
-export function spec(lines: number): SignSpec<VestibuloFrame> {
+export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFrame> {
   const g = boardGeometry(lines);
   const span = (from: number, to: number) => ({ x: g.linesX + from * CELL_STEP, end: g.linesX + to * CELL_STEP - (CELL_STEP - CELL_WIDTH) });
-  // The header, as photographed at Tres Cantos and Cantoblanco: "Vía" under a
-  // Cercanías roundel over the platform column, "Destino" over characters 7
-  // to 13, and "Próxima Llegada" over the minutes.
+  // The header, as photographed at Tres Cantos and Cantoblanco: the
+  // Cercanías roundel over "Vía" at the start of the platform column,
+  // "Destino" over characters 7 to 13, both about as tall as a character, and
+  // at Cantoblanco only, "Próxima Llegada" over the minutes.
   const via = span(0, PLATFORM_CELLS);
   const destino = span(6, 13);
   const header: VNode[] = [
-    cercaniasRoundel((via.x + via.end) / 2, g.headerTop + 4.9, 2.75),
-    h('text', { x: (via.x + via.end) / 2, y: g.headerBottom - 3.1, fill: LEGEND, 'font-size': 6.2, 'font-weight': 700, 'text-anchor': 'middle' }, ['Vía']),
-    h('text', { x: (destino.x + destino.end) / 2, y: g.headerBottom - 4.2, fill: LEGEND, 'font-size': 8.4, 'font-weight': 700, 'text-anchor': 'middle', 'letter-spacing': 0.3 }, ['Destino']),
-    h('text', { fill: LEGEND, 'font-size': 4.3, 'font-weight': 700, 'text-anchor': 'end' }, [
-      h('tspan', { x: g.minX + 8.4, y: g.headerTop + 6.6 }, ['Próxima']),
-      h('tspan', { x: g.minX + 8.4, y: g.headerTop + 11.4 }, ['Llegada']),
-    ]),
+    cercaniasRoundel(via.x + 5, g.headerTop + 6.6, 5),
+    h('text', { x: via.x, y: g.headerBottom - 3.4, fill: LEGEND, 'font-size': 12.5, 'font-weight': 700, 'letter-spacing': 1.2 }, ['Vía']),
+    h('text', { x: (destino.x + destino.end) / 2, y: g.headerBottom - 3.9, fill: LEGEND, 'font-size': 15.5, 'font-weight': 700, 'text-anchor': 'middle', 'letter-spacing': 0.4 }, ['Destino']),
   ];
+  if (nextArrival) {
+    header.push(
+      h('text', { fill: LEGEND, 'font-size': 8, 'font-weight': 700, 'text-anchor': 'end' }, [
+        h('tspan', { x: g.minX + 8.4, y: g.headerTop + 9.6 }, ['Próxima']),
+        h('tspan', { x: g.minX + 8.4, y: g.headerTop + 18.4 }, ['Llegada']),
+      ]),
+    );
+  }
   const housing = (): VNode[] => [
     h('rect', { x: 0, y: 0, width: g.width, height: g.height, rx: 10, fill: HOUSING }),
     h('rect', { ...g.panel, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': 3 }),
@@ -66,19 +71,26 @@ export function spec(lines: number): SignSpec<VestibuloFrame> {
   };
 }
 
-const specs = new Map<number, SignSpec<VestibuloFrame>>();
-const specFor = (lines: number): SignSpec<VestibuloFrame> => {
-  let found = specs.get(lines);
-  if (!found) specs.set(lines, (found = spec(lines)));
+export interface BoardShape {
+  lines: number;
+  /** Whether "Próxima Llegada" is printed in the header. */
+  nextArrival: boolean;
+}
+
+const specs = new Map<string, SignSpec<VestibuloFrame>>();
+const specFor = ({ lines, nextArrival }: BoardShape): SignSpec<VestibuloFrame> => {
+  const key = `${lines}/${nextArrival}`;
+  let found = specs.get(key);
+  if (!found) specs.set(key, (found = spec(lines, nextArrival)));
   return found;
 };
 
-export function renderToString(lines: number, frame: VestibuloFrame, options: FamilyOptions): string {
-  return renderSign(specFor(lines), frame, options);
+export function renderToString(shape: BoardShape, frame: VestibuloFrame, options: FamilyOptions): string {
+  return renderSign(specFor(shape), frame, options);
 }
 
-export function mount(lines: number, host: Element, options: FamilyOptions, env: { ticker: Ticker }): MountedSign<VestibuloFrame> {
-  const blank: VestibuloFrame = { rows: Array.from({ length: lines }, () => blankRow), led: '' };
-  return mountSign(specFor(lines), blank, host, options, env);
+export function mount(shape: BoardShape, host: Element, options: FamilyOptions, env: { ticker: Ticker }): MountedSign<VestibuloFrame> {
+  const blank: VestibuloFrame = { rows: Array.from({ length: shape.lines }, () => blankRow), led: '' };
+  return mountSign(specFor(shape), blank, host, options, env);
 }
 

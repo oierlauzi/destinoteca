@@ -65,11 +65,15 @@ installations:
   - site: es/tres-cantos
     line: C-4
     status: retired
-    note: Ya no están. En el vestíbulo hubo un panel de dos líneas de la misma familia.
+    note: Sobre postes, uno por vía, con un reloj entre ambos. Ya no están. En el vestíbulo hubo un panel de dos líneas de la misma familia.
   - site: es/cantoblanco
     line: C-4
     status: retired
     note: Ya no están. En el vestíbulo hubo un panel de cuatro líneas de la misma familia.
+  - site: es/el-goloso
+    line: C-4
+    status: unknown
+    note: Sobre postes, uno por vía, con un reloj entre ambos.
   - site: es/mendez-alvaro
     line: C-5
     status: in-service
@@ -80,7 +84,10 @@ variants:
     description: Suspendido sobre el andén, bajo la marquesina.
   - id: poste
     name: Sobre poste
-    description: Montado en un poste, en andenes sin marquesina.
+    description: >-
+      Montado en un poste, en andenes sin marquesina. En El Goloso y Tres
+      Cantos van por parejas, uno por vía, con un reloj de estación entre
+      ambos.
   - id: sin-numero-de-via
     name: Sin número de vía
     description: >-
@@ -165,6 +172,56 @@ photos:
     ownWork: true
     sourceUrl: https://github.com/oierlauzi/renfe-flipdot-re
     license: cc-by-sa-4.0
+  - id: cantoblanco-noche-2017
+    src: ./cantoblanco-anden-2.jpg
+    alt: >-
+      Cartel de andén de Cantoblanco Universidad de noche, colgado de la
+      marquesina: «Vía 1», «SIN PARADA» en la línea flip-dot y un aviso en
+      letras rojas en la fila de LED, encendida.
+    caption: Cantoblanco Universidad, diciembre de 2017. De noche se ve encendida la fila de LED, con un aviso.
+    date: '2017-12'
+    place: Cantoblanco Universidad
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/SHmHdnw9mZWJQ2ceA
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: cantoblanco-2023
+    src: ./cantoblanco-anden-1.jpg
+    alt: >-
+      Andén de Cantoblanco Universidad un día soleado. Bajo la marquesina
+      cuelga un cartel de «Vía 2»; las vías y el andén se pierden al fondo.
+    caption: Cantoblanco Universidad, septiembre de 2023.
+    date: '2023-09'
+    place: Cantoblanco Universidad
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/dSHDW57rH9D2dCTV7
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: el-goloso
+    src: ./el-goloso-anden.jpg
+    alt: >-
+      Andén de El Goloso a pleno sol: dos carteles sobre postes, «Vía 1» y
+      «Vía 2», con un reloj de estación entre ambos. Las líneas flip-dot
+      muestran la misma letra repetida.
+    caption: "El Goloso: un cartel por vía, sobre postes, con el reloj de la estación en medio. Las líneas muestran una letra repetida en todos los caracteres."
+    place: El Goloso
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/8u8ANUAXZNPJ1wGW9
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: tres-cantos-nieve-2021
+    src: ./tres-cantos-anden.jpg
+    alt: >-
+      Andén de Tres Cantos cubierto de nieve bajo un cielo despejado: dos
+      carteles sobre postes, «Vía 1» y «Vía 2», con un reloj entre ambos, y
+      edificios de viviendas a la izquierda.
+    caption: Tres Cantos, enero de 2021, tras una gran nevada. También aquí, un cartel por vía con el reloj en medio.
+    date: '2021-01'
+    place: Tres Cantos
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/9JGHJGjsfDJ6J5rG6
+    source: Google Maps
+    license: rights-reserved-credited
 cover: via-libre-1997
 references:
   - title: renfe-flipdot-re. Ingeniería inversa de un teleindicador PAGE Ibérica PI-T100-M

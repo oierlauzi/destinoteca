@@ -32,13 +32,26 @@ components:
     description: Fila de texto móvil bajo las líneas flip-dot, algo más ancha que ellas.
   - name: Rótulos fijos
     description: >-
-      «Vía» con el logotipo de Cercanías encima, «Destino», «Próxima Llegada» y
-      un «min.» al final de cada línea.
+      «Vía» con el logotipo de Cercanías encima, «Destino» y un «min.» al final
+      de cada línea.
 installations:
   - site: es/tres-cantos
     line: C-4
     status: unknown
     note: En el vestíbulo. La estación tuvo también teleindicadores de andén de la misma familia, ya retirados.
+photos:
+  - id: tres-cantos-vestibulo
+    src: ./tres-cantos-vestibulo.jpg
+    alt: >-
+      Pasillo de acceso a los andenes de Tres Cantos. Encima de la entrada,
+      junto a un reloj, cuelga el panel de dos líneas con «Vía» y «Destino» en
+      la cabecera y la fila de LED encendida en rojo.
+    caption: El panel de Tres Cantos, sobre el pasillo que lleva a los andenes.
+    place: Tres Cantos
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/cucRjHfCNvZRMeam8
+    source: Google Maps
+    license: rights-reserved-credited
 replica:
   id: page-iberica-vestibulo-2-lineas
   poster:
@@ -63,8 +76,8 @@ Existe también una versión de
 
 | Elemento | Contenido |
 | --- | --- |
-| Cabecera | «Vía» con el logotipo de Cercanías encima, sobre los dos primeros caracteres; «Destino», más o menos del séptimo al decimotercero; «Próxima Llegada» a la derecha |
-| Líneas flip-dot | Una por tren: la vía, el destino y los minutos que faltan, junto a un «min.» fijo |
+| Cabecera | «Vía» con el logotipo de Cercanías encima, sobre los dos primeros caracteres, y «Destino», más o menos del séptimo al decimotercero. A diferencia del de cuatro líneas, no lleva «Próxima Llegada» |
+| Líneas flip-dot | Una por tren: la vía, el destino y los minutos que faltan, junto a un «min.» fijo. Bajo cada línea hay un tubo fluorescente que la ilumina, y por eso están tan separadas |
 | Fila de LED | Texto móvil debajo de las líneas, algo más ancha que ellas |
 
 Cada línea tiene 20 caracteres, cuatro más que la del cartel de andén. Por lo
@@ -77,8 +90,9 @@ comprobado en ninguna unidad.
 
 La réplica reutiliza las piezas de la del cartel de andén: los mismos puntos,
 el mismo juego de caracteres, la misma fila de LED y los mismos defectos. Sus
-medidas, en cambio, son una estimación hecha a partir de fotografías tomadas
-en ángulo, porque no se ha medido ninguna unidad. Cada línea se actualiza a la
+medidas, en cambio, son una estimación hecha a partir de las fotografías de
+esta ficha, tomadas en ángulo: no se ha medido ninguna unidad. El tubo
+fluorescente de cada línea no se dibuja, pero sí el espacio que ocupa. Cada línea se actualiza a la
 vez que las demás, como si cada una tuviera su propio controlador; es una
 suposición basada en que la línea del cartel de andén se identifica como
 «MAESTRA».
@@ -86,4 +100,4 @@ suposición basada en que la línea del cartel de andén se identifica como
 Lo que muestra la fila de LED cuando hay trenes (las paradas del primero) es
 una elección de la réplica: no hay fotografías que lo muestren.
 
-Si tienes fotografías o datos de estos paneles, [puedes aportarlos](../../contribuir/).
+Si tienes más fotografías o datos de estos paneles, [puedes aportarlos](../../contribuir/).

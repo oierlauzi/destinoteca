@@ -78,7 +78,8 @@ const selection = (lines: number): SelectionPolicy => ({
 
 export type VestibuloOptions = FamilyOptions;
 
-function board(id: string, lines: number, example: BoardRow[]): ReplicaDef {
+/** `nextArrival`: whether "Próxima Llegada" is printed in the header (it is at Cantoblanco, not at Tres Cantos). */
+function board(id: string, lines: number, nextArrival: boolean, example: BoardRow[]): ReplicaDef {
   const { width, height } = boardGeometry(lines);
   return {
     id,
@@ -88,17 +89,17 @@ function board(id: string, lines: number, example: BoardRow[]): ReplicaDef {
     options: familyOptionsSchema,
     frame: frameSchema(lines, example),
     selection: () => selection(lines),
-    load: async () => (await import('./index')).implementation(lines),
+    load: async () => (await import('./index')).implementation(lines, nextArrival),
   };
 }
 
 // Defaults for "texto libre": trains of line C-4, which served both stations.
-export const vestibulo2 = board('page-iberica-vestibulo-2-lineas', 2, [
+export const vestibulo2 = board('page-iberica-vestibulo-2-lineas', 2, false, [
   { platform: '1', destination: 'CHAMARTIN', minutes: '2' },
   { platform: '2', destination: 'COLMENAR VIEJO', minutes: '13' },
 ]);
 
-export const vestibulo4 = board('page-iberica-vestibulo-4-lineas', 4, [
+export const vestibulo4 = board('page-iberica-vestibulo-4-lineas', 4, true, [
   { platform: '2', destination: 'CHAMARTIN', minutes: '8' },
   { platform: '1', destination: 'COLMENAR VIEJO', minutes: '8' },
   { platform: '2', destination: 'ATOCHA', minutes: '15' },

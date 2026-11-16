@@ -13,9 +13,17 @@ const FRAME = { side: 7.7189846, top: 6.7270778, bottom: 6.6713 };
 const LED_WIDTH = 197;
 /** Inner panel edge to the LED row, and LED row to the bottom of the panel, as on the platform sign. */
 const LED_MARGIN = { side: 8, bottom: 7.6 };
-const HEADER_HEIGHT = 17.27;
-/** Clear space between two lines, and from a divider to the LED row. */
-const LINE_GAP = 5.6;
+/**
+ * Sizes measured against the height of a line of characters in photographs
+ * of the boards at Tres Cantos and Cantoblanco. Under each line runs a
+ * fluorescent tube (not drawn), which is why the lines are far apart: one
+ * line starts about 2.25 line-heights below the previous one.
+ */
+const HEADER_HEIGHT = 25.5;
+/** From the bottom of a line to the rule under it: the tube's place. */
+const BELOW_LINE = 9.5;
+/** From a rule to the top of the next line. */
+const ABOVE_LINE = 4.5;
 const LED_AFTER_DIVIDER = 3.65318;
 
 export interface BoardGeometry {
@@ -45,9 +53,10 @@ export function boardGeometry(lines: number): BoardGeometry {
   const block = lineWidth(CELLS) + MIN_GAP + MIN_WIDTH;
   const linesX = ledX + (LED_WIDTH - block) / 2;
   const headerBottom = panelY + HEADER_HEIGHT;
-  const firstTop = headerBottom + LINE_GAP / 2 + 1.6;
-  const lineTops = Array.from({ length: lines }, (_, i) => firstTop + i * (LINE_HEIGHT + LINE_GAP));
-  const dividers = [headerBottom, ...lineTops.map((top) => top + LINE_HEIGHT + LINE_GAP / 2)];
+  const firstTop = headerBottom + ABOVE_LINE;
+  const lineGap = BELOW_LINE + ABOVE_LINE;
+  const lineTops = Array.from({ length: lines }, (_, i) => firstTop + i * (LINE_HEIGHT + lineGap));
+  const dividers = [headerBottom, ...lineTops.map((top) => top + LINE_HEIGHT + BELOW_LINE)];
   const ledY = dividers[dividers.length - 1]! + LED_AFTER_DIVIDER;
   const panelHeight = ledY + LED_HEIGHT + LED_MARGIN.bottom - panelY;
   return {
@@ -56,7 +65,7 @@ export function boardGeometry(lines: number): BoardGeometry {
     panel: { x: panelX, y: panelY, width: panelWidth, height: panelHeight },
     linesX,
     lineTops,
-    lineGap: LINE_GAP,
+    lineGap,
     dividers,
     led: { x: ledX, y: ledY, width: LED_WIDTH },
     headerTop: panelY,

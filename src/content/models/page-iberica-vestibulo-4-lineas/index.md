@@ -39,6 +39,33 @@ installations:
     line: C-4
     status: unknown
     note: En el vestíbulo. La estación tuvo también teleindicadores de andén de la misma familia, ya retirados.
+photos:
+  - id: cantoblanco-vestibulo
+    src: ./cantoblanco-vestibulo-1.jpg
+    alt: >-
+      Vestíbulo de Cantoblanco Universidad. Sobre las puertas de los andenes
+      de la línea C-4, un reloj y el panel de cuatro líneas, con «Vía»,
+      «Destino» y «Próxima Llegada» en la cabecera y trenes a Chamartín y a
+      Colmenar.
+    caption: El panel de Cantoblanco Universidad, junto al reloj del vestíbulo.
+    place: Cantoblanco Universidad
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/ffrVRkup8ibVMKjk9
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: cantoblanco-vestibulo-2023
+    src: ./cantoblanco-vestibulo-2.jpg
+    alt: >-
+      El vestíbulo de Cantoblanco Universidad desde más lejos, con la escalera
+      a la izquierda y las puertas de los andenes. Arriba, el panel de cuatro
+      líneas con la fila de LED encendida en rojo.
+    caption: Cantoblanco Universidad, junio de 2023. La fila de LED está encendida.
+    date: '2023-06'
+    place: Cantoblanco Universidad
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/NMZHqnzu1PT5AkTeA
+    source: Google Maps
+    license: rights-reserved-credited
 replica:
   id: page-iberica-vestibulo-4-lineas
   poster:
@@ -70,7 +97,7 @@ Existe también una versión de
 | Elemento | Contenido |
 | --- | --- |
 | Cabecera | «Vía» con el logotipo de Cercanías encima, sobre los dos primeros caracteres; «Destino», más o menos del séptimo al decimotercero; «Próxima Llegada» a la derecha |
-| Líneas flip-dot | Una por tren: la vía, el destino y los minutos que faltan, junto a un «min.» fijo |
+| Líneas flip-dot | Una por tren: la vía, el destino y los minutos que faltan, junto a un «min.» fijo. Bajo cada línea hay un tubo fluorescente que la ilumina, y por eso están tan separadas |
 | Fila de LED | Texto móvil debajo de las líneas, algo más ancha que ellas |
 
 Cada línea tiene 20 caracteres, cuatro más que la del cartel de andén. Por lo
@@ -83,8 +110,9 @@ comprobado en ninguna unidad.
 
 La réplica reutiliza las piezas de la del cartel de andén: los mismos puntos,
 el mismo juego de caracteres, la misma fila de LED y los mismos defectos. Sus
-medidas, en cambio, son una estimación hecha a partir de fotografías tomadas
-en ángulo, porque no se ha medido ninguna unidad. Cada línea se actualiza a la
+medidas, en cambio, son una estimación hecha a partir de las fotografías de
+esta ficha, tomadas en ángulo: no se ha medido ninguna unidad. El tubo
+fluorescente de cada línea no se dibuja, pero sí el espacio que ocupa. Cada línea se actualiza a la
 vez que las demás, como si cada una tuviera su propio controlador; es una
 suposición basada en que la línea del cartel de andén se identifica como
 «MAESTRA».
@@ -92,4 +120,4 @@ suposición basada en que la línea del cartel de andén se identifica como
 Lo que muestra la fila de LED cuando hay trenes (las paradas del primero) es
 una elección de la réplica: no hay fotografías que lo muestren.
 
-Si tienes fotografías o datos de estos paneles, [puedes aportarlos](../../contribuir/).
+Si tienes más fotografías o datos de estos paneles, [puedes aportarlos](../../contribuir/).

@@ -65,6 +65,16 @@ describe('concourse board presenter', () => {
     expect(svg.match(/<polygon /g)).toHaveLength(4 * 20 * 5 * 7);
     expect(svg.match(/>min\.</g)).toHaveLength(4);
     expect(svg).toContain('>Destino<');
+    expect(svg).toContain('>Próxima<');
+    // The 2-line board photographed at Tres Cantos has no "Próxima Llegada".
+    expect(implementation(2, false).renderToString(implementation(2, false).blank(view([]), options), options)).not.toContain('Próxima');
+  });
+
+  it('leaves room under each line for its tube', () => {
+    const g = boardGeometry(4);
+    const step = g.lineTops[1]! - g.lineTops[0]!;
+    expect(step / 11.181).toBeGreaterThan(2.1);
+    expect(step / 11.181).toBeLessThan(2.6);
   });
 });
 
