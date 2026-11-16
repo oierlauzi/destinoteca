@@ -51,6 +51,18 @@ const WORD =
 const WORD_CAP = 1490;
 const WORD_WIDTH = 18695;
 
+/** The mark alone, `height` tall, centred on (cx, cy). */
+export function mpMark(cx: number, cy: number, height: number, fill: string): VNode {
+  const scale = height / STRIPE.height;
+  return h('path', { d: MARK, fill, transform: `translate(${cx - (MARK_WIDTH * scale) / 2},${cy - height / 2}) scale(${scale})` });
+}
+
+/** The name alone, its capitals `cap` tall, centred on cx and standing on `baseline`. */
+export function mpWord(cx: number, baseline: number, cap: number, fill: string): VNode {
+  const scale = cap / WORD_CAP;
+  return h('path', { d: WORD, fill, transform: `translate(${cx - (WORD_WIDTH * scale) / 2},${baseline - cap}) scale(${scale})` });
+}
+
 /**
  * The logo with its right edge at `right` and its letters `cap` tall,
  * standing on `baseline`. The mark is a little taller than the letters.

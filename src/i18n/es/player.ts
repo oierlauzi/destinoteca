@@ -226,4 +226,17 @@ export const player: Record<string, string> = {
   'festina.opt.motion': 'Marcha del segundero',
   'festina.motion.step': 'A saltos, uno por segundo',
   'festina.motion.sweep': 'Continua',
+
+  // --- Teleindicadores de andén de MP Electronics para ADIF ---
+  'anden.mp.opt.side': 'Lado de la vía',
+  'anden.mp.opt.side.help': 'Dónde van el número de vía y la franja verde.',
+  'anden.mp.side.left': 'A la izquierda',
+  'anden.mp.side.right': 'A la derecha',
+  'anden.mp.opt.dial': 'Esfera del reloj',
+  'anden.mp.opt.dial.help': 'Unos llevan la de Festina, con números; otros, la de MP Electronics, sin ellos.',
+  'anden.mp.dial.festina': 'Festina',
+  'anden.mp.dial.mp': 'MP Electronics',
+  'anden.mp.opt.lineColor': 'Color de la tercera fila',
+  'anden.mp.frame.destination': 'Destino',
+  'anden.mp.frame.line': 'Tercera fila',
 };

@@ -26,6 +26,12 @@ export interface FestinaOptions {
   inlays: boolean;
   secondHand: 'blue' | 'dark' | 'none';
   motion: 'step' | 'sweep';
+  /**
+   * Whose mark the dial carries. Festina's clocks have the four numerals and
+   * Festina's mark; the same clock built into MP Electronics' platform
+   * displays can carry MP Electronics' mark instead, and no numerals.
+   */
+  dial?: 'festina' | 'mp';
   [key: string]: unknown;
 }
 

@@ -1,6 +1,7 @@
 import { h, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { FestinaFrame, FestinaOptions } from './def';
+import { mpMark, mpWord } from '../mp-electronics-adif/mp-logo';
 import { festinaMark, festinaWord } from './festina-logo';
 import { C, R, SIZE } from './geometry';
 
@@ -57,14 +58,19 @@ function caseNodes(options: FestinaOptions, ids: { ring: string; edge: string })
 
 // --- The dial ----------------------------------------------------------------------
 
-function dial(): VNode[] {
+function dial(brand: FestinaOptions['dial'] = 'festina'): VNode[] {
   const nodes: VNode[] = [];
-  // A bar for every minute; the hours' are wider and a little longer.
+  // A bar for every minute; the hours' are wider and a little longer, and on MP Electronics' dial, narrower and much longer.
+  const mp = brand === 'mp';
   for (let minute = 0; minute < 60; minute++) {
     const hour = minute % 5 === 0;
-    const width = hour ? r(0.05) : r(0.017);
-    const length = hour ? r(0.095) : r(0.07);
+    const width = hour ? r(mp ? 0.035 : 0.05) : r(0.017);
+    const length = hour ? r(mp ? 0.15 : 0.095) : r(0.07);
     nodes.push(h('rect', { x: C - width / 2, y: C - r(0.97), width, height: length, fill: INK, transform: `rotate(${minute * 6} ${C} ${C})` }));
+  }
+  if (brand === 'mp') {
+    nodes.push(mpMark(C, C - r(0.47), r(0.2), INK), mpWord(C, C + r(0.43), r(0.062), INK));
+    return nodes;
   }
   const numeral = (text: string, x: number, y: number) =>
     h('text', { x: C + x, y: C + y, 'font-size': r(0.27), 'font-weight': 800, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: INK, 'letter-spacing': r(-0.01) }, [text]);
@@ -128,16 +134,31 @@ export function daySeconds(time: number, zone: string): number {
 const frameSeconds = (frame: FestinaFrame): number =>
   frame.time === undefined ? RESTING.hours * 3600 + RESTING.minutes * 60 + RESTING.seconds : daySeconds(frame.time, frame.zone ?? 'Europe/Madrid');
 
-function scene(options: FestinaOptions, a: Angles, prefix: string, refs?: { hour?: SVGElement; minute?: SVGElement; second?: SVGElement }): VNode[] {
+export interface HandRefs {
+  hour?: SVGElement;
+  minute?: SVGElement;
+  second?: SVGElement;
+}
+
+/** The whole clock in a 240-unit square centred on (120, 120): case, dial, hands. For the replica, and for displays with this clock built in. */
+/** MP Electronics' hands: plain bars, the second hand a thin line without a ring. */
+const bar = (from: number, to: number, width: number, color = INK): VNode[] => [
+  h('path', { d: pts([[-width * 0.6, from], [width * 0.6, from], [width / 2, to], [-width / 2, to]]), fill: color }),
+];
+
+export function clockScene(options: FestinaOptions, a: Angles, prefix: string, refs?: HandRefs): VNode[] {
   const rotate = (deg: number) => `rotate(${fmt(deg)} ${C} ${C})`;
+  const mp = options.dial === 'mp';
   const nodes: VNode[] = [
     ...caseNodes(options, { ring: `${prefix}-ring`, edge: `${prefix}-edge` }),
-    ...dial(),
-    h('g', { transform: rotate(a.hour) }, hourHand(), refs ? (element) => (refs.hour = element) : undefined),
-    h('g', { transform: rotate(a.minute) }, minuteHand(), refs ? (element) => (refs.minute = element) : undefined),
+    ...dial(options.dial),
+    h('g', { transform: rotate(a.hour) }, mp ? bar(0.16, -0.5, 0.07) : hourHand(), refs ? (element) => (refs.hour = element) : undefined),
+    h('g', { transform: rotate(a.minute) }, mp ? bar(0.18, -0.86, 0.05) : minuteHand(), refs ? (element) => (refs.minute = element) : undefined),
   ];
   if (options.secondHand !== 'none') {
-    nodes.push(h('g', { transform: rotate(a.second) }, secondHand(SECOND[options.secondHand]), refs ? (element) => (refs.second = element) : undefined));
+    const color = SECOND[options.secondHand];
+    const hand = mp ? bar(0.24, -0.9, 0.014, color) : secondHand(color);
+    nodes.push(h('g', { transform: rotate(a.second) }, hand, refs ? (element) => (refs.second = element) : undefined));
   }
   nodes.push(h('circle', { cx: C, cy: C, r: r(0.055), fill: INK }));
   if (options.secondHand !== 'none') nodes.push(h('circle', { cx: C, cy: C, r: r(0.022), fill: SECOND[options.secondHand] }));
@@ -159,7 +180,7 @@ function root(frame: FestinaFrame, children: VNode[], titleRef?: (element: SVGEl
 }
 
 export function renderToString(frame: FestinaFrame, options: FestinaOptions): string {
-  const svg = root(frame, scene(options, angles(frameSeconds(frame), options.motion), `festina-${options.case}`));
+  const svg = root(frame, clockScene(options, angles(frameSeconds(frame), options.motion), `festina-${options.case}`));
   svg.attrs.width = 800;
   svg.attrs.height = 800;
   return toDocument(svg, 'destinoteca · reloj Festina para ADIF · https://oierlauzi.github.io/destinoteca/');
@@ -184,7 +205,7 @@ export function mount(host: Element, initial: FestinaOptions, env: { ticker: Tic
   let tick = 0;
   // The time of day the last frame gave, and when it arrived on the page's own clock.
   let anchor = { seconds: frameSeconds(frame), at: 0, running: false };
-  let refs: { hour?: SVGElement; minute?: SVGElement; second?: SVGElement } = {};
+  let refs: HandRefs = {};
   let title: SVGElement | undefined;
   let element: SVGElement | undefined;
   let shown = '';
@@ -196,7 +217,7 @@ export function mount(host: Element, initial: FestinaOptions, env: { ticker: Tic
 
   const build = (): void => {
     refs = {};
-    element = toDom(root(frame, scene(options, angles(now(), options.motion), prefix, refs), (node) => (title = node)), doc);
+    element = toDom(root(frame, clockScene(options, angles(now(), options.motion), prefix, refs), (node) => (title = node)), doc);
     element.setAttribute('width', '100%');
     element.style.display = 'block';
     host.replaceChildren(element);

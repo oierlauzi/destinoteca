@@ -25,18 +25,18 @@ import { columnLegend, TITLES, type Column, type Legend, type Regional } from '.
  * a second rectangle filled with lit ones and clipped to the runs of lit
  * dots. A change of text only rewrites those clip paths.
  */
-const FONT_FAMILY = 'Myriad Pro, Frutiger, Segoe UI, Helvetica Neue, Arial, sans-serif';
-const BODY = '#24272b';
-const BODY_EDGE = '#3b3f44';
-const GREEN = '#00703c';
+export const FONT_FAMILY = 'Myriad Pro, Frutiger, Segoe UI, Helvetica Neue, Arial, sans-serif';
+export const BODY = '#24272b';
+export const BODY_EDGE = '#3b3f44';
+export const GREEN = '#00703c';
 const TAB = '#e6e7e4';
 const TAB_INK = '#4d4f51';
-const LEGEND_ES = '#c4c7c3';
-const LEGEND_STRONG = '#eceeea';
-const PANEL = '#2c2f31';
-const BEZEL = '#17191b';
-const BEZEL_EDGE = '#3c4044';
-const UNLIT = '#555a5b';
+export const LEGEND_ES = '#c4c7c3';
+export const LEGEND_STRONG = '#eceeea';
+export const PANEL = '#2c2f31';
+export const BEZEL = '#17191b';
+export const BEZEL_EDGE = '#3c4044';
+export const UNLIT = '#555a5b';
 /** Blank columns between the end of a running text and its start again. */
 const WIDE_GAP = 32;
 
@@ -66,13 +66,13 @@ export function cellText(column: Column, value: string): string {
 }
 
 /** The columns of a panel, `cols` wide. */
-const panelBits = (text: string, cols: number): Bits => {
+export const panelBits = (text: string, cols: number): Bits => {
   const strip = textStrip(text, font);
   return Array.from({ length: cols }, (_, c) => strip[c] ?? 0);
 };
 
 /** Faults: dots stuck on or off, and whole rows of LEDs gone dark in a panel. Fixed by the seed. */
-function withFaults(bits: Bits, panel: number, options: AdifOptions): Bits {
+export function withFaults(bits: Bits, panel: number, options: Pick<AdifOptions, 'deadOn' | 'deadOff' | 'deadRows' | 'deadSeed'>): Bits {
   const on = options.deadOn / 100;
   const off = options.deadOff / 100;
   const deadRows = options.deadRows / 100;
@@ -246,7 +246,7 @@ const idsFor = (prefix: string): Ids => ({
   clip: (i) => `${prefix}-c${i}`,
 });
 
-const ledPattern = (id: string, fill: string, glow: boolean, ref?: (element: SVGElement) => void): VNode =>
+export const ledPattern = (id: string, fill: string, glow: boolean, ref?: (element: SVGElement) => void): VNode =>
   h('pattern', { id, width: 1, height: 1, patternUnits: 'userSpaceOnUse' }, [
     // A lit LED glows past its edge, which makes the strokes read bolder than the dots are.
     ...(glow ? [h('circle', { cx: 0.5, cy: 0.5, r: 0.5, fill, opacity: 0.4 })] : []),

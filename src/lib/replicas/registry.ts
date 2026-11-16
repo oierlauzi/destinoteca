@@ -4,6 +4,7 @@ import { accesoAtocha } from './page-iberica-acceso-atocha/def';
 import { andenAtocha } from './page-iberica-anden-atocha/def';
 import { andenContinuo } from './page-iberica-anden-continuo/def';
 import { festinaAdif } from './festina-adif/def';
+import { andenMp, andenMpReloj, andenMpVertical } from './mp-electronics-adif-anden/def';
 import { mpElectronicsAdif } from './mp-electronics-adif/def';
 import { vestibulo2, vestibulo4 } from './page-iberica-vestibulo/def';
 import type { ReplicaDef } from './types';
@@ -24,6 +25,9 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'page-iberica-anden-atocha': andenAtocha,
   'mp-electronics-adif': mpElectronicsAdif,
   'festina-adif': festinaAdif,
+  'mp-electronics-adif-anden': andenMp,
+  'mp-electronics-adif-anden-reloj': andenMpReloj,
+  'mp-electronics-adif-anden-vertical': andenMpVertical,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {
