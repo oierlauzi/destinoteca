@@ -33,6 +33,8 @@ const TAB_INK = '#4d4f51';
 const LEGEND_ES = '#c4c7c3';
 const LEGEND_STRONG = '#eceeea';
 const PANEL = '#2c2f31';
+const BEZEL = '#17191b';
+const BEZEL_EDGE = '#3c4044';
 const UNLIT = '#555a5b';
 /** Blank columns between the end of a running text and its start again. */
 const WIDE_GAP = 32;
@@ -268,7 +270,9 @@ function scene(options: AdifOptions, ids: Ids, paths: string[], refs?: { clips: 
     boards.push(h('g', { transform: `translate(${bx},${by})` }, board(options)));
   }
   const leds: VNode[] = all.flatMap((panel, i) => [
-    h('rect', { x: panel.x - 0.4, y: panel.y - 0.4, width: panel.cols + 0.8, height: PANEL_ROWS + 0.8, fill: PANEL }),
+    // Each window has a slightly rounded bezel around it.
+    h('rect', { x: panel.x - 1.3, y: panel.y - 1.3, width: panel.cols + 2.6, height: PANEL_ROWS + 2.6, rx: 1.4, fill: BEZEL, stroke: BEZEL_EDGE, 'stroke-width': 0.35 }),
+    h('rect', { x: panel.x - 0.4, y: panel.y - 0.4, width: panel.cols + 0.8, height: PANEL_ROWS + 0.8, rx: 0.5, fill: PANEL }),
     h('rect', { x: panel.x, y: panel.y, width: panel.cols, height: PANEL_ROWS, fill: `url(#${ids.unlit})` }),
     h('rect', { x: panel.x, y: panel.y, width: panel.cols, height: PANEL_ROWS, fill: `url(#${panel.wide ? ids.wideLit : ids.lit})`, 'clip-path': `url(#${ids.clip(i)})` }),
   ]);

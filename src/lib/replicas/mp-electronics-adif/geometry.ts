@@ -56,11 +56,11 @@ export interface Layout {
 export function layout(): Layout {
   const rowsTop = HEADER + LEGENDS;
   const rowY = (row: number): number => rowsTop + row * ROW_PITCH;
-  // From just before the place field, 46 characters long: it stops short of the end of the remarks.
+  // From the start of the place field to about the middle of the remarks, in whole characters.
   const wide = {
-    x: FIELD_X.place - 4,
+    x: FIELD_X.place,
     y: rowY(ROWS - 1) + PANEL_ROWS + WIDE_GAP,
-    cols: 46 * MP_ADVANCE,
+    cols: Math.round((FIELD_X.remarks + panelCols('remarks') / 2 - FIELD_X.place) / MP_ADVANCE) * MP_ADVANCE,
   };
   return { rowsTop, rowY, wide, height: wide.y + PANEL_ROWS + BOTTOM };
 }

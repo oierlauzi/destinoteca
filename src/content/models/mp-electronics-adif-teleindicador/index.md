@@ -40,7 +40,8 @@ components:
       (14).
   - name: Fila ancha
     description: >-
-      Bajo los trenes, de la columna del destino a la de las observaciones:
+      Bajo los trenes, desde la columna del destino hasta más o menos la mitad
+      de la de las observaciones:
       avisos que se desplazan, casi siempre en rojo, o el título del tablero.
   - name: LED
     description: >-

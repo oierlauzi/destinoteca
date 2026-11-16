@@ -4,7 +4,7 @@ import type { Service, View } from '../src/lib/model';
 import { defaults, type ParamSchema } from '../src/lib/params';
 import { readConfig, replicaSize, writeConfig } from '../src/lib/player/config';
 import { AMBER, fromFlat, GREEN, mpElectronicsAdif as def, toFlat, type AdifOptions } from '../src/lib/replicas/mp-electronics-adif/def';
-import { BOARD_WIDTH, CELLS, layout } from '../src/lib/replicas/mp-electronics-adif/geometry';
+import { BOARD_WIDTH, CELLS, FIELD_X, layout } from '../src/lib/replicas/mp-electronics-adif/geometry';
 import { idleText } from '../src/lib/replicas/mp-electronics-adif/labels';
 import { blank, present, trainText } from '../src/lib/replicas/mp-electronics-adif/presenter';
 import { cellText, renderToString, runsPath } from '../src/lib/replicas/mp-electronics-adif/render';
@@ -56,6 +56,10 @@ describe('the board', () => {
   it('grows with the boards hung together, whatever its languages', () => {
     expect(replicaSize(def, { ...options, regional: 'ca' })).toEqual(replicaSize(def, options));
     expect(layout().rowY(1) - layout().rowY(0)).toBe(16);
+    // The wide row starts with the place field and ends about the middle of the remarks.
+    const wide = layout().wide;
+    expect(wide.x).toBe(FIELD_X.place);
+    expect(Math.abs(wide.x + wide.cols - (FIELD_X.remarks + CELLS.remarks * 4))).toBeLessThanOrEqual(4);
     const one = replicaSize(def, { ...options, regional: '' });
     const four = replicaSize(def, { ...options, regional: '', across: 2, down: 2 });
     expect(one.width).toBe(BOARD_WIDTH);
