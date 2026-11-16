@@ -84,7 +84,8 @@ installations:
     note: Vestíbulo inferior.
   - site: es/madrid-puerta-de-atocha
     status: in-service
-    note: Según las fuentes de las fotografías.
+  - site: es/barcelona-sants
+    status: in-service
   - site: es/leon
     status: in-service
     note: Un tablero de llegadas, según la fuente de la fotografía.
@@ -100,6 +101,11 @@ photos:
     ownWork: true
     license: cc-by-sa-4.0
 cover: chamartin-vestibulo-inferior
+references:
+  - title: Sobre nosotros
+    author: MP Electronics
+    url: https://www.mpelectronics.es/sobre-nosotros/
+    note: La historia de la empresa, que cita las estaciones de ADIF de Atocha, Sants y Chamartín entre sus grandes encargos.
 replica:
   id: mp-electronics-adif
 stage: stub
@@ -108,9 +114,14 @@ stage: stub
 Es el tablero de salidas y llegadas que se ve en las estaciones de largo
 recorrido de ADIF, a menudo en grupo: en las grandes estaciones cuelgan
 varios uno al lado del otro, o uno encima de otro, y cada uno sigue con los
-trenes del anterior. Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/),
-cuyo nombre aparece en una pequeña placa bajo los paneles. Sigue en servicio,
-pero poco a poco lo sustituyen pantallas de vídeo.
+trenes del anterior. Sigue en servicio, pero poco a poco lo sustituyen
+pantallas de vídeo.
+
+Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/), de Palamós
+(Girona), cuyo nombre aparece en una pequeña placa bajo los paneles. La
+empresa cuenta las estaciones de ADIF de Atocha, Sants y Chamartín entre sus
+grandes encargos, entre los teleindicadores de la M-30 de Madrid (1992) y su
+cierre en 2010; se refundó en 2013.
 
 ## Cómo es
 
@@ -173,7 +184,9 @@ avisos propios de cada estación solo se pueden escribir a mano.
 
 - **Los rótulos en euskera y en gallego.** La réplica usa las palabras
   habituales, pero no se han visto en ninguna fotografía.
-- **Cuándo se instalaron**, y en qué estaciones hay o hubo.
+- **Cuándo se instalaron.** Por la historia de la empresa, entre 1992 y
+  2010; no se sabe en qué año llegó cada estación.
+- **En qué otras estaciones hay o hubo.**
 - **Qué deciden las observaciones**: desde cuántos minutos de retraso se
   avisa, y cuándo se da la hora estimada y cuándo solo el retraso.
 
