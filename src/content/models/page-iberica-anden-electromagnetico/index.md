@@ -76,7 +76,7 @@ installations:
     note: Sobre postes, uno por vía, con un reloj entre ambos.
   - site: es/delicias
     status: unknown
-    note: Colgado de la marquesina.
+    note: Uno por andén, colgados de la marquesina. Fotografiados en servicio en 2016.
   - site: es/mendez-alvaro
     line: C-5
     status: in-service
@@ -225,19 +225,20 @@ photos:
     sourceUrl: https://maps.app.goo.gl/9JGHJGjsfDJ6J5rG6
     source: Google Maps
     license: rights-reserved-credited
-  - id: delicias
-    src: ./delicias-anden.jpg
+  - id: delicias-2016
+    src: ./delicias-2016.jpg
     alt: >-
-      El andén de Delicias desde arriba, mojado por la lluvia. Colgado de la
-      marquesina, un cartel dice «Vía 1» y «CHAMARTIN», con el tubo
-      fluorescente encendido bajo la línea flip-dot. Debajo, dos viajeras con
-      paraguas y un rótulo hacia Aeropuerto T4 por Atocha.
-    caption: Delicias, un día de lluvia. Bajo la línea flip-dot se ve encendido el tubo fluorescente que la ilumina.
+      La estación de Delicias vista desde una pasarela, con un tren de
+      Cercanías en la vía 2 y marquesinas rojas onduladas sobre los andenes.
+      Dos carteles encendidos, uno por andén: «Vía 2, P.PIO-VILLAL» y «Vía 1,
+      RECOL-F.MORA, 4», cada uno con su fila de LED roja también encendida.
+    caption: "Delicias, marzo de 2016: los carteles de los dos andenes, encendidos, con destinos abreviados para caber en 16 caracteres."
+    date: '2016-03-05'
     place: Delicias
-    author: Usuario de Google Maps
-    sourceUrl: https://maps.app.goo.gl/3C9QCBJMxTvG21Wx7
-    source: Google Maps
-    license: rights-reserved-credited
+    author: Malopez 21
+    sourceUrl: https://commons.wikimedia.org/wiki/File:Estaci%C3%B3n_de_Delicias_(Cercan%C3%ADas_Madrid),_andenes.JPG
+    source: Wikimedia Commons
+    license: cc-by-sa-4.0
 cover: via-libre-1997
 references:
   - title: renfe-flipdot-re. Ingeniería inversa de un teleindicador PAGE Ibérica PI-T100-M
