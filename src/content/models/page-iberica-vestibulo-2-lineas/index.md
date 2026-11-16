@@ -44,8 +44,8 @@ photos:
     src: ./tres-cantos-vestibulo.jpg
     alt: >-
       Pasillo de acceso a los andenes de Tres Cantos. Encima de la entrada,
-      junto a un reloj, cuelga el panel de dos líneas con «Vía» y «Destino» en
-      la cabecera y la fila de LED encendida en rojo.
+      junto a un reloj, cuelga el panel de dos líneas con la fila de LED
+      encendida.
     caption: El panel de Tres Cantos, sobre el pasillo que lleva a los andenes.
     place: Tres Cantos
     author: Usuario de Google Maps

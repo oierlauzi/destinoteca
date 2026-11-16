@@ -102,9 +102,8 @@ photos:
   - id: via-libre-1997
     src: ./via-libre-1997.jpg
     alt: >-
-      Cartel de andén visto de cerca: «Vía 1» y «Próxima Llegada» en letras
-      blancas, el logotipo de Cercanías y, en puntos amarillos,
-      «ATOCH-CHAMAR».
+      Cartel de andén visto de cerca, con sus rótulos blancos, el logotipo de
+      Cercanías y la línea flip-dot encendida.
     caption: El cartel en servicio, tal como lo publicó *Vía Libre* en 1997.
     date: '1997'
     author: Vía Libre
@@ -113,9 +112,8 @@ photos:
   - id: mostoles-1997
     src: ./mostoles-1997.jpg
     alt: >-
-      Andén de Móstoles lleno de viajeros junto a un tren de Cercanías. Sobre
-      ellos, el cartel dice «Vía 1, FUENLABRADA, 1 min.» y la fila de LED roja
-      está encendida.
+      Andén de Móstoles lleno de viajeros junto a un tren de Cercanías, con el
+      cartel encima.
     caption: Móstoles, 1997. Se ve encendida la fila de LED, que no se conserva en la unidad estudiada.
     date: '1997'
     place: Móstoles
@@ -125,8 +123,8 @@ photos:
   - id: villalba-1997
     src: ./villalba-1997.jpg
     alt: >-
-      Andén de la estación de Villalba con bancos rojos. A la derecha, un
-      cartel montado sobre un poste dice «Vía 0, P.PIO-CHAMAR».
+      Andén de la estación de Villalba con bancos rojos y, a la derecha, un
+      cartel montado sobre un poste.
     caption: Villalba, 1997, en la variante sobre poste.
     date: '1997'
     place: Villalba
@@ -137,7 +135,7 @@ photos:
     src: ./anuncio-via-libre-1997.jpg
     alt: >-
       Anuncio de PAGE Ibérica, S.A.: su logotipo, una lista de actividades y la
-      fotografía de un cartel que dice «Vía 1, ATOCH-T.CANT, 6 min.».
+      fotografía de un cartel de andén.
     caption: Anuncio de PAGE Ibérica en *Vía Libre*, marzo de 1997.
     date: '1997-03'
     author: PAGE Ibérica, S.A.
@@ -146,9 +144,8 @@ photos:
   - id: pitis-2026
     src: ./pitis-2026.jpg
     alt: >-
-      Cartel colgado de la marquesina de Pitis que dice «Vía» sin número y
-      «SI PARADA», con una letra perdida. En la vía, un tren de coches azules
-      y amarillos y viajeros en el andén.
+      Cartel colgado de la marquesina de Pitis. En la vía, un tren de coches
+      azules y amarillos y viajeros en el andén.
     caption: Pitis, 2026, unos meses antes de su retirada, junto al *Tren de los 80*.
     date: '2026'
     place: Pitis
@@ -158,7 +155,7 @@ photos:
     src: ./aravaca-retired.jpg
     alt: >-
       Un cartel desmontado y apoyado en el suelo del andén de Aravaca, con el
-      cristal suelto. Todavía se lee «Vía 2» y «LAS ROZAS».
+      cristal suelto.
     caption: Aravaca, junio de 2026. Ya sin alimentación, sigue mostrando el último destino que recibió.
     date: '2026-06'
     place: Aravaca
@@ -168,8 +165,8 @@ photos:
   - id: unidad-preservada
     src: ./unidad-preservada.jpg
     alt: >-
-      La línea flip-dot, sin el resto del cartel, colocada sobre una estantería
-      de madera. Muestra «CHAMARTIN» y un 8 junto al rótulo «min.».
+      La línea flip-dot, sin el resto del cartel, encendida sobre una
+      estantería de madera.
     caption: La línea PI-T100-M recuperada para el proyecto de ingeniería inversa, de nuevo en marcha.
     author: Oier Lauzirika Zarrabeitia
     ownWork: true
@@ -179,9 +176,8 @@ photos:
     src: ./cantoblanco-anden-2.jpg
     alt: >-
       Cartel de andén de Cantoblanco Universidad de noche, colgado de la
-      marquesina: «Vía 1», «SIN PARADA» en la línea flip-dot y un aviso en
-      letras rojas en la fila de LED, encendida.
-    caption: Cantoblanco Universidad, diciembre de 2017. De noche se ve encendida la fila de LED, con un aviso.
+      marquesina, con la fila de LED encendida.
+    caption: Cantoblanco Universidad, diciembre de 2017.
     date: '2017-12'
     place: Cantoblanco Universidad
     author: Usuario de Google Maps
@@ -192,7 +188,7 @@ photos:
     src: ./cantoblanco-anden-1.jpg
     alt: >-
       Andén de Cantoblanco Universidad un día soleado. Bajo la marquesina
-      cuelga un cartel de «Vía 2»; las vías y el andén se pierden al fondo.
+      cuelga un cartel; las vías y el andén se pierden al fondo.
     caption: Cantoblanco Universidad, septiembre de 2023.
     date: '2023-09'
     place: Cantoblanco Universidad
@@ -203,9 +199,8 @@ photos:
   - id: el-goloso
     src: ./el-goloso-anden.jpg
     alt: >-
-      Andén de El Goloso a pleno sol: dos carteles sobre postes, «Vía 1» y
-      «Vía 2», con un reloj de estación entre ambos. Las líneas flip-dot
-      muestran la misma letra repetida.
+      Andén de El Goloso a pleno sol: dos carteles sobre postes, con un reloj
+      de estación entre ambos.
     caption: "El Goloso: un cartel por vía, sobre postes, con el reloj de la estación en medio."
     place: El Goloso
     author: Usuario de Google Maps
@@ -216,8 +211,8 @@ photos:
     src: ./tres-cantos-anden.jpg
     alt: >-
       Andén de Tres Cantos cubierto de nieve bajo un cielo despejado: dos
-      carteles sobre postes, «Vía 1» y «Vía 2», con un reloj entre ambos, y
-      edificios de viviendas a la izquierda.
+      carteles sobre postes, con un reloj entre ambos, y edificios de viviendas
+      a la izquierda.
     caption: Tres Cantos, enero de 2021, tras una gran nevada. También aquí, un cartel por vía con el reloj en medio.
     date: '2021-01'
     place: Tres Cantos
@@ -230,8 +225,7 @@ photos:
     alt: >-
       La estación de Delicias vista desde una pasarela, con un tren de
       Cercanías en la vía 2 y marquesinas rojas onduladas sobre los andenes.
-      Dos carteles encendidos, uno por andén: «Vía 2, P.PIO-VILLAL» y «Vía 1,
-      RECOL-F.MORA, 4», cada uno con su fila de LED roja también encendida.
+      Dos carteles encendidos, uno por andén, con sus filas de LED.
     caption: "Delicias, marzo de 2016: los carteles de los dos andenes."
     date: '2016-03-05'
     place: Delicias

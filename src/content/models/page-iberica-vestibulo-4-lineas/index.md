@@ -44,9 +44,7 @@ photos:
     src: ./cantoblanco-vestibulo-1.jpg
     alt: >-
       Vestíbulo de Cantoblanco Universidad. Sobre las puertas de los andenes
-      de la línea C-4, un reloj y el panel de cuatro líneas, con «Vía»,
-      «Destino» y «Próxima Llegada» en la cabecera y trenes a Chamartín y a
-      Colmenar.
+      de la línea C-4, un reloj y el panel de cuatro líneas.
     caption: El panel de Cantoblanco Universidad, junto al reloj del vestíbulo.
     place: Cantoblanco Universidad
     author: Usuario de Google Maps
