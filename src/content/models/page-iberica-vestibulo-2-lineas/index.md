@@ -3,7 +3,7 @@ name: Panel electromagnético de vestíbulo de PAGE Ibérica, 2 líneas
 summary: >-
   Panel de vestíbulo de Renfe Cercanías Madrid con dos líneas flip-dot de 20
   caracteres, una por tren, para anunciar las próximas salidas de toda la
-  estación. Visto en Tres Cantos.
+  estación. Visto en Tres Cantos y en Delicias.
 kind: concourse-board
 technologies:
   - flip-dot
@@ -34,11 +34,20 @@ components:
     description: >-
       «Vía» con el logotipo de Cercanías encima, «Destino» y un «min.» al final
       de cada línea.
+variants:
+  - id: proxima-llegada
+    name: Con «Próxima Llegada»
+    description: >-
+      En Delicias la cabecera lleva también «Próxima Llegada» sobre los
+      minutos, como el panel de cuatro líneas. En Tres Cantos no.
 installations:
   - site: es/tres-cantos
     line: C-4
     status: unknown
     note: En el vestíbulo. La estación tuvo también teleindicadores de andén de la misma familia, ya retirados.
+  - site: es/delicias
+    status: unknown
+    note: En el vestíbulo.
 photos:
   - id: tres-cantos-vestibulo
     src: ./tres-cantos-vestibulo.jpg
@@ -51,6 +60,15 @@ photos:
     author: Usuario de Google Maps
     sourceUrl: https://maps.app.goo.gl/cucRjHfCNvZRMeam8
     source: Google Maps
+    license: rights-reserved-credited
+  - id: delicias-vestibulo
+    src: ./delicias-vestibulo.jpg
+    alt: >-
+      El panel de dos líneas de Delicias visto de cerca, desde abajo, con sus
+      rótulos blancos y las líneas flip-dot iluminadas.
+    caption: Delicias.
+    place: Delicias
+    author: Gonzalo Vázquez Hidalgo
     license: rights-reserved-credited
 replica:
   id: page-iberica-vestibulo-2-lineas
@@ -66,8 +84,9 @@ stage: stub
 
 Además de los [teleindicadores de andén](../page-iberica-anden-electromagnetico/),
 algunas estaciones de Cercanías Madrid tuvieron en el vestíbulo un panel que
-anunciaba los próximos trenes de toda la estación. Este tiene dos líneas; en
-Tres Cantos convivió con los carteles de andén de la misma familia, que ya no están.
+anunciaba los próximos trenes de toda la estación. Este tiene dos líneas; se
+ha visto en Tres Cantos, donde convivió con los carteles de andén de la misma
+familia, que ya no están, y en Delicias.
 Existe también una versión de
 [4 líneas](../page-iberica-vestibulo-4-lineas/).
 
@@ -75,7 +94,7 @@ Existe también una versión de
 
 | Elemento | Contenido |
 | --- | --- |
-| Cabecera | «Vía» con el logotipo de Cercanías encima, sobre los dos primeros caracteres, y «Destino», más o menos del séptimo al decimotercero. A diferencia del de cuatro líneas, no lleva «Próxima Llegada» |
+| Cabecera | «Vía» con el logotipo de Cercanías encima, sobre los dos primeros caracteres, y «Destino», más o menos del séptimo al decimotercero. En Tres Cantos no lleva «Próxima Llegada»; en Delicias, como el de cuatro líneas, sí |
 | Líneas flip-dot | Una por tren: la vía, el destino y los minutos que faltan, junto a un «min.» fijo. Bajo cada línea hay un tubo fluorescente que la ilumina, y por eso están tan separadas |
 | Fila de LED | Texto móvil debajo de las líneas, algo más ancha que ellas |
 
