@@ -45,13 +45,13 @@ components:
   - name: LED
     description: >-
       Bicolores, rojos y verdes: el texto puede ser verde, rojo o ámbar, con
-      los dos encendidos. Los paneles tienen 13 filas de LED.
+      los dos encendidos. Los paneles tienen 11 filas de LED.
 variants:
   - id: castellano
     name: Castellano e inglés
     description: >-
       Cabecera toda verde y filas en ámbar, como en las estaciones de Madrid.
-      Los rótulos de las columnas tienen dos líneas y el tablero es más bajo.
+      Los rótulos de las columnas tienen dos líneas.
     replicaPreset: {}
   - id: catalan
     name: Castellano, catalán e inglés
@@ -173,18 +173,18 @@ Los LED son bicolores, rojos y verdes. Cada estación eligió su color para las
 filas: ámbar (los dos encendidos) en Madrid, verde en Barcelona, rojo en la
 Comunitat Valenciana.
 
-Cada carácter ocupa 7 columnas y una en blanco, en paneles de 13 filas. Las
-mayúsculas usan las 11 de abajo; las 2 de arriba son para la tilde de la Ñ.
-Los trazos verticales tienen dos LED de grueso y los horizontales uno, y el
-cero lleva una barra. Las vocales acentuadas se escriben en minúscula, con el
-acento encima.
+Cada carácter ocupa 7 columnas y una en blanco, en paneles de 11 filas que
+las mayúsculas llenan de arriba abajo. Los trazos verticales tienen dos LED de
+grueso y los horizontales uno, y el cero lleva una barra. Como no queda sitio
+para una tilde sobre una mayúscula, las vocales acentuadas y la eñe se
+escriben en minúscula, con la tilde encima.
 
 ## Variantes
 
 La cabecera cambia según la región: siempre en castellano y en inglés, y en
 medio, si la hay, en la lengua cooficial (catalán, valenciano, euskera o
-gallego). Con tres lenguas, los rótulos de las columnas ocupan tres líneas y
-la franja que les deja el tablero es más alta. Unos tableros tienen la
+gallego); con tres lenguas, los rótulos de las columnas ocupan tres líneas en
+lugar de dos. Unos tableros tienen la
 cabecera toda verde y otros llevan el título en una pestaña gris claro. Los
 más antiguos no tienen el logotipo de adif. El rótulo inglés de las
 observaciones tampoco es el mismo en todos.
@@ -198,7 +198,7 @@ mostrar las dos cosas.
 ## La réplica
 
 Está medida sobre fotografías y dibujada a escuadra. La tipografía se ha
-reconstruido con la regla de los trazos descrita arriba: la L, la ó, la Ñ y
+reconstruido con la regla de los trazos descrita arriba: la L, la ó y
 el cero se han leído punto por punto, y el resto puede diferir en detalles de
 los reales. Las observaciones salen de los retrasos y las cancelaciones; los
 avisos propios de cada estación solo se pueden escribir a mano.

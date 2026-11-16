@@ -15,26 +15,27 @@ const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
 const view = (services: Service[]): View => ({ now: NOW, timeZone: 'Europe/Madrid', services, total: services.length, notices: [], placement: { platforms: [], cycle: true } });
 
 describe('the typeface', () => {
-  it('has 7-column characters on 13 rows, capitals on the bottom 11', () => {
-    for (const char of 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789:./-áéíóúàèòïüç') {
+  it('has 7-column characters on 11 rows, which capitals fill', () => {
+    for (const char of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:./-áéíóúàèòïüçñ') {
       const glyph = font.glyph(char)!;
       expect(glyph, char).toHaveLength(7);
-      expect(Math.max(...glyph), char).toBeLessThan(1 << 13);
+      expect(Math.max(...glyph), char).toBeLessThan(1 << 11);
     }
-    // The L: a stem two dots thick from row 2 to row 12, a foot one dot thick.
+    // The L: a stem two dots thick down the whole panel, a foot one dot thick.
     const l = font.glyph('L')!;
-    expect(l[0]).toBe(0b1111111111100);
-    expect(l[1]).toBe(0b1111111111100);
-    expect(l[6]).toBe(1 << 12);
-    // The tilde of the Ñ is in the two rows above the capitals.
-    expect(font.glyph('Ñ')!.some((byte) => byte & 0b11)).toBe(true);
-    expect(font.glyph('N')!.some((byte) => byte & 0b11)).toBe(false);
-    expect(MP_SEEN_IN_PHOTOGRAPHS).toEqual(expect.arrayContaining(['L', 'ó', 'Ñ', '0']));
+    expect(l[0]).toBe(0b11111111111);
+    expect(l[1]).toBe(0b11111111111);
+    expect(l[6]).toBe(1 << 10);
+    // A small letter leaves its two top rows to its mark.
+    expect(font.glyph('ñ')!.some((byte) => byte & 0b11)).toBe(true);
+    expect(font.glyph('o')).toBeUndefined();
+    expect(MP_SEEN_IN_PHOTOGRAPHS).toEqual(expect.arrayContaining(['L', 'ó', '0']));
   });
 
   it('writes accented vowels small, keeps Ñ, and blanks what it lacks without moving the rest', () => {
     expect(font.fold('Castelló de la Plana')).toBe('CASTELLó DE LA PLANA');
-    expect(font.fold('A Coruña')).toBe('A CORUÑA');
+    expect(font.fold('A Coruña')).toBe('A CORUñA');
+    expect(font.fold('MÁLAGA')).toBe('MáLAGA');
     expect(font.fold('a€b')).toBe('A B');
     // Every character advances 8 columns, a space too.
     expect(textStrip('AB C', font)).toHaveLength(4 * 8 - 1);
@@ -52,8 +53,9 @@ describe('the board', () => {
     expect(cellText('time', '10:45')).toBe('10:45');
   });
 
-  it('is taller with three lines of legends, and grows with the boards hung together', () => {
-    expect(layout(true).height).toBeGreaterThan(layout(false).height);
+  it('grows with the boards hung together, whatever its languages', () => {
+    expect(replicaSize(def, { ...options, regional: 'ca' })).toEqual(replicaSize(def, options));
+    expect(layout().rowY(1) - layout().rowY(0)).toBe(16);
     const one = replicaSize(def, { ...options, regional: '' });
     const four = replicaSize(def, { ...options, regional: '', across: 2, down: 2 });
     expect(one.width).toBe(BOARD_WIDTH);

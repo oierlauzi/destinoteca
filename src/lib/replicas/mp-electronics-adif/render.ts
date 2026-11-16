@@ -33,17 +33,17 @@ const TAB_INK = '#4d4f51';
 const LEGEND_ES = '#c4c7c3';
 const LEGEND_STRONG = '#eceeea';
 const PANEL = '#2c2f31';
-const UNLIT = '#4a4f4f';
+const UNLIT = '#555a5b';
 /** Blank columns between the end of a running text and its start again. */
 const WIDE_GAP = 32;
 
 type Bits = number[];
 
 const boardCount = (options: AdifOptions) => ({ across: Math.max(1, Math.min(4, options.across || 1)), down: Math.max(1, Math.min(3, options.down || 1)) });
-const layoutOf = (options: AdifOptions): Layout => layout(Boolean(options.regional));
+const layoutOf = (_options: AdifOptions): Layout => layout();
 const sizeOf = (options: AdifOptions) => {
   const { across, down } = boardCount(options);
-  return stackSize(across, down, Boolean(options.regional));
+  return stackSize(across, down);
 };
 
 /** A field's text in its cells: most from the left, the platform from the right, the train split in two. */

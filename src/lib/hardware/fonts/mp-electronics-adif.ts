@@ -3,18 +3,18 @@ import type { ProportionalFont } from './proportional';
 /**
  * The typeface of the LED boards MP Electronics made for ADIF's stations.
  *
- * Every character takes 7 columns, one blank column apart, on panels 13
- * rows tall. Capitals fill the bottom 11 rows; the 2 rows above them hold
- * the tilde of the Ñ. Vertical strokes are two dots thick and horizontal
- * ones a single dot, and the zero is slashed. A vowel with an accent is
- * written as a lowercase letter, with the accent above it: "CASTELLó".
+ * Every character takes 7 columns, one blank column apart, on panels 11
+ * rows tall that capitals fill from top to bottom. Vertical strokes are two
+ * dots thick and horizontal ones a single dot, and the zero is slashed.
+ * There is no room for a mark over a capital, so a vowel with an accent, and
+ * the Ñ, are written as lowercase letters with the mark above them:
+ * "CASTELLó", "CORUñA".
  *
  * No ROM has been read. Each character is drawn here as a skeleton one dot
  * thick, 6 wide and 11 tall, thickened by one dot to the right: that is how
  * the letters of the photographs are built. The L and the ó were read dot by
- * dot from a close photograph, the Ñ (a capital with its tilde on top) and
- * the slashed zero from others; the rest follow the same construction and
- * may differ from the real ones in detail.
+ * dot from a close photograph and the slashed zero from others; the rest
+ * follow the same construction and may differ from the real ones in detail.
  */
 const CAPITALS: Record<string, string> = {
   A: '..##../.#..#./#....#/#....#/#....#/######/#....#/#....#/#....#/#....#/#....#',
@@ -75,20 +75,20 @@ const SMALL: Record<string, string> = {
   o: '.####./#....#/#....#/#....#/#....#/#....#/#....#/.####.',
   u: '#....#/#....#/#....#/#....#/#....#/#....#/#...##/.###.#',
   c: '.####./#....#/#...../#...../#...../#....#/.####./......',
+  n: '#.###./##...#/#....#/#....#/#....#/#....#/#....#/#....#',
 };
 
 /** Marks above a small letter, two rows, drawn as they are (not thickened). */
 const ACUTE = ['...###.', '..##...'];
 const GRAVE = ['.###...', '...##..'];
 const DIAERESIS = ['.##..##', '.##..##'];
-/** The tilde of the Ñ, in the two rows above the capitals. */
 const TILDE = ['..##..#', '.#..##.'];
 
 const WIDTH = 7;
-const ROWS = 13;
-/** First row of a capital. */
-const CAP_TOP = 2;
-/** First row of a small letter's body: three rows below the top of a capital. */
+const ROWS = 11;
+/** First row of a capital: they fill the panel. */
+const CAP_TOP = 0;
+/** First row of a small letter's body: three rows below the top of a capital, leaving two for its mark. */
 const SMALL_TOP = CAP_TOP + 3;
 
 type Bitmap = boolean[][];
@@ -119,12 +119,12 @@ const toColumns = (bitmap: Bitmap): number[] =>
 
 const GLYPHS = new Map<string, number[]>();
 for (const [char, skeleton] of Object.entries(CAPITALS)) GLYPHS.set(char, toColumns(stamp(blank(), skeleton, CAP_TOP)));
-GLYPHS.set('Ñ', toColumns(mark(stamp(blank(), CAPITALS.N!, CAP_TOP), TILDE, 0)));
 
 const ACCENTED: Record<string, [string, string[]]> = {
   á: ['a', ACUTE], é: ['e', ACUTE], í: ['i', ACUTE], ó: ['o', ACUTE], ú: ['u', ACUTE],
   à: ['a', GRAVE], è: ['e', GRAVE], ò: ['o', GRAVE],
   ï: ['i', DIAERESIS], ü: ['u', DIAERESIS],
+  ñ: ['n', TILDE],
 };
 for (const [char, [base, marks]] of Object.entries(ACCENTED)) {
   GLYPHS.set(char, toColumns(mark(stamp(blank(), SMALL[base]!, SMALL_TOP), marks, CAP_TOP)));
@@ -133,11 +133,11 @@ for (const [char, [base, marks]] of Object.entries(ACCENTED)) {
 GLYPHS.set('ç', toColumns(mark(stamp(blank(), SMALL.c!, SMALL_TOP), ['...##..'], ROWS - 1)));
 
 /** Read from photographs dot by dot, for the record; the rest are built as described above. */
-export const MP_SEEN_IN_PHOTOGRAPHS: readonly string[] = ['L', 'ó', 'Ñ', '0'];
+export const MP_SEEN_IN_PHOTOGRAPHS: readonly string[] = ['L', 'ó', '0'];
 
-/** Accented capitals the board writes as small letters. */
+/** Capitals with a mark, which the board writes as small letters. */
 const SMALL_FORMS: Record<string, string> = {
-  Á: 'á', É: 'é', Í: 'í', Ó: 'ó', Ú: 'ú', À: 'à', È: 'è', Ò: 'ò', Ï: 'ï', Ü: 'ü', Ç: 'ç',
+  Á: 'á', É: 'é', Í: 'í', Ó: 'ó', Ú: 'ú', À: 'à', È: 'è', Ò: 'ò', Ï: 'ï', Ü: 'ü', Ç: 'ç', Ñ: 'ñ',
 };
 
 /**

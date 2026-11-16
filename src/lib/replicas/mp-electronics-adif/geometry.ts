@@ -3,11 +3,11 @@ import type { Column } from './labels';
 
 /**
  * Where everything goes on one board, in units of the distance between two
- * LEDs. Measured on a photograph of a board at Barcelona Sants taken nearly
- * straight on, set square: a character advances 8 LEDs, a line of
- * characters is 13 LEDs tall, and each field of a row is a panel of its own.
+ * LEDs. Measured on a photograph of an arrivals board taken straight on, set
+ * square: a character advances 8 LEDs, a row of characters is 11 LEDs tall
+ * (the capitals fill it), and each field of a row is a panel of its own.
  */
-export const PANEL_ROWS = 13;
+export const PANEL_ROWS = 11;
 export const ROWS = 7;
 
 /** Characters of each field, from the longest texts photographed. */
@@ -23,11 +23,10 @@ export const COLUMNS: Column[] = ['time', 'place', 'train', 'platform', 'remarks
 const SIDE = 11;
 const GAP = 3;
 export const HEADER = 27;
-/** From the bottom of the header to the first row: three lines of column legends, or two. */
-const LEGENDS_3 = 40;
-const LEGENDS_2 = 22;
-const ROW_PITCH = PANEL_ROWS + 4;
-const WIDE_GAP = 4;
+/** From the bottom of the header to the first row, where the column legends are printed, with two lines or three. */
+const LEGENDS = 38;
+const ROW_PITCH = PANEL_ROWS + 5;
+const WIDE_GAP = 9;
 const BOTTOM = 11;
 /** Between boards hung next to or above one another. */
 export const BOARD_GAP = 10;
@@ -46,11 +45,7 @@ export const FIELD_X = {} as Record<Column, number>;
 
 export const BOARD_WIDTH = FIELD_X.remarks + panelCols('remarks') + SIDE;
 
-/**
- * The vertical layout of a board, which depends on how many lines of legends
- * it prints: boards with a regional language have a taller band above the
- * rows (Barcelona Sants) than those with Spanish and English only (Madrid).
- */
+/** The vertical layout of a board. The band of legends is as tall with two lines as with three. */
 export interface Layout {
   rowsTop: number;
   rowY(row: number): number;
@@ -58,21 +53,21 @@ export interface Layout {
   height: number;
 }
 
-export function layout(threeLines: boolean): Layout {
-  const rowsTop = HEADER + (threeLines ? LEGENDS_3 : LEGENDS_2);
+export function layout(): Layout {
+  const rowsTop = HEADER + LEGENDS;
   const rowY = (row: number): number => rowsTop + row * ROW_PITCH;
-  // From the place field to the end of the remarks, in whole characters.
+  // From just before the place field, 46 characters long: it stops short of the end of the remarks.
   const wide = {
-    x: FIELD_X.place,
+    x: FIELD_X.place - 4,
     y: rowY(ROWS - 1) + PANEL_ROWS + WIDE_GAP,
-    cols: Math.floor((FIELD_X.remarks + panelCols('remarks') - FIELD_X.place) / MP_ADVANCE) * MP_ADVANCE,
+    cols: 46 * MP_ADVANCE,
   };
   return { rowsTop, rowY, wide, height: wide.y + PANEL_ROWS + BOTTOM };
 }
 
 /** Several boards, `across` side by side and `down` one above another. */
-export function stackSize(across: number, down: number, threeLines: boolean): { width: number; height: number } {
-  const { height } = layout(threeLines);
+export function stackSize(across: number, down: number): { width: number; height: number } {
+  const { height } = layout();
   return {
     width: across * BOARD_WIDTH + (across - 1) * BOARD_GAP,
     height: down * height + (down - 1) * BOARD_GAP,

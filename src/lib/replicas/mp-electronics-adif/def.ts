@@ -173,7 +173,7 @@ const selection = (options: Values): SelectionPolicy => ({
 });
 
 const sizeOf = (options: Values): { width: number; height: number } =>
-  stackSize(Math.max(1, Number(options.across) || 1), Math.max(1, Number(options.down) || 1), Boolean(options.regional));
+  stackSize(Math.max(1, Number(options.across) || 1), Math.max(1, Number(options.down) || 1));
 
 export const mpElectronicsAdif: ReplicaDef = {
   id: 'mp-electronics-adif',
