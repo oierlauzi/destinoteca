@@ -8,7 +8,7 @@
 }
 
 .stage {
-  background: var(--sunken);
+  background: var(--stage);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: clamp(8px, 2.5vw, 28px);
@@ -28,10 +28,10 @@
   height: auto;
 }
 
-/* Full screen: the sign alone on black, as large as the screen allows. */
+/* Full screen: the sign alone, as large as the screen allows. */
 .stage:fullscreen,
 .stage.is-fake-fullscreen {
-  background: #000;
+  background: var(--stage);
   border: 0;
   border-radius: 0;
   padding: 24px;

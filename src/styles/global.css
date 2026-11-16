@@ -23,6 +23,12 @@
   --housing: #121212;
   --housing-ink: #f4f2e9;
   --dot: #aede5a;
+  /*
+   * The ground a replica stands on. White in both themes, and on purpose not
+   * redefined for dark mode below: the signs' housings are black, and on a
+   * dark ground their outline would disappear.
+   */
+  --stage: #ffffff;
 
   --radius: 6px;
   --gutter: clamp(16px, 4vw, 32px);
