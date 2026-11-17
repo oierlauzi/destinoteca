@@ -90,6 +90,10 @@ references:
     publication: YouTube
     url: https://www.youtube.com/watch?v=nWuDrpYqH7s
     note: Vídeo de los paneles en servicio, grabado en 2009.
+  - title: Chamartín en obras
+    publication: Forotrenes
+    url: https://www.forotrenes.com/foro/download/file.php?id=65603
+    note: Fotografía del vestíbulo todavía en obras, con los paneles ya colgados.
 replica:
   id: solari-renfe-largo-recorrido
 stage: stub
@@ -111,6 +115,11 @@ En noviembre de 1989 la revista contaba que se le había cambiado el modo de
 control y que todos sus equipos de visualización llevaban ya
 microprocesadores; lo gobernaba el sistema NET 2000 de Solari.
 
+Los paneles estaban desde el principio: una
+[fotografía del vestíbulo todavía en obras](https://www.forotrenes.com/foro/download/file.php?id=65603)
+los muestra ya colgados, con el rótulo «Salidas largo recorrido», antes de
+que se abriera la estación.
+
 Son los mismos paneles en todas las fotografías; entre los años ochenta y
 2007 solo cambiaron los marcos y las paletas, que con el tiempo pasaron a
 mostrar el producto de cada tren con su logotipo. En una fotografía de 1995
@@ -126,8 +135,6 @@ se ven funcionar.
 ## Lo que no se sabe
 
 - **Qué indicaban las dos luces del final de cada fila.**
-- **Cuándo se instalaron y cuándo se retiraron.** El sistema es de 1975, pero
-  no se sabe si estos paneles estaban desde el principio, y en 2009 todavía
-  funcionaban.
+- **Cuándo se retiraron.** En 2009 todavía funcionaban.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
