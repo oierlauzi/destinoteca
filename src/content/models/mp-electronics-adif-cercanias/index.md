@@ -48,16 +48,6 @@ photos:
     sourceUrl: https://estoesmadridmadrid.wordpress.com/wp-content/uploads/2013/02/dsc01011.jpg
     source: ¡Esto es Madrid, Madrid!
     license: rights-reserved-credited
-  - id: chamartin-desmontaje-2026
-    src: ./chamartin-desmontaje-2026.jpg
-    alt: >-
-      Un panel de Cercanías ya descolgado, apoyado con otros contra una valla
-      de obra en un andén, con los cables sueltos.
-    caption: Desmontado en un andén de Chamartín, mayo de 2026.
-    date: '2026-05-30'
-    place: Madrid Chamartín
-    author: Hugo Carabaña Menéndez
-    license: rights-reserved-credited
 cover: chamartin-ecomovilidad
 replica:
   id: mp-electronics-adif-cercanias
