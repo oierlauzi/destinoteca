@@ -139,6 +139,24 @@ electromecánicos y una línea de diodos.
 
 **Falta:** fotografías de los equipos y saber cuándo se retiraron.
 
+### Relojes de andén de Chamartín
+
+Relojes de paletas, con la hora y los minutos en una caja clara, colgados
+bajo las marquesinas de los andenes de Chamartín, junto a los
+[indicadores de andén de paletas](../catalogo/solari-renfe-anden/).
+Por las paletas parecen de Solari, como los indicadores, pero no está
+comprobado.
+
+Fotografías: [Forotrenes](https://www.forotrenes.com/foro/download/file.php?id=66181&mode=view)
+y [Crea Madrid Nuevo Norte](https://creamadridnuevonorte.com/app/uploads/2022/03/expreso-rapide-estrella-puerta-del-sol-estacion-de-chamartin-madrid.jpg).
+
+**Falta:**
+
+- **El fabricante.** Que sean de Solari es una suposición.
+- **Fotografías más cercanas**, de la caja y de las paletas.
+- **Las fechas** de las fotografías, y cuándo se retiraron.
+- **Los autores de las fotografías** y sus derechos.
+
 ## Otros
 
 ### Indicadores de andén originales del AVE
