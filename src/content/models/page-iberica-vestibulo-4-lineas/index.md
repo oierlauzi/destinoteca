@@ -3,7 +3,7 @@ name: Panel electromagnético de vestíbulo de PAGE Ibérica, 4 líneas
 summary: >-
   Panel de vestíbulo de Renfe Cercanías Madrid con cuatro líneas flip-dot de 20
   caracteres, una por tren, para anunciar las próximas salidas de toda la
-  estación. Visto en Cantoblanco.
+  estación. Visto en Cantoblanco y en Pinar de las Rozas.
 kind: concourse-board
 technologies:
   - flip-dot
@@ -35,6 +35,9 @@ installations:
     line: C-4
     status: unknown
     note: En el vestíbulo. La estación tuvo también teleindicadores de andén de la misma familia, ya retirados.
+  - site: es/pinar-de-las-rozas
+    status: unknown
+    note: En una pared. Grabado en vídeo en servicio.
 photos:
   - id: cantoblanco-vestibulo
     src: ./cantoblanco-vestibulo-1.jpg
@@ -60,6 +63,12 @@ photos:
     sourceUrl: https://maps.app.goo.gl/NMZHqnzu1PT5AkTeA
     source: Google Maps
     license: rights-reserved-credited
+references:
+  - title: Renfe Cercanías - Panel de información en Pinar
+    author: Ferrocarril Ibérico - Canal Oficial
+    publication: YouTube
+    url: https://www.youtube.com/watch?v=8SDaOLen0Uw
+    note: El panel de Pinar de las Rozas en servicio, con un aviso recorriendo la fila de LED.
 replica:
   id: page-iberica-vestibulo-4-lineas
   poster:
@@ -82,6 +91,8 @@ Además de los [teleindicadores de andén](../page-iberica-anden-electromagnetic
 algunas estaciones de Cercanías Madrid tuvieron en el vestíbulo un panel que
 anunciaba los próximos trenes de toda la estación. Este tiene cuatro líneas; en
 Cantoblanco convivió con los carteles de andén de la misma familia, que ya no están.
+Se ha visto otro en Pinar de las Rozas, en un
+[vídeo](https://www.youtube.com/watch?v=8SDaOLen0Uw).
 Existe también una versión de
 [2 líneas](../page-iberica-vestibulo-2-lineas/).
 
@@ -98,6 +109,22 @@ demás comparte su lenguaje: la caja negra, los rótulos fijos en blanco, los
 puntos flip-dot de 5 × 7 y la fila de LED roja. Es probable que también
 comparta piezas, empezando por los módulos de cada carácter, pero no se ha
 comprobado en ninguna unidad.
+
+En el vídeo de Pinar de las Rozas, la fila de LED recorre un aviso que prohíbe
+subir o bajar del tren una vez que suenan o se encienden las señales de
+cierre de puertas.
+
+## La eñe que sale como Q
+
+En ese aviso, «SEÑALES» aparece en la fila de LED como «SEQALES». Es
+probable que sea un problema de codificación: en la tabla de caracteres
+ISO 8859-1 (Latin-1), la Ñ es el byte `0xD1`, y
+si un enlace de 7 bits pierde el bit más significativo queda en `0x51`, que es
+la Q. El
+[cartel de andén](../page-iberica-anden-electromagnetico/#curiosidades) de la
+misma familia tiene un arreglo en su línea flip-dot para un problema parecido
+con su propia tabla de caracteres; la fila de LED de este panel, por lo que se
+ve, no lo tenía.
 
 Como los carteles de andén, estos paneles se han ido retirando, y es probable
 que ya no quede ninguno en servicio.

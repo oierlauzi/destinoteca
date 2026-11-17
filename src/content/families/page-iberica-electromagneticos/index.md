@@ -44,7 +44,7 @@ Se han visto en servicio estos montajes de esta generación:
   para anunciar los trenes de toda la estación: el de
   [dos líneas](../../catalogo/page-iberica-vestibulo-2-lineas/), visto en Tres
   Cantos, y el de [cuatro líneas](../../catalogo/page-iberica-vestibulo-4-lineas/),
-  visto en Cantoblanco.
+  visto en Cantoblanco y en Pinar de las Rozas.
 
 Que las filas de los paneles de vestíbulo tengan 20 caracteres y no 16 indica
 que el ancho de la línea cambia de un miembro a otro de la familia. Encaja con
