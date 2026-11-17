@@ -39,11 +39,11 @@ photos:
     alt: >-
       El vestíbulo de Chamartín desde un mostrador de información, con varios
       paneles de salidas de paletas en lo alto.
-    caption: Chamartín, en una fotografía del archivo de Renfe.
+    caption: Chamartín, años ochenta, en una fotografía del archivo de Renfe.
     place: Madrid Chamartín
     author: Archivo Renfe
-    sourceUrl: https://cadenaser.com/resizer/v2/57J2PKEX3BAFHLIW6SRDVPV7YE.jpg?auth=0003fac0fde339c8c49d7bd64c229c6f860ede0e497ac82b2a035f0c1a5d778a&quality=70&width=1200&height=900&smart=true
-    source: Cadena SER
+    sourceUrl: https://x.com/ger58056/status/1602384737305513986
+    source: X (@ger58056)
     license: rights-reserved-credited
   - id: chamartin-2007
     src: ./chamartin-2007.jpg
