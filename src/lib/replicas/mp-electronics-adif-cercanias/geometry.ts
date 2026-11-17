@@ -16,7 +16,8 @@ export const ROW_COLS = ROW_CELLS * ADVANCE - 1;
 
 const SIDE = 9;
 export const HEADER = 15;
-const LEGENDS = 13;
+/** The grey band between the header and the first row, where the legends and the roundel are. */
+const LEGENDS = 21;
 const ROW_PITCH = ROW_DOTS + 3;
 const BOTTOM = 7;
 

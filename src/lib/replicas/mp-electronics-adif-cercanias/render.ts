@@ -74,7 +74,8 @@ function scene(options: CercaniasOptions, ids: Ids, paths: string[], refs?: { cl
       h('tspan', { 'font-size': 4.2, 'font-weight': 700, dx: 1.6, 'letter-spacing': 0.2 }, ['DEPARTURES']),
     ]),
     adifLogo(width - ROWS_X, HEADER / 2, 6, '#ffffff'),
-    cercaniasRoundel(width / 2, HEADER + 5.5, 3.4),
+    // The roundel stands in the middle of the grey band, halfway between the header and the first row.
+    cercaniasRoundel(width / 2, (HEADER + ROWS_TOP - 1) / 2, 4.6),
     ...legend(ROWS_X, top, 'Vía', 'PLATFORM'),
     ...legend(ROWS_X + AT.destination * ADVANCE, top, 'Destino', 'DESTINATION'),
     ...legend(ROWS_X + ROW_COLS, top, 'Próximo tren', 'NEXT TRAIN', 'end'),
