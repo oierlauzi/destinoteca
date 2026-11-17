@@ -25,8 +25,8 @@ export const FLAP = { width: 7, height: 10 };
 export const FLAP_GAP = 0.8;
 const FIELD_GAP = 3.2;
 export const ROW_PITCH = FLAP.height + 2.8;
-/** The hour flap: just its two digits, from its left edge, and the dot printed after them. */
-export const HOUR_FLAP = 11.4;
+/** The hour flap: its two digits as far apart as the minutes', from its left edge, and the dot printed after them. */
+export const HOUR_FLAP = 15;
 
 const charsWidth = (count: number): number => count * FLAP.width + (count - 1) * FLAP_GAP;
 

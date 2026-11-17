@@ -24,6 +24,8 @@ const LETTER_FONT = "Helvetica, Arial, 'Liberation Sans', sans-serif";
 const LETTER_SIZE = 12;
 const LETTER_MARGIN = 0.7;
 const LETTER_SQUEEZE = 0.66;
+/** The centre of the hour's first digit, from its flap's left edge. */
+const HOUR_DIGIT = 2.9;
 const LEGEND_INK = '#c4c2b8';
 const LAMP_OFF = '#4a1c15';
 const LAMP_ON = '#ff5b38';
@@ -164,22 +166,16 @@ function printed(flap: Flap, value: string, half: Half): VNode[] {
     });
   }
   if (!value.trim()) return [];
-  // Tall, narrow lettering from the top of the flap to its foot, the hour against the right of its flap just before its dot.
-  const hour = flap.kind === 'hour';
-  const x = hour ? flap.x + flap.width - 1.9 : flap.x + flap.width / 2;
+  // Tall, narrow lettering from the top of the flap to its foot.
   const baseline = flap.y + FLAP.height - LETTER_MARGIN;
-  const squeeze = /[MW]/.test(value) ? LETTER_SQUEEZE * 0.86 : LETTER_SQUEEZE;
-  const nodes = [
-    h('text', {
-      transform: `matrix(${squeeze} 0 0 1 ${x} ${baseline})`,
-      'font-family': LETTER_FONT,
-      'font-size': LETTER_SIZE,
-      'text-anchor': hour ? 'end' : 'middle',
-      fill: INK,
-    }, [value]),
-  ];
-  // The hour's dot is printed on its flap, after the digits, on the line they stand on.
-  if (hour && half === 'bottom') nodes.push(h('circle', { cx: flap.x + flap.width - 1.05, cy: baseline - 0.6, r: 0.6, fill: INK }));
+  const letter = (text: string, x: number): VNode => {
+    const squeeze = /[MW]/.test(text) ? LETTER_SQUEEZE * 0.86 : LETTER_SQUEEZE;
+    return h('text', { transform: `matrix(${squeeze} 0 0 1 ${x} ${baseline})`, 'font-family': LETTER_FONT, 'font-size': LETTER_SIZE, 'text-anchor': 'middle', fill: INK }, [text]);
+  };
+  if (flap.kind !== 'hour') return [letter(value, flap.x + flap.width / 2)];
+  // The hour's digits are as far apart as the minutes', from the flap's left edge; its dot follows them on the line they stand on.
+  const nodes = Array.from(value, (digit, i) => letter(digit, flap.x + HOUR_DIGIT + i * (FLAP.width + FLAP_GAP)));
+  if (half === 'bottom') nodes.push(h('circle', { cx: flap.x + flap.width - 1.1, cy: baseline - 0.6, r: 0.6, fill: INK }));
   return nodes;
 }
 
