@@ -14,14 +14,15 @@ import { PANEL_ROWS } from '../mp-electronics-adif/geometry';
 export type Kind = 'plain' | 'clock' | 'vertical';
 
 export { PANEL_ROWS };
-const GAP = 3;
+/** LEDs between the time panel and the train panel: photographs show about a character's width. */
+export const TIME_TRAIN_GAP = 10;
 const MARGIN = 4;
 const STRIPE = 9;
 
 /** The rows: time and train side by side, then the destination and the running line as wide as both. */
 export const TIME_COLS = 5 * MP_ADVANCE;
 export const TRAIN_COLS = 13 * MP_ADVANCE;
-export const ROWS_WIDTH = TIME_COLS + GAP + TRAIN_COLS;
+export const ROWS_WIDTH = TIME_COLS + TIME_TRAIN_GAP + TRAIN_COLS;
 
 export interface Box {
   x: number;

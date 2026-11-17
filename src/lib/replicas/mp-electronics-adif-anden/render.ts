@@ -23,7 +23,7 @@ import {
   withFaults,
 } from '../mp-electronics-adif/render';
 import type { AndenFrame, AndenOptions } from './def';
-import { layout, PANEL_ROWS, ROW_TOPS, ROWS_WIDTH, TIME_COLS, TRAIN_COLS, type Kind, type Layout } from './geometry';
+import { layout, PANEL_ROWS, ROW_TOPS, ROWS_WIDTH, TIME_COLS, TIME_TRAIN_GAP, TRAIN_COLS, type Kind, type Layout } from './geometry';
 
 /** Blank columns between the end of the running line and its start again. */
 const LINE_GAP = 32;
@@ -42,7 +42,7 @@ function panels(l: Layout): Panel[] {
   const { x, y } = l.rows;
   return [
     { key: 'time', x, y: y + ROW_TOPS.time, cols: TIME_COLS },
-    { key: 'train', x: x + TIME_COLS + 3, y: y + ROW_TOPS.time, cols: TRAIN_COLS },
+    { key: 'train', x: x + TIME_COLS + TIME_TRAIN_GAP, y: y + ROW_TOPS.time, cols: TRAIN_COLS },
     { key: 'destination', x, y: y + ROW_TOPS.destination, cols: ROWS_WIDTH },
     { key: 'line', x, y: y + ROW_TOPS.line, cols: ROWS_WIDTH },
   ];
@@ -113,7 +113,7 @@ function scene(kind: Kind, frame: AndenFrame, options: AndenOptions, seconds: nu
     h('rect', { x: 0, y: 0, width: l.width, height: l.height, rx: 2, fill: BODY, stroke: BODY_EDGE, 'stroke-width': 0.6 }),
     h('rect', { ...l.stripe, fill: GREEN }),
     legend(x + 0.5, y + ROW_TOPS.legend1, 'time', options.regional),
-    legend(x + TIME_COLS + 3.5, y + ROW_TOPS.legend1, 'train', options.regional),
+    legend(x + TIME_COLS + TIME_TRAIN_GAP + 0.5, y + ROW_TOPS.legend1, 'train', options.regional),
     legend(x + 0.5, y + ROW_TOPS.legend2, 'place', options.regional),
   ];
   // The platform: "Vía" over "PLATFORM" beside the number, or on one line above it.
