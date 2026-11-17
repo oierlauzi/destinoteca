@@ -68,11 +68,36 @@ export async function copyText(text: string, fallback?: HTMLTextAreaElement | HT
 }
 
 /** Offers a file made in the page for download. */
-export function download(filename: string, content: string, type: string): void {
-  const url = URL.createObjectURL(new Blob([content], { type }));
+export function download(filename: string, content: string | Blob, type: string): void {
+  const url = URL.createObjectURL(content instanceof Blob ? content : new Blob([content], { type }));
   const link = el('a', { attrs: { href: url, download: filename } });
   document.body.append(link);
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/**
+ * A standalone SVG file drawn on a canvas `width` pixels wide, at its own
+ * proportions, as a PNG. What the SVG leaves transparent stays transparent.
+ */
+export async function svgToPng(svg: string, width = 2400): Promise<Blob> {
+  const box = /viewBox="[\d.-]+ [\d.-]+ ([\d.]+) ([\d.]+)"/.exec(svg);
+  const ratio = box ? Number(box[2]) / Number(box[1]) : 0.5;
+  const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+  try {
+    const image = new Image();
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error('The SVG could not be drawn'));
+      image.src = url;
+    });
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = Math.round(width * ratio);
+    canvas.getContext('2d')!.drawImage(image, 0, 0, canvas.width, canvas.height);
+    return await new Promise<Blob>((resolve, reject) => canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('No PNG'))), 'image/png'));
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }

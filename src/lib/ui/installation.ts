@@ -11,7 +11,7 @@ import type { ReplicaDef } from '../replicas/types';
 import { EXAMPLE_ROWS } from '../sources/manual/def';
 import { getSource, sources } from '../sources/registry';
 import type { SourceStatus } from '../sources/types';
-import { copyText, download, el, uid } from './dom';
+import { copyText, download, el, svgToPng, uid } from './dom';
 import { renderForm, type FormContext } from './form';
 import { setupFullscreen } from './fullscreen';
 import { servicesEditor } from './services-editor';
@@ -170,6 +170,10 @@ export function mountInstallation(root: HTMLElement): void {
     el('button', {
       class: 'button', text: t('player.download'), attrs: { type: 'button' },
       on: { click: () => download(`${root.dataset.id ?? 'composicion'}.svg`, mounted.toSVG(), 'image/svg+xml') },
+    }),
+    el('button', {
+      class: 'button', text: t('player.downloadPng'), attrs: { type: 'button' },
+      on: { click: async () => download(`${root.dataset.id ?? 'composicion'}.png`, await svgToPng(mounted.toSVG()), 'image/png') },
     }),
     embedButton,
     fullscreenButton,

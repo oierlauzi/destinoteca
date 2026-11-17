@@ -9,7 +9,7 @@ import { EXAMPLE_ROWS } from '../sources/manual/def';
 import { getSource, sources } from '../sources/registry';
 import type { SourceStatus } from '../sources/types';
 import { renderDepartures } from './departures';
-import { copyText, download, el, uid } from './dom';
+import { copyText, download, el, svgToPng, uid } from './dom';
 import { renderForm, type FormContext } from './form';
 import { setupFullscreen } from './fullscreen';
 import { servicesEditor } from './services-editor';
@@ -108,6 +108,15 @@ export function mountPlayground(root: HTMLElement): void {
         click: () => {
           const svg = replica.toSVG();
           if (svg) download(`${def.id}.svg`, svg, 'image/svg+xml');
+        },
+      },
+    }),
+    el('button', {
+      class: 'button', text: t('player.downloadPng'), attrs: { type: 'button' },
+      on: {
+        click: async () => {
+          const svg = replica.toSVG();
+          if (svg) download(`${def.id}.png`, await svgToPng(svg), 'image/png');
         },
       },
     }),

@@ -1,6 +1,7 @@
 export const player: Record<string, string> = {
   // --- The playground around a replica ---
   'player.download': 'Descargar SVG',
+  'player.downloadPng': 'Descargar PNG',
   'player.embed.show': '</> Insertar',
   'player.embed.hide': '</> Ocultar',
   'player.embed.label': 'Código para insertar',
