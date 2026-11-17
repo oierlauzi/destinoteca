@@ -155,10 +155,19 @@ function printed(flap: Flap, value: string, half: Half): VNode[] {
     });
   }
   if (!value.trim()) return [];
-  const digitsWidth = flap.kind === 'hour' ? charsWidth(2) : flap.width;
-  const nodes = [h('text', { x: flap.x + digitsWidth / 2, y: cy + FLAP.height * 0.27, 'font-size': FLAP.height * 0.74, 'text-anchor': 'middle', fill: INK }, [value])];
+  // The hour stands against the right of its flap, just before the dot printed after it.
+  const hour = flap.kind === 'hour';
+  const nodes = [
+    h('text', {
+      x: hour ? flap.x + flap.width - 1.9 : flap.x + flap.width / 2,
+      y: cy + FLAP.height * 0.27,
+      'font-size': FLAP.height * 0.74,
+      'text-anchor': hour ? 'end' : 'middle',
+      fill: INK,
+    }, [value]),
+  ];
   // The hour's dot is printed on its flap, after the digits.
-  if (flap.kind === 'hour' && half === 'bottom') nodes.push(h('circle', { cx: flap.x + charsWidth(2) + (MINUTE_DOT - FLAP_GAP) / 2, cy: flap.y + FLAP.height * 0.78, r: 0.55, fill: INK }));
+  if (flap.kind === 'hour' && half === 'bottom') nodes.push(h('circle', { cx: flap.x + flap.width - 1.05, cy: flap.y + FLAP.height * 0.78, r: 0.55, fill: INK }));
   return nodes;
 }
 
