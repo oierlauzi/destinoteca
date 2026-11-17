@@ -8,8 +8,6 @@ kind: composition
 operators:
   - ref: adif
     role: owner
-years:
-  to: 2026
 status: retired
 installations:
   - site: es/madrid-chamartin

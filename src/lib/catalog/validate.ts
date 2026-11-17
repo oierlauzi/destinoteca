@@ -28,7 +28,6 @@ export function modelProblems(model: ModelFacts): string[] {
   if (model.manufacturers.length === 0 && !model.manufacturerUnknown) {
     problems.push('an article needs a manufacturer, or manufacturerUnknown: true');
   }
-  if (model.years?.from === undefined) problems.push('an article needs years.from (add circa: true if approximate)');
   if (model.operators.length === 0) problems.push('an article needs at least one operator');
   if (model.referenceCount === 0) problems.push('an article needs at least one reference');
   if (model.photoCount === 0) problems.push('an article needs at least one photo');

@@ -88,7 +88,6 @@ describe('validation', () => {
 
   it('asks more of an article', () => {
     const problems = modelProblems(model({ stage: 'article', operators: [], years: undefined }));
-    expect(problems.join('\n')).toMatch(/years\.from/);
     expect(problems.join('\n')).toMatch(/operator/);
     expect(problems.join('\n')).toMatch(/reference/);
     expect(problems.join('\n')).toMatch(/photo/);

@@ -25,9 +25,6 @@ operators:
 family: page-iberica-electromagneticos
 countries:
   - es
-years:
-  from: 1996
-  circa: true
 status: retiring
 installations:
   - site: es/mostoles
