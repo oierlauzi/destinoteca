@@ -75,7 +75,7 @@ describe('installations', () => {
   });
 
   it('draw the Solari boards without their frame when the installation has its own', async () => {
-    const paletas = resolveInstallation({ size: { width: 300, height: 120 }, elements: [{ id: 'p', model: 'paletas', params: { marco: false }, at: { x: 0, y: 0, width: 292.8 } }] }, entry);
+    const paletas = resolveInstallation({ size: { width: 300, height: 120 }, elements: [{ id: 'p', model: 'paletas', params: { marco: false }, at: { x: 0, y: 0, width: 285 } }] }, entry);
     expect(paletas.members[0]!.height).toBeCloseTo(115.1, 1);
   });
 });

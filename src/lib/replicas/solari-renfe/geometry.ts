@@ -31,9 +31,11 @@ export const HOUR_FLAP = 15;
 
 const charsWidth = (count: number): number => count * FLAP.width + (count - 1) * FLAP_GAP;
 
-const WIDTHS: Record<FieldKind, (key: string) => number> = {
-  // The train's word is about six characters wide, "por" eight.
-  word: (key) => (key === 'p' ? charsWidth(8) : charsWidth(6)),
+const WIDTHS: Record<FieldKind, (key: string, variant: Variant) => number> = {
+  // Measured against the destination's flaps, gaps included: on the long-distance
+  // board the train's word is five characters wide and "por" eight; the Cercanías
+  // board's train word is about six.
+  word: (key, variant) => (key === 'p' ? charsWidth(8) : charsWidth(variant === 'largo' ? 5 : 6)),
   place: () => charsWidth(12),
   time: () => HOUR_FLAP + FLAP_GAP + charsWidth(2),
   platform: () => charsWidth(2),
@@ -84,7 +86,7 @@ export interface Layout {
 export function layout(variant: Variant, rows: number): Layout {
   let x = FRAME.side + INNER.side;
   const fields = COLUMNS[variant].map(([key, kind, legend]) => {
-    const field = { key, kind, legend, x, width: WIDTHS[kind](key) };
+    const field = { key, kind, legend, x, width: WIDTHS[kind](key, variant) };
     x += field.width + (kind === 'platform' ? 2 : FIELD_GAP);
     return field;
   });
