@@ -14,18 +14,19 @@ installations:
     status: retired
     note: En el vestíbulo, sobre las taquillas y los accesos a las vías.
 composition:
-  size: { width: 601, height: 146 }
+  size: { width: 601, height: 138 }
   elements:
     - id: marco
-      at: { x: 0, y: 0, width: 601, height: 146 }
+      at: { x: 0, y: 0, width: 601, height: 138 }
+      panel: { fill: '#e8e3cc', edge: '#b8b297', lines: [] }
+    - id: rotulo
+      at: { x: 0, y: 0, width: 601, height: 14 }
       panel:
         fill: '#e8e3cc'
-        edge: '#b8b297'
-        valign: top
         lines:
-          - { text: SALIDAS LARGO RECORRIDO, size: 7.5, spacing: 3, color: '#3b3a35' }
+          - { text: SALIDAS LARGO RECORRIDO, size: 10, spacing: 4, color: '#3b3a35' }
     - id: fabricante
-      at: { x: 181.8, y: 138, width: 116, height: 6 }
+      at: { x: 181.8, y: 130, width: 116, height: 6 }
       panel:
         fill: '#e8e3cc'
         lines:
@@ -34,12 +35,12 @@ composition:
       model: paletas-chamartin-vestibulo
       params: { marco: false }
       serie: salidas
-      at: { x: 5, y: 22, width: 292.8 }
+      at: { x: 5, y: 14, width: 292.8 }
     - id: panel-2
       model: paletas-chamartin-vestibulo
       params: { marco: false }
       serie: salidas
-      at: { x: 303.2, y: 22, width: 292.8 }
+      at: { x: 303.2, y: 14, width: 292.8 }
 photos:
   - id: chamartin-anos-80
     src: ./chamartin-anos-80.jpg

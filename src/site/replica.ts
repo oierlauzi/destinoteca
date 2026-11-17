@@ -1,4 +1,3 @@
-import { defaults } from '@/lib/params';
 import { RAW, readConfig } from '@/lib/player/config';
 import { getReplica } from '@/lib/replicas/registry';
 
@@ -7,11 +6,12 @@ import { getReplica } from '@/lib/replicas/registry';
  * arrives: the layout does not jump, and without JavaScript there is still a
  * sign to look at. Returns markup safe to inline (it is our own renderer's).
  */
-export async function restingSvg(replicaId: string): Promise<string> {
+export async function restingSvg(replicaId: string, params: Record<string, string | number | boolean> = {}): Promise<string> {
   const def = getReplica(replicaId);
   if (!def) return '';
   const impl = await def.load();
-  const options = defaults(def.options);
+  // The entry's own settings (a square case, no second hand) show from the start.
+  const options = readConfig(def, new URLSearchParams(Object.entries(params).map(([key, value]) => [key, String(value)]))).options;
   const view = { now: 0, timeZone: 'Europe/Madrid', services: [], total: 0, notices: [], placement: { platforms: [], cycle: true } };
   const svg = impl.renderToString(impl.blank(view, options), options);
   // Inline SVG wants neither the XML prolog nor a fixed size.

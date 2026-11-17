@@ -20,7 +20,7 @@ interface Props {
 const { replicaId, params = {}, title = t('player.stage') } = Astro.props;
 const def = getReplica(replicaId);
 if (!def) throw new Error(`ReplicaPlayground: no replica is called "${replicaId}"`);
-const svg = await restingSvg(replicaId);
+const svg = await restingSvg(replicaId, params);
 ---
 
 <section

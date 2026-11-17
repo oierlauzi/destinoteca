@@ -15,6 +15,6 @@ export const GET: APIRoute = async ({ params }) => {
   const catalog = await getCatalog();
   const model = catalog.model(params.id!);
   const { replica, composition } = model.data;
-  const svg = composition ? await compositionSvg(catalog.composition(model), model.data.name) : await posterSvg(replica!.id, replica!.poster);
+  const svg = composition ? await compositionSvg(catalog.composition(model), model.data.name) : await posterSvg(replica!.id, { ...replica!.params, ...replica!.poster });
   return new Response(svg, { headers: { 'Content-Type': 'image/svg+xml; charset=utf-8' } });
 };

@@ -182,7 +182,8 @@ function surround(variant: Variant, l: Layout): VNode[] {
   const { panel, frame } = l;
   return [
     h('rect', { x: 0, y: 0, width: l.width, height: l.height, rx: 1.2, fill: FRAME_FILL, stroke: FRAME_EDGE, 'stroke-width': 0.6 }),
-    h('text', { x: l.width / 2, y: frame.title - 3.4, 'text-anchor': 'middle', 'font-size': 7, 'letter-spacing': 2.4, fill: TITLE_INK }, [TITLES[variant]]),
+    // The title's capitals fill the band above the panel, as photographed.
+    h('text', { x: l.width / 2, y: frame.title - 1.8, 'text-anchor': 'middle', 'font-family': LETTER_FONT, 'font-size': 13, 'letter-spacing': 2.6, fill: TITLE_INK }, [TITLES[variant]]),
     h('text', { x: panel.x + panel.width - 2, y: l.height - 2.4, 'text-anchor': 'end', 'font-size': 2.4, fill: '#57554c' }, ['solari&c. udine, italy']),
   ];
 }
