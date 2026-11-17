@@ -1,7 +1,7 @@
 import { FLAP } from './geometry';
 
 /**
- * How a train's word is lettered on its wide flap. The photographs are not
+ * How a word is lettered on a wide flap: the train's, or the "por" column's. The photographs are not
  * consistent, so the words they show are set as seen, all against the
  * flap's left:
  *
@@ -70,22 +70,19 @@ function split(text: string): [string, string] {
   return [text.slice(0, at), text.slice(at + 1)];
 }
 
-/** The train's words stand against the flap's left; `align` 'center' centres one line (the "por" column). */
-export function wordLines(text: string, flapWidth: number, align: 'left' | 'center' = 'left'): WordLine[] {
+export function wordLines(text: string, flapWidth: number): WordLine[] {
   const value = text.trim();
   if (!value) return [];
   const room = flapWidth - 2 * SIDE;
   const style = styleOf(value);
   const natural = (line: string, size: number): number => advance(line) * size * LETTER_SQUEEZE;
-  const x = align === 'left' ? SIDE : flapWidth / 2;
-  const anchor = align === 'left' ? 'start' : 'middle';
   if (style === 'tall') {
     const size = LETTER_SIZE;
-    return [{ text: value, x, anchor, baseline: FLAP.height - LETTER_MARGIN, size, width: Math.min(room, natural(value, size)) }];
+    return [{ text: value, x: SIDE, anchor: 'start', baseline: FLAP.height - LETTER_MARGIN, size, width: Math.min(room, natural(value, size)) }];
   }
   if (style === 'wide') {
     const size = Math.min(LETTER_SIZE, room / (advance(value) * LETTER_SQUEEZE));
-    return [{ text: value, x, anchor, baseline: (FLAP.height + CAP * size) / 2, size, width: Math.min(room, natural(value, size)) }];
+    return [{ text: value, x: SIDE, anchor: 'start', baseline: (FLAP.height + CAP * size) / 2, size, width: Math.min(room, natural(value, size)) }];
   }
   const cap = (FLAP.height - 2 * LETTER_MARGIN - LINE_GAP) / 2;
   const size = cap / CAP;
@@ -94,8 +91,8 @@ export function wordLines(text: string, flapWidth: number, align: 'left' | 'cent
   const block = Math.max(...widths);
   return lines.map((line, i) => ({
     text: line,
-    x: style === 'block' ? x + (align === 'left' ? block / 2 : 0) : x,
-    anchor: style === 'block' ? 'middle' : anchor,
+    x: style === 'block' ? SIDE + block / 2 : SIDE,
+    anchor: style === 'block' ? 'middle' : 'start',
     baseline: LETTER_MARGIN + cap + i * (cap + LINE_GAP),
     size,
     width: widths[i]!,

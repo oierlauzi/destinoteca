@@ -144,7 +144,7 @@ type Half = 'top' | 'bottom';
 function printed(flap: Flap, value: string, half: Half): VNode[] {
   if (flap.kind === 'word') {
     // Set to a width of its own, so that it fits whatever the font.
-    return wordLines(value, flap.width, flap.key === 't' ? 'left' : 'center').map((line) =>
+    return wordLines(value, flap.width).map((line) =>
       h('text', { x: flap.x + line.x, y: flap.y + line.baseline, 'font-family': LETTER_FONT, 'font-size': line.size, 'text-anchor': line.anchor, textLength: line.width, lengthAdjust: 'spacingAndGlyphs', fill: INK }, [line.text]),
     );
   }
