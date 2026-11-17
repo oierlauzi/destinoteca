@@ -1,8 +1,9 @@
 ---
-name: Indicador de andén de paletas de Chamartín y Príncipe Pío
+name: Indicador de andén de paletas de Solari di Udine para RENFE
 summary: >-
-  Los indicadores de paletas de los andenes de Chamartín y de la estación del
-  Norte, hoy Príncipe Pío, con la vía, la hora y el destino del próximo tren.
+  Los indicadores de paletas de Solari de los andenes de Chamartín y de la
+  estación del Norte, hoy Príncipe Pío, con la vía, la hora y el destino del
+  próximo tren.
   En Chamartín los sustituyeron los teleindicadores LED de MP Electronics.
 kind: platform-indicator
 technologies:
@@ -11,7 +12,9 @@ transportModes:
   - rail
 features:
   - printed-legends
-manufacturerUnknown: true
+manufacturers:
+  - ref: solari
+    role: manufacturer
 operators:
   - ref: renfe
     role: operator
@@ -131,13 +134,16 @@ references:
     publication: Vía Libre
     date: '1989-11'
     note: El sistema de información al público de Chamartín, instalado en 1975 por VEMISA.
+aliases:
+  - paletas-chamartin-anden
 stage: stub
 ---
 
 Antes de los [teleindicadores de andén de MP Electronics](../mp-electronics-adif-anden/),
-los andenes de Chamartín tenían indicadores de paletas colgados de las
-marquesinas, con la vía, la hora y el destino del próximo tren. En los años
-noventa tenían al lado monitores de tubo.
+los andenes de Chamartín tenían indicadores de paletas de
+[Solari](../../fabricantes/solari/) colgados de las marquesinas, con la vía,
+la hora y el destino del próximo tren. En los años noventa tenían al lado
+monitores de tubo.
 
 En la fila de arriba van «VIA» y el número, la hora y dos luces; en la de
 abajo, el destino.
@@ -146,16 +152,18 @@ Los mismos indicadores estaban en la estación del Norte, hoy Príncipe Pío.
 Allí no colgaban de una marquesina, sino del brazo de un poste, y así se
 fotografiaron en 1989.
 
+El sistema de información al público de Chamartín lo instaló en 1975 VEMISA,
+representante de Solari en España, según *Vía Libre*, que en 1989 contaba
+indicadores de vía de una y de doble cara entre los equipos de esos sistemas.
+La revista no dice quién hizo los de los andenes, pero testimonios orales
+confirman que eran de Solari, como los paneles del vestíbulo.
+
 Se retiraron a principios de 2010, durante la renovación de las estaciones de
 Cercanías, según contó entonces
 [ecomovilidad.net](https://ecomovilidad.net/madrid/imagen-de-la-semana-los-indicadores-de-chamartin/).
 
 ## Lo que no se sabe
 
-- **Quién los fabricó.** El sistema de información al público de Chamartín
-  lo instaló en 1975 VEMISA, representante de Solari, según *Vía Libre*, que
-  en 1989 contaba indicadores de vía de una y de doble cara entre los equipos
-  de esos sistemas; pero no dice quién hizo los de Chamartín.
 - **Cuándo se instalaron**, y cuándo se retiraron de Príncipe Pío.
 - **Qué indicaban las dos luces** de la fila de arriba.
 
