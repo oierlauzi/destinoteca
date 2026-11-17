@@ -70,7 +70,7 @@ photos:
     author: Autor desconocido
     source: Procedencia desconocida
     license: rights-reserved-credited
-cover: archivo-renfe-vias-7-8
+cover: atocha-vias-3-4
 references:
   - title: Las pequeña y mediana empresa del ferrocarril busca el mercado exterior
     publication: Vía Libre
