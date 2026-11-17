@@ -54,7 +54,7 @@ describe('the board', () => {
     expect(cellText('time', '10:45')).toBe('10:45');
   });
 
-  it('grows with the boards hung together, whatever its languages', () => {
+  it('is one board, the same size whatever its languages', () => {
     expect(replicaSize(def, { ...options, regional: 'ca' })).toEqual(replicaSize(def, options));
     expect(layout().rowY(1) - layout().rowY(0)).toBe(16);
     // The wide row starts with the place field and ends about the middle of the remarks.
@@ -62,11 +62,10 @@ describe('the board', () => {
     expect(wide.x).toBe(FIELD_X.place);
     expect(Math.abs(wide.x + wide.cols - (FIELD_X.remarks + CELLS.remarks * 4))).toBeLessThanOrEqual(4);
     const one = replicaSize(def, { ...options, regional: '' });
-    const four = replicaSize(def, { ...options, regional: '', across: 2, down: 2 });
     expect(one.width).toBe(BOARD_WIDTH);
-    expect(four.width).toBeGreaterThan(2 * one.width);
-    expect(four.height).toBeGreaterThan(2 * one.height);
-    expect(def.selection({ ...options, across: 2, down: 2 }).window.size).toBe(28);
+    // Boards hung together are compositions, not a setting of the board.
+    expect(def.options.fields.some((field) => ['across', 'down'].includes(field.key))).toBe(false);
+    expect(def.selection(options).window.size).toBe(7);
   });
 
   it('draws runs of lit dots as rectangles', () => {
@@ -95,8 +94,8 @@ describe('the board', () => {
     expect(renderToString(frame, { ...options, deadRows: 20 })).toBe(faulty);
   });
 
-  it('carries a frame flat and back, with rows past the first board', () => {
-    const frame = { rows: Array.from({ length: 14 }, (_, i) => ({ time: `1${i % 10}:00`, place: 'TOLEDO', train: 'AVANT 08100', platform: '1', remarks: '' })), wide: 'AVISO' };
+  it('carries a frame flat and back', () => {
+    const frame = { rows: Array.from({ length: 7 }, (_, i) => ({ time: `1${i % 10}:00`, place: 'TOLEDO', train: 'AVANT 08100', platform: '1', remarks: '' })), wide: 'AVISO' };
     expect(fromFlat(toFlat(frame))).toEqual(frame);
   });
 });
@@ -135,21 +134,24 @@ describe('presenter', () => {
     expect(trainText(coupled)).toBe('A 03073/34073');
   });
 
-  it('fills a stack of boards, and keeps notices for the wide row', () => {
+  it('fills its seven rows, and keeps notices for the wide row', () => {
     const services = buildLongDistanceBoard(3, NOW);
-    const frame = present({ ...view(services), notices: [{ text: 'Acceso a la sala de embarque' }] }, { ...options, across: 2 });
-    expect(frame.rows).toHaveLength(14);
-    expect(frame.rows.filter((row) => row.time).length).toBe(Math.min(14, services.length));
+    const frame = present({ ...view(services), notices: [{ text: 'Acceso a la sala de embarque' }] }, options);
+    expect(frame.rows).toHaveLength(7);
+    expect(frame.rows.filter((row) => row.time).length).toBe(Math.min(7, services.length));
     expect(frame.wide).toBe('Acceso a la sala de embarque');
-    expect(blank(view([]), { ...options, across: 2, down: 3 }).rows).toHaveLength(42);
+    expect(blank(view([]), options).rows).toHaveLength(7);
   });
 });
 
 describe('settings', () => {
   it('reads a hand-typed board and its appearance from the URL and writes them back', () => {
-    const config = readConfig(def, new URLSearchParams('h1=08:15&d1=VALENCIA%20EST.%20NORD&t1=EUROMED%2001081&v1=-&o1=POR%20HUELGA&lengua=ca&cabecera=tab&ancho=2'));
+    const config = readConfig(def, new URLSearchParams('h1=08:15&d1=VALENCIA%20EST.%20NORD&t1=EUROMED%2001081&v1=-&o1=POR%20HUELGA&lengua=ca&cabecera=tab&ancho=2&alto=3'));
     expect(config.frame).toMatchObject({ h1: '08:15', d1: 'VALENCIA EST. NORD', t1: 'EUROMED 01081', o1: 'POR HUELGA' });
-    expect(config.options).toMatchObject({ regional: 'ca', header: 'tab', across: 2 });
+    expect(config.options).toMatchObject({ regional: 'ca', header: 'tab' });
+    // Links from when boards could be stacked still open, on one board.
+    expect(config.options).not.toHaveProperty('across');
+    expect(replicaSize(def, config.options)).toEqual(replicaSize(def, {}));
     expect(readConfig(def, writeConfig(def, config))).toEqual(config);
   });
 

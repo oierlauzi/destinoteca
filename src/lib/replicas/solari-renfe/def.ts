@@ -1,7 +1,7 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
 import type { ReplicaDef } from '../types';
-import { DEFAULT_ROWS, layout, stackSize, type Variant } from './geometry';
+import { boardBox, DEFAULT_ROWS, layout, type Variant } from './geometry';
 
 /**
  * Solari's split-flap boards for Renfe, in the dark skin of the 1970s and
@@ -19,21 +19,18 @@ export interface SolariFrame {
 }
 
 export interface SolariOptions {
-  across: number;
-  down: number;
+  /** The light frame with the board's title, or only the dark panel. */
+  surround: boolean;
   animate: boolean;
   speed: number;
   [key: string]: unknown;
 }
 
-const MAX_ACROSS = 4;
-const MAX_DOWN = 3;
-
 function optionsSchema(): ParamSchema {
   return {
     fields: [
-      { key: 'across', urlKey: 'ancho', type: 'range', label: 'adif.opt.across', default: 1, min: 1, max: MAX_ACROSS, step: 1 },
-      { key: 'down', urlKey: 'alto', type: 'range', label: 'adif.opt.down', help: 'adif.opt.stack.help', default: 1, min: 1, max: MAX_DOWN, step: 1 },
+      // The frame and title belong to the installation: a composition turns them off and draws its own.
+      { key: 'surround', urlKey: 'marco', type: 'boolean', label: 'solari.opt.surround', default: true, hidden: true },
       { key: 'animate', urlKey: 'anim', type: 'boolean', label: 'solari.opt.animate', help: 'solari.opt.animate.help', default: true },
       { key: 'speed', type: 'range', label: 'solari.opt.speed', default: 14, min: 4, max: 30, step: 1, unit: 'paletas/s' },
     ],
@@ -91,7 +88,7 @@ function frameSchema(variant: Variant): ParamSchema {
 export function fromFlat(variant: Variant, flat: Values): SolariFrame {
   const keys = keysOf(variant);
   return {
-    rows: Array.from({ length: DEFAULT_ROWS[variant] * MAX_ACROSS * MAX_DOWN }, (_, i) => Object.fromEntries(keys.map((key) => [key, String(flat[`${key}${i + 1}`] ?? '')]))),
+    rows: Array.from({ length: DEFAULT_ROWS[variant] }, (_, i) => Object.fromEntries(keys.map((key) => [key, String(flat[`${key}${i + 1}`] ?? '')]))),
   };
 }
 
@@ -103,30 +100,24 @@ export function toFlat(frame: SolariFrame): Values {
   return flat;
 }
 
-/** How many boards are hung together, and so how many rows there are in all: each board carries on from the one before. */
-export const boardsOf = (options: Values): { across: number; down: number } => ({
-  across: Math.max(1, Math.min(MAX_ACROSS, Number(options.across) || 1)),
-  down: Math.max(1, Math.min(MAX_DOWN, Number(options.down) || 1)),
-});
-const rowsOf = (options: Values, variant: Variant): number => {
-  const { across, down } = boardsOf(options);
-  return DEFAULT_ROWS[variant] * across * down;
-};
+/** Whether the board is drawn with its frame and title. */
+export const surroundOf = (options: Values): boolean => options.surround !== false;
+const rowsOf = (variant: Variant): number => DEFAULT_ROWS[variant];
 
-const selection = (variant: Variant) => (options: Values): SelectionPolicy => ({
+const selection = (variant: Variant) => (): SelectionPolicy => ({
   events: variant === 'largo' ? 'departures' : 'both',
   platforms: 'any',
   portions: 'merge',
   sortBy: 'scheduled',
   keepAfterMs: 60_000,
   includeCancelled: false,
-  window: { size: rowsOf(options, variant), mode: 'top', dwellMs: 0 },
+  window: { size: rowsOf(variant), mode: 'top', dwellMs: 0 },
 });
 
 function solari(id: string, variant: Variant): ReplicaDef {
   const size = (options: Values) => {
-    const { across, down } = boardsOf(options);
-    return stackSize(variant, across, down);
+    const { width, height } = boardBox(variant, surroundOf(options));
+    return { width, height };
   };
   return {
     id,

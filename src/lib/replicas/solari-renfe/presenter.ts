@@ -13,7 +13,6 @@ import {
   type Service,
   type View,
 } from '../../model';
-import type { Values } from '../../params';
 import { rowsOf, type SolariFrame, type SolariRow } from './def';
 import type { Variant } from './geometry';
 
@@ -73,12 +72,12 @@ function commuter(service: Service, view: View): SolariRow {
   };
 }
 
-export function blank(variant: Variant, options: Values): SolariFrame {
-  return { rows: Array.from({ length: rowsOf(options, variant) }, () => ({})) };
+export function blank(variant: Variant): SolariFrame {
+  return { rows: Array.from({ length: rowsOf(variant) }, () => ({})) };
 }
 
-export function present(variant: Variant, view: View, options: Values): SolariFrame {
-  const rows = view.services.slice(0, rowsOf(options, variant)).map((service) => (variant === 'largo' ? longDistance(service, view) : commuter(service, view)));
-  while (rows.length < rowsOf(options, variant)) rows.push({});
+export function present(variant: Variant, view: View): SolariFrame {
+  const rows = view.services.slice(0, rowsOf(variant)).map((service) => (variant === 'largo' ? longDistance(service, view) : commuter(service, view)));
+  while (rows.length < rowsOf(variant)) rows.push({});
   return { rows };
 }

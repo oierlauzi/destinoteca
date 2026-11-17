@@ -1,7 +1,7 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
 import type { ReplicaDef } from '../types';
-import { ROWS, stackSize } from './geometry';
+import { BOARD_WIDTH, layout, ROWS } from './geometry';
 import type { Mode, Regional } from './labels';
 
 /**
@@ -40,8 +40,6 @@ export interface AdifOptions {
   wideScroll: boolean;
   wideSpeed: number;
   wideIdle: string;
-  across: number;
-  down: number;
   deadOn: number;
   deadOff: number;
   deadRows: number;
@@ -80,8 +78,6 @@ export const optionsSchema: ParamSchema = {
         { value: 'gl', label: 'adif.regional.gl' },
       ],
     },
-    { key: 'across', urlKey: 'ancho', type: 'range', label: 'adif.opt.across', default: 1, min: 1, max: 4, step: 1, group: 'board' },
-    { key: 'down', urlKey: 'alto', type: 'range', label: 'adif.opt.down', help: 'adif.opt.stack.help', default: 1, min: 1, max: 3, step: 1, group: 'board' },
     {
       key: 'header', urlKey: 'cabecera', type: 'select', label: 'adif.opt.header', default: 'green', group: 'look',
       choices: [{ value: 'green', label: 'adif.header.green' }, { value: 'tab', label: 'adif.header.tab' }],
@@ -137,13 +133,10 @@ export const frameSchema: ParamSchema = {
 
 /**
  * Frames cross the replica's boundary flat (h1, d1, t1, v1, o1, h2...), as a
- * form and a URL hold them; inside, they are rows. A stack of boards has
- * rows past the seventh; the hand-typed form fills the first board.
+ * form and a URL hold them; inside, they are rows.
  */
 export function fromFlat(flat: Values): AdifFrame {
-  let count = ROWS;
-  while (flat[`h${count + 1}`] !== undefined || flat[`d${count + 1}`] !== undefined) count++;
-  const rows = Array.from({ length: count }, (_, i) => {
+  const rows = Array.from({ length: ROWS }, (_, i) => {
     const row = {} as AdifRow;
     for (const key of Object.keys(KEYS) as (keyof AdifRow)[]) row[key] = String(flat[`${KEYS[key]}${i + 1}`] ?? '');
     return row;
@@ -159,8 +152,6 @@ export function toFlat(frame: AdifFrame): Values {
   return flat;
 }
 
-const boards = (options: Values): number => Math.max(1, Number(options.across) || 1) * Math.max(1, Number(options.down) || 1);
-
 const selection = (options: Values): SelectionPolicy => ({
   events: options.mode === 'arrivals' ? 'arrivals' : 'departures',
   platforms: 'any',
@@ -169,16 +160,14 @@ const selection = (options: Values): SelectionPolicy => ({
   keepAfterMs: 60_000,
   // Cancelled trains stay on the board, marked as such.
   includeCancelled: true,
-  window: { size: ROWS * boards(options), mode: 'top', dwellMs: 0 },
+  window: { size: ROWS, mode: 'top', dwellMs: 0 },
 });
 
-const sizeOf = (options: Values): { width: number; height: number } =>
-  stackSize(Math.max(1, Number(options.across) || 1), Math.max(1, Number(options.down) || 1));
+const sizeOf = (): { width: number; height: number } => ({ width: BOARD_WIDTH, height: layout().height });
 
 export const mpElectronicsAdif: ReplicaDef = {
   id: 'mp-electronics-adif',
-  viewBox: sizeOf({}),
-  size: sizeOf,
+  viewBox: sizeOf(),
   accepts: 'board',
   needs: { services: ROWS, calls: false },
   options: optionsSchema,

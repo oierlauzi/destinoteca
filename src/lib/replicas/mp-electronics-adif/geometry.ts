@@ -28,8 +28,6 @@ const LEGENDS = 38;
 const ROW_PITCH = PANEL_ROWS + 5;
 const WIDE_GAP = 9;
 const BOTTOM = 11;
-/** Between boards hung next to or above one another. */
-export const BOARD_GAP = 10;
 
 export const panelCols = (column: Column): number => CELLS[column] * MP_ADVANCE;
 
@@ -63,13 +61,4 @@ export function layout(): Layout {
     cols: Math.round((FIELD_X.remarks + panelCols('remarks') / 2 - FIELD_X.place) / MP_ADVANCE) * MP_ADVANCE,
   };
   return { rowsTop, rowY, wide, height: wide.y + PANEL_ROWS + BOTTOM };
-}
-
-/** Several boards, `across` side by side and `down` one above another. */
-export function stackSize(across: number, down: number): { width: number; height: number } {
-  const { height } = layout();
-  return {
-    width: across * BOARD_WIDTH + (across - 1) * BOARD_GAP,
-    height: down * height + (down - 1) * BOARD_GAP,
-  };
 }

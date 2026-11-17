@@ -70,9 +70,6 @@ const INNER = { side: 5, legends: 11.5, bottom: 4 };
 /** The legends' size: "tren" takes about a third of its column. */
 export const LEGEND_SIZE = 8.5;
 
-/** Between boards hung next to or above one another. */
-export const BOARD_GAP = 8;
-
 export interface Layout {
   width: number;
   height: number;
@@ -108,14 +105,12 @@ export function layout(variant: Variant, rows: number): Layout {
   };
 }
 
-/** Where board `index` of a stack `across` wide goes. */
-export function boardOrigin(variant: Variant, across: number, index: number): { x: number; y: number } {
-  const { width, height } = layout(variant, DEFAULT_ROWS[variant]);
-  return { x: (index % across) * (width + BOARD_GAP), y: Math.floor(index / across) * (height + BOARD_GAP) };
-}
-
-/** Several boards, `across` side by side and `down` one above another. */
-export function stackSize(variant: Variant, across: number, down: number): { width: number; height: number } {
-  const { width, height } = layout(variant, DEFAULT_ROWS[variant]);
-  return { width: across * width + (across - 1) * BOARD_GAP, height: down * height + (down - 1) * BOARD_GAP };
+/**
+ * What a board takes up: all of it, or with `surround` off only its dark
+ * panel of legends and flaps, for an installation that draws its own frame
+ * and title around several boards.
+ */
+export function boardBox(variant: Variant, surround: boolean): { x: number; y: number; width: number; height: number } {
+  const l = layout(variant, DEFAULT_ROWS[variant]);
+  return surround ? { x: 0, y: 0, width: l.width, height: l.height } : { ...l.panel };
 }

@@ -4,7 +4,6 @@ import { adifLogo } from './adif-logo';
 import { mpLogo } from './mp-logo';
 import type { AdifFrame, AdifOptions, AdifRow } from './def';
 import {
-  BOARD_GAP,
   BOARD_WIDTH,
   CELLS,
   COLUMNS,
@@ -14,7 +13,6 @@ import {
   panelCols,
   ROWS,
   layout,
-  stackSize,
   type Layout,
 } from './geometry';
 import { columnLegend, TITLES, type Column, type Legend, type Regional } from './labels';
@@ -42,12 +40,8 @@ const WIDE_GAP = 32;
 
 type Bits = number[];
 
-const boardCount = (options: AdifOptions) => ({ across: Math.max(1, Math.min(4, options.across || 1)), down: Math.max(1, Math.min(3, options.down || 1)) });
 const layoutOf = (_options: AdifOptions): Layout => layout();
-const sizeOf = (options: AdifOptions) => {
-  const { across, down } = boardCount(options);
-  return stackSize(across, down);
-};
+const sizeOf = (options: AdifOptions) => ({ width: BOARD_WIDTH, height: layoutOf(options).height });
 
 /** A field's text in its cells: most from the left, the platform from the right, the train split in two. */
 export function cellText(column: Column, value: string): string {
@@ -108,7 +102,7 @@ export function runsPath(bits: Bits, x: number, y: number): string {
 }
 
 interface Panel {
-  /** Unique within the stack, for the fault seed. */
+  /** Unique within the board, for the fault seed. */
   index: number;
   x: number;
   y: number;
@@ -116,35 +110,27 @@ interface Panel {
   wide: boolean;
 }
 
-/** Every panel of the stack, in a fixed order. */
+/** Every panel of the board, in a fixed order. */
 function panels(options: AdifOptions): Panel[] {
-  const { across, down } = boardCount(options);
   const board = layoutOf(options);
   const out: Panel[] = [];
-  for (let b = 0; b < across * down; b++) {
-    const bx = (b % across) * (BOARD_WIDTH + BOARD_GAP);
-    const by = Math.floor(b / across) * (board.height + BOARD_GAP);
-    for (let row = 0; row < ROWS; row++) {
-      COLUMNS.forEach((column, f) => {
-        out.push({ index: b * 100 + row * 10 + f, x: bx + FIELD_X[column], y: by + board.rowY(row), cols: panelCols(column), wide: false });
-      });
-    }
-    out.push({ index: b * 100 + 99, x: bx + board.wide.x, y: by + board.wide.y, cols: board.wide.cols, wide: true });
+  for (let row = 0; row < ROWS; row++) {
+    COLUMNS.forEach((column, f) => {
+      out.push({ index: row * 10 + f, x: FIELD_X[column], y: board.rowY(row), cols: panelCols(column), wide: false });
+    });
   }
+  out.push({ index: 99, x: board.wide.x, y: board.wide.y, cols: board.wide.cols, wide: true });
   return out;
 }
 
-/** What each panel shows: the rows board after board, and the wide row's window. */
-function panelTexts(frame: AdifFrame, options: AdifOptions): string[] {
-  const { across, down } = boardCount(options);
+/** What each panel shows: the rows, and the wide row's window. */
+function panelTexts(frame: AdifFrame): string[] {
   const texts: string[] = [];
-  for (let b = 0; b < across * down; b++) {
-    for (let row = 0; row < ROWS; row++) {
-      const data: AdifRow | undefined = frame.rows[b * ROWS + row];
-      for (const column of COLUMNS) texts.push(cellText(column, data ? data[keyOf(column)] : ''));
-    }
-    texts.push('');
+  for (let row = 0; row < ROWS; row++) {
+    const data: AdifRow | undefined = frame.rows[row];
+    for (const column of COLUMNS) texts.push(cellText(column, data ? data[keyOf(column)] : ''));
   }
+  texts.push('');
   return texts;
 }
 
@@ -154,7 +140,7 @@ const wideStrip = (text: string): number[] => textStrip(font.fold(text), font);
 
 /** The lit dots of every panel. `wideOffset` is how far the wide row has run. */
 function litPaths(frame: AdifFrame, options: AdifOptions, wideOffset: number): string[] {
-  const texts = panelTexts(frame, options);
+  const texts = panelTexts(frame);
   const { wide } = layoutOf(options);
   const strip = wideStrip(frame.wide);
   const moving = options.wideScroll && scrolls(strip, wide.cols);
@@ -254,7 +240,6 @@ export const ledPattern = (id: string, fill: string, glow: boolean, ref?: (eleme
   ], ref);
 
 function scene(options: AdifOptions, ids: Ids, paths: string[], refs?: { clips: SVGElement[]; patterns: SVGElement[] }): VNode[] {
-  const { across, down } = boardCount(options);
   const all = panels(options);
   const defs = h('defs', {}, [
     ledPattern(ids.unlit, UNLIT, false),
@@ -264,12 +249,6 @@ function scene(options: AdifOptions, ids: Ids, paths: string[], refs?: { clips: 
       h('clipPath', { id: ids.clip(i) }, [h('path', { d: paths[i] ?? '' }, [], refs ? (element) => (refs.clips[i] = element) : undefined)]),
     ),
   ]);
-  const boards: VNode[] = [];
-  for (let b = 0; b < across * down; b++) {
-    const bx = (b % across) * (BOARD_WIDTH + BOARD_GAP);
-    const by = Math.floor(b / across) * (layoutOf(options).height + BOARD_GAP);
-    boards.push(h('g', { transform: `translate(${bx},${by})` }, board(options)));
-  }
   const leds: VNode[] = all.flatMap((panel, i) => [
     // Each window has a slightly rounded bezel around it.
     h('rect', { x: panel.x - 1.3, y: panel.y - 1.3, width: panel.cols + 2.6, height: PANEL_ROWS + 2.6, rx: 1.4, fill: BEZEL, stroke: BEZEL_EDGE, 'stroke-width': 0.35 }),
@@ -277,7 +256,7 @@ function scene(options: AdifOptions, ids: Ids, paths: string[], refs?: { clips: 
     h('rect', { x: panel.x, y: panel.y, width: panel.cols, height: PANEL_ROWS, fill: `url(#${ids.unlit})` }),
     h('rect', { x: panel.x, y: panel.y, width: panel.cols, height: PANEL_ROWS, fill: `url(#${panel.wide ? ids.wideLit : ids.lit})`, 'clip-path': `url(#${ids.clip(i)})` }),
   ]);
-  return [defs, ...boards, ...leds];
+  return [defs, ...board(options), ...leds];
 }
 
 export function describe(frame: AdifFrame, options: AdifOptions): string {
@@ -329,7 +308,7 @@ export function mount(host: Element, initial: AdifOptions, env: { ticker: Ticker
 
   /** The parts that do not move are rebuilt only when an option that shapes them changes. */
   const shapeKey = (o: AdifOptions): string =>
-    JSON.stringify([o.mode, o.regional, o.header, o.logo, o.remarksEn, o.across, o.down]);
+    JSON.stringify([o.mode, o.regional, o.header, o.logo, o.remarksEn]);
 
   const wideOffset = (): number => {
     const strip = wideStrip(frame.wide);

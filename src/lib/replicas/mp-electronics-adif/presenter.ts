@@ -88,15 +88,12 @@ function wideText(view: View, options: AdifOptions): string {
   return options.wideIdle || idleText(options.mode);
 }
 
-const boards = (options: AdifOptions): number => Math.max(1, options.across) * Math.max(1, options.down);
-
 export function blank(view: View, options: AdifOptions): AdifFrame {
-  return { rows: Array.from({ length: ROWS * boards(options) }, () => blankRow), wide: wideText(view, options) };
+  return { rows: Array.from({ length: ROWS }, () => blankRow), wide: wideText(view, options) };
 }
 
 export function present(view: View, options: AdifOptions): AdifFrame {
-  const size = ROWS * boards(options);
-  const rows = view.services.slice(0, size).map((service) => row(service, view, options));
-  while (rows.length < size) rows.push(blankRow);
+  const rows = view.services.slice(0, ROWS).map((service) => row(service, view, options));
+  while (rows.length < ROWS) rows.push(blankRow);
   return { rows, wide: wideText(view, options) };
 }

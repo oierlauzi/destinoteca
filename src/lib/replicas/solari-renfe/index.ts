@@ -10,8 +10,8 @@ const options = (values: Values) => values as SolariOptions;
 /** The code of one of the two variants. */
 export function implementation(variant: Variant): ReplicaImpl {
   return {
-    present: (view, values) => toFlat(present(variant, view, values)),
-    blank: (_view, values) => toFlat(blank(variant, values)),
+    present: (view) => toFlat(present(variant, view)),
+    blank: () => toFlat(blank(variant)),
     renderToString: (frame: Frame, values: Values) => renderToString(variant, fromFlat(variant, frame), options(values)),
     mount(host, values, env) {
       const mounted = mount(variant, host, options(values), env);
