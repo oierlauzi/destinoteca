@@ -49,6 +49,8 @@ photos:
     source: Citymapper
     license: rights-reserved-credited
 cover: pasarela-atocha
+replica:
+  id: page-iberica-pasarela-atocha
 stage: stub
 ---
 
@@ -56,22 +58,27 @@ Cuelga en la pasarela que cruza sobre las vías de Atocha Cercanías y reúne
 los próximos trenes de toda la estación en dos pantallas gemelas, una junto a
 la otra, dentro de una misma caja metálica gris. Cada pantalla tiene sus
 rótulos impresos, «Vía», «Destino» y «Próximo tren», y cinco líneas de puntos
-flip-dot iluminados por LED, en verde; la de la izquierda lleva además el
-logotipo de Cercanías en una esquina. Bajo las dos corre una sola franja roja
-de LED.
+flip-dot iluminados por LED, en verde: la vía, el destino y los minutos que
+faltan. Bajo las dos corre una sola fila roja de LED, de siete puntos de
+alto.
 
 Es de la misma generación de caja gris que los
 [teleindicadores de andén](../page-iberica-anden-atocha/) y el
 [de acceso a andén](../page-iberica-acceso-anden-atocha/) de la estación.
 
-Como en el antiguo [panel del vestíbulo](../page-iberica-vestibulo-atocha/),
-los minutos se escriben con «min» en minúsculas.
+La tipografía es la de los demás carteles de la estación, con los puntos de un
+trazo. Como en el antiguo [panel del vestíbulo](../page-iberica-vestibulo-atocha/),
+los minutos se escriben con «min» en minúsculas, aquí pegado a la cifra:
+«2min».
 
 ## Lo que no se sabe
 
 - **Qué muestra la franja roja.** No se ve texto en ella en ninguna de las dos fotografías.
-- **El ancho exacto de las líneas y la tipografía**, que todavía no se han
-  leído punto por punto.
+- **El ancho exacto de las líneas.** La réplica supone 126 columnas, con el
+  mismo paso entre puntos que los demás carteles de la estación.
+- **Cómo se reparten los trenes entre las dos pantallas.** La réplica pone
+  los cinco primeros en la de la izquierda y los cinco siguientes en la de la
+  derecha.
 - **Cuándo se instaló.**
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

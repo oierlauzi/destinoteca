@@ -1,6 +1,7 @@
 import { REPLICA_IDS, type ReplicaId } from './ids';
 import { andenElectromagnetico } from './page-iberica-anden-electromagnetico/def';
 import { accesoAtocha } from './page-iberica-acceso-atocha/def';
+import { pasarelaAtocha } from './page-iberica-pasarela-atocha/def';
 import { andenAtocha } from './page-iberica-anden-atocha/def';
 import { andenContinuo } from './page-iberica-anden-continuo/def';
 import { festinaAdif } from './festina-adif/def';
@@ -24,6 +25,7 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'page-iberica-vestibulo-4-lineas': vestibulo4,
   'page-iberica-anden-continuo': andenContinuo,
   'page-iberica-acceso-atocha': accesoAtocha,
+  'page-iberica-pasarela-atocha': pasarelaAtocha,
   'page-iberica-anden-atocha': andenAtocha,
   'mp-electronics-adif': mpElectronicsAdif,
   'festina-adif': festinaAdif,

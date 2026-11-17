@@ -168,6 +168,17 @@ export const player: Record<string, string> = {
   // --- Teleindicador de andén de PAGE Ibérica, Atocha Cercanías ---
   'atocha.frame.label': 'Panel LED, línea 1',
   'atocha.frame.led': 'Panel LED, línea 2',
+  'pasarela.frame.destination': 'Destino',
+  'pasarela.frame.line1': 'Línea 1 (cara izquierda)',
+  'pasarela.frame.line2': 'Línea 2 (cara izquierda)',
+  'pasarela.frame.line3': 'Línea 3 (cara izquierda)',
+  'pasarela.frame.line4': 'Línea 4 (cara izquierda)',
+  'pasarela.frame.line5': 'Línea 5 (cara izquierda)',
+  'pasarela.frame.line6': 'Línea 6 (cara derecha)',
+  'pasarela.frame.line7': 'Línea 7 (cara derecha)',
+  'pasarela.frame.line8': 'Línea 8 (cara derecha)',
+  'pasarela.frame.line9': 'Línea 9 (cara derecha)',
+  'pasarela.frame.line10': 'Línea 10 (cara derecha)',
 
   // --- Teleindicador LED de MP Electronics para ADIF ---
   'adif.group.board': 'Tablero',
