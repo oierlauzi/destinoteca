@@ -72,17 +72,18 @@ const flipDots = new DotMatrix<LitFlapLook>({
 // Each line changes in a wave from left to right, the lines one after another.
 const sweep = (): DotTransition => new DotTransition(LINE_COUNT, COLS, ROWS, (_turn, col, row) => col * 6 + row * 8);
 
-/** The radius of the frame's top corners. */
-const CORNER = FRAME + 2;
+/** The faces' rounded corners, and the frame's, concentric with them around the same centre. */
+const INNER_CORNER = 10;
+const CORNER = FRAME + INNER_CORNER;
 
 /** A face's outline, with its outer top corner rounded and the other three square. */
 function facePath(x: number, y: number, outer: 'left' | 'right'): string {
-  const r = 4;
+  const r = INNER_CORNER;
   const right = x + FACE.width;
   const bottom = y + FACE.height;
   return outer === 'left'
-    ? `M${x},${bottom}V${y + r}Q${x},${y} ${x + r},${y}H${right}V${bottom}Z`
-    : `M${x},${bottom}V${y}H${right - r}Q${right},${y} ${right},${y + r}V${bottom}Z`;
+    ? `M${x},${bottom}V${y + r}A${r},${r} 0 0 1 ${x + r},${y}H${right}V${bottom}Z`
+    : `M${x},${bottom}V${y}H${right - r}A${r},${r} 0 0 1 ${right},${y + r}V${bottom}Z`;
 }
 
 /** One face: its printed header and the band of each line. */
@@ -93,7 +94,7 @@ function face(index: number): VNode[] {
   const small = 2.7 * PITCH;
   const nodes: VNode[] = [
     // Rounded only at the corner where the frame around it is: the outer top corner.
-    h('path', { d: facePath(x, y, index === 0 ? 'left' : 'right'), fill: FACE_FILL, stroke: '#0c0c0d', 'stroke-width': 1 }),
+    h('path', { d: facePath(x, y, index === 0 ? 'left' : 'right'), fill: FACE_FILL, stroke: '#000000', 'stroke-width': 2.6 }),
     h('text', { x: colX(index, 4), y: y + HEADER - 3.6 * PITCH, 'font-size': big / 0.72, ...legend }, ['Vía']),
     h('text', { x: colX(index, 41), y: y + HEADER - 3.6 * PITCH, 'font-size': big / 0.72, ...legend }, ['Destino']),
     h('text', { x: colX(index, 116), y: y + HEADER - 7.4 * PITCH, 'font-size': small / 0.72, 'text-anchor': 'middle', ...legend }, ['Próximo']),
@@ -113,7 +114,7 @@ function housing(): VNode[] {
     // The LED row's black housing, square, under the grey frame.
     h('rect', { x: 0, y: LED.band.y - 4, width: WIDTH, height: LED.band.height + 4, fill: '#1c1c1d', stroke: '#000000', 'stroke-width': 0.6 }),
     // The grey frame: rounded at the top, square at the bottom where the LED housing meets it.
-    h('path', { d: `M0,${GREY_HEIGHT}V${CORNER}Q0,0 ${CORNER},0H${WIDTH - CORNER}Q${WIDTH},0 ${WIDTH},${CORNER}V${GREY_HEIGHT}Z`, fill: ENCLOSURE, stroke: '#77776f', 'stroke-width': 0.6 }),
+    h('path', { d: `M0,${GREY_HEIGHT}V${CORNER}A${CORNER},${CORNER} 0 0 1 ${CORNER},0H${WIDTH - CORNER}A${CORNER},${CORNER} 0 0 1 ${WIDTH},${CORNER}V${GREY_HEIGHT}Z`, fill: ENCLOSURE, stroke: '#77776f', 'stroke-width': 0.6 }),
     ...Array.from({ length: FACES }, (_, i) => face(i)).flat(),
     // The makers' plate, centred under each face.
     ...Array.from({ length: FACES }, (_, i) => pageLogoPlate(faceAt(i).x + FACE.width / 2, GREY_HEIGHT - FRAME / 2, 2.9, `page-logo-pasarela-${i}`)),
