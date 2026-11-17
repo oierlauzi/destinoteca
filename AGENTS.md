@@ -50,6 +50,8 @@ byte for byte the same; compare their `renderToString` output before and after.
   photos too poor, credit missing) goes in the public page
   `src/texts/es/pendientes.md` («Por documentar»), with links and what is
   missing, so readers can fill the gaps. Move it out when it gets an entry.
+  An entry moved back there leaves its id in `src/site/moved.ts`, which
+  keeps the old address redirecting to its section.
 
 ## Photographs
 

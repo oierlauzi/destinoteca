@@ -67,7 +67,7 @@ Es de la misma generación de caja gris que los
 [de acceso a andén](../page-iberica-acceso-anden-atocha/) de la estación.
 
 La tipografía es la de los demás carteles de la estación, con los puntos de un
-trazo. Como en el antiguo [panel del vestíbulo](../page-iberica-vestibulo-atocha/),
+trazo. Como en el antiguo [panel del vestíbulo](../../pendientes/#panel-del-vestíbulo-de-atocha-cercanías),
 los minutos se escriben con «min» en minúsculas, aquí pegado a la cifra:
 «2min».
 

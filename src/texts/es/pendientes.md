@@ -34,7 +34,7 @@ En el vestíbulo, entre dos columnas redondas y junto a los tornos de acceso,
 colgaba un tablero «Próximas salidas» de cristal líquido, con dos partes:
 «Cercanías» a la izquierda y «Regionales y Largo Recorrido» a la derecha.
 Tenía unas diez líneas en amarillo y una línea roja debajo. Tiene la misma
-división que el [panel de PAGE Ibérica](../catalogo/page-iberica-vestibulo-atocha/)
+división que el [panel de PAGE Ibérica](#panel-del-vestíbulo-de-atocha-cercanías)
 que estuvo después en el vestíbulo, y puede que este lo sustituyera.
 
 Fotografía: Docutren,
@@ -66,6 +66,39 @@ en estas estaciones, de las que no se conocen fotografías:
 **Falta:** fotografías de cualquiera de ellas.
 
 ## PAGE Ibérica
+
+### Panel del vestíbulo de Atocha Cercanías
+
+El gran panel del vestíbulo de Atocha Cercanías, colgado sobre las
+taquillas y ya retirado. Reunía en una sola caja gris lo que en otras
+estaciones de la [familia](../familias/page-iberica-electromagneticos/)
+ocupaba varios carteles:
+
+- **Cercanías**, a la izquierda: diez líneas flip-dot con la vía, el destino
+  y los minutos que faltan o la hora, y una fila de LED debajo.
+- **Largo Recorrido y Regionales**, a la derecha: cuatro líneas de salidas y
+  cuatro de llegadas, cada bloque con su propia fila de LED.
+- **En medio**, un reloj y cuatro pantallas de cristal líquido.
+- **Abajo**, una fila de LED que ocupa todo el ancho.
+
+Las líneas flip-dot escriben con la misma tipografía que los
+[teleindicadores de andén](../catalogo/page-iberica-anden-atocha/) de la
+estación, con «min» en minúsculas. Puede que sustituyera al
+[tablero de Ikusi](#tablero-del-vestíbulo-de-atocha-cercanías), que tenía la
+misma división.
+
+![Vestíbulo de Atocha Cercanías, con gente pasando delante de las taquillas. Encima, el panel gris, con las líneas de Cercanías a la izquierda, un reloj y cuatro pantallas en el centro, las de Largo Recorrido a la derecha y una fila de LED a todo lo ancho.](./pendientes/page-iberica-vestibulo-atocha.jpg)
+
+Fotografía: Gonzalo Vázquez Hidalgo. Derechos reservados, reproducida con
+crédito.
+
+**Falta:**
+
+- **Cuándo se instaló y cuándo se retiró**, y qué lo sustituyó.
+- **Qué mostraban las filas de LED y las pantallas.** En la fotografía, la
+  fila de Cercanías y la de abajo están apagadas, y las pantallas apenas se
+  leen.
+- **Más fotografías**, sobre todo de cerca.
 
 ### Tablero de llegadas y salidas en castellano y catalán
 

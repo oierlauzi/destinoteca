@@ -16,6 +16,7 @@ import { resolveComposition } from '@/lib/compositions/layout';
 import type { EntryInput, ResolvedComposition } from '@/lib/compositions/types';
 import { getReplica } from '@/lib/replicas/registry';
 import { isReplicaId } from '@/lib/replicas/ids';
+import { MOVED_TO_BACKLOG } from '@/site/moved';
 
 /*
  * The one door to the catalog. Pages never call `astro:content` themselves:
@@ -331,6 +332,8 @@ export class Catalog {
     ];
     for (const [name, list] of groups) {
       const ids = list.flatMap((entry) => [entry.id, ...entry.data.aliases]);
+      // A model's former address may also be held by an entry moved to «Por documentar».
+      if (name === 'models') ids.push(...Object.keys(MOVED_TO_BACKLOG));
       for (const id of collisions(ids)) report(name, `"${id}" is used as an id or alias more than once`);
     }
     for (const model of this.models) for (const alias of model.data.aliases) this.modelAliases.set(alias, model.id);

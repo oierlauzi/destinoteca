@@ -34,8 +34,9 @@ Se han visto en servicio estos montajes de esta generación:
   [acceso a andén](../../catalogo/page-iberica-acceso-anden-atocha/), con una
   fila de LED roja; el [panel de la pasarela](../../catalogo/page-iberica-pasarela-atocha/),
   con dos pantallas de cinco líneas, y el antiguo
-  [panel del vestíbulo](../../catalogo/page-iberica-vestibulo-atocha/), ya
-  retirado, con columnas para Cercanías y para Largo Recorrido y Regionales.
+  panel del vestíbulo, ya retirado, con columnas para Cercanías y para Largo
+  Recorrido y Regionales, que todavía no tiene ficha: está
+  [por documentar](../../pendientes/#panel-del-vestíbulo-de-atocha-cercanías).
 - **Paneles de vestíbulo**, que apilan de dos a cuatro filas de 20 caracteres
   para anunciar los trenes de toda la estación: el de
   [dos líneas](../../catalogo/page-iberica-vestibulo-2-lineas/), visto en Tres

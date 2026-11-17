@@ -1,16 +1,24 @@
 ---
 import Redirect from '@/components/Redirect.astro';
 import { getCatalog } from '@/site/catalog';
+import { MOVED_TO_BACKLOG } from '@/site/moved';
 import { pathsWithAliases, type AliasProps } from '@/site/paths';
 import { href } from '@/site/url';
 import ModelView from '@/views/ModelView.astro';
 
 export async function getStaticPaths() {
-  return pathsWithAliases((await getCatalog()).models);
+  const moved = Object.entries(MOVED_TO_BACKLOG).map(([id, anchor]) => ({
+    params: { id },
+    props: { id, alias: true, to: `${href('pendientes/')}#${anchor}` },
+  }));
+  return [...pathsWithAliases((await getCatalog()).models), ...moved];
 }
 
-type Props = AliasProps;
-const { id, alias } = Astro.props;
+type Props = AliasProps & {
+  /** Where a page left behind by an entry moved to «Por documentar» points. */
+  to?: string;
+};
+const { id, alias, to } = Astro.props;
 ---
 
-{alias ? <Redirect to={href(`catalogo/${id}/`)} /> : <ModelView id={id} locale="es" />}
+{alias ? <Redirect to={to ?? href(`catalogo/${id}/`)} /> : <ModelView id={id} locale="es" />}
