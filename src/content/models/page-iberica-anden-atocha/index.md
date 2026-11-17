@@ -77,6 +77,9 @@ Es el cartel de andén de Atocha Cercanías que sigue en servicio, en la caja
 gris que comparten todos los de la estación. Cuelga de pórticos sobre los
 andenes, de dos en dos y con un reloj entre ellos.
 
+Sustituyó a los [carteles de cristal líquido de Ikusi](../ikusi-anden-atocha/),
+que en enero de 1995 seguían en servicio sobre los andenes.
+
 Tiene dos pantallas:
 
 - **Una línea flip-dot** iluminada por LED, como la del
@@ -117,6 +120,7 @@ construcción, y pueden no coincidir con las reales.
 - **Cuándo cambia la primera línea del panel.** La réplica la cambia cuando
   el tren está a cero minutos, como en la fotografía con los trenes en el
   andén; no se sabe qué más la hace cambiar.
-- **Cuándo se instalaron.**
+- **Cuándo se instalaron.** Fue después de enero de 1995, cuando los andenes
+  todavía tenían los carteles de Ikusi.
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).
