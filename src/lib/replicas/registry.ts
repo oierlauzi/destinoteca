@@ -6,6 +6,7 @@ import { andenContinuo } from './page-iberica-anden-continuo/def';
 import { festinaAdif } from './festina-adif/def';
 import { andenMp, andenMpReloj, andenMpVertical } from './mp-electronics-adif-anden/def';
 import { mpCercanias } from './mp-electronics-adif-cercanias/def';
+import { solariCercanias, solariLargo } from './solari-renfe/def';
 import { mpElectronicsAdif } from './mp-electronics-adif/def';
 import { vestibulo2, vestibulo4 } from './page-iberica-vestibulo/def';
 import type { ReplicaDef } from './types';
@@ -30,6 +31,8 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'mp-electronics-adif-anden-reloj': andenMpReloj,
   'mp-electronics-adif-anden-vertical': andenMpVertical,
   'mp-electronics-adif-cercanias': mpCercanias,
+  'solari-renfe-largo-recorrido': solariLargo,
+  'solari-renfe-cercanias': solariCercanias,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {

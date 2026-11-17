@@ -1,5 +1,5 @@
 ---
-name: Panel de paletas del vestíbulo de Madrid Chamartín
+name: Panel de paletas de largo recorrido de Solari, Madrid Chamartín
 summary: >-
   Los grandes paneles de paletas que anunciaban las salidas de largo
   recorrido en el vestíbulo de Chamartín, sustituidos por los paneles LED de
@@ -60,6 +60,8 @@ photos:
     source: Flickr
     license: rights-reserved-credited
 cover: chamartin-anos-80
+replica:
+  id: solari-renfe-largo-recorrido
 stage: stub
 ---
 
@@ -69,6 +71,9 @@ de paletas de [Solari](../../fabricantes/solari/), de Udine, colgados en el
 vestíbulo. Cada línea anunciaba un tren: su
 producto, su destino, por dónde pasaba, la hora y la vía.
 
+Había también paneles de la misma marca para los trenes de
+[Cercanías](../solari-renfe-cercanias/), con otras columnas.
+
 Son los mismos paneles en todas las fotografías; entre los años ochenta y
 2007 solo cambiaron los marcos y las paletas, que con el tiempo pasaron a
 mostrar el producto de cada tren con su logotipo. El nombre del fabricante,
@@ -77,6 +82,7 @@ fotografías.
 
 ## Lo que no se sabe
 
+- **Qué indicaban las dos luces del final de cada fila.**
 - **Cuándo se instalaron y cuándo se retiraron.**
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
