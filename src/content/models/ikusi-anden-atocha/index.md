@@ -91,9 +91,10 @@ próximo tren de una vía.
 
 Cada mitad tiene un rótulo impreso con la vía, «VIA 3» o «VIA 4», y dos
 líneas de [cristal líquido](../../tecnologias/lcd/): una corta, de cinco
-caracteres, con la hora, y otra más larga con el destino. El rótulo y la hora comparten la fila de
-arriba, con el rótulo hacia el centro de la caja y la hora hacia el extremo.
-Los caracteres son módulos separados, uno por letra, y los que quedan apagados
+caracteres, con la hora, y otra de doce con el destino.
+El rótulo y la hora comparten la fila de arriba, con el rótulo hacia el centro
+de la caja y la hora hacia el extremo. Los caracteres son módulos separados,
+uno por carácter (también los dos puntos de la hora tienen el suyo), y los que quedan apagados
 se ven como rectángulos tenues, cada uno de un tono algo distinto. La línea
 del destino también da avisos: en una fotografía, la de la vía 1 dice «NO
 ADMITE». Debajo corre una tercera línea, roja, que unas veces aparece
@@ -110,8 +111,6 @@ PAGE Ibérica.
 - **Qué muestra la línea roja.** En una fotografía lleva texto, pero no se
   lee; en las demás se ve encendida entera. Tampoco se sabe de qué tecnología
   es.
-- **Cuántos caracteres tiene la línea del destino.** En una fotografía se
-  cuentan catorce: los trece de «MOSTOLES/SOTO» y uno más en blanco.
 - **Cuándo se instalaron y cuándo se retiraron.**
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).
