@@ -57,6 +57,18 @@ composition:
             stretch: true
             finish: aluminium
 photos:
+  - id: adif-vestibulo-subterraneo
+    src: ./adif-vestibulo-subterraneo.jpg
+    alt: >-
+      La entrada al vestíbulo subterráneo, con los tornos de acceso. Encima,
+      el logotipo de adif, dos tableros de salidas, un reloj cuadrado y el
+      nombre de la estación en grandes letras metálicas.
+    caption: El acceso al vestíbulo subterráneo, en una fotografía de Adif.
+    place: Madrid-Chamartín-Clara Campoamor
+    author: Adif Alta Velocidad
+    sourceUrl: https://www.adifaltavelocidad.es/documents/34745/2301034/Estaci%C3%B3n+Madrid-Chamart%C3%ADn_nuevo+vest%C3%ADbulo+subterr%C3%A1neo_paneles+y+nombre+de+estaci%C3%B3n_DBM_3745.png/9a3051c8-54a7-733d-0644-207a2c766f10
+    source: Adif Alta Velocidad
+    license: rights-reserved-credited
   - id: vestibulo-subterraneo
     src: ./chamartin-vestibulo-inferior.jpg
     alt: >-
@@ -70,7 +82,7 @@ references:
   - title: Estación Madrid-Chamartín, nuevo vestíbulo subterráneo, paneles y nombre de estación
     author: Adif Alta Velocidad
     url: https://www.adifaltavelocidad.es/documents/34745/2301034/Estaci%C3%B3n+Madrid-Chamart%C3%ADn_nuevo+vest%C3%ADbulo+subterr%C3%A1neo_paneles+y+nombre+de+estaci%C3%B3n_DBM_3745.png/9a3051c8-54a7-733d-0644-207a2c766f10
-    note: Fotografía de la misma pared.
+    note: La fotografía de la pared que se reproduce arriba.
 aliases:
   - salidas-vestibulo-subterraneo-chamartin
 stage: stub
