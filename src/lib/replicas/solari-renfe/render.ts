@@ -3,7 +3,7 @@ import type { Ticker } from '../../player/ticker';
 import type { SolariFrame, SolariOptions, SolariRow } from './def';
 import { boardsOf } from './def';
 import { LETTER_MARGIN, LETTER_SIZE, LETTER_SQUEEZE, wordLines } from './words';
-import { boardOrigin, DEFAULT_ROWS, FLAP, FLAP_GAP, layout, HOUR_FLAP, stackSize, TITLES, type Layout, type Variant } from './geometry';
+import { boardOrigin, DEFAULT_ROWS, LEGEND_SIZE, FLAP, FLAP_GAP, layout, HOUR_FLAP, stackSize, TITLES, type Layout, type Variant } from './geometry';
 
 /** The dark skin: a light frame, black flaps with white lettering. */
 const FONT = "'DIN Condensed', 'Oswald', 'Roboto Condensed', 'Arial Narrow', sans-serif";
@@ -203,7 +203,7 @@ function board(variant: Variant, l: Layout): VNode[] {
     ...l.fields
       .filter((field) => field.legend)
       .map((field) =>
-        h('text', { x: field.x + field.width / 2, y: l.legendY, 'text-anchor': 'middle', 'font-size': 4.4, 'font-style': 'italic', fill: LEGEND_INK }, [field.legend]),
+        h('text', { x: field.x + field.width / 2, y: l.legendY, 'text-anchor': 'middle', 'font-family': LETTER_FONT, 'font-size': LEGEND_SIZE, 'font-style': 'italic', fill: LEGEND_INK }, [field.legend]),
       ),
     h('text', { x: panel.x + panel.width - 2, y: l.height - 2.4, 'text-anchor': 'end', 'font-size': 2.4, fill: '#57554c' }, ['solari&c. udine, italy']),
   ];
