@@ -14,30 +14,30 @@ installations:
     status: in-service
     note: En el acceso al nuevo vestíbulo subterráneo.
 composition:
-  size: { width: 1040, height: 210 }
+  size: { width: 1040, height: 192 }
   background: '#ecebe7'
   elements:
     - id: salidas-1
       model: mp-electronics-adif-teleindicador
       params: { color: '#5df08f' }
       serie: salidas
-      at: { x: 175, y: 20, width: 300 }
+      at: { x: 175, y: 4, width: 300 }
     - id: salidas-2
       model: mp-electronics-adif-teleindicador
       params: { color: '#5df08f' }
       serie: salidas
-      at: { x: 479, y: 20, width: 300 }
+      at: { x: 479, y: 4, width: 300 }
     - id: reloj
       model: festina-adif-reloj-cuadrado
-      at: { x: 794, y: 0, width: 150 }
+      at: { x: 794, y: 4, width: 130.7 }
     - id: logotipo
-      at: { x: 0, y: 95, width: 165, height: 50 }
+      at: { x: 0, y: 0, width: 165, height: 50 }
       panel:
         fill: none
         lines: []
         logo: { kind: adif, height: 42, color: '#5c6670', symbolColor: '#3aaa35' }
     - id: nombre
-      at: { x: 0, y: 162, width: 1040, height: 44 }
+      at: { x: 0, y: 146, width: 1040, height: 44 }
       panel:
         fill: none
         lines:
