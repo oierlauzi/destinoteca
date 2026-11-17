@@ -4,8 +4,8 @@
  * of the 1970s and 1980s, set square.
  *
  * A row is a sequence of fields: a wide flap with a word (the train), twelve
- * character flaps (a place), a time (a flap of two digits for the hour, a
- * printed dot, a flap for each digit of the minutes), the platform on a flap
+ * character flaps (a place), a time (a flap with the two digits of the hour
+ * and a printed dot, a flap for each digit of the minutes), the platform on a flap
  * of two characters, and two lamps.
  */
 export type Variant = 'largo' | 'cercanias';
@@ -25,8 +25,8 @@ export const FLAP = { width: 7, height: 10 };
 export const FLAP_GAP = 0.8;
 const FIELD_GAP = 3.2;
 export const ROW_PITCH = FLAP.height + 2.8;
-/** The room the hour flap has after its two digits, for the dot printed on it. */
-export const MINUTE_DOT = 2.8;
+/** The hour flap: just its two digits, from its left edge, and the dot printed after them. */
+export const HOUR_FLAP = 11.4;
 
 const charsWidth = (count: number): number => count * FLAP.width + (count - 1) * FLAP_GAP;
 
@@ -34,7 +34,7 @@ const WIDTHS: Record<FieldKind, (key: string) => number> = {
   // The train's word is about three and a half characters wide, "por" a little wider.
   word: (key) => (key === 'p' ? charsWidth(5) : charsWidth(3.4)),
   place: () => charsWidth(12),
-  time: () => charsWidth(2) + MINUTE_DOT + 2 * FLAP.width + FLAP_GAP,
+  time: () => HOUR_FLAP + FLAP_GAP + charsWidth(2),
   platform: () => charsWidth(2),
   lamps: () => 6,
 };

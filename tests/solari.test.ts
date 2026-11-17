@@ -48,7 +48,7 @@ describe('Solari split-flap boards', () => {
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
     const svg = renderToString('largo', frame, { across: 1, down: 1, animate: true, speed: 14 });
     // The dot is printed on the hour flap, so only flaps showing an hour have one.
-    expect(svg.match(/r="0.55" fill="#f1eee2"/g)).toHaveLength(6);
+    expect(svg.match(/r="0.6" fill="#f1eee2"/g)).toHaveLength(6);
     expect(svg.match(/fill="#ff5b38"/g)).toHaveLength(1);
   });
 

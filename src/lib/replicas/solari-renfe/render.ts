@@ -2,7 +2,7 @@ import { cp437, h, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { SolariFrame, SolariOptions, SolariRow } from './def';
 import { boardsOf } from './def';
-import { boardOrigin, DEFAULT_ROWS, FLAP, FLAP_GAP, layout, MINUTE_DOT, stackSize, TITLES, type Layout, type Variant } from './geometry';
+import { boardOrigin, DEFAULT_ROWS, FLAP, FLAP_GAP, layout, HOUR_FLAP, stackSize, TITLES, type Layout, type Variant } from './geometry';
 
 /** The dark skin: a light frame, black flaps with white lettering. */
 const FONT = "'DIN Condensed', 'Oswald', 'Roboto Condensed', 'Arial Narrow', sans-serif";
@@ -14,6 +14,16 @@ const PANEL_FILL = '#141514';
 const FLAP_TOP = '#1e1f1e';
 const FLAP_BOTTOM = '#1e1f1e';
 const INK = '#f1eee2';
+/**
+ * The flaps' lettering nearly fills them, top to bottom: a grotesque of
+ * Helvetica's widths (Arial and Liberation Sans share them), squeezed
+ * to the narrow letters of the photographs.
+ */
+const LETTER_FONT = "Helvetica, Arial, 'Liberation Sans', sans-serif";
+/** Capitals 0.716 of the size tall: 8.6 of the flap's 10. */
+const LETTER_SIZE = 12;
+const LETTER_MARGIN = 0.7;
+const LETTER_SQUEEZE = 0.66;
 const LEGEND_INK = '#c4c2b8';
 const LAMP_OFF = '#4a1c15';
 const LAMP_ON = '#ff5b38';
@@ -53,7 +63,6 @@ interface Lamp {
   which: number;
 }
 
-const charsWidth = (count: number): number => count * FLAP.width + (count - 1) * FLAP_GAP;
 
 /** Every flap and lamp of a stack of boards; rows are numbered board after board. */
 function stackParts(variant: Variant, options: SolariOptions): { flaps: Flap[]; lamps: Lamp[] } {
@@ -87,8 +96,8 @@ function parts(l: Layout, variant: Variant, rows: number, first = 0): { flaps: F
           for (let i = 0; i < 12; i++) flaps.push({ ...base, kind: 'char', x: field.x + i * (FLAP.width + FLAP_GAP), width: FLAP.width, seq: CHARS, index: i });
           break;
         case 'time': {
-          // The hour flap is a little wider than two digits: the dot after the hour is printed on it.
-          const hourWidth = charsWidth(2) + MINUTE_DOT - FLAP_GAP;
+          // The hour flap holds its two digits with no room before them, and the dot printed after them.
+          const hourWidth = HOUR_FLAP;
           flaps.push({ ...base, kind: 'hour', x: field.x, width: hourWidth, seq: HOURS, index: 0 });
           const minutesX = field.x + hourWidth + FLAP_GAP;
           for (let i = 0; i < 2; i++) flaps.push({ ...base, kind: 'digit', x: minutesX + i * (FLAP.width + FLAP_GAP), width: FLAP.width, seq: DIGITS, index: i + 1 });
@@ -155,19 +164,22 @@ function printed(flap: Flap, value: string, half: Half): VNode[] {
     });
   }
   if (!value.trim()) return [];
-  // The hour stands against the right of its flap, just before the dot printed after it.
+  // Tall, narrow lettering from the top of the flap to its foot, the hour against the right of its flap just before its dot.
   const hour = flap.kind === 'hour';
+  const x = hour ? flap.x + flap.width - 1.9 : flap.x + flap.width / 2;
+  const baseline = flap.y + FLAP.height - LETTER_MARGIN;
+  const squeeze = /[MW]/.test(value) ? LETTER_SQUEEZE * 0.86 : LETTER_SQUEEZE;
   const nodes = [
     h('text', {
-      x: hour ? flap.x + flap.width - 1.9 : flap.x + flap.width / 2,
-      y: cy + FLAP.height * 0.27,
-      'font-size': FLAP.height * 0.74,
+      transform: `matrix(${squeeze} 0 0 1 ${x} ${baseline})`,
+      'font-family': LETTER_FONT,
+      'font-size': LETTER_SIZE,
       'text-anchor': hour ? 'end' : 'middle',
       fill: INK,
     }, [value]),
   ];
-  // The hour's dot is printed on its flap, after the digits.
-  if (flap.kind === 'hour' && half === 'bottom') nodes.push(h('circle', { cx: flap.x + flap.width - 1.05, cy: flap.y + FLAP.height * 0.78, r: 0.55, fill: INK }));
+  // The hour's dot is printed on its flap, after the digits, on the line they stand on.
+  if (hour && half === 'bottom') nodes.push(h('circle', { cx: flap.x + flap.width - 1.05, cy: baseline - 0.6, r: 0.6, fill: INK }));
   return nodes;
 }
 
