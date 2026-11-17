@@ -27,6 +27,10 @@ countries:
   - es
 status: retiring
 installations:
+  - site: es/embajadores
+    line: C-5
+    status: unknown
+    note: Colgado del techo del andén subterráneo. Fotografiado en 1994, la fotografía más antigua que se conoce del cartel.
   - site: es/mostoles
     status: unknown
     note: Fotografiado en servicio en 1997.
@@ -94,6 +98,19 @@ variants:
     replicaPreset:
       rotulo: tren
 photos:
+  - id: embajadores-1994
+    src: ./embajadores-1994.jpg
+    alt: >-
+      Andén subterráneo de Embajadores, iluminado por tubos fluorescentes. Dos
+      hombres posan bajo un cartel colgado del techo; al otro lado de las vías,
+      el andén de enfrente.
+    caption: Embajadores, vía 1, 1994. Es la fotografía más antigua que se conoce del cartel.
+    date: '1994'
+    place: Embajadores
+    author: Luna
+    sourceUrl: https://archivo.docutren.com/uploads/r/fototeca-2/b/4/d/b4d9092e28e7aad9d450c75629425407861f58b38ce70a3a875cbf7a292ef060/FD_05782_141.jpg
+    source: Fototeca de la Fundación de los Ferrocarriles Españoles, FD_05782
+    license: rights-reserved-credited
   - id: via-libre-1997
     src: ./via-libre-1997.jpg
     alt: >-
@@ -383,7 +400,9 @@ centro de control de tráfico centralizado procesaba los datos de la
 circulación y enviaba a cada andén lo que le correspondía; el corazón del
 sistema estaba en la sala de pantallas de Madrid-Atocha. La revista lo
 presentaba como una instalación piloto de Cercanías, desarrollada, instalada
-y puesta a punto por PAGE Ibérica.
+y puesta a punto por PAGE Ibérica. Del mismo año es la fotografía más antigua
+que se conoce del cartel: uno colgado sobre la vía 1 de Embajadores, en un
+extremo de ese tramo.
 
 En marzo de 1997 la revista *Vía Libre* dedicó un reportaje a la información
 al viajero en Cercanías, con un apartado titulado «Teleindicadores de andén
