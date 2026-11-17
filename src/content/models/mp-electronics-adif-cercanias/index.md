@@ -54,11 +54,11 @@ replica:
 stage: stub
 ---
 
-Es la versión para Cercanías de los
-[paneles LED de MP Electronics para ADIF](../mp-electronics-adif-teleindicador/),
-más pequeña. Comparte con ellos la cabecera verde con el logotipo de adif y
-los rótulos impresos, con el logotipo de Cercanías en medio, y se colgaba
-tanto en los andenes como en los vestíbulos.
+Es un panel de salidas para los trenes de Cercanías, que se colgaba tanto en
+los andenes como en los vestíbulos. Lleva la misma cabecera verde con el
+logotipo de adif y los mismos rótulos impresos que los
+[paneles LED de MP Electronics](../mp-electronics-adif-teleindicador/) de
+largo recorrido, con el logotipo de Cercanías en medio.
 
 En lugar de paneles separados para cada columna, cada una de sus doce filas
 es una sola tira de LED ámbar discretos, de siete puntos de alto, con la vía,
