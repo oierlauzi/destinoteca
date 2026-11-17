@@ -19,7 +19,8 @@ manufacturers:
 operators:
   - ref: renfe-cercanias-madrid
     role: operator
-family: page-iberica-electromagneticos
+families:
+  - page-iberica-electromagneticos-cercanias-madrid
 countries:
   - es
 status: retiring
@@ -96,9 +97,9 @@ Existe también una versión de
 | Fila de LED | Texto móvil debajo de las líneas, algo más ancha que ellas |
 
 Cada línea tiene 20 caracteres, cuatro más que la del cartel de andén. Por lo
-demás comparte su lenguaje: la caja negra, los rótulos fijos en blanco, los
-puntos flip-dot de 5 × 7 y la fila de LED roja. Es probable que también
-comparta piezas, empezando por los módulos de cada carácter, pero no se ha
+demás tiene el lenguaje de su
+[familia](../../familias/page-iberica-electromagneticos-cercanias-madrid/), y es probable que
+comparta con el cartel de andén los módulos de cada carácter, aunque no se ha
 comprobado en ninguna unidad.
 
 Como los carteles de andén, estos paneles se han ido retirando, y es probable

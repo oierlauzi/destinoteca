@@ -7,6 +7,7 @@ summary: >-
   castellano e inglés y texto en LED.
 manufacturers:
   - mp-electronics
+cover: mp-electronics-adif-teleindicador
 ---
 
 Todos los fabricó [MP Electronics](../../fabricantes/mp-electronics/) para

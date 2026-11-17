@@ -18,7 +18,8 @@ export interface ModelFacts {
   manufacturerUnknown: boolean;
   /** Operator ids, including the parents of those named (Cercanías Madrid brings Renfe). */
   operators: string[];
-  family?: string;
+  /** Family ids. */
+  families: string[];
   countries: string[];
   years?: { from?: number; to?: number; circa?: boolean };
   status: Status;

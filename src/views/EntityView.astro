@@ -1,8 +1,10 @@
 ---
 // The page of one manufacturer, operator, family or technology: what it is,
 // and every model of the catalog that belongs to it.
+import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import ModelGrid from '@/components/ModelGrid.astro';
+import References from '@/components/References.astro';
 import { t } from '@/i18n';
 import Base from '@/layouts/Base.astro';
 import type { CollectionName } from '@/lib/catalog';
@@ -49,6 +51,12 @@ if (collection === 'operators') {
   }
   if (data.website) facts.push({ label: t('catalog.entity.website'), links: [{ href: data.website, text: new URL(data.website).host }] });
 }
+// A family carries its own sources, and is pictured, where its page is shared, by its cover entry's photograph.
+const references = collection === 'families' ? (entry as Family).data.references : [];
+const coverModel = collection === 'families' && (entry as Family).data.cover ? catalog.model((entry as Family).data.cover!.id) : undefined;
+const coverPhoto = coverModel ? catalog.cover(coverModel) : undefined;
+const social = coverPhoto ? (await getImage({ src: coverPhoto.src, width: Math.min(coverPhoto.src.width, 1200) })).src : undefined;
+
 if (collection === 'families') {
   const makers = (entry as Family).data.manufacturers.map((ref) => catalog.manufacturer(ref.id));
   if (makers.length > 0) {
@@ -60,7 +68,7 @@ if (collection === 'families') {
 }
 ---
 
-<Base title={entry.data.name} description={entry.data.summary} source={`src/content/${collection}/${entry.id}/index.md`}>
+<Base title={entry.data.name} description={entry.data.summary} source={`src/content/${collection}/${entry.id}/index.md`} image={social}>
   <div class="container page">
     <header>
       <p class="eyebrow">
@@ -108,6 +116,15 @@ if (collection === 'families') {
       <h2 id="fichas">{t('catalog.entity.models')}</h2>
       <ModelGrid models={models} />
     </section>
+
+    {
+      references.length > 0 && (
+        <section aria-labelledby="fuentes">
+          <h2 id="fuentes">{t('catalog.model.references')}</h2>
+          <References references={references} />
+        </section>
+      )
+    }
   </div>
 </Base>
 

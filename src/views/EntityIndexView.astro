@@ -1,10 +1,11 @@
 ---
-// The list of every manufacturer, operator or technology, with how many
-// models each has.
+// The list of every manufacturer, operator, technology or family, with how
+// many models each has. Families are shown as cards with a picture.
+import FamilyCard from '@/components/FamilyCard.astro';
 import { t } from '@/i18n';
 import Base from '@/layouts/Base.astro';
 import type { CollectionName } from '@/lib/catalog';
-import { counted, getCatalog } from '@/site/catalog';
+import { counted, getCatalog, type Family } from '@/site/catalog';
 import { ENTITY_PAGES } from '@/site/entities';
 import { href } from '@/site/url';
 
@@ -27,7 +28,10 @@ const entries = catalog.entities(collection).map((entry) => {
     <p class="lead">{t(`${page.strings}.lead`)}</p>
     <ul class="card-grid entities">
       {
-        entries.map(({ entry, count }) => (
+        collection === 'families' && entries.map(({ entry }) => <FamilyCard family={entry as Family} level={2} />)
+      }
+      {
+        collection !== 'families' && entries.map(({ entry, count }) => (
           <li class="card">
             <div class="card-body">
               <h2 class="card-title">

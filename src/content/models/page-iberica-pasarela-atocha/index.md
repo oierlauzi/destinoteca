@@ -18,7 +18,9 @@ manufacturers:
 operators:
   - ref: renfe-cercanias-madrid
     role: operator
-family: page-iberica-electromagneticos
+families:
+  - page-iberica-electromagneticos-cercanias-madrid
+  - page-iberica-electromagneticos-atocha-cercanias
 countries:
   - es
 status: in-service
@@ -66,8 +68,9 @@ Es de la misma generación de caja gris que los
 [teleindicadores de andén](../page-iberica-anden-atocha/) y el
 [de acceso a andén](../page-iberica-acceso-anden-atocha/) de la estación.
 
-La tipografía es la de los demás carteles de la estación, con los puntos de un
-trazo. Como en el antiguo [panel del vestíbulo](../../pendientes/#panel-del-vestíbulo-de-atocha-cercanías),
+La tipografía es la de los demás
+[carteles de la estación](../../familias/page-iberica-electromagneticos-atocha-cercanias/#la-tipografía-de-las-líneas-flip-dot),
+con los puntos de un trazo. Como en el antiguo [panel del vestíbulo](../../pendientes/#panel-del-vestíbulo-de-atocha-cercanías),
 los minutos se escriben con «min» en minúsculas, aquí pegado a la cifra:
 «2min».
 

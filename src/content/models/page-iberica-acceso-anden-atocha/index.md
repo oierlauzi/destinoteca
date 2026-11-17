@@ -19,7 +19,9 @@ manufacturers:
 operators:
   - ref: renfe-cercanias-madrid
     role: operator
-family: page-iberica-electromagneticos
+families:
+  - page-iberica-electromagneticos-cercanias-madrid
+  - page-iberica-electromagneticos-atocha-cercanias
 countries:
   - es
 status: in-service
@@ -52,7 +54,8 @@ stage: stub
 ---
 
 Es uno de los carteles de PAGE Ibérica que siguen en servicio en Atocha
-Cercanías, en la caja gris que comparten todos los de la estación. Anuncia el
+Cercanías, en la caja gris que comparten todos los de la
+[estación](../../familias/page-iberica-electromagneticos-atocha-cercanias/). Anuncia el
 próximo tren de un andén a quien va a entrar en él.
 
 Su línea flip-dot es una matriz continua iluminada por LED, como la del

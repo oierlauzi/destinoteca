@@ -21,7 +21,7 @@ const manufacturers = [
   ...new Map(sources.flatMap((source) => source.manufacturers).map((link) => [`${link.ref.id}/${link.role}`, { entry: catalog.manufacturer(link.ref.id), role: link.role }])).values(),
 ];
 const operators = [...new Map(sources.flatMap((source) => source.operators).map((link) => [`${link.ref.id}/${link.role}`, { entry: catalog.operator(link.ref.id), link }])).values()];
-const family = data.family ? catalog.family(data.family.id) : undefined;
+const families = data.families.map((ref) => catalog.family(ref.id));
 const span = (from?: number, to?: number) => (from || to ? ` (${from ?? '?'}–${to ?? ''})` : '');
 ---
 
@@ -75,11 +75,17 @@ const span = (from?: number, to?: number) => (from || to ? ` (${from ?? '?'}–$
     }
 
     {
-      family && (
+      families.length > 0 && (
         <>
-          <dt>{t('catalog.model.family')}</dt>
+          <dt>{t(families.length > 1 ? 'catalog.model.families' : 'catalog.model.family')}</dt>
           <dd>
-            <a href={href(`familias/${family.id}/`)}>{family.data.name}</a>
+            <ul class="plain">
+              {families.map((family) => (
+                <li>
+                  <a href={href(`familias/${family.id}/`)}>{family.data.name}</a>
+                </li>
+              ))}
+            </ul>
           </dd>
         </>
       )

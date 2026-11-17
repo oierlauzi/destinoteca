@@ -53,7 +53,7 @@ Lo que sepas, aunque sean dos líneas.
 ```
 
 Los valores admitidos en cada campo, y todos los campos opcionales
-(`manufacturers`, `operators`, `family`, `years`, `status`, `components`,
+(`manufacturers`, `operators`, `families`, `years`, `status`, `components`,
 `installations`, `variants`, `photos`, `references`, `replica`, `aliases`),
 están en [`src/content.config.ts`](src/content.config.ts) y en
 [`src/lib/catalog/vocab.ts`](src/lib/catalog/vocab.ts). La ficha

@@ -27,7 +27,10 @@ const { Content } = await render(model);
 
 const cover = catalog.cover(model);
 const social = cover ? (await getImage({ src: cover.src, width: Math.min(cover.src.width, 1200) })).src : undefined;
-const siblings = facts.family ? catalog.modelsWith('familia', facts.family).filter((other) => other.id !== model.id) : [];
+// One list per family it belongs to, each without this entry.
+const siblings = facts.families
+  .map((id) => ({ family: catalog.family(id), models: catalog.modelsWith('familia', id).filter((other) => other.id !== model.id) }))
+  .filter(({ models }) => models.length > 0);
 const elements = catalog.elementsOf(model);
 const partOf = catalog.compositionsWith(model);
 
@@ -197,12 +200,14 @@ const installations = data.installations.map((installation) => {
     }
 
     {
-      siblings.length > 0 && (
-        <section aria-labelledby="familia">
-          <h2 id="familia">{t('catalog.model.sameFamily')}</h2>
-          <ModelGrid models={siblings} />
+      siblings.map(({ family, models }) => (
+        <section aria-labelledby={`familia-${family.id}`}>
+          <h2 id={`familia-${family.id}`}>
+            {t('catalog.model.sameFamily')} <a href={href(`familias/${family.id}/`)}>{family.data.name}</a>
+          </h2>
+          <ModelGrid models={models} />
         </section>
-      )
+      ))
     }
   </div>
 </Base>

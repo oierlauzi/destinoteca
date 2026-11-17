@@ -1,0 +1,50 @@
+---
+// A family on a card: pictured by its cover entry (its replica if it has one,
+// else its photograph), with how many entries belong to it.
+import { Image } from 'astro:assets';
+import PlaceholderArt from './PlaceholderArt.astro';
+import { counted, getCatalog, type Family } from '@/site/catalog';
+import { hasPoster, posterHref } from '@/site/poster';
+import { href } from '@/site/url';
+
+interface Props {
+  family: Family;
+  /** Heading level of the card title, to fit the page outline. */
+  level?: 2 | 3 | 4;
+}
+
+const { family, level = 3 } = Astro.props;
+const catalog = await getCatalog();
+const members = catalog.modelsWith('familia', family.id);
+const pictured = family.data.cover ? catalog.model(family.data.cover.id) : (members.find(hasPoster) ?? members[0]);
+const poster = pictured && hasPoster(pictured) ? await posterHref(pictured) : undefined;
+const photo = !poster && pictured ? catalog.cover(pictured) : undefined;
+const Heading = `h${level}` as 'h3';
+---
+
+<li class="card">
+  <div class:list={['card-media', { 'is-replica': poster }]}>
+    {
+      poster ? (
+        <img src={poster} alt="" loading="lazy" decoding="async" />
+      ) : photo ? (
+        <Image src={photo.src} alt="" widths={[320, 640]} sizes="(min-width: 40rem) 20rem, 100vw" width={640} loading="lazy" />
+      ) : (
+        <PlaceholderArt seed={family.id} />
+      )
+    }
+  </div>
+  <div class="card-body">
+    <Heading class="card-title"><a href={href(`familias/${family.id}/`)}>{family.data.name}</a></Heading>
+    <p class="card-text">{family.data.summary}</p>
+    <p class="card-meta">{counted('catalog.count.models', members.length)}</p>
+  </div>
+</li>
+
+<style>
+  .card-meta {
+    margin: auto 0 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>

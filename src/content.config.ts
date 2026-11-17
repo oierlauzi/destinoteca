@@ -38,6 +38,20 @@ const settings = z.record(z.string(), z.union([z.string(), z.number(), z.boolean
 /** A date as precise as is known: YYYY, YYYY-MM or YYYY-MM-DD. Quoted in YAML. */
 const partialDate = z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/, { error: 'YYYY, YYYY-MM or YYYY-MM-DD, in quotes' });
 
+/** Bibliography: what an entry's facts come from. */
+const references = z
+  .array(
+    z.object({
+      title: z.string(),
+      author: z.string().optional(),
+      publication: z.string().optional(),
+      date: partialDate.optional(),
+      url: z.url().optional(),
+      note: z.string().optional(),
+    }),
+  )
+  .default([]);
+
 const models = defineCollection({
   loader: entries('models'),
   schema: ({ image }) =>
@@ -63,7 +77,8 @@ const models = defineCollection({
           }),
         )
         .default([]),
-      family: reference('families').optional(),
+      /** The families it belongs to; one can be in several (all of a network, and those of one station). */
+      families: z.array(reference('families')).default([]),
       /** Countries of use. Where it was made is the manufacturer's business. */
       countries: z.array(country).default([]),
       years: z.object({ from: year.optional(), to: year.optional(), circa: z.boolean().optional() }).optional(),
@@ -133,18 +148,7 @@ const models = defineCollection({
       /** Id of the photo used on cards. Defaults to the first. */
       cover: id.optional(),
       /** Bibliography. */
-      references: z
-        .array(
-          z.object({
-            title: z.string(),
-            author: z.string().optional(),
-            publication: z.string().optional(),
-            date: partialDate.optional(),
-            url: z.url().optional(),
-            note: z.string().optional(),
-          }),
-        )
-        .default([]),
+      references,
       replica: z
         .object({
           id: z.enum(REPLICA_IDS),
@@ -227,6 +231,10 @@ const families = defineCollection({
     name: z.string(),
     summary: z.string().max(300),
     manufacturers: z.array(reference('manufacturers')).default([]),
+    /** The member that pictures the family on cards: one of its own models. */
+    cover: reference('models').optional(),
+    /** Sources for what the family's article says of all its members. */
+    references,
     aliases: z.array(id).default([]),
   }),
 });

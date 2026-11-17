@@ -19,7 +19,8 @@ manufacturers:
 operators:
   - ref: renfe-cercanias-madrid
     role: operator
-family: page-iberica-electromagneticos
+families:
+  - page-iberica-electromagneticos-cercanias-madrid
 countries:
   - es
 status: retiring
@@ -117,9 +118,9 @@ Existe también una versión de
 | Fila de LED | Texto móvil debajo de las líneas, algo más ancha que ellas |
 
 Cada línea tiene 20 caracteres, cuatro más que la del cartel de andén. Por lo
-demás comparte su lenguaje: la caja negra, los rótulos fijos en blanco, los
-puntos flip-dot de 5 × 7 y la fila de LED roja. Es probable que también
-comparta piezas, empezando por los módulos de cada carácter, pero no se ha
+demás tiene el lenguaje de su
+[familia](../../familias/page-iberica-electromagneticos-cercanias-madrid/), y es probable que
+comparta con el cartel de andén los módulos de cada carácter, aunque no se ha
 comprobado en ninguna unidad.
 
 En el vídeo de Pinar de las Rozas, la fila de LED recorre un aviso que prohíbe
@@ -132,11 +133,10 @@ En ese aviso, «SEÑALES» aparece en la fila de LED como «SEQALES». Es
 probable que sea un problema de codificación: en la tabla de caracteres
 ISO 8859-1 (Latin-1), la Ñ es el byte `0xD1`, y
 si un enlace de 7 bits pierde el bit más significativo queda en `0x51`, que es
-la Q. El
-[cartel de andén](../page-iberica-anden-electromagnetico/#curiosidades) de la
-misma familia tiene un arreglo en su línea flip-dot para un problema parecido
-con su propia tabla de caracteres; la fila de LED de este panel, por lo que se
-ve, no lo tenía.
+la Q. Las líneas flip-dot de la
+[familia](../../familias/page-iberica-electromagneticos-cercanias-madrid/#curiosidades) tienen un
+arreglo para un problema parecido con su propia tabla de caracteres; la fila
+de LED de este panel, por lo que se ve, no lo tenía.
 
 Como los carteles de andén, estos paneles se han ido retirando, y es probable
 que ya no quede ninguno en servicio.

@@ -71,7 +71,7 @@ en estas estaciones, de las que no se conocen fotografías:
 
 El gran panel del vestíbulo de Atocha Cercanías, colgado sobre las
 taquillas y ya retirado. Reunía en una sola caja gris lo que en otras
-estaciones de la [familia](../familias/page-iberica-electromagneticos/)
+estaciones de la [familia](../familias/page-iberica-electromagneticos-cercanias-madrid/)
 ocupaba varios carteles:
 
 - **Cercanías**, a la izquierda: diez líneas flip-dot con la vía, el destino

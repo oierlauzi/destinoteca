@@ -14,12 +14,10 @@ transportModes:
 Cercanías Madrid es la red de trenes de cercanías de la Comunidad de Madrid,
 uno de los núcleos de Cercanías de [Renfe](../renfe/).
 
-A mediados de los años noventa sus andenes empezaron a recibir teleindicadores
-electromagnéticos que anunciaban el próximo tren y los minutos que faltaban
-para su llegada. Según la revista *Vía Libre*, en octubre de 1994 funcionaban
-ya, como instalación piloto, en la línea C-5 entre Embajadores y
-Móstoles-El Soto, y en marzo de 1997 el sistema estaba instalado en las líneas
-C-5, C-8 y C-10 y se estaba extendiendo a la C-4 y la C-1.
+Desde 1994 sus estaciones recibieron los
+[teleindicadores electromagnéticos de PAGE Ibérica](../../familias/page-iberica-electromagneticos-cercanias-madrid/),
+que anunciaban el próximo tren y los minutos que faltaban para su llegada;
+Atocha Cercanías tiene los [suyos propios](../../familias/page-iberica-electromagneticos-atocha-cercanias/).
 
 Antes, los andenes de Atocha Cercanías tenían
 [teleindicadores de cristal líquido de Ikusi](../../catalogo/ikusi-anden-atocha/).

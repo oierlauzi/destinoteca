@@ -27,6 +27,7 @@ function model(overrides: Partial<ModelFacts> = {}): ModelFacts {
     manufacturers: ['acme'],
     manufacturerUnknown: false,
     operators: ['renfe'],
+    families: [],
     countries: ['es'],
     years: { from: 1996 },
     status: 'retiring',
@@ -61,7 +62,7 @@ describe('decades and years', () => {
 describe('facets', () => {
   const models = [
     model(),
-    model({ id: 'other', technologies: ['led', 'flip-dot'], countries: ['pt'], hasReplica: true, family: 'fam' }),
+    model({ id: 'other', technologies: ['led', 'flip-dot'], countries: ['pt'], hasReplica: true, families: ['fam'] }),
   ];
 
   it('have unique ids, since those are query-string keys', () => {

@@ -5,5 +5,5 @@ export const ENTITY_PAGES: Record<CollectionName, { segment: string; facet: stri
   manufacturers: { segment: 'fabricantes', facet: 'fabricante', strings: 'catalog.manufacturers', hasIndex: true },
   operators: { segment: 'operadores', facet: 'operador', strings: 'catalog.operators', hasIndex: true },
   technologies: { segment: 'tecnologias', facet: 'tecnologia', strings: 'catalog.technologies', hasIndex: true },
-  families: { segment: 'familias', facet: 'familia', strings: 'catalog.families', hasIndex: false },
+  families: { segment: 'familias', facet: 'familia', strings: 'catalog.families', hasIndex: true },
 };

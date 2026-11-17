@@ -19,7 +19,9 @@ manufacturers:
 operators:
   - ref: renfe-cercanias-madrid
     role: operator
-family: page-iberica-electromagneticos
+families:
+  - page-iberica-electromagneticos-cercanias-madrid
+  - page-iberica-electromagneticos-atocha-cercanias
 countries:
   - es
 status: in-service
@@ -74,7 +76,8 @@ stage: stub
 ---
 
 Es el cartel de andén de Atocha Cercanías que sigue en servicio, en la caja
-gris que comparten todos los de la estación. Cuelga de pórticos sobre los
+gris que comparten todos los de la
+[estación](../../familias/page-iberica-electromagneticos-atocha-cercanias/). Cuelga de pórticos sobre los
 andenes, de dos en dos y con un reloj entre ellos.
 
 Sustituyó a los [carteles de cristal líquido de Ikusi](../ikusi-anden-atocha/),
@@ -91,17 +94,8 @@ Tiene dos pantallas:
   fotografías. Tiene sitio para dos líneas de texto: la primera dice qué
   anuncia la segunda, y la segunda recorre las paradas.
 
-## La tipografía de la línea flip-dot
-
-Los trazos son de un punto, y la mayoría de las mayúsculas tienen 5 de ancho,
-la I tres y la L y la E cuatro, con una columna en blanco entre letras. Para
-«min» hay minúsculas que empiezan en la tercera fila, a la altura del punto de
-arriba de los dos puntos. La O y el 0 son iguales.
-
-Se han copiado punto por punto de las fotografías las letras A, C, E, I, L,
-N, O, P, R, S y V, los dígitos 0, 3, 4, 5 y 7, el punto, el guion, los dos
-puntos y la m, la i y la n; de fotografías de menos resolución, la D, la G,
-la J, la M, la T, la U y la barra. El resto se ha dibujado en el mismo estilo.
+La tipografía de la línea es la de todos los carteles de la estación, y se
+describe en su [familia](../../familias/page-iberica-electromagneticos-atocha-cercanias/#la-tipografía-de-las-líneas-flip-dot).
 
 ## El panel LED
 

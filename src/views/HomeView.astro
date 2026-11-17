@@ -1,4 +1,5 @@
 ---
+import FamilyCard from '@/components/FamilyCard.astro';
 import ModelGrid from '@/components/ModelGrid.astro';
 import { t } from '@/i18n';
 import Base from '@/layouts/Base.astro';
@@ -12,7 +13,12 @@ interface Props {
 
 const catalog = await getCatalog();
 const withReplica = catalog.modelsWith('replica', 'si');
-const withoutReplica = catalog.models.filter((model) => !withReplica.includes(model));
+// Families first: each tells the story its entries share. Then whatever
+// belongs to none, those with a replica ahead.
+const families = catalog.families;
+const loose = catalog.models
+  .filter((model) => model.data.families.length === 0)
+  .sort((a, b) => Number(withReplica.includes(b)) - Number(withReplica.includes(a)));
 const photos = catalog.models.reduce((sum, model) => sum + model.data.photos.length, 0);
 
 // Every axis is a way in. A value with a page of its own links there; the
@@ -40,6 +46,7 @@ const axes = FACETS.filter((facet) => facet.id !== 'replica')
       <p class="counts muted">
         {
           [
+            counted('catalog.count.families', families.length),
             counted('catalog.count.models', catalog.models.length),
             counted('catalog.count.replicas', withReplica.length),
             counted('catalog.count.photos', photos),
@@ -51,20 +58,25 @@ const axes = FACETS.filter((facet) => facet.id !== 'replica')
 
   <div class="container page">
     {
-      withReplica.length > 0 && (
-        <section aria-labelledby="con-replica">
-          <h2 id="con-replica">{t('catalog.home.replicas')}</h2>
-          <p class="muted intro">{t('catalog.home.replicasLead')}</p>
-          <ModelGrid models={withReplica} />
+      families.length > 0 && (
+        <section aria-labelledby="familias">
+          <h2 id="familias">{t('catalog.home.families')}</h2>
+          <p class="muted intro">{t('catalog.home.familiesLead')}</p>
+          <ul class="card-grid">
+            {families.map((family) => (
+              <FamilyCard family={family} />
+            ))}
+          </ul>
         </section>
       )
     }
 
     {
-      withoutReplica.length > 0 && (
-        <section aria-labelledby="en-el-catalogo">
-          <h2 id="en-el-catalogo">{t('catalog.home.recent')}</h2>
-          <ModelGrid models={withoutReplica} />
+      loose.length > 0 && (
+        <section aria-labelledby="otras-fichas">
+          <h2 id="otras-fichas">{t('catalog.home.others')}</h2>
+          <p class="muted intro">{t('catalog.home.othersLead')}</p>
+          <ModelGrid models={loose} />
         </section>
       )
     }

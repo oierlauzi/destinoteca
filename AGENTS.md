@@ -44,6 +44,10 @@ byte for byte the same; compare their `renderToString` output before and after.
   réplica") or listing components.
 - **Manufacturer pages** describe the company, not its products; the products
   are the entries that link to it.
+- **Families** tell what their members share (history, installation, how the
+  system worked, curiosities); an entry tells only what is its own. An entry
+  can belong to several families (`families:`), such as a city's network and
+  one station's signs.
 - Entry ids are permanent. To rename, move the folder and keep the old id in
   `aliases`.
 - Equipment found in a source but not ready for an entry (unknown place,

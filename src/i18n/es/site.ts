@@ -5,6 +5,7 @@ export const site: Record<string, string> = {
     'Un archivo para documentar y preservar los teleindicadores, paneles de salidas y relojes de estación: su historia, sus fotografías y réplicas interactivas.',
   'site.skip': 'Saltar al contenido',
   'site.nav.catalog': 'Archivo',
+  'site.nav.families': 'Familias',
   'site.nav.manufacturers': 'Fabricantes',
   'site.nav.operators': 'Operadores',
   'site.nav.technologies': 'Tecnologías',

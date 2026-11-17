@@ -22,7 +22,8 @@ manufacturers:
 operators:
   - ref: renfe-cercanias-madrid
     role: operator
-family: page-iberica-electromagneticos
+families:
+  - page-iberica-electromagneticos-cercanias-madrid
 countries:
   - es
 status: retiring
@@ -299,18 +300,10 @@ references:
     date: '2026'
     url: https://github.com/oierlauzi/renfe-flipdot-re
     note: Descripción del equipo, del firmware y del panel a partir de una unidad recuperada. Fuente principal de esta ficha.
-  - title: Cercanías
-    publication: Vía Libre
-    date: '1994-10'
-    note: Breve sobre la instalación piloto de PAGE Ibérica en los andenes de la línea C-5, entre Embajadores y Móstoles-El Soto.
-  - title: Un sistema de información basado en teleindicadores
-    publication: Vía Libre
-    date: '1996-12'
-    note: Recuadro sobre los teleindicadores del Pasillo Verde, sin nombre de fabricante.
   - title: Teleindicadores de andén electromagnéticos
     publication: Vía Libre
     date: '1997-03'
-    note: Apartado de un reportaje sobre la información al viajero en Cercanías, con declaraciones de José María Navarro, de PAGE Ibérica. El mismo dossier da los nueve minutos con que aparece el tren en el cartel.
+    note: Apartado de un reportaje sobre la información al viajero en Cercanías, con la descripción del cartel por José María Navarro, de PAGE Ibérica.
 replica:
   id: page-iberica-anden-electromagnetico
   poster:
@@ -321,19 +314,28 @@ replica:
 stage: article
 ---
 
-Durante treinta años, quien esperaba un tren en muchas estaciones de Cercanías
-de Madrid miraba hacia este cartel: una caja negra colgada sobre el andén que
-decía, en puntos amarillos, adónde iba el próximo tren y cuántos minutos
-faltaban. Se instalaron desde mediados de los años noventa y se están
-retirando a medida que se reforman las estaciones.
+Es el cartel de andén más extendido de los
+[teleindicadores electromagnéticos de PAGE Ibérica para Renfe Cercanías Madrid](../../familias/page-iberica-electromagneticos-cercanias-madrid/):
+una caja negra colgada sobre el andén, con el destino del próximo tren y los
+minutos que faltan en una línea flip-dot de 16 caracteres y sus paradas en una
+fila de LED debajo. La fotografía más antigua que se conoce es de 1994, en
+Embajadores, el año de la instalación piloto de la línea C-5.
 
-Más tarde se instaló una [versión con matriz continua](../page-iberica-anden-continuo/)
-en la misma caja. Hubo también una
-[versión sin fila de LED](../page-iberica-anden-sin-led/), con solo la línea
-flip-dot, y otra [de dos vías](../page-iberica-anden-dos-vias/), con dos
-carteles en una misma caja.
+De él salieron otros carteles de la familia: una
+[versión con matriz continua](../page-iberica-anden-continuo/) en la misma
+caja, una [sin fila de LED](../page-iberica-anden-sin-led/) y otra
+[de dos vías](../page-iberica-anden-dos-vias/), con dos carteles en una caja.
 
 ## Qué muestra
+
+En marzo de 1997, José María Navarro, de PAGE Ibérica, lo describía así en
+*Vía Libre*:
+
+> En los andenes anuncia en un panel, con una línea de excitación
+> electromagnética, qué tren va a llegar y cuántos minutos falta para su
+> detención en la parada, y en otra línea de texto móvil, de diodos,
+> información sobre las estaciones sucesivas donde el tren va a tener las
+> siguientes paradas.
 
 El cartel es un conjunto de varias piezas, cada una con su papel:
 
@@ -347,12 +349,8 @@ El cartel es un conjunto de varias piezas, cada una con su papel:
 
 Como «min.» es un rótulo fijo y no está dibujado con puntos, la línea se
 compone con el destino a la izquierda y la cifra empujada al extremo derecho.
-Es una convención de quien enviaba el texto, no algo que el cartel sepa.
-
-El cartel, de hecho, no calcula nada. No formatea números ni lleva la cuenta
-atrás: la línea completa de 16 caracteres le llegaba ya hecha desde un equipo
-situado aguas arriba, que volvía a enviarla cada vez que cambiaba el minuto.
-La comunicación con el cartel es un enlace serie RS-422.
+Es una convención de quien enviaba el texto, no algo que el cartel sepa: la
+línea completa de 16 caracteres le llega ya hecha.
 
 ## La línea flip-dot: PI-T100-M
 
@@ -366,119 +364,35 @@ texto flip-dot que lleva dentro. Así lo dice la etiqueta de su chasis:
 | Función | MAESTRA |
 | Descripción | «1 línea de texto. Módulos de PLACA MÓVIL de 100 mm» |
 
-«Placa móvil» es el nombre que da la etiqueta a la tecnología
-[flip-dot](../../tecnologias/flip-dot/). La línea tiene 16 caracteres; cada
-uno es un módulo independiente de 5 puntos de ancho por 7 de alto y 100 mm de
-altura, lo que suma 560 puntos. Los módulos van montados por parejas en ocho
-placas portadoras.
+La línea tiene 16 caracteres de 5 × 7 puntos, 560 en total, con los módulos
+montados por parejas en ocho placas portadoras. Su electrónica y su panel son
+de Telenorma, como se cuenta en la
+[familia](../../familias/page-iberica-electromagneticos-cercanias-madrid/#quién-los-hizo).
 
-Al cambiar el texto solo se redibujan los caracteres que han cambiado.
+La EPROM de la unidad estudiada lleva una pegatina que dice
+`TELENORMA 18 JUN 96`: su firmware se grabó el 18 de junio de 1996. El resto
+de marcas de la unidad coincide en una fabricación de mediados de los
+noventa.
 
-## Quién lo fabricó
+## Montaje
 
-[PAGE Ibérica](../../fabricantes/page-iberica/) firmaba el cartel, pero no lo
-construyó entero. La electrónica y el panel flip-dot son de
-[Telenorma](../../fabricantes/telenorma/), la empresa alemana heredera de
-*Telefonbau und Normalzeit*, de Fráncfort: su logotipo está en la placa base y
-en las placas portadoras del panel, y su etiqueta en la memoria EPROM. PAGE
-Ibérica los integró en un cartel: la caja, el tubo fluorescente y la placa
-exterior. Esa placa dice «FABRICADO», lo que encaja tanto con una fabricación
-bajo licencia como con un montaje alrededor de piezas compradas.
-
-El firmware apunta en la misma dirección. No es un programa hecho a medida para
-RENFE, sino un terminal de visualización genérico, capaz de gobernar trece
-tipos de panel distintos, que se eligen con unos interruptores.
-
-La EPROM lleva una pegatina que dice `TELENORMA 18 JUN 96`: el firmware de la
-unidad estudiada se grabó el 18 de junio de 1996. El resto de marcas de la
-unidad coincide en una fabricación de mediados de los noventa.
-
-## Dónde se instaló
-
-La primera noticia es de octubre de 1994. *Vía Libre* contaba entonces que
-los viajeros de la línea C-5 veían ya, en paneles teleindicadores instalados
-en los andenes de las estaciones entre Embajadores y Móstoles-El Soto,
-cuántos minutos faltaban para el próximo tren, su destino y sus paradas. El
-centro de control de tráfico centralizado procesaba los datos de la
-circulación y enviaba a cada andén lo que le correspondía; el corazón del
-sistema estaba en la sala de pantallas de Madrid-Atocha. La revista lo
-presentaba como una instalación piloto de Cercanías, desarrollada, instalada
-y puesta a punto por PAGE Ibérica. Del mismo año es la fotografía más antigua
-que se conoce del cartel: uno colgado sobre la vía 1 de Embajadores, en un
-extremo de ese tramo.
-
-En marzo de 1997 la revista *Vía Libre* dedicó un reportaje a la información
-al viajero en Cercanías, con un apartado titulado «Teleindicadores de andén
-electromagnéticos». En él José María Navarro, de PAGE Ibérica, describe el
-cartel:
-
-> En los andenes anuncia en un panel, con una línea de excitación
-> electromagnética, qué tren va a llegar y cuántos minutos falta para su
-> detención en la parada, y en otra línea de texto móvil, de diodos,
-> información sobre las estaciones sucesivas donde el tren va a tener las
-> siguientes paradas.
-
-Según ese reportaje, el sistema de PAGE Ibérica estaba instalado en las líneas
-C-5 (Móstoles, Atocha, Fuenlabrada), C-8 (Atocha, Villalba) y C-10 (Villalba,
-Príncipe Pío, Atocha, Chamartín), y se estaba instalando en la C-4 (Atocha,
-Parla) y la C-1 (Tres Cantos, Atocha, Alcalá de Henares). El tren aparecía en
-el cartel cuando faltaban nueve minutos para su llegada, y la megafonía
-automática lo anunciaba cuando faltaba uno.
-Era un sistema de Madrid: en otras ciudades los suministradores eran otros,
-como AEG-Matra en Málaga y Valencia, Electrans en Barcelona o Ikusi en Bilbao.
-
-El mismo reportaje cuenta de dónde salían los datos. Venían del control de
-tráfico centralizado; si ese enlace fallaba, el sistema podía gobernarse desde
-el centro de control de Cercanías o desde el ordenador instalado en cada
-estación. Los enlaces iban por cuadretes telefónicos y fibra óptica, y todos
-los componentes se describían como comerciales, comprados en el mercado para
-facilitar el mantenimiento.
-
-Delicias y Méndez Álvaro, dos de las estaciones donde se han fotografiado,
-se abrieron con el Pasillo Verde en 1996. En diciembre de ese año *Vía Libre*
-describía el sistema de teleindicadores del Pasillo Verde, con los minutos
-que faltaban, el destino y las paradas, como un sistema «que ya funcionaba en
-las líneas C-5 y C-4». No nombra a su fabricante.
-
-El montaje variaba según la estación: bajo la marquesina o sobre un poste. El
-número de vía era un vinilo que no todas las estaciones recibieron, y algunos
-carteles pasaron toda su vida útil diciendo «Vía» y nada más.
-
-## Curiosidades
-
-**Los corazones.** Hacia el final los carteles fallaban a menudo, sobre todo en
-las comunicaciones: caracteres perdidos o equivocados eran una imagen corriente
-en el andén. Un fallo era especialmente reconocible: un corazón en mitad del
-destino. El juego de caracteres del cartel tiene un corazón en la posición
-`0x03`, y `0x03` es también el byte con el que el firmware marca el final del
-mensaje.
-
-**La eñe duplicada.** El juego de caracteres es el CP437 de los primeros PC,
-con un cambio pensado para enlaces serie de 7 bits. En CP437 la `ñ` y la `Ñ`
-están en las posiciones `0xA4` y `0xA5`. Un enlace de 7 bits no transmite el
-bit más significativo, así que esos dos códigos llegan convertidos en `0x24` y
-`0x25`, que en CP437 son `$` y `%`. Para que la eñe se lea bien también en ese
-caso, el cartel tiene dibujadas una `ñ` y una `Ñ` en esas dos posiciones, en
-lugar de `$` y `%`, además de las que ya tiene en su sitio.
-
-**El último mensaje.** Los puntos flip-dot son mecánicos y conservan su
-posición sin corriente. Un cartel desmontado sigue mostrando el último destino
-que recibió, como el de Aravaca de la fotografía.
-
-**Legible de día.** La línea flip-dot se lee con luz natural sin iluminación
-propia. El tubo fluorescente, que solo la alumbra a ella, es una luz de lectura
-para la noche.
+El montaje variaba según la estación: bajo la marquesina o sobre un poste, y
+en El Goloso y Tres Cantos por parejas, una por vía, con un reloj entre
+ambos. El número de vía era un vinilo que no todas las estaciones
+recibieron, y algunos carteles pasaron toda su vida útil diciendo «Vía» y
+nada más. Algunos, como el de Cercedilla, dicen «Próximo tren» en lugar de
+«Próxima Llegada».
 
 ## Retirada
 
-Los carteles se desmontan a medida que se reforman las estaciones. El de Pitis
-seguía en su sitio en 2026, pocos meses antes de su retirada; en junio de ese
-año se fotografió otro ya desmontado en el andén de Aravaca. A noviembre de
-2026, los únicos que se sabe que siguen en servicio están en Méndez Álvaro, en
-la línea C-5.
+El de Pitis seguía en su sitio en 2026, pocos meses antes de su retirada; en
+junio de ese año se fotografió otro ya desmontado en el andén de Aravaca, que
+seguía mostrando el último destino que recibió. A noviembre de 2026, los
+únicos que se sabe que siguen en servicio están en Méndez Álvaro, en la línea
+C-5.
 
 Una unidad de la línea PI-T100-M se ha recuperado y documentado en el proyecto
 [renfe-flipdot-re](https://github.com/oierlauzi/renfe-flipdot-re), que describe
 su electrónica, su firmware y el protocolo con el que se le envía texto por su
-enlace RS-422.
-De su memoria salen los caracteres que usa la réplica de esta página.
+enlace RS-422. De su memoria salen los caracteres que usa la réplica de esta
+página.

@@ -169,7 +169,7 @@ export class Catalog {
       manufacturers: [...new Set(sources.flatMap((source) => source.manufacturers.map((link) => link.ref.id)))],
       manufacturerUnknown: data.manufacturerUnknown,
       operators: [...operators],
-      family: data.family?.id,
+      families: data.families.map((ref) => ref.id),
       countries: [...countries],
       years: data.years,
       status: data.status,
@@ -317,6 +317,12 @@ export class Catalog {
     // References between the grouping collections.
     for (const family of this.families) {
       for (const ref of family.data.manufacturers) check(`families/${family.id}`, this.manufacturers, ref, 'manufacturer');
+      const cover = family.data.cover;
+      if (cover) {
+        const model = this.models.find((entry) => entry.id === cover.id);
+        if (!model) report(`families/${family.id}`, `its cover "${cover.id}" is not an entry`);
+        else if (!model.data.families.some((ref) => ref.id === family.id)) report(`families/${family.id}`, `its cover "${cover.id}" is not one of its members`);
+      }
     }
     for (const operator of this.operators) {
       check(`operators/${operator.id}`, this.operators, operator.data.parent, 'operator');
@@ -347,7 +353,7 @@ export class Catalog {
       for (const link of data.operators) check(where, this.operators, link.ref, 'operator');
       for (const component of data.components) check(where, this.manufacturers, component.manufacturer, 'manufacturer');
       for (const installation of data.installations) check(where, this.sites, installation.site, 'site');
-      check(where, this.families, data.family, 'family');
+      for (const ref of data.families) check(where, this.families, ref, 'family');
       if (data.replica && !isReplicaId(data.replica.id)) report(where, `replica "${data.replica.id}" does not exist`);
       if (data.replica && !getReplica(data.replica.id)) report(where, `replica "${data.replica.id}" is not registered`);
       this.checkComposition(model, report);

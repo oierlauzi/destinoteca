@@ -18,7 +18,8 @@ manufacturers:
 operators:
   - ref: adif
     role: owner
-family: mp-electronics-adif
+families:
+  - mp-electronics-adif
 countries:
   - es
 status: in-service

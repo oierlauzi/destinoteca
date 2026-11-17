@@ -64,9 +64,10 @@ export const FACETS: Facet[] = [
   {
     id: 'familia',
     label: 'catalog.facet.family',
-    values: (m) => (m.family ? [m.family] : []),
+    values: (m) => m.families,
     names: { from: 'collection', collection: 'families' },
     route: (value) => `familias/${value}/`,
+    index: 'familias/',
   },
   {
     id: 'pais',
