@@ -46,6 +46,10 @@ byte for byte the same; compare their `renderToString` output before and after.
   are the entries that link to it.
 - Entry ids are permanent. To rename, move the folder and keep the old id in
   `aliases`.
+- Equipment found in a source but not ready for an entry (unknown place,
+  photos too poor, credit missing) goes in the public page
+  `src/texts/es/pendientes.md` («Por documentar»), with links and what is
+  missing, so readers can fill the gaps. Move it out when it gets an entry.
 
 ## Photographs
 

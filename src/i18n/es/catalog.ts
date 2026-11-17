@@ -159,4 +159,5 @@ export const catalog: Record<string, string> = {
   // About
   'catalog.about.title': 'Acerca de destinoteca',
   'catalog.contribute.title': 'Cómo contribuir',
+  'catalog.backlog.title': 'Por documentar',
 };

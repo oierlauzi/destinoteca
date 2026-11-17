@@ -10,6 +10,9 @@ cualquiera puede proponer cambios. No hace falta saber programar.
   una fotografía y dos líneas ya es útil.
 - **Una réplica**, si programas.
 
+En [Por documentar](../pendientes/) hay equipos de los que se sabe algo pero
+todavía no tienen ficha, cada uno con lo que le falta.
+
 ## La forma más sencilla: abrir una incidencia
 
 Los formularios de GitHub preguntan lo necesario en cada caso:
