@@ -33,6 +33,8 @@ export function buildSnapshot(config: Values, now: number, start: number, anchor
     const delay = typeof row.delay === 'number' && Number.isFinite(row.delay) ? row.delay : undefined;
     const event =
       at === undefined ? undefined : delay === undefined ? { scheduled: at } : { scheduled: at - delay * 60000, estimated: at };
+    let arrivalAt = row.arr ? atTimeOfDay(now, row.arr, DEFAULT_TIME_ZONE) : undefined;
+    if (arrivalAt !== undefined && !anchored && arrivalAt < now - 60000) arrivalAt += DAY;
     const state = row.state ?? '';
     const portions = (row.split ?? []).filter((part) => part.dest?.trim());
     const service: Service = {
@@ -49,6 +51,7 @@ export function buildSnapshot(config: Values, now: number, start: number, anchor
       remarks: row.note ? [row.note] : undefined,
       here: {
         activity: state === 'passes' || state === 'terminus' || state === 'origin' ? state : 'calls',
+        arrival: arrivalAt === undefined ? undefined : { scheduled: arrivalAt },
         departure: event,
         platform: row.via ? { name: row.via, confirmed: row.conf !== false } : undefined,
       },

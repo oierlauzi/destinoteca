@@ -13,6 +13,8 @@ export interface ManualRow {
   min?: number;
   /** Or the time it leaves, "HH:MM" station time. Wins over `min`. */
   time?: string;
+  /** The time it arrives, "HH:MM" station time, for boards that show arrivals. */
+  arr?: string;
   /** Platform. */
   via?: string;
   /** False while the platform is only expected. */
@@ -42,9 +44,9 @@ export interface ManualRow {
 }
 
 export const EXAMPLE_ROWS: ManualRow[] = [
-  { dest: 'Chamartín', min: 6, via: '1', line: 'C-1', color: '#4fb0e5', num: '23545', prod: 'Cercanías', op: 'Renfe', stops: 'Nuevos Ministerios, Recoletos, Atocha' },
-  { dest: 'Príncipe Pío', min: 11, via: '1', line: 'C-10', color: '#bccf00', prod: 'Cercanías', op: 'Renfe', stops: 'Pitis, Las Rozas' },
-  { dest: 'Villalba', min: 18, via: '2', line: 'C-8', color: '#00a34b', prod: 'Cercanías', op: 'Renfe' },
+  { dest: 'Chamartín', min: 6, via: '1', line: 'C-1', color: '#4fb0e5', num: '23545', prod: 'Cercanías', op: 'Renfe', origin: 'Aeropuerto T4', stops: 'Nuevos Ministerios, Recoletos, Atocha' },
+  { dest: 'Príncipe Pío', min: 11, via: '1', line: 'C-10', color: '#bccf00', prod: 'Cercanías', op: 'Renfe', origin: 'Villalba', stops: 'Pitis, Las Rozas' },
+  { dest: 'Villalba', min: 18, via: '2', line: 'C-8', color: '#00a34b', prod: 'Cercanías', op: 'Renfe', origin: 'Atocha' },
 ];
 
 export const manualConfig: ParamSchema = {

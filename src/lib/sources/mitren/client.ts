@@ -30,7 +30,7 @@
  */
 import type { BoardSnapshot, Call, Place, Service } from '../../model';
 import type { Needs, SourceEnv, SourceHandlers, SourceInstance } from '../types';
-import { mapArrivals, mitrenExt, remainingStops, type MitrenArrivals, type MitrenTrain } from './map';
+import { firstStop, mapArrivals, mitrenExt, remainingStops, type MitrenArrivals, type MitrenTrain } from './map';
 import { DEFAULT_NETWORK, findStation, networkForCode, stationPlace, TIME_ZONE, type Station } from './stations';
 
 export const MITREN_WS = 'wss://mitren.app/api/ws/trains/';
@@ -119,6 +119,7 @@ export class MitrenSession implements SourceInstance {
   private holding = false;
   private sendSubscriptions: ((ids: string[]) => void) | undefined;
   private readonly callsByTrain = new Map<string, Call[]>();
+  private readonly originByTrain = new Map<string, Place>();
   private readonly trainState = new Map<string, TrainState>();
   private lastIssue: string | undefined;
   /** The last mapped board, before calls are laid on. */
@@ -232,6 +233,7 @@ export class MitrenSession implements SourceInstance {
       }, SUBSCRIBE_GAP_MS);
     }
     for (const id of [...this.callsByTrain.keys()]) if (!ids.includes(id)) this.callsByTrain.delete(id);
+    for (const id of [...this.originByTrain.keys()]) if (!ids.includes(id)) this.originByTrain.delete(id);
     for (const id of [...this.trainState.keys()]) if (!ids.includes(id)) this.trainState.delete(id);
     for (const id of ids) if (!this.trainState.has(id)) this.trainState.set(id, 'waiting');
     this.sendSubscriptions(ids);
@@ -242,7 +244,9 @@ export class MitrenSession implements SourceInstance {
     const services = this.board.map((service) => {
       const train = mitrenExt(service)?.technicalId;
       const calls = train ? this.callsByTrain.get(train) : undefined;
-      return calls ? { ...service, callsAfter: calls } : service;
+      const origin = train ? this.originByTrain.get(train) : undefined;
+      if (!calls && !origin) return service;
+      return { ...service, ...(calls ? { callsAfter: calls } : {}), ...(origin ? { origin } : {}) };
     });
     const snapshot: BoardSnapshot = {
       kind: 'board',
@@ -337,6 +341,10 @@ export class MitrenSession implements SourceInstance {
           const calls = remainingStops(data, this.station, this.network);
           if (calls) this.callsByTrain.set(id, calls);
           else this.callsByTrain.delete(id);
+          // The train's list of stops also says where it started.
+          const origin = firstStop(data, this.station, this.network);
+          if (origin) this.originByTrain.set(id, origin);
+          else this.originByTrain.delete(id);
           this.trainState.set(id, !calls ? 'nomatch' : calls.length ? 'stops' : 'empty');
           if (!calls) {
             const list = data && Array.isArray(data.stops) ? data.stops : [];

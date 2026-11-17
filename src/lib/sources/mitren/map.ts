@@ -169,6 +169,14 @@ function stopPlace(stop: MitrenStop, network: string): Place | undefined {
   return place;
 }
 
+/** Where a train started: the first stop of a train_update's list, unless that is `station` itself. */
+export function firstStop(data: MitrenTrain | null | undefined, station: string, network: string): Place | undefined {
+  const stops = data && Array.isArray(data.stops) ? data.stops : [];
+  const first = stops.find((stop): stop is MitrenStop => !!stop);
+  if (!first || String(first.station_id) === station || String(first.stop_id) === station) return undefined;
+  return stopPlace(first, network);
+}
+
 /**
  * The calls a train still has to make after `station`, from a train_update's
  * `data.stops`. Skipped and cancelled stops are left out. Null when the

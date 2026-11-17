@@ -61,3 +61,34 @@ describe('Solari split-flap boards', () => {
     expect(fromFlat('cercanias', toFlat(frame))).toEqual(frame);
   });
 });
+
+describe('where Cercanías trains come from', () => {
+  it('comes with the simulated trains, with their arrival', async () => {
+    const { buildBoard } = await import('../src/lib/sources/demo/index');
+    const services = buildBoard(4, NOW);
+    const through = services.filter((service) => service.here?.activity === 'calls');
+    expect(through.length).toBeGreaterThan(0);
+    for (const service of through) {
+      expect(service.origin?.name).toBeTruthy();
+      expect(service.here?.arrival?.scheduled).toBeLessThan(service.here!.departure!.scheduled!);
+    }
+    const rows = present('cercanias', view(through), {}).rows;
+    expect(rows[0]!.o).not.toBe('');
+    expect(rows[0]!.a).toMatch(/^\d\d\.\d\d$/);
+  });
+
+  it('can be typed by hand, with the arrival time', async () => {
+    const { buildSnapshot } = await import('../src/lib/sources/manual');
+    const snapshot = buildSnapshot({ services: [{ dest: 'Atocha', origin: 'Ávila', arr: '15:52', time: '15:53' }] }, NOW, NOW, true);
+    const rows = present('cercanias', view(snapshot.services), {}).rows;
+    expect(rows[0]).toMatchObject({ o: 'AVILA', a: '15.52', d: 'ATOCHA', s: '15.53' });
+  });
+
+  it("is the first stop of a live train's list, unless the train starts here", async () => {
+    const { firstStop } = await import('../src/lib/sources/mitren/map');
+    const data = { stops: [{ station_id: '10000', name: 'Atocha Cercanías' }, { station_id: '17000', name: 'Chamartín' }] };
+    expect(firstStop(data, '17000', '10')?.name).toBe('Atocha Cercanías');
+    expect(firstStop(data, '10000', '10')).toBeUndefined();
+    expect(solariCercanias.needs.calls).toBe(true);
+  });
+});

@@ -32,6 +32,7 @@ const MORE: Column[] = [
   { key: 'prod', width: 10, placeholder: 'Cercanías' },
   { key: 'op', width: 10, placeholder: 'Renfe' },
   { key: 'origin', width: 14 },
+  { key: 'arr', width: 5, placeholder: 'HH:MM' },
   { key: 'delay', kind: 'number', width: 4 },
   { key: 'state', kind: 'select', choices: ['', 'cancelled', 'passes', 'terminus', 'origin'] },
   { key: 'conf', kind: 'check' },

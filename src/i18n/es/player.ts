@@ -87,6 +87,7 @@ export const player: Record<string, string> = {
   'manual.row.prod': 'Servicio',
   'manual.row.op': 'Operador',
   'manual.row.origin': 'Origen',
+  'manual.row.arr': 'Llegada',
   'manual.row.delay': 'Retraso',
   'manual.row.state': 'Estado',
   'manual.row.state.none': 'Circula',

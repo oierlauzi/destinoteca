@@ -55,11 +55,14 @@ export function buildBoard(seed: number, now: number): Service[] {
       product: { id: 'cercanias', name: 'Cercanías', shortName: 'CERC', category: 'commuter' },
       line: { name: run.line, color: run.color },
       number: String(10000 + ((seed + i * 137) % 89999)),
+      // Through trains come from the other end of their line; one in a while starts here.
+      origin: (seed + i) % 5 === 0 ? undefined : place(RUNS[(pick + 6) % RUNS.length]!),
       destination: place(run),
       callsAfter: [1, 2, 3].map((k) => ({ place: place(RUNS[(pick + k * 3) % RUNS.length]!) })),
       status: late ? 'delayed' : 'on-time',
       here: {
-        activity: 'calls',
+        activity: (seed + i) % 5 === 0 ? 'origin' : 'calls',
+        arrival: (seed + i) % 5 === 0 ? undefined : { scheduled: at - 60000 - late * 60000, estimated: at - 60000 },
         departure: { scheduled: at - late * 60000, estimated: at },
         // The last trains on the board have no platform yet, as on a real one.
         platform: { name: PLATFORMS[(seed + i) % PLATFORMS.length]!, confirmed: i < 4 },
