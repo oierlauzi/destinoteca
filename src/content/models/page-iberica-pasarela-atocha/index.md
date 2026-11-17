@@ -3,7 +3,7 @@ name: Panel electromagnético de PAGE Ibérica, Pasarela de Atocha Cercanías
 summary: >-
   El panel de la pasarela sobre las vías de Atocha Cercanías: dos pantallas
   flip-dot iluminadas por LED, lado a lado, de cinco líneas cada una con vía,
-  destino y minutos. Caja gris.
+  destino y minutos, y una franja roja bajo las dos. Caja metálica gris.
 kind: departure-board
 technologies:
   - flip-dot
@@ -27,6 +27,16 @@ installations:
     status: in-service
     note: En la pasarela sobre las vías.
 photos:
+  - id: pasarela-atocha
+    src: ./pasarela-atocha.jpg
+    alt: >-
+      El panel de la pasarela en una pared de hormigón: dos pantallas de
+      letras verdes en una misma caja metálica, con una franja roja debajo.
+    caption: La pasarela de Atocha Cercanías.
+    place: Atocha Cercanías
+    author: Oier Lauzirika Zarrabeitia
+    ownWork: true
+    license: cc-by-sa-4.0
   - id: atocha-pasarela
     src: ./atocha-pasarela.jpg
     alt: >-
@@ -38,14 +48,19 @@ photos:
     sourceUrl: https://citymapper.com/news/1376/por-que-nadie-entiende-el-cercanias-de-madrid
     source: Citymapper
     license: rights-reserved-credited
-cover: atocha-pasarela
+cover: pasarela-atocha
 stage: stub
 ---
 
 Cuelga en la pasarela que cruza sobre las vías de Atocha Cercanías y reúne
 los próximos trenes de toda la estación en dos pantallas gemelas, una junto a
-la otra, cada una con su cabecera «Vía», «Destino» y «Próximo tren». Es de la
-misma generación de caja gris que los
+la otra, dentro de una misma caja metálica gris. Cada pantalla tiene sus
+rótulos impresos, «Vía», «Destino» y «Próximo tren», y cinco líneas de puntos
+flip-dot iluminados por LED, en verde; la de la izquierda lleva además el
+logotipo de Cercanías en una esquina. Bajo las dos corre una sola franja roja
+de LED.
+
+Es de la misma generación de caja gris que los
 [teleindicadores de andén](../page-iberica-anden-atocha/) y el
 [de acceso a andén](../page-iberica-acceso-anden-atocha/) de la estación.
 
@@ -54,8 +69,9 @@ los minutos se escriben con «min» en minúsculas.
 
 ## Lo que no se sabe
 
-La única fotografía conocida es pequeña, así que no se puede contar el ancho
-de las líneas ni leer la tipografía punto por punto, ni ver qué muestra la
-franja roja de abajo. Tampoco se sabe cuándo se instaló.
+- **Qué muestra la franja roja.** No se ve texto en ella en ninguna de las dos fotografías.
+- **El ancho exacto de las líneas y la tipografía**, que todavía no se han
+  leído punto por punto.
+- **Cuándo se instaló.**
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).
