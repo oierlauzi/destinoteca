@@ -1,9 +1,9 @@
 ---
 name: Tableros de alta velocidad de Sevilla-Santa Justa
 summary: >-
-  Sobre el acceso a las vías de alta velocidad, dos tableros de llegadas y dos
-  de salidas de MP Electronics, con un reloj Festina cuadrado en medio, entre
-  dos placas verdes de adif.
+  Dos tableros de llegadas y dos de salidas de MP Electronics, con un reloj
+  Festina en medio, sobre el acceso a las vías de alta velocidad de
+  Sevilla-Santa Justa.
 kind: installation
 operators:
   - ref: adif

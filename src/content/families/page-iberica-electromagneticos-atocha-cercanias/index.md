@@ -1,9 +1,8 @@
 ---
 name: Paneles electromagnéticos de PAGE Ibérica en Atocha Cercanías
 summary: >-
-  Los carteles de caja gris que PAGE Ibérica instaló en Atocha Cercanías: de
-  andén, de acceso a andén y de la pasarela, con líneas flip-dot continuas
-  iluminadas por LED y una tipografía de trazo fino.
+  Los carteles de PAGE Ibérica de Atocha Cercanías: de andén, de acceso a
+  andén y de la pasarela.
 manufacturers:
   - page-iberica
 cover: page-iberica-anden-atocha

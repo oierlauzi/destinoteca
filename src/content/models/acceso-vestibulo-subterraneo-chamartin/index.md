@@ -1,9 +1,8 @@
 ---
 name: Acceso al vestíbulo subterráneo de Chamartín
 summary: >-
-  En el acceso al nuevo vestíbulo subterráneo de Madrid-Chamartín-Clara
-  Campoamor, dos tableros de salidas de MP Electronics y un reloj Festina
-  cuadrado, sobre el logotipo de adif y el nombre de la estación.
+  Dos tableros de salidas de MP Electronics y un reloj Festina en el acceso al
+  vestíbulo subterráneo de Chamartín.
 kind: installation
 operators:
   - ref: adif

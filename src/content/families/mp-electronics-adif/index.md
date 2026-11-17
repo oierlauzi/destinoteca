@@ -2,9 +2,7 @@
 name: Indicadores LED de MP Electronics para ADIF
 summary: >-
   Los tableros de salidas y llegadas, los paneles de Cercanías y los carteles
-  de andén que MP Electronics hizo para las estaciones de ADIF, con un mismo
-  diseño: cabecera verde con el logotipo de adif, rótulos impresos en
-  castellano e inglés y texto en LED.
+  de andén de LED que MP Electronics hizo para las estaciones de ADIF.
 manufacturers:
   - mp-electronics
 cover: mp-electronics-adif-teleindicador

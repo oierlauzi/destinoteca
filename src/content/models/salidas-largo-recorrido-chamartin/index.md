@@ -1,9 +1,8 @@
 ---
 name: Salidas de largo recorrido del vestíbulo de Chamartín
 summary: >-
-  Pares de paneles de paletas de Solari bajo un mismo marco claro con el
-  rótulo «Salidas largo recorrido», colgados en fila sobre el vestíbulo de
-  Chamartín.
+  Pares de paneles de paletas de Solari para las salidas de largo recorrido,
+  en el vestíbulo de Chamartín.
 kind: installation
 operators:
   - ref: renfe

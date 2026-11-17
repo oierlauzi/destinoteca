@@ -1,9 +1,8 @@
 ---
 name: Cercanías del vestíbulo subterráneo de Chamartín
 summary: >-
-  Dos paneles de Cercanías de MP Electronics, uno junto al otro, en una pared
-  del vestíbulo subterráneo de Chamartín. Se retiraron en septiembre de 2026,
-  sustituidos por una pantalla de vídeo.
+  Dos paneles de Cercanías de MP Electronics en el vestíbulo subterráneo de
+  Chamartín, retirados en 2026.
 kind: installation
 operators:
   - ref: adif

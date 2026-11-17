@@ -1,10 +1,8 @@
 ---
 name: Teleindicadores electromagnéticos de PAGE Ibérica para Renfe Cercanías Madrid
 summary: >-
-  Los carteles flip-dot que PAGE Ibérica instaló en Cercanías Madrid desde
-  1994, con electrónica de Telenorma: carteles de andén con el próximo tren y
-  sus minutos, y paneles de vestíbulo de varias filas, gobernados desde el
-  control de tráfico centralizado.
+  Los carteles flip-dot que PAGE Ibérica instaló desde 1994 en las estaciones
+  de Cercanías Madrid, en los andenes y en los vestíbulos.
 manufacturers:
   - page-iberica
   - telenorma
