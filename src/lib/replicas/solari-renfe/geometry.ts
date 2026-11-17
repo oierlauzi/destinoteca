@@ -66,9 +66,9 @@ export const TITLES: Record<Variant, string> = { largo: 'SALIDAS LARGO RECORRIDO
 export const DEFAULT_ROWS: Record<Variant, number> = { largo: 8, cercanias: 8 };
 
 const FRAME = { side: 6, title: 13, bottom: 7 };
-const INNER = { side: 5, legends: 13.5, bottom: 4 };
-/** The legends' size: "tren" takes about two fifths of its column. */
-export const LEGEND_SIZE = 10.5;
+const INNER = { side: 5, legends: 11.5, bottom: 4 };
+/** The legends' size: "tren" takes about a third of its column. */
+export const LEGEND_SIZE = 8.5;
 
 /** Between boards hung next to or above one another. */
 export const BOARD_GAP = 8;
@@ -103,7 +103,7 @@ export function layout(variant: Variant, rows: number): Layout {
     panel: { x: panelX, y: panelY, width: panelWidth, height: panelHeight },
     fields,
     rows,
-    legendY: panelY + 9.6,
+    legendY: panelY + 8,
     rowY: (row) => rowsTop + row * ROW_PITCH,
   };
 }
