@@ -10,8 +10,9 @@ const FRAME_FILL = '#e8e3cc';
 const FRAME_EDGE = '#b8b297';
 const TITLE_INK = '#3b3a35';
 const PANEL_FILL = '#141514';
-const FLAP_TOP = '#2b2c2b';
-const FLAP_BOTTOM = '#212221';
+/** Flat, matte flaps: both halves the same black, as photographed. */
+const FLAP_TOP = '#1e1f1e';
+const FLAP_BOTTOM = '#1e1f1e';
 const INK = '#f1eee2';
 const LEGEND_INK = '#c4c2b8';
 const LAMP_OFF = '#4a1c15';
@@ -189,7 +190,7 @@ function flapNodes(flap: Flap, value: string, refs?: FlapRefs): VNode[] {
   ];
   if (refs) nodes.push(h('g', { display: 'none' }, [{ ...halfNodes(flap, 'top', value), ref: ref('leafHalf') }], ref('leaf')));
   const hinge = flap.y + FLAP.height / 2;
-  nodes.push(h('line', { x1: flap.x, y1: hinge, x2: flap.x + flap.width, y2: hinge, stroke: '#070707', 'stroke-width': 0.3 }));
+  nodes.push(h('line', { x1: flap.x, y1: hinge, x2: flap.x + flap.width, y2: hinge, stroke: '#0e0e0e', 'stroke-width': 0.22 }));
   return nodes;
 }
 
@@ -214,7 +215,7 @@ function openings(l: Layout): VNode[] {
   for (let row = 0; row < l.rows; row++) {
     for (const field of l.fields) {
       if (field.kind === 'lamps') continue;
-      nodes.push(h('rect', { x: field.x - 0.7, y: l.rowY(row) - 0.7, width: field.width + 1.4, height: FLAP.height + 1.4, rx: 0.9, fill: '#090909', stroke: '#3c3d3b', 'stroke-width': 0.3 }));
+      nodes.push(h('rect', { x: field.x - 0.7, y: l.rowY(row) - 0.7, width: field.width + 1.4, height: FLAP.height + 1.4, rx: 0.9, fill: '#0b0b0b', stroke: '#262726', 'stroke-width': 0.3 }));
     }
   }
   return nodes;
