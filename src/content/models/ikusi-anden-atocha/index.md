@@ -67,8 +67,8 @@ photos:
       el andén.
     caption: Vías 3 y 4, con un tren de la serie 440 en el andén.
     place: Atocha Cercanías
-    author: Autor desconocido
-    source: Procedencia desconocida
+    author: Archivo Renfe
+    source: Facebook, compartida por Bvemike
     license: rights-reserved-credited
 cover: atocha-vias-3-4
 references:
