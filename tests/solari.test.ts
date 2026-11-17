@@ -6,6 +6,7 @@ import { fromFlat, solariCercanias, solariLargo, toFlat } from '../src/lib/repli
 import { layout } from '../src/lib/replicas/solari-renfe/geometry';
 import { present } from '../src/lib/replicas/solari-renfe/presenter';
 import { renderToString } from '../src/lib/replicas/solari-renfe/render';
+import { styleOf, wordLines } from '../src/lib/replicas/solari-renfe/words';
 
 const NOW = Date.UTC(2026, 10, 16, 13, 0, 0);
 const view = (services: Service[]): View => ({ now: NOW, timeZone: 'Europe/Madrid', services, total: services.length, notices: [], placement: { platforms: [], cycle: true } });
@@ -90,5 +91,43 @@ describe('where Cercanías trains come from', () => {
     expect(firstStop(data, '17000', '10')?.name).toBe('Atocha Cercanías');
     expect(firstStop(data, '10000', '10')).toBeUndefined();
     expect(solariCercanias.needs.calls).toBe(true);
+  });
+});
+
+describe('Solari train words', () => {
+  const width = layout('largo', 8).fields[0]!.width;
+
+  it('sets the photographed words as seen, anything else on one line', () => {
+    expect(['TALGO', 'ELECTROTREN', 'RAPIDO', 'RAP. ARAGON'].map(styleOf)).toEqual(['tall', 'tall', 'tall', 'tall']);
+    expect(styleOf('INTERURBANO')).toBe('wide');
+    expect(styleOf('TALGO PENDULAR')).toBe('left');
+    expect(styleOf('TALGO EXTREMADURA')).toBe('block');
+    expect(styleOf('TREN HOTEL')).toBe('wide');
+    expect(wordLines('TREN HOTEL', width)).toHaveLength(1);
+  });
+
+  it('fills the flap top to bottom with a tall word', () => {
+    const [line] = wordLines('TALGO', width);
+    expect(line!.size).toBe(12);
+    expect(line!.width).toBeLessThanOrEqual(width);
+  });
+
+  it('clamps other text to the tighter of the flap height and width', () => {
+    const [short] = wordLines('TER', width);
+    const [long] = wordLines('INTERURBANO', width);
+    expect(short!.size).toBe(12);
+    expect(long!.size).toBeLessThan(12);
+    expect(long!.width).toBeCloseTo(width - 1.2, 5);
+  });
+
+  it('puts two-line words against the left, TALGO centred over EXTREMADURA', () => {
+    const pendular = wordLines('TALGO PENDULAR', width);
+    expect(pendular.map((l) => [l.text, l.anchor, l.x])).toEqual([['TALGO', 'start', 0.6], ['PENDULAR', 'start', 0.6]]);
+    const [talgo, extremadura] = wordLines('TALGO EXTREMADURA', width);
+    expect(talgo!.anchor).toBe('middle');
+    expect(talgo!.x).toBeCloseTo(0.6 + extremadura!.width / 2, 5);
+    expect(extremadura!.x).toBe(talgo!.x);
+    expect(talgo!.baseline).toBeLessThan(5);
+    expect(extremadura!.baseline).toBeLessThanOrEqual(10);
   });
 });

@@ -2,6 +2,7 @@ import { cp437, h, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { SolariFrame, SolariOptions, SolariRow } from './def';
 import { boardsOf } from './def';
+import { LETTER_MARGIN, LETTER_SIZE, LETTER_SQUEEZE, wordLines } from './words';
 import { boardOrigin, DEFAULT_ROWS, FLAP, FLAP_GAP, layout, HOUR_FLAP, stackSize, TITLES, type Layout, type Variant } from './geometry';
 
 /** The dark skin: a light frame, black flaps with white lettering. */
@@ -20,10 +21,6 @@ const INK = '#f1eee2';
  * to the narrow letters of the photographs.
  */
 const LETTER_FONT = "Helvetica, Arial, 'Liberation Sans', sans-serif";
-/** Capitals 0.716 of the size tall: 8.6 of the flap's 10. */
-const LETTER_SIZE = 12;
-const LETTER_MARGIN = 0.7;
-const LETTER_SQUEEZE = 0.66;
 /** The centre of the hour's first digit, from its flap's left edge. */
 const HOUR_DIGIT = 2.9;
 const LEGEND_INK = '#c4c2b8';
@@ -141,29 +138,15 @@ const lampsLit = (row: SolariRow | undefined): number => Math.max(0, Math.min(2,
 
 // --- Drawing ----------------------------------------------------------------------
 
-/** A word too long for one line goes on two; lettering wider than the flap is squeezed. */
-function wordLines(text: string): string[] {
-  if (text.length <= 9 || !text.includes(' ')) return [text];
-  const cut = text.lastIndexOf(' ', Math.ceil(text.length / 2) + 2);
-  const at = cut > 0 ? cut : text.indexOf(' ');
-  return [text.slice(0, at), text.slice(at + 1)];
-}
-
 type Half = 'top' | 'bottom';
 
 /** What is printed on a flap showing `value`, in board coordinates. The dot of an hour is low enough to be on its bottom half only. */
 function printed(flap: Flap, value: string, half: Half): VNode[] {
-  const cy = flap.y + FLAP.height / 2;
   if (flap.kind === 'word') {
-    const lines = wordLines(value);
-    const size = lines.length === 1 ? FLAP.height * 0.42 : FLAP.height * 0.3;
-    const room = flap.width * 0.9;
-    return lines.filter(Boolean).map((line, i) => {
-      const y = lines.length === 1 ? cy + size * 0.36 : cy + (i === 0 ? -0.6 : size + 0.4);
-      // Every word is set to a width of its own, never wider than the flap, so that it fits whatever the font.
-      const width = Math.min(room, line.length * size * 0.52);
-      return h('text', { x: flap.x + flap.width / 2, y, 'font-size': size, 'text-anchor': 'middle', textLength: width, lengthAdjust: 'spacingAndGlyphs', fill: INK }, [line]);
-    });
+    // Set to a width of its own, so that it fits whatever the font.
+    return wordLines(value, flap.width).map((line) =>
+      h('text', { x: flap.x + line.x, y: flap.y + line.baseline, 'font-family': LETTER_FONT, 'font-size': line.size, 'text-anchor': line.anchor, textLength: line.width, lengthAdjust: 'spacingAndGlyphs', fill: INK }, [line.text]),
+    );
   }
   if (!value.trim()) return [];
   // Tall, narrow lettering from the top of the flap to its foot.
