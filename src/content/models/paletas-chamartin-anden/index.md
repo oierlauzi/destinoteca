@@ -69,7 +69,25 @@ photos:
     sourceUrl: https://commons.wikimedia.org/wiki/File:Madrid_Chamar%C3%ADn_1.jpg
     source: Wikimedia Commons
     license: cc-by-sa-4.0
+  - id: chamartin-2010
+    src: ./chamartin-2010.jpg
+    alt: >-
+      Un indicador de paletas de caja amarilla colgado bajo la marquesina de
+      un andén, con un reloj Festina encima.
+    caption: Chamartín, pocas semanas antes de su retirada.
+    place: Madrid Chamartín
+    author: Fernando de Córdoba
+    sourceUrl: https://ecomovilidad.net/madrid/imagen-de-la-semana-los-indicadores-de-chamartin/
+    source: ecomovilidad.net
+    license: rights-reserved-credited
 cover: chamartin-anos-90-renfe
+references:
+  - title: 'Imagen de la semana: los indicadores de Chamartín'
+    author: Fernando de Córdoba
+    publication: ecomovilidad.net
+    date: '2010-02-21'
+    url: https://ecomovilidad.net/madrid/imagen-de-la-semana-los-indicadores-de-chamartin/
+    note: Cuenta su retirada, durante la renovación de las estaciones de Cercanías.
 stage: stub
 ---
 
@@ -78,9 +96,13 @@ los andenes de Chamartín tenían indicadores de paletas colgados de las
 marquesinas, con la vía, la hora y el destino del próximo tren. En los años
 noventa tenían al lado monitores de tubo.
 
+Se retiraron a principios de 2010, durante la renovación de las estaciones de
+Cercanías, según contó entonces
+[ecomovilidad.net](https://ecomovilidad.net/madrid/imagen-de-la-semana-los-indicadores-de-chamartin/).
+
 ## Lo que no se sabe
 
 - **Quién los fabricó.**
-- **Cuándo se instalaron y cuándo se retiraron.**
+- **Cuándo se instalaron.**
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
