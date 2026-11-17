@@ -100,6 +100,7 @@ export const catalog: Record<string, string> = {
   'catalog.model.technologies': 'Tecnología',
   'catalog.model.manufacturers': 'Fabricante',
   'catalog.model.manufacturerUnknown': 'Desconocido',
+  'catalog.card.makerUnknown': 'Fabricante desconocido',
   'catalog.model.operators': 'Operador',
   'catalog.model.family': 'Familia',
   'catalog.model.families': 'Familias',

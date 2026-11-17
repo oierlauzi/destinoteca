@@ -36,7 +36,7 @@ const Heading = `h${level}` as 'h3';
   </div>
   <div class="card-body">
     <Heading class="card-title"><a href={href(`familias/${family.id}/`)}>{family.data.name}</a></Heading>
-    <p class="card-text">{family.data.summary}</p>
+    <p class="card-text">{catalog.familyKeyFacts(family).join(' · ')}</p>
     <p class="card-meta">{counted('catalog.count.models', members.length)}</p>
   </div>
 </li>

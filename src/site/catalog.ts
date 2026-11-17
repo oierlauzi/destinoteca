@@ -144,6 +144,36 @@ export class Catalog {
     return facts;
   }
 
+  /**
+   * The few facts a card shows under its title: what it is made with, who
+   * made it, and where it is (its one place, or else whoever runs it).
+   */
+  keyFacts(model: Model): string[] {
+    const facts = this.facts(model);
+    const technologies = facts.technologies.map((id) => this.technology(id).data.name).join(', ');
+    const makers = facts.manufacturerUnknown && facts.manufacturers.length === 0
+      ? t('catalog.card.makerUnknown')
+      : facts.manufacturers.slice(0, 2).map((id) => this.manufacturer(id).data.name).join(', ');
+    const sites = [...new Set(model.data.locations.flatMap((location) => (location.site ? [location.site.id] : [])))];
+    const operator = [model, ...this.elementsOf(model)].flatMap((entry) => entry.data.operators)[0];
+    const where = sites.length === 1 ? this.site(sites[0]!).data.name : operator ? this.operator(operator.ref.id).data.name : '';
+    return [technologies, makers, where].filter(Boolean);
+  }
+
+  /** The same for a family: who made its members, and who ran them. */
+  familyKeyFacts(family: Family): string[] {
+    const members = this.modelsWith('familia', family.id);
+    const makers = family.data.manufacturers.map((ref) => this.manufacturer(ref.id).data.name).join(', ');
+    // The operator most of its members name first.
+    const counts = new Map<string, number>();
+    for (const member of members) {
+      const first = member.data.operators[0];
+      if (first) counts.set(first.ref.id, (counts.get(first.ref.id) ?? 0) + 1);
+    }
+    const top = [...counts].sort((a, b) => b[1] - a[1])[0];
+    return [makers, top ? this.operator(top[0]).data.name : ''].filter(Boolean);
+  }
+
   get allFacts(): ModelFacts[] {
     return this.models.map((model) => this.facts(model));
   }
