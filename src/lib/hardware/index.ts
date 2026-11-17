@@ -4,6 +4,7 @@ export * from './dot-matrix';
 export * from './character-display';
 export * from './marquee';
 export * from './transition';
+export * from './lcd-modules';
 export * from './fonts/types';
 export { cp437 } from './fonts/cp437';
 export { telenormaCp437, sevenBit } from './fonts/telenorma-cp437';
@@ -17,3 +18,4 @@ export { pageIbericaBold7, SEEN_IN_PHOTOGRAPHS } from './fonts/page-iberica-bold
 export { pageIbericaThin7, pageIbericaThin7Own, THIN_SEEN_IN_PHOTOGRAPHS } from './fonts/page-iberica-thin-7';
 export { pageIbericaLed12 } from './fonts/page-iberica-led-12';
 export { mpElectronicsAdif, MP_ADVANCE, MP_SEEN_IN_PHOTOGRAPHS } from './fonts/mp-electronics-adif';
+export { ikusiLcd, ikusiRows, IKUSI_COLS, IKUSI_ROWS, IKUSI_SEEN, IKUSI_RECONSTRUCTED } from './fonts/ikusi-lcd';

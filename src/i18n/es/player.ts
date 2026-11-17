@@ -305,4 +305,19 @@ export const player: Record<string, string> = {
   'solari.frame.row10': 'Fila 10',
   'solari.frame.row11': 'Fila 11',
   'solari.frame.row12': 'Fila 12',
+
+  // --- Teleindicador de andén de cristal líquido de Ikusi ---
+  'ikusi.group.board': 'Cartel',
+  'ikusi.group.wear': 'Desgaste',
+  'ikusi.opt.side': 'Lado del poste',
+  'ikusi.opt.side.help': 'El rótulo de la vía va hacia el poste, y la hora hacia fuera.',
+  'ikusi.side.left': 'A la izquierda',
+  'ikusi.side.right': 'A la derecha',
+  'ikusi.opt.uneven': 'Diferencias de tono',
+  'ikusi.opt.uneven.help': 'Cada carácter es un cristal aparte y envejece a su manera.',
+  'ikusi.opt.delamination': 'Cristales despegados',
+  'ikusi.opt.delamination.help': 'Caracteres con una mancha donde las capas del cristal se han separado.',
+  'ikusi.opt.wearSeed': 'Semilla del desgaste',
+  'ikusi.frame.time': 'Hora',
+  'ikusi.frame.text': 'Destino o aviso',
 };

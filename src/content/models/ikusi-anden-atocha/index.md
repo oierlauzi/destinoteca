@@ -1,9 +1,10 @@
 ---
 name: Teleindicador de andén de cristal líquido de Ikusi, Atocha Cercanías
 summary: >-
-  Los carteles de andén de Atocha Cercanías antes de los de PAGE Ibérica: una
-  caja en lo alto de un poste, con una mitad por vía, la hora y el destino en
-  caracteres de cristal líquido y una línea roja debajo. Ya retirados.
+  Los carteles de andén de Atocha Cercanías antes de los de PAGE Ibérica: uno
+  por vía, con la hora y el destino en caracteres de cristal líquido y una
+  línea roja debajo, casi siempre de dos en dos en lo alto de un poste. Ya
+  retirados.
 kind: platform-indicator
 technologies:
   - lcd
@@ -23,7 +24,18 @@ status: retired
 locations:
   - site: es/madrid-atocha-cercanias
     status: retired
-    note: Sobre los andenes, en lo alto de postes, con una mitad para cada vía. Sustituidos por los carteles de PAGE Ibérica.
+    note: Sobre los andenes, de dos en dos en lo alto de postes. Sustituidos por los carteles de PAGE Ibérica.
+variants:
+  - id: izquierda
+    name: A la izquierda del poste
+    description: La hora a la izquierda, y el rótulo de la vía a la derecha, hacia el poste.
+    replicaPreset:
+      lado: left
+  - id: derecha
+    name: A la derecha del poste
+    description: El rótulo de la vía a la izquierda, hacia el poste, y la hora a la derecha.
+    replicaPreset:
+      lado: right
 photos:
   - id: archivo-renfe-vias-7-8
     src: ./archivo-renfe-vias-7-8.jpg
@@ -152,25 +164,39 @@ references:
     publication: Vía Libre
     date: '1997-04'
     note: La fotografía más reciente que se conoce de los carteles.
+replica:
+  id: ikusi-anden-atocha
 stage: stub
 ---
 
 Antes que los [carteles de PAGE Ibérica](../page-iberica-anden-atocha/) que
 hoy cuelgan sobre los andenes de Atocha Cercanías, la estación tuvo estos
-teleindicadores de [Ikusi](../../fabricantes/ikusi/). Cada uno es una caja
-alargada en lo alto de un poste, con dos mitades, y cada mitad anuncia el
-próximo tren de una vía.
+teleindicadores de [Ikusi](../../fabricantes/ikusi/). Cada uno anuncia el
+próximo tren de una vía. En todas las fotografías que se conocen cuelgan de
+dos en dos, uno a cada lado de un poste, en el
+[cartel de dos vías](../ikusi-anden-atocha-dos-vias/). Se sabe por
+testimonios, no por fotografías, que también los hubo sueltos, para una sola
+vía: iguales a una de las mitades de ese cartel, que terminan donde él tiene
+la junta sobre el poste.
 
-Cada mitad tiene un rótulo impreso con la vía, «VIA 3» o «VIA 4», y dos
+Cada cartel tiene un rótulo impreso con la vía, «VIA 3» o «VIA 4», y dos
 líneas de [cristal líquido](../../tecnologias/lcd/): una corta, de cinco
-caracteres, con la hora, y otra de doce con el destino.
-El rótulo y la hora comparten la fila de arriba, con el rótulo hacia el centro
-de la caja y la hora hacia el extremo. Los caracteres son módulos separados,
-uno por carácter (también los dos puntos de la hora tienen el suyo), y los que quedan apagados
-se ven como rectángulos tenues, cada uno de un tono algo distinto. La línea
-del destino también da avisos: en una fotografía, la de la vía 1 dice «NO
+caracteres, con la hora, y otra de doce con el destino. El rótulo y la hora
+comparten la fila de arriba, con el rótulo hacia el poste y la hora hacia el
+extremo, así que los de un lado del poste son la imagen en espejo de los del
+otro; el destino se escribe siempre de izquierda a derecha. Los caracteres son
+módulos separados, uno por carácter (también los dos puntos de la hora tienen
+el suyo), montados en fila sobre un carril, como en los tableros de Ikusi de
+los aeropuertos; los extremos de cada fila parecen rellenos con módulos en
+blanco del mismo ancho. Cada cristal brilla en verde con un tono algo
+distinto, más claro u oscuro, también los que quedan en blanco. La línea del
+destino también da avisos: en una fotografía, la de la vía 1 dice «NO
 ADMITE». Debajo corre una tercera línea, roja, que unas veces aparece
-encendida de punta a punta y otras con dos o tres palabras.
+encendida de punta a punta y otras con dos o tres palabras. El frente es una
+chapa con tres aberturas, una por fila: por las de los caracteres asoman los
+carriles con sus módulos, y la de la línea roja es mayor que la línea y más
+oscura. En la chapa van impresos el rótulo de la vía y, abajo, bajo el final de la línea
+roja, el logotipo de Ikusi.
 
 En marzo de 1992, *Vía Libre* contaba que Ikusi había instalado para Renfe
 los sistemas de información al público de Madrid-Atocha, sin decir de qué
@@ -185,5 +211,13 @@ varios andenes. Después los sustituyeron los de PAGE Ibérica.
   es.
 - **Cuándo se instalaron y cuándo se retiraron.** La fotografía más antigua
   que se conoce es de 1989, y la más reciente, de 1997.
+- **Dónde estaban los carteles de una sola vía.** No se conoce ninguna
+  fotografía de ellos.
+- **Cuántos puntos tiene cada carácter.** Las fotografías de estos carteles
+  no dejan contarlos. En los tableros de Ikusi de los aeropuertos, de la
+  misma época y con caracteres parecidos, son 7 de ancho por 11 de alto, con
+  trazos de dos puntos, y así se dibujan en la réplica.
+- **Las medidas.** Se estiman a partir de las fotografías, en unos 120 cm de
+  ancho y 53 de alto, con caracteres de unos 8,5 cm.
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

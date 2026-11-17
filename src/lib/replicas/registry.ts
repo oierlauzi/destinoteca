@@ -6,6 +6,7 @@ import { andenAtocha } from './page-iberica-anden-atocha/def';
 import { andenContinuo } from './page-iberica-anden-continuo/def';
 import { andenSinLed } from './page-iberica-anden-sin-led/def';
 import { andenDosVias } from './page-iberica-anden-dos-vias/def';
+import { ikusiAndenAtocha } from './ikusi-anden-atocha/def';
 import { festinaAdif } from './festina-adif/def';
 import { andenMp, andenMpReloj, andenMpVertical } from './mp-electronics-adif-anden/def';
 import { mpCercanias } from './mp-electronics-adif-cercanias/def';
@@ -39,6 +40,7 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'solari-renfe-cercanias': solariCercanias,
   'page-iberica-anden-sin-led': andenSinLed,
   'page-iberica-anden-dos-vias': andenDosVias,
+  'ikusi-anden-atocha': ikusiAndenAtocha,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {
