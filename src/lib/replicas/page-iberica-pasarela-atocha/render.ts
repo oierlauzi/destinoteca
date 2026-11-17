@@ -72,6 +72,9 @@ const flipDots = new DotMatrix<LitFlapLook>({
 // Each line changes in a wave from left to right, the lines one after another.
 const sweep = (): DotTransition => new DotTransition(LINE_COUNT, COLS, ROWS, (_turn, col, row) => col * 6 + row * 8);
 
+/** The radius of the frame's top corners. */
+const CORNER = FRAME + 2;
+
 /** One face: its printed header and the band of each line. */
 function face(index: number): VNode[] {
   const { x, y } = faceAt(index);
@@ -79,7 +82,8 @@ function face(index: number): VNode[] {
   const big = 6 * PITCH;
   const small = 2.7 * PITCH;
   const nodes: VNode[] = [
-    h('rect', { x, y, width: FACE.width, height: FACE.height, rx: 4, fill: FACE_FILL, stroke: '#0c0c0d', 'stroke-width': 1 }),
+    // Rounded at the top only, like the frame around it.
+    h('path', { d: `M${x},${y + FACE.height}V${y + 4}Q${x},${y} ${x + 4},${y}H${x + FACE.width - 4}Q${x + FACE.width},${y} ${x + FACE.width},${y + 4}V${y + FACE.height}Z`, fill: FACE_FILL, stroke: '#0c0c0d', 'stroke-width': 1 }),
     h('text', { x: colX(index, 4), y: y + HEADER - 3.6 * PITCH, 'font-size': big / 0.72, ...legend }, ['Vía']),
     h('text', { x: colX(index, 41), y: y + HEADER - 3.6 * PITCH, 'font-size': big / 0.72, ...legend }, ['Destino']),
     h('text', { x: colX(index, 116), y: y + HEADER - 7.4 * PITCH, 'font-size': small / 0.72, 'text-anchor': 'middle', ...legend }, ['Próximo']),
@@ -96,9 +100,10 @@ function face(index: number): VNode[] {
 
 function housing(): VNode[] {
   return [
-    // The LED row's black housing, under the grey frame.
-    h('rect', { x: 0, y: LED.band.y - 4, width: WIDTH, height: LED.band.height + 4, rx: 2, fill: '#1c1c1d', stroke: '#000000', 'stroke-width': 0.6 }),
-    h('rect', { x: 0, y: 0, width: WIDTH, height: GREY_HEIGHT, rx: FRAME + 2, fill: ENCLOSURE, stroke: '#77776f', 'stroke-width': 0.6 }),
+    // The LED row's black housing, square, under the grey frame.
+    h('rect', { x: 0, y: LED.band.y - 4, width: WIDTH, height: LED.band.height + 4, fill: '#1c1c1d', stroke: '#000000', 'stroke-width': 0.6 }),
+    // The grey frame: rounded at the top, square at the bottom where the LED housing meets it.
+    h('path', { d: `M0,${GREY_HEIGHT}V${CORNER}Q0,0 ${CORNER},0H${WIDTH - CORNER}Q${WIDTH},0 ${WIDTH},${CORNER}V${GREY_HEIGHT}Z`, fill: ENCLOSURE, stroke: '#77776f', 'stroke-width': 0.6 }),
     ...Array.from({ length: FACES }, (_, i) => face(i)).flat(),
     // The makers' plate, centred under each face.
     ...Array.from({ length: FACES }, (_, i) => pageLogoPlate(faceAt(i).x + FACE.width / 2, GREY_HEIGHT - FRAME / 2, 2.9, `page-logo-pasarela-${i}`)),
@@ -118,7 +123,7 @@ const spec: SignSpec<PasarelaFrame, LitFlapLook> = {
   credit: 'panel electromagnético de PAGE Ibérica, pasarela de Atocha Cercanías',
   flipDots,
   sweep,
-  led: ledRow(LED.x, LED.y, LED.width),
+  led: ledRow(LED.x, LED.y, LED.width, LED.height),
   dots,
   look: rowLook,
   ledText: (frame) => frame.led,

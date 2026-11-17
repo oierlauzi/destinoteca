@@ -152,18 +152,20 @@ export interface LedRow {
 }
 
 /**
- * A red LED row of the given width. None was recovered with the salvaged
- * unit; its size and pitch come from photographs.
+ * A red LED row of the given width: seven LEDs high, `height` tall (that of
+ * the platform signs unless said otherwise). None was recovered with the
+ * salvaged unit; its size and pitch come from photographs.
  */
-export function ledRow(x: number, y: number, width: number): LedRow {
-  const cols = Math.floor((width - LED_PITCH) / LED_PITCH);
+export function ledRow(x: number, y: number, width: number, height = LED_HEIGHT): LedRow {
+  const pitch = height === LED_HEIGHT ? LED_PITCH : (height * 12) / 95;
+  const cols = Math.floor((width - pitch) / pitch);
   const matrix = new DotMatrix<RoundLedLook>({
-    modules: [{ x: x + (width - cols * LED_PITCH) / 2, y: y + (LED_HEIGHT - LED_ROWS * LED_PITCH) / 2 }],
+    modules: [{ x: x + (width - cols * pitch) / 2, y: y + (height - LED_ROWS * pitch) / 2 }],
     cols,
     rows: LED_ROWS,
-    pitch: LED_PITCH,
+    pitch,
     skin: roundLed(),
-    backing: () => [h('rect', { x, y, width, height: LED_HEIGHT, fill: '#2c0a11', stroke: '#000000', 'stroke-width': 0.2 })],
+    backing: () => [h('rect', { x, y, width, height, fill: '#2c0a11', stroke: '#000000', 'stroke-width': 0.2 })],
   });
   return { matrix, cols, lines: [0], strip: ledStrip, align: 'center', look: ledLook };
 }

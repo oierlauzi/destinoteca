@@ -1,5 +1,4 @@
 import { PITCH, ROWS } from '../page-iberica-electromagneticos/atocha';
-import { LED_HEIGHT } from '../page-iberica-electromagneticos/parts';
 
 /**
  * PAGE Ibérica's board on the gangway over the tracks of Atocha Cercanías:
@@ -33,6 +32,8 @@ const BOTTOM = 1.5 * p;
 export const FACE = { width: COLS * p + 2 * SIDE, height: HEADER + LINES * LINE + BOTTOM };
 /** Grey frame, the same all round and between the faces. */
 export const FRAME = 10;
+/** The red LED row: seven LEDs, about one and a half times as tall as a flip-dot line. */
+export const LED_HEIGHT = 1.55 * ROWS * PITCH;
 /** The black housing of the LED row, under the frame. */
 const LED_BAND = LED_HEIGHT + 8;
 
@@ -53,4 +54,4 @@ export function lineAt(face: number, line: number): { x: number; y: number } {
 export const colX = (face: number, col: number): number => faceAt(face).x + SIDE + col * p;
 
 /** The LED row, across both faces, centred in its band. */
-export const LED = { x: FRAME, y: GREY_HEIGHT + (LED_BAND - LED_HEIGHT) / 2, width: WIDTH - 2 * FRAME, band: { y: GREY_HEIGHT, height: LED_BAND } };
+export const LED = { x: FRAME, y: GREY_HEIGHT + (LED_BAND - LED_HEIGHT) / 2, width: WIDTH - 2 * FRAME, height: LED_HEIGHT, band: { y: GREY_HEIGHT, height: LED_BAND } };
