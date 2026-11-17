@@ -17,7 +17,7 @@ installations:
     to: 2026
     note: En el vestíbulo subterráneo. Sustituidos por una pantalla de vídeo en septiembre de 2026.
 composition:
-  size: { width: 224, height: 104 }
+  size: { width: 226, height: 104 }
   elements:
     - id: cercanias-1
       model: mp-electronics-adif-cercanias
@@ -26,14 +26,14 @@ composition:
     - id: cercanias-2
       model: mp-electronics-adif-cercanias
       serie: cercanias
-      at: { x: 112, y: 0, width: 112 }
+      at: { x: 114, y: 0, width: 112 }
 stage: stub
 ---
 
 En una pared del vestíbulo subterráneo de Chamartín, detrás de la de los
 [tableros de salidas](../salidas-vestibulo-subterraneo-chamartin/), colgaban
 dos [paneles de Cercanías de MP Electronics](../mp-electronics-adif-cercanias/)
-uno junto al otro, tocándose; el de la derecha seguía con los trenes del de la
+uno junto al otro, casi tocándose; el de la derecha seguía con los trenes del de la
 izquierda. En septiembre de 2026 se retiraron y en su lugar se colgó una
 pantalla de vídeo.
 
