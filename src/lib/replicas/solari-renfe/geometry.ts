@@ -23,7 +23,8 @@ export interface Field {
 export const FLAP = { width: 7, height: 10 };
 /** Between two flaps of the same field. */
 export const FLAP_GAP = 0.8;
-const FIELD_GAP = 3.2;
+/** Between two columns: about a character flap. */
+const FIELD_GAP = FLAP.width;
 export const ROW_PITCH = FLAP.height + 2.8;
 /** The hour flap: its two digits as far apart as the minutes', from its left edge, and the dot printed after them. */
 export const HOUR_FLAP = 15;
