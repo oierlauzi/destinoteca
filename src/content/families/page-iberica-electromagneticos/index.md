@@ -28,6 +28,9 @@ Se han visto en servicio estos montajes de esta generación:
 - **Cartel de andén sin fila de LED**, el
   [mismo cartel reducido a su línea flip-dot](../../catalogo/page-iberica-anden-sin-led/),
   con los minutos y el «min.» pero sin más rótulos. Visto en Vallecas.
+- **Cartel de andén de dos vías**, con
+  [dos carteles en una caja](../../catalogo/page-iberica-anden-dos-vias/), uno
+  encima del otro, cada uno con su vía, su línea flip-dot y su fila de LED.
 - **Cartel de andén de dos caras**, para andenes centrales.
 - **Los carteles de Atocha Cercanías**, de caja gris y con la placa de PAGE
   bajo la pantalla. Sus líneas flip-dot son matrices continuas iluminadas por

@@ -18,9 +18,16 @@ const at = (x: number, y: number) => ({ x: x - ORIGIN.x, y: y - ORIGIN.y });
 // the rule above the LED row, which stays where the drawing has it.
 const LED_RULE = 56.89837;
 const TUBE_GAP = 7.4;
-const ROW = at(24.658236, LED_RULE - TUBE_GAP - LINE_HEIGHT);
-const LED = at(20.358263, 60.55167);
-const led = ledRow(LED.x, LED.y, 158.50243);
+/** The flip-dot line's top-left corner. */
+export const ROW = at(24.658236, LED_RULE - TUBE_GAP - LINE_HEIGHT);
+/** The LED row's top-left corner, and its width. */
+export const LED = at(20.358263, 60.55167);
+export const LED_WIDTH = 158.50243;
+/** Height of the inner panel, which holds everything printed and both displays. */
+export const PANEL_HEIGHT = 67.75975;
+/** Where the inner panel starts. */
+export const PANEL_TOP = at(12.080421, 11.557226).y;
+const led = ledRow(LED.x, LED.y, LED_WIDTH);
 export const LED_COLS = led.cols;
 
 /** The 16 characters of the flip-dot line: the text, with the minutes written over its end. */
@@ -46,32 +53,67 @@ export function describe(frame: AndenFrame, options: FamilyOptions): string {
 /** The legend over the minutes: "Próxima Llegada" on most signs, "Próximo tren" on some (Cercedilla). */
 const nextLegend = (options: FamilyOptions): [string, string] => (options.nextLegend === 'tren' ? ['Próximo', 'tren'] : ['Próxima', 'Llegada']);
 
-function housing(frame: AndenFrame, options: FamilyOptions, slots: Record<string, SVGElement>): VNode[] {
+/** The inner panel, from `top` and `height` tall, with the sign's rounded corners and black edge. */
+export function panelRect(top: number, height: number): VNode {
+  const corner = at(12.080421, 11.557226);
+  return h('rect', { x: corner.x, y: top, width: 176.00145, height, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': 3 });
+}
+
+/** A hairline between two rows of the panel, at `y` in sign coordinates. */
+export function panelRule(y: number): VNode {
+  const x = at(12.080421, 0).x;
+  return h('line', { x1: x, y1: y, x2: x + 176.00145, y2: y, stroke: '#000000', 'stroke-width': 0.2 });
+}
+
+/**
+ * The panel inside the frame and everything printed or stuck on it, `dy`
+ * below where this sign has it: a unit that stacks two signs draws it twice.
+ * Nodes that follow the frame register in `slots` under their name plus `key`.
+ * With `panel` false the inner panel itself is left out, for a unit whose
+ * rows run on in one panel.
+ */
+export function signFace(dy: number, platform: string, options: FamilyOptions, slots: Record<string, SVGElement>, key = '', panel = true): VNode[] {
   const [first, second] = nextLegend(options);
-  const panel = at(12.080421, 11.557226);
+  const here = (x: number, y: number) => at(x, y + dy);
+  const corner = here(12.080421, 11.557226);
   const big = { fill: LEGEND, 'font-size': 23.2833, 'font-weight': 700, 'letter-spacing': 1 };
   const divider = (y: number): VNode => {
-    const p = at(12.080421, y);
+    const p = here(12.080421, y);
     return h('line', { x1: p.x, y1: p.y, x2: p.x + 176.00145, y2: p.y, stroke: '#000000', 'stroke-width': 0.2 });
   };
-  const via = at(58.99646, 33.011734);
-  const next = at(146.3284, 23.902781);
-  const platform = at(106.98637, 33.244568);
+  const via = here(58.99646, 33.011734);
+  const next = here(146.3284, 23.902781);
+  const number = here(106.98637, 33.244568);
+  const roundel = here(21.284002, 16.007592);
   return [
-    h('rect', { x: 0, y: 0, width: WIDTH, height: HEIGHT, rx: 10, fill: HOUSING }),
-    h('rect', { x: panel.x, y: panel.y, width: 176.00145, height: 67.75975, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': 3 }),
-    minLegend(ROW.x + lineWidth(CELLS) + MIN_GAP, ROW.y),
+    ...(panel ? [panelRect(corner.y, PANEL_HEIGHT)] : []),
+    minLegend(ROW.x + lineWidth(CELLS) + MIN_GAP, ROW.y + dy),
     h('text', { x: via.x, y: via.y, ...big }, ['Vía']),
     h('text', { fill: LEGEND, 'font-size': 7.05556, 'font-weight': 700 }, [
-      h('tspan', { x: next.x, y: next.y }, [first], (element) => (slots.next1 = element)),
-      h('tspan', { x: next.x, y: next.y + 7.761116, 'letter-spacing': 0.15875 }, [second], (element) => (slots.next2 = element)),
+      h('tspan', { x: next.x, y: next.y }, [first], (element) => (slots[`next1${key}`] = element)),
+      h('tspan', { x: next.x, y: next.y + 7.761116, 'letter-spacing': 0.15875 }, [second], (element) => (slots[`next2${key}`] = element)),
     ]),
     divider(35.448382),
     divider(LED_RULE),
-    cercaniasRoundel(at(21.284002, 16.007592).x + 8.218758, at(21.284002, 16.007592).y + 8.218758, 8.218758),
+    cercaniasRoundel(roundel.x + 8.218758, roundel.y + 8.218758, 8.218758),
     // The platform number: a vinyl stuck on beside "Vía".
-    h('text', { x: platform.x, y: platform.y, ...big }, [frame.platform], (element) => (slots.platform = element)),
+    h('text', { x: number.x, y: number.y, ...big }, [platform], (element) => (slots[`platform${key}`] = element)),
   ];
+}
+
+/** Brings the nodes `signFace` registered under `key` up to date. */
+export function fillSignFace(platform: string, options: FamilyOptions, slots: Record<string, SVGElement>, key = ''): void {
+  const [first, second] = nextLegend(options);
+  const next1 = slots[`next1${key}`];
+  const next2 = slots[`next2${key}`];
+  const number = slots[`platform${key}`];
+  if (next1) next1.textContent = first;
+  if (next2) next2.textContent = second;
+  if (number) number.textContent = platform;
+}
+
+function housing(frame: AndenFrame, options: FamilyOptions, slots: Record<string, SVGElement>): VNode[] {
+  return [h('rect', { x: 0, y: 0, width: WIDTH, height: HEIGHT, rx: 10, fill: HOUSING }), ...signFace(0, frame.platform, options, slots)];
 }
 
 const spec: SignSpec<AndenFrame> = {
@@ -86,12 +128,7 @@ const spec: SignSpec<AndenFrame> = {
   ledText: (frame) => frame.led,
   describe,
   housing,
-  fill: (frame, slots, options) => {
-    const [first, second] = nextLegend(options);
-    if (slots.next1) slots.next1.textContent = first;
-    if (slots.next2) slots.next2.textContent = second;
-    if (slots.platform) slots.platform.textContent = frame.platform;
-  },
+  fill: (frame, slots, options) => fillSignFace(frame.platform, options, slots),
 };
 
 export function renderToString(frame: AndenFrame, options: AndenOptions): string {

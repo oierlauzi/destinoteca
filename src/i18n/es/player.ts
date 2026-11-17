@@ -116,6 +116,8 @@ export const player: Record<string, string> = {
   'anden.opt.nextLegend.help': 'La mayoría dicen «Próxima Llegada»; algunos, como el de Cercedilla, «Próximo tren».',
   'anden.nextLegend.llegada': 'Próxima Llegada',
   'anden.nextLegend.tren': 'Próximo tren',
+  'dosvias.frame.top': 'Vía de arriba',
+  'dosvias.frame.bottom': 'Vía de abajo',
   'pageib.group.look': 'Apariencia',
   'pageib.group.defects': 'Defectos',
   'pageib.opt.showMinutes': 'Mostrar minutos',

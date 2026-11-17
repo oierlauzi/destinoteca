@@ -330,7 +330,8 @@ retirando a medida que se reforman las estaciones.
 Más tarde se instaló una [versión con matriz continua](../page-iberica-anden-continuo/)
 en la misma caja. Hubo también una
 [versión sin fila de LED](../page-iberica-anden-sin-led/), con solo la línea
-flip-dot.
+flip-dot, y otra [de dos vías](../page-iberica-anden-dos-vias/), con dos
+carteles en una misma caja.
 
 ## Qué muestra
 

@@ -149,6 +149,11 @@ export interface LedRow {
   /** Where a text that fits stands. */
   align: 'center' | 'left';
   look(options: FamilyOptions): RoundLedLook;
+  /**
+   * The dots of the whole panel, for one whose lines are not rows of a single
+   * matrix (separate LED rows). Without it, `panelState` lays the lines out.
+   */
+  state?(strips: number[][], offsets: number[]): DotState;
 }
 
 /**
@@ -170,6 +175,35 @@ export function ledRow(x: number, y: number, width: number, height = LED_HEIGHT)
   return { matrix, cols, lines: [0], strip: ledStrip, align: 'center', look: ledLook };
 }
 
+/**
+ * Several red LED rows like `ledRow`, all `width` wide, with their tops at
+ * `ys`: one per sign of a unit that stacks several, each running its own text.
+ * They are one matrix with a module per row, so they light and scroll together
+ * with the rest of the sign.
+ */
+export function ledRows(x: number, ys: number[], width: number): LedRow {
+  const cols = Math.floor((width - LED_PITCH) / LED_PITCH);
+  const left = x + (width - cols * LED_PITCH) / 2;
+  const inset = (LED_HEIGHT - LED_ROWS * LED_PITCH) / 2;
+  const matrix = new DotMatrix<RoundLedLook>({
+    modules: ys.map((y) => ({ x: left, y: y + inset })),
+    cols,
+    rows: LED_ROWS,
+    pitch: LED_PITCH,
+    skin: roundLed(),
+    backing: (module) => [h('rect', { x, y: module.y - inset, width, height: LED_HEIGHT, fill: '#2c0a11', stroke: '#000000', 'stroke-width': 0.2 })],
+  });
+  return {
+    matrix,
+    cols,
+    lines: ys.map(() => 0),
+    strip: ledStrip,
+    align: 'center',
+    look: ledLook,
+    state: (strips, offsets) => ys.map((_, i) => ledWindow(strips[i] ?? [], cols, offsets[i] ?? 0, 'center')),
+  };
+}
+
 export const ledLook = (options: FamilyOptions): RoundLedLook => ({ lit: options.ledColor, unlit: LED_UNLIT });
 
 export const ledStrip = (text: string): number[] => textColumns(text, flipDotFont, flipDotCharset, 1);
@@ -182,6 +216,7 @@ export function ledWindow(strip: number[], cols: number, offset: number, align: 
 
 /** The whole panel: each line's window moved down to its row. */
 export function panelState(panel: LedRow, strips: number[][], offsets: number[]): DotState {
+  if (panel.state) return panel.state(strips, offsets);
   const columns: number[] = Array.from({ length: panel.cols }, () => 0);
   panel.lines.forEach((top, i) => {
     const window = ledWindow(strips[i] ?? [], panel.cols, offsets[i] ?? 0, panel.align);
