@@ -28,8 +28,7 @@ revisión.
 - **Esbozos y artículos.** Una ficha nueva es un esbozo (`stage: stub`) y solo
   necesita nombre, resumen, tipo, tecnología, medio de transporte y país. Para
   ser artículo (`stage: article`) necesita además fabricante (o
-  `manufacturerUnknown: true`), año de inicio, operador, una fuente y una
-  fotografía.
+  `manufacturerUnknown: true`), operador, una fuente y una fotografía.
 - **Solo lo que se puede sostener.** Cada dato debería poder rastrearse hasta
   una fuente o una fotografía. Lo que es una suposición se presenta como tal;
   lo que no se sabe se deja en blanco.
