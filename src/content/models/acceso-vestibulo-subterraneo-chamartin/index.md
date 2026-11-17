@@ -15,6 +15,8 @@ installations:
     note: En el acceso al nuevo vestíbulo subterráneo.
 composition:
   size: { width: 1048, height: 192 }
+  # The wall is painted white; a touch of grey keeps it apart from the page.
+  background: '#f3f3f1'
   elements:
     - id: logotipo
       at: { x: 16, y: 0, width: 237, height: 78 }
