@@ -5,7 +5,7 @@ import FamilyCard from '@/components/FamilyCard.astro';
 import { t } from '@/i18n';
 import Base from '@/layouts/Base.astro';
 import type { CollectionName } from '@/lib/catalog';
-import { counted, countryName, getCatalog, type Family, type Manufacturer, type Operator } from '@/site/catalog';
+import { counted, getCatalog, type Family } from '@/site/catalog';
 import { ENTITY_PAGES } from '@/site/entities';
 import { href } from '@/site/url';
 
@@ -17,20 +17,8 @@ interface Props {
 const { collection } = Astro.props;
 const catalog = await getCatalog();
 const page = ENTITY_PAGES[collection];
-/** A few key facts under each name, rather than the summary its own page leads with. */
-function keyFacts(entry: ReturnType<typeof catalog.entities>[number]): string {
-  if (collection === 'manufacturers') {
-    const data = (entry as Manufacturer).data;
-    return [data.city, data.country && countryName(data.country)].filter(Boolean).join(', ');
-  }
-  if (collection === 'operators') {
-    const data = (entry as Operator).data;
-    return [data.parent && catalog.operator(data.parent.id).data.name, data.country && countryName(data.country)].filter(Boolean).join(' · ');
-  }
-  return 'alsoKnownAs' in entry.data ? entry.data.alsoKnownAs.slice(0, 3).join(' · ') : '';
-}
 const entries = catalog.entities(collection).map((entry) => {
-  return { entry, facts: keyFacts(entry), count: counted('catalog.count.models', catalog.modelsWith(page.facet, entry.id).length) };
+  return { entry, count: counted('catalog.count.models', catalog.modelsWith(page.facet, entry.id).length) };
 });
 ---
 
@@ -43,13 +31,13 @@ const entries = catalog.entities(collection).map((entry) => {
         collection === 'families' && entries.map(({ entry }) => <FamilyCard family={entry as Family} level={2} />)
       }
       {
-        collection !== 'families' && entries.map(({ entry, facts, count }) => (
+        collection !== 'families' && entries.map(({ entry, count }) => (
           <li class="card">
             <div class="card-body">
               <h2 class="card-title">
                 <a href={href(`${page.segment}/${entry.id}/`)}>{entry.data.name}</a>
               </h2>
-              {facts && <p class="card-text">{facts}</p>}
+              <p class="card-text">{entry.data.summary}</p>
               <p class="card-meta muted">{count}</p>
             </div>
           </li>

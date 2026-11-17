@@ -22,10 +22,7 @@ const cover = catalog.cover(model);
 const poster = hasPoster(model) ? await posterHref(model) : undefined;
 const Heading = `h${level}` as 'h3';
 const years = yearsLabel(facts.years, facts.status);
-const status = facts.status !== 'unknown' ? t(`catalog.status.${facts.status}`) : '';
-const meta = [years, status, facts.stage === 'stub' ? t('catalog.stage.stub') : ''].filter(Boolean).join(' · ');
-// A few key facts rather than the summary, which the entry's page leads with.
-const subtitle = catalog.keyFacts(model).join(' · ');
+const meta = [years, facts.stage === 'stub' ? t('catalog.stage.stub') : ''].filter(Boolean).join(' · ');
 // Read by the filter on the catalog page: one data attribute per facet.
 const data = Object.fromEntries(Object.entries(catalog.facetData(model)).map(([key, value]) => [`data-f-${key}`, value]));
 const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
@@ -45,7 +42,7 @@ const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
   </div>
   <div class="card-body">
     <Heading class="card-title"><a href={href(`catalogo/${model.id}/`)}>{facts.name}</a></Heading>
-    <p class="card-text">{subtitle}</p>
+    <p class="card-text">{facts.summary}</p>
     {meta && <p class="card-meta">{meta}</p>}
     <ul class="badges">
       <li>
