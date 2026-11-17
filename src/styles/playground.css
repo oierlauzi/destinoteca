@@ -621,3 +621,8 @@
 .appearance {
   margin-bottom: 12px;
 }
+
+/* Where the data comes from, folded like the appearance: the tabs sit inside it. */
+.data .tabpanel {
+  margin-bottom: 8px;
+}

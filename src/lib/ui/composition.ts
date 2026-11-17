@@ -263,7 +263,9 @@ export function mountComposition(root: HTMLElement): void {
     tablist.append(tab);
   }
 
-  ui.replaceChildren(toolbar, embedBox, tablist, panel);
+  // Folded away, as on a replica's page, so that the entry is not buried under settings.
+  const data = el('details', { class: 'appearance data' }, [el('summary', { text: t('player.tabs') }), tablist, panel]);
+  ui.replaceChildren(toolbar, embedBox, data);
   apply(false);
   void drawPanel();
 }

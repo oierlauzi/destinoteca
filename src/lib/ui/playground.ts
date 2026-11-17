@@ -22,23 +22,6 @@ import { servicesEditor } from './services-editor';
  * source registry, forms from schemas, and everything the visitor sets is one
  * PlayerConfig, which is also exactly what an embed URL carries.
  */
-const store = {
-  get(key: string): string | null {
-    try {
-      return localStorage.getItem(key);
-    } catch {
-      return null;
-    }
-  },
-  set(key: string, value: string): void {
-    try {
-      localStorage.setItem(key, value);
-    } catch {
-      // Private windows and blocked storage: the setting just does not stick.
-    }
-  },
-};
-
 const editors: FormContext['editors'] = { services: servicesEditor };
 
 function initialConfig(def: ReplicaDef, root: HTMLElement): PlayerConfig {
@@ -263,11 +246,14 @@ export function mountPlayground(root: HTMLElement): void {
   // --- Appearance ---------------------------------------------------------------
   const optionsForm = renderForm(def.options, config.options, (options) => apply({ ...config, options }));
   const appearance = el('details', { class: 'appearance' }, [el('summary', { text: t('player.appearance') }), optionsForm.element]);
-  appearance.open = store.get('destinoteca-appearance-open') === '1';
-  appearance.addEventListener('toggle', () => store.set('destinoteca-appearance-open', appearance.open ? '1' : '0'));
+
+  // --- Data -----------------------------------------------------------------------
+  // Folded away like the appearance, so that what the page says about the sign
+  // is not buried under settings. The replica runs all the same.
+  const data = el('details', { class: 'appearance data' }, [el('summary', { text: t('player.tabs') }), ...(tabIds.length > 1 ? [tablist] : []), panel]);
 
   // Appearance first, straight under the sign it changes; then where the data comes from.
-  ui.replaceChildren(toolbar, embedBox, appearance, ...(tabIds.length > 1 ? [tablist] : []), panel);
+  ui.replaceChildren(toolbar, embedBox, appearance, ...(tabIds.length ? [data] : []));
 
   replica.addEventListener('replica-status', (event) => {
     const { status: state, detail } = (event as CustomEvent<{ status: SourceStatus; detail?: string }>).detail;
