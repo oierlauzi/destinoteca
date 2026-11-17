@@ -12,6 +12,9 @@ import {
   type FacetContext,
   type ModelFacts,
 } from '@/lib/catalog';
+import { resolveComposition } from '@/lib/compositions/layout';
+import type { EntryInput, ResolvedComposition } from '@/lib/compositions/types';
+import { getReplica } from '@/lib/replicas/registry';
 import { isReplicaId } from '@/lib/replicas/ids';
 
 /*
@@ -66,6 +69,7 @@ export class Catalog {
   private readonly factsById = new Map<string, ModelFacts>();
   /** Former model ids, and where each now points. */
   readonly modelAliases = new Map<string, string>();
+  private readonly layouts = new Map<string, ResolvedComposition>();
 
   constructor(
     readonly models: Model[],
@@ -145,8 +149,10 @@ export class Catalog {
 
   private buildFacts(model: Model): ModelFacts {
     const data = model.data;
+    // A composition is made by, run by and built with whatever its elements are.
+    const sources = [data, ...this.elementsOf(model).map((element) => element.data)];
     const operators = new Set<string>();
-    for (const link of data.operators) for (const operator of this.operatorChain(link.ref.id)) operators.add(operator.id);
+    for (const link of sources.flatMap((source) => source.operators)) for (const operator of this.operatorChain(link.ref.id)) operators.add(operator.id);
     const countries = new Set(data.countries);
     for (const installation of data.installations) {
       if (installation.site) countries.add(this.site(installation.site.id).data.country);
@@ -156,22 +162,101 @@ export class Catalog {
       name: data.name,
       summary: data.summary,
       kind: data.kind,
-      technologies: data.technologies.map((ref) => ref.id),
-      transportModes: data.transportModes,
+      technologies: [...new Set(sources.flatMap((source) => source.technologies.map((ref) => ref.id)))],
+      transportModes: [...new Set(sources.flatMap((source) => source.transportModes))],
       features: data.features,
-      manufacturers: [...new Set(data.manufacturers.map((link) => link.ref.id))],
+      manufacturers: [...new Set(sources.flatMap((source) => source.manufacturers.map((link) => link.ref.id)))],
       manufacturerUnknown: data.manufacturerUnknown,
       operators: [...operators],
       family: data.family?.id,
       countries: [...countries],
       years: data.years,
       status: data.status,
-      hasReplica: data.replica !== undefined,
+      hasReplica: data.replica !== undefined || data.composition !== undefined,
       stage: data.stage,
       photoCount: data.photos.length,
       referenceCount: data.references.length,
       bodyLength: (model.body ?? '').trim().length,
     };
+  }
+
+  // --- Compositions ---
+
+  /** The archive entries a composition is made of, each once, in the order first listed. */
+  elementsOf(model: Model): Model[] {
+    const ids = [...new Set((model.data.composition?.elements ?? []).flatMap((element) => (element.model ? [element.model.id] : [])))];
+    return ids.flatMap((id) => this.models.filter((candidate) => candidate.id === id));
+  }
+
+  /** The compositions an entry appears in. */
+  compositionsWith(model: Model | string): Model[] {
+    const id = typeof model === 'string' ? model : model.id;
+    return this.models.filter((candidate) => candidate.data.composition?.elements.some((element) => element.model?.id === id));
+  }
+
+  /** Where everything of a composition goes. */
+  composition(model: Model): ResolvedComposition {
+    const layout = this.layouts.get(model.id);
+    if (!layout) throw new Error(`Catalog: "${model.id}" is not a composition`);
+    return layout;
+  }
+
+  private entryInput = (id: string): EntryInput | undefined => {
+    const entry = this.models.find((candidate) => candidate.id === id);
+    if (!entry) return undefined;
+    return { id: entry.id, name: entry.data.name, replica: entry.data.replica, variants: entry.data.variants };
+  };
+
+  private checkComposition(model: Model, report: (where: string, what: string) => void): void {
+    const where = `models/${model.id}`;
+    const { data } = model;
+    if ((data.kind === 'composition') !== (data.composition !== undefined)) {
+      report(where, 'kind: composition goes with a composition block, and a composition block with kind: composition');
+    }
+    if (!data.composition) return;
+    if (data.replica) report(where, 'a composition draws its elements; it has no replica of its own');
+    if (data.installations.length !== 1) report(where, 'a composition is one installation: give exactly one');
+    const { size, elements } = data.composition;
+    for (const id of collisions(elements.map((element) => element.id))) report(where, `element id "${id}" is repeated`);
+    const series = new Map<string, string>();
+    for (const element of elements) {
+      const at = `${where}, element "${element.id}"`;
+      const height = element.at.height ?? 0;
+      if (element.at.x < 0 || element.at.y < 0 || element.at.x + element.at.width > size.width || element.at.y + height > size.height) {
+        report(at, `does not fit in the composition's ${size.width} × ${size.height} cm`);
+      }
+      if (!element.model) continue;
+      const entry = this.models.find((candidate) => candidate.id === element.model!.id);
+      if (!entry) {
+        report(at, `refers to the entry "${element.model.id}", which does not exist`);
+        continue;
+      }
+      if (entry.data.composition) report(at, `"${entry.id}" is itself a composition`);
+      if (!entry.data.replica) {
+        report(at, `"${entry.id}" has no replica to draw it with`);
+        continue;
+      }
+      if (element.variant && !entry.data.variants.some((variant) => variant.id === element.variant)) {
+        report(at, `"${entry.id}" has no variant "${element.variant}"`);
+      }
+      if (element.serie) {
+        const replica = series.get(element.serie);
+        if (replica && replica !== entry.data.replica.id) report(at, `the series "${element.serie}" mixes different displays`);
+        series.set(element.serie, entry.data.replica.id);
+      }
+    }
+    try {
+      const input = { ...data.composition, elements: data.composition.elements.map((element) => ({ ...element, model: element.model?.id })) };
+      const layout = resolveComposition(input, this.entryInput);
+      for (const member of layout.members) {
+        if (member.kind === 'replica' && (member.y + member.height > size.height + 0.5 || member.x + member.width > size.width + 0.5)) {
+          report(`${where}, element "${member.id}"`, `at its replica's shape it is ${member.height} cm tall and does not fit`);
+        }
+      }
+      this.layouts.set(model.id, layout);
+    } catch (error) {
+      report(where, (error as Error).message);
+    }
   }
 
   /** The photo that stands for a model on cards and in previews. */
@@ -261,6 +346,8 @@ export class Catalog {
       for (const installation of data.installations) check(where, this.sites, installation.site, 'site');
       check(where, this.families, data.family, 'family');
       if (data.replica && !isReplicaId(data.replica.id)) report(where, `replica "${data.replica.id}" does not exist`);
+      if (data.replica && !getReplica(data.replica.id)) report(where, `replica "${data.replica.id}" is not registered`);
+      this.checkComposition(model, report);
       if (data.cover && !data.photos.some((photo) => photo.id === data.cover)) {
         report(where, `cover "${data.cover}" is not the id of one of its photos`);
       }

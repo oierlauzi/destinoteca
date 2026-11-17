@@ -47,6 +47,14 @@ variants:
       lengua: va
       modo: arrivals
       color: '#ff3b30'
+  - id: alta-velocidad
+    name: Con el servicio en la cabecera
+    description: >-
+      «Llegadas: Alta velocidad», con el inglés en una franja más oscura en
+      medio de la cabecera, como en Sevilla-Santa Justa.
+    replicaPreset:
+      servicio: Alta velocidad
+      service: HIGH SPEED
   - id: sin-logotipo
     name: Sin logotipo
     description: >-
@@ -62,6 +70,9 @@ installations:
     status: in-service
   - site: es/barcelona-sants
     status: in-service
+  - site: es/sevilla-santa-justa
+    status: in-service
+    note: Cuatro tableros con un reloj Festina en medio; véase la composición.
   - site: es/leon
     status: in-service
     note: Un tablero de llegadas, según la fuente de la fotografía.
@@ -83,6 +94,7 @@ photos:
       tableros de salidas y llegadas, dos a cada lado de un reloj Festina.
     caption: Cuatro tableros de alta velocidad con un reloj Festina en medio, enero de 2026.
     date: '2026-01-20'
+    place: Sevilla-Santa Justa
     author: Agent Travel
     sourceUrl: https://agenttravel.es/Fotos/AVE%20Madrid%20Sevilla%2020ene26.jpg
     source: Agent Travel

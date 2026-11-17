@@ -1,0 +1,75 @@
+---
+// A composition on its page: the wall with its printed panels, each display
+// where it hangs (a link to its entry of the archive) and one data source for
+// them all. All behaviour is in src/lib/ui/composition.ts.
+import '@/styles/playground.css';
+import '@/styles/composition.css';
+import { t } from '@/i18n';
+import { toString } from '@/lib/hardware';
+import { wallNodes } from '@/lib/compositions/render';
+import type { ResolvedComposition } from '@/lib/compositions/types';
+import { drawMembers } from '@/site/composition';
+import { href } from '@/site/url';
+
+interface Props {
+  id: string;
+  title: string;
+  composition: ResolvedComposition;
+  /** Only the displays, as in an embed. */
+  bare?: boolean;
+}
+
+const { id, title, composition, bare = false } = Astro.props;
+const { width, height } = composition;
+const drawn = await drawMembers(composition);
+const pct = (n: number, of: number): string => `${Math.round((n / of) * 100000) / 1000}%`;
+// Inline SVG wants neither the XML prolog nor a fixed size.
+const inline = (svg: string): string => svg.slice(svg.indexOf('<svg')).replace(/^<svg([^>]*?)\swidth="[^"]*"\sheight="[^"]*"/, '<svg$1 width="100%"');
+const wall = `<svg viewBox="0 0 ${width} ${height}" width="100%" aria-hidden="true">${wallNodes(composition).map((node) => toString(node)).join('')}</svg>`;
+const members = composition.members.flatMap((member) => (member.kind === 'replica' ? [member] : []));
+---
+
+<section
+  class:list={['playground', { 'composition-player': !bare, 'composition-embed': bare }]}
+  aria-label={title}
+  data-id={id}
+  data-title={title}
+  data-embed={href(`embed/catalogo/${id}/`)}
+  data-composition={JSON.stringify(composition)}
+>
+  <div class="stage" style={`--ratio:${width / height}`}>
+    <div class="wall" style={`aspect-ratio:${width}/${height}`}>
+      <Fragment set:html={wall} />
+      {
+        members.map((member) => (
+          <a
+            class="member"
+            href={href(`catalogo/${member.entry}/`)}
+            target={bare ? '_top' : undefined}
+            title={member.variant ? `${member.name} (${member.variant})` : member.name}
+            aria-label={member.name}
+            data-member={member.id}
+            style={`left:${pct(member.x, width)};top:${pct(member.y, height)};width:${pct(member.width, width)}`}
+            set:html={inline(drawn.get(member.id) ?? '')}
+          />
+        ))
+      }
+    </div>
+  </div>
+  {
+    !bare && (
+      <>
+        <noscript>
+          <p class="muted">{t('player.noscript')}</p>
+        </noscript>
+        <div class="playground-ui" />
+      </>
+    )
+  }
+</section>
+
+<script>
+  import { mountCompositionEmbed, mountCompositions } from '@/lib/ui/composition';
+  mountCompositions();
+  document.querySelectorAll<HTMLElement>('.composition-embed').forEach(mountCompositionEmbed);
+</script>

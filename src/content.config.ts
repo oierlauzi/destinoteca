@@ -33,6 +33,8 @@ const entries = (folder: string) => glob({ base: `./src/content/${folder}`, patt
 const id = z.string().regex(ID_PATTERN, { error: 'lower-case words joined by hyphens' });
 const country = z.string().regex(COUNTRY_PATTERN, { error: 'lower-case ISO 3166-1 alpha-2 code' });
 const year = z.number().int().min(1800).max(2100);
+/** Replica settings by URL key, as in an embed URL. */
+const settings = z.record(z.string(), z.union([z.string(), z.number(), z.boolean()]));
 /** A date as precise as is known: YYYY, YYYY-MM or YYYY-MM-DD. Quoted in YAML. */
 const partialDate = z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/, { error: 'YYYY, YYYY-MM or YYYY-MM-DD, in quotes' });
 
@@ -45,8 +47,9 @@ const models = defineCollection({
       alsoKnownAs: z.array(z.string()).default([]),
       summary: z.string().max(300),
       kind: z.enum(KINDS),
-      technologies: z.array(reference('technologies')).min(1),
-      transportModes: z.array(z.enum(TRANSPORT_MODES)).min(1),
+      /** A composition takes these from its elements as well; anything else needs at least one of each. */
+      technologies: z.array(reference('technologies')).default([]),
+      transportModes: z.array(z.enum(TRANSPORT_MODES)).default([]),
       features: z.array(z.enum(FEATURES)).default([]),
       manufacturers: z.array(z.object({ ref: reference('manufacturers'), role: z.enum(MANUFACTURER_ROLES) })).default([]),
       manufacturerUnknown: z.boolean().default(false),
@@ -152,6 +155,58 @@ const models = defineCollection({
            * a hand-typed frame and appearance, by URL key, as in an embed URL.
            */
           poster: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
+        })
+        .optional(),
+      /**
+       * For `kind: composition`: entries of the archive hung together as they
+       * were at the place of its one installation, with the printed panels
+       * that went with them. Measured in centimetres from the top left.
+       */
+      composition: z
+        .object({
+          size: z.object({ width: z.number().positive(), height: z.number().positive() }),
+          /** The wall behind, when it shows between the elements. */
+          background: z.string().optional(),
+          elements: z
+            .array(
+              z
+                .object({
+                  id,
+                  /** An entry of the archive with a replica. */
+                  model: reference('models').optional(),
+                  variant: id.optional(),
+                  /** Replica settings, by URL key, over the entry's and its variant's. */
+                  params: settings.optional(),
+                  /** An entry's height follows from its replica; a panel gives its own. */
+                  at: z.object({ x: z.number(), y: z.number(), width: z.number().positive(), height: z.number().positive().optional() }),
+                  /** Boards of one series carry on from one another, in the order listed. */
+                  serie: z.string().optional(),
+                  platforms: z.array(z.string()).optional(),
+                  /** A printed plate that belongs to the installation rather than to any entry. */
+                  panel: z
+                    .object({
+                      fill: z.string(),
+                      edge: z.string().optional(),
+                      valign: z.enum(['top', 'middle', 'bottom']).optional(),
+                      lines: z.array(
+                        z.object({
+                          text: z.string(),
+                          /** Height of the capitals, in cm. */
+                          size: z.number().positive(),
+                          weight: z.number().optional(),
+                          color: z.string().optional(),
+                          align: z.enum(['left', 'center', 'right']).optional(),
+                          spacing: z.number().optional(),
+                        }),
+                      ),
+                      logo: z.object({ kind: z.enum(['adif', 'cercanias']), height: z.number().positive(), color: z.string().optional() }).optional(),
+                    })
+                    .optional(),
+                })
+                .refine((e) => (e.model === undefined) !== (e.panel === undefined), { error: 'give exactly one of model or panel' })
+                .refine((e) => e.panel === undefined || e.at.height !== undefined, { error: 'a panel needs at.height' }),
+            )
+            .min(1),
         })
         .optional(),
       /** Former ids of this entry. Each leaves a redirect behind. */

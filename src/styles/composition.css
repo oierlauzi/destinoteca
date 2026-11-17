@@ -1,0 +1,42 @@
+/*
+ * A composition: the wall, and each display where it hangs. Global, like the
+ * playground's, because the displays are put in place by script.
+ */
+
+.wall {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.wall > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.wall .member {
+  position: absolute;
+  display: block;
+  border-radius: 2px;
+  outline-offset: 3px;
+}
+
+/* Each display is a way into its entry of the archive. */
+.wall .member:hover,
+.wall .member:focus-visible {
+  outline: 2px solid var(--accent, #3b82f6);
+}
+
+.wall .member destinoteca-replica,
+.wall .member svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage:fullscreen .wall,
+.stage.is-fake-fullscreen .wall {
+  max-width: none;
+  width: min(100%, calc((100vh - 48px) * var(--ratio)));
+}

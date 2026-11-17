@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import Infobox from '@/components/Infobox.astro';
+import CompositionPlayer from '@/components/CompositionPlayer.astro';
 import ModelGrid from '@/components/ModelGrid.astro';
 import PhotoGallery from '@/components/PhotoGallery.astro';
 import References from '@/components/References.astro';
@@ -27,6 +28,8 @@ const { Content } = await render(model);
 const cover = catalog.cover(model);
 const social = cover ? (await getImage({ src: cover.src, width: Math.min(cover.src.width, 1200) })).src : undefined;
 const siblings = facts.family ? catalog.modelsWith('familia', facts.family).filter((other) => other.id !== model.id) : [];
+const elements = catalog.elementsOf(model);
+const partOf = catalog.compositionsWith(model);
 
 /** "1996–2026", "desde 1996", "hasta 2026": whatever is known of a period. */
 function span(from?: number, to?: number): string {
@@ -63,10 +66,10 @@ const installations = data.installations.map((installation) => {
       <p class="lead">{data.summary}</p>
       <ul class="badges">
         {
-          data.technologies.map((ref) => (
+          facts.technologies.map((id) => (
             <li>
-              <a class="badge" href={href(`tecnologias/${ref.id}/`)}>
-                {catalog.technology(ref.id).data.name}
+              <a class="badge" href={href(`tecnologias/${id}/`)}>
+                {catalog.technology(id).data.name}
               </a>
             </li>
           ))
@@ -98,6 +101,27 @@ const installations = data.installations.map((installation) => {
             {t('catalog.model.replica')}
           </h2>
           <ReplicaPlayground replicaId={data.replica.id} params={data.replica.params} />
+        </section>
+      )
+    }
+
+    {
+      data.composition && (
+        <section class="replica" aria-labelledby="replica-title">
+          <h2 id="replica-title" class="visually-hidden">
+            {t('catalog.model.composition')}
+          </h2>
+          <CompositionPlayer id={model.id} title={data.name} composition={catalog.composition(model)} />
+        </section>
+      )
+    }
+
+    {
+      elements.length > 0 && (
+        <section aria-labelledby="elementos">
+          <h2 id="elementos">{t('catalog.model.elements')}</h2>
+          <p class="muted">{t('catalog.model.elements.help')}</p>
+          <ModelGrid models={elements} />
         </section>
       )
     }
@@ -159,6 +183,15 @@ const installations = data.installations.map((installation) => {
         <section aria-labelledby="fuentes">
           <h2 id="fuentes">{t('catalog.model.references')}</h2>
           <References references={data.references} />
+        </section>
+      )
+    }
+
+    {
+      partOf.length > 0 && (
+        <section aria-labelledby="composiciones">
+          <h2 id="composiciones">{t('catalog.model.partOf')}</h2>
+          <ModelGrid models={partOf} />
         </section>
       )
     }

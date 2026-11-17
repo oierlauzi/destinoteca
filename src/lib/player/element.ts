@@ -31,7 +31,7 @@ const sameSource = (a: PlayerConfig | undefined, b: PlayerConfig): boolean =>
  * The element is the whole public surface for a page: set `query` (or call
  * `configure`) and listen to its events. It owns a hub of its own unless one
  * is handed to it before it connects, which is how several replicas share a
- * station.
+ * station: then whoever handed it the hub chooses the source.
  */
 export class ReplicaElement extends HTMLElement {
   static readonly observedAttributes = ['replica', 'query'];
@@ -72,7 +72,7 @@ export class ReplicaElement extends HTMLElement {
       placement: config.placement,
       raw: config.source === RAW ? config.frame : undefined,
     });
-    if (!sameSource(previous, config)) {
+    if (this.ownsHub && !sameSource(previous, config)) {
       void this.hub.setSource(config.source === RAW ? undefined : getSource(config.source), config.sourceConfig);
     }
   }

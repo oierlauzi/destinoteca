@@ -155,6 +155,13 @@ describe('selection', () => {
       .toEqual(['leaving', 'a', 'c', 'd']);
   });
 
+  it('lets the second board of a series carry on where the first stops', () => {
+    const top = { ...concourse, window: { size: 4, mode: 'top' as const, dwellMs: 0 } };
+    expect(ids(select(snapshot, top, anywhere, T0).services)).toEqual(['leaving', 'a', 'c', 'd']);
+    expect(ids(select(snapshot, top, { ...anywhere, skip: 4 }, T0).services)).toEqual(['e', 'f']);
+    expect(select(snapshot, top, { ...anywhere, skip: 8 }, T0).services).toEqual([]);
+  });
+
   it('keeps hand-typed services without a time, in the order given, after the timed ones', () => {
     const typed = board([{ id: 'x', destination: { name: 'X' } }, train('a', 'A', min(3), '1'), { id: 'y', destination: { name: 'Y' } }]);
     expect(ids(eligible(typed, concourse, anywhere, T0))).toEqual(['a', 'x', 'y']);

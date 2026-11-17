@@ -18,6 +18,7 @@ export const catalog: Record<string, string> = {
   'catalog.kind.clock': 'Reloj',
   'catalog.kind.onboard-display': 'Indicador a bordo',
   'catalog.kind.other': 'Otro',
+  'catalog.kind.composition': 'Composición',
   'catalog.mode.rail': 'Ferrocarril',
   'catalog.mode.metro': 'Metro',
   'catalog.mode.tram': 'Tranvía',
@@ -114,6 +115,10 @@ export const catalog: Record<string, string> = {
   'catalog.model.stubLink': 'Cómo contribuir',
   'catalog.model.noReplica': 'Este equipo todavía no tiene réplica web.',
   'catalog.model.sameFamily': 'De la misma familia',
+  'catalog.model.composition': 'La composición',
+  'catalog.model.elements': 'Qué la forma',
+  'catalog.model.elements.help': 'Cada elemento tiene su propia ficha en el archivo. Pulsa sobre uno en la composición o en la lista para ir a ella.',
+  'catalog.model.partOf': 'Forma parte de',
 
   // Photos
   'catalog.photo.by': 'Foto: {author}',

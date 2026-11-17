@@ -199,6 +199,24 @@ ids, unknown replica ids and articles missing required facts.
 `src/lib/catalog/facets.ts` is the single table of organising axes: the
 filterable list and every taxonomy page are generated from it.
 
+### Compositions
+
+A replica is one unit. Units that hung together at one place (four boards
+with a clock between them, two split-flap boards under one printed frame)
+are archive entries of their own: `kind: composition`, with a
+`composition` block listing elements (another entry, its variant and
+settings, its place in centimetres) and printed panels. They live in the
+same collection as everything else, and take their technologies,
+manufacturers, operators and modes from their elements, so every listing
+and taxonomy page includes them.
+
+`src/lib/compositions/` resolves the layout (settings: the entry's, then its
+variant's, then the composition's; height from the replica's shape) and
+composes one SVG from each element's own drawing. On the page, one
+`SourceHub` feeds every element: a `ReplicaElement` handed a hub leaves the
+source to whoever handed it. Boards in the same `serie` carry on from one
+another through `Placement.skip`. Each element links to its own entry.
+
 Pages are thin wrappers over `src/views/`. Internal links go through
 `href()` in `src/site/url.ts`, which adds the base path (and, one day, a
 language prefix). UI strings live in `src/i18n/es/` behind `t()`.

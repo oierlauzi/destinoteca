@@ -110,10 +110,13 @@ const SHORT: Record<string, string> = { INTERCITY: 'INTCITY' };
 
 const named = (name: string, names?: string[]): Place => ({ name, names, country: 'es' });
 
-/** Twelve trains ahead of `now` at a large station, the same ones for the same seed. */
+/**
+ * Twenty trains ahead of `now` at a large station, the same ones for the same
+ * seed: enough for several boards hung together.
+ */
 export function buildLongDistanceBoard(seed: number, now: number): Service[] {
   const services: Service[] = [];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 20; i++) {
     const pick = (seed + i * 5) % LONG_RUNS.length;
     const run = LONG_RUNS[pick]!;
     const at = now + (240 + i * 420 + ((seed + i * 31) % 300)) * 1000;
@@ -155,6 +158,17 @@ const LONG_NOTICES: Notice[] = [
   { text: 'Acceso a la sala de embarque 30 minutos antes de la salida', severity: 'info' },
 ];
 
+/** A simulated station's picture, with its trains. */
+export function demoSnapshot(long: boolean, services: Service[], now: number): BoardSnapshot {
+  return {
+    kind: 'board',
+    generatedAt: now,
+    station: { name: 'Estación de pruebas', country: 'es', timeZone: DEFAULT_TIME_ZONE },
+    services,
+    notices: long ? LONG_NOTICES : undefined,
+  };
+}
+
 export function create(config: Values, env: SourceEnv): SourceInstance {
   let timer: ReturnType<typeof setInterval> | undefined;
   const long = config.network === 'long-distance';
@@ -176,14 +190,7 @@ export function create(config: Values, env: SourceEnv): SourceInstance {
           origin = now;
           services = board(seed, origin);
         }
-        const snapshot: BoardSnapshot = {
-          kind: 'board',
-          generatedAt: now,
-          station: { name: 'Estación de pruebas', country: 'es', timeZone: DEFAULT_TIME_ZONE },
-          services,
-          notices: long ? LONG_NOTICES : undefined,
-        };
-        handlers.onSnapshot(snapshot);
+        handlers.onSnapshot(demoSnapshot(long, services, now));
       };
       handlers.onStatus('live', 'demo.simulated');
       emit();

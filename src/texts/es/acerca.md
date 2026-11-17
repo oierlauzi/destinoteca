@@ -14,6 +14,11 @@ Cada ficha reúne dos cosas:
   que se puede manejar a mano, alimentar con datos de trenes, insertar en otra
   página o descargar como imagen vectorial.
 
+El archivo guarda también **composiciones**: los equipos tal y como colgaban
+juntos en un lugar concreto, como varios tableros con un reloj en medio, con
+las placas impresas que los acompañaban. Cada composición enlaza con la ficha
+de cada uno de sus elementos, y todos muestran los mismos trenes.
+
 ## De dónde sale
 
 El archivo nació de [renfe-flipdot-re](https://github.com/oierlauzi/renfe-flipdot-re),

@@ -36,6 +36,11 @@ export interface Placement {
   platforms: string[];
   /** False holds the next service instead of rotating or paging. */
   cycle: boolean;
+  /**
+   * How many services the units before this one already show: the second
+   * board of a series hung together carries on where the first stops.
+   */
+  skip?: number;
 }
 
 /** What a replica's presenter receives. Always a list, even for a one-line sign. */
@@ -101,7 +106,8 @@ export function eligible(snapshot: BoardSnapshot, policy: SelectionPolicy, place
 
 /**
  * The window of `eligible` services on show at step `step` (a counter the
- * player advances every `dwellMs`).
+ * player advances every `dwellMs`), after those the units before this one
+ * show.
  */
 export function windowOf(
   services: Service[],
@@ -110,6 +116,7 @@ export function windowOf(
   step: number,
 ): { services: Service[]; page?: { index: number; count: number } } {
   const { size, mode } = policy.window;
+  if (placement.skip) services = services.slice(placement.skip);
   const depth = Math.min(services.length, policy.window.depth ?? services.length);
   if (mode === 'top' || !placement.cycle || depth <= size) return { services: services.slice(0, size) };
   if (mode === 'rotate') {

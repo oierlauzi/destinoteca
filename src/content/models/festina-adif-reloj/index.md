@@ -47,6 +47,8 @@ installations:
     status: in-service
   - site: es/huesca
     status: in-service
+  - site: es/sevilla-santa-justa
+    status: in-service
 photos:
   - id: reloj-cuadrado-2021
     src: ./reloj-cuadrado-2021.jpg
@@ -67,6 +69,7 @@ photos:
       salidas y llegadas.
     caption: Entre cuatro tableros de salidas y llegadas, enero de 2026.
     date: '2026-01-20'
+    place: Sevilla-Santa Justa
     author: Agent Travel
     sourceUrl: https://agenttravel.es/Fotos/AVE%20Madrid%20Sevilla%2020ene26.jpg
     source: Agent Travel

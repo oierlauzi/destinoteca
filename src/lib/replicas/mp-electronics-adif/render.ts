@@ -27,6 +27,8 @@ export const FONT_FAMILY = 'Myriad Pro, Frutiger, Segoe UI, Helvetica Neue, Aria
 export const BODY = '#24272b';
 export const BODY_EDGE = '#3b3f44';
 export const GREEN = '#00703c';
+/** The darker band of a service header. */
+const SERVICE_BAND = '#005a30';
 const TAB = '#e6e7e4';
 const TAB_INK = '#4d4f51';
 export const LEGEND_ES = '#c4c7c3';
@@ -163,6 +165,7 @@ const legendText = (legend: Legend, regional: Regional): { es: string; regional?
 const roughWidth = (text: string, size: number, perChar = 0.53): number => text.length * size * perChar;
 
 function header(options: AdifOptions): VNode[] {
+  if (options.service) return serviceHeader(options);
   const title = legendText(TITLES[options.mode], options.regional);
   const big = 12.5;
   const small = 7.5;
@@ -186,6 +189,23 @@ function header(options: AdifOptions): VNode[] {
   parts.push(h('text', { x: FIELD_X.time, y: 18.5, fill: ink }, spans));
   if (options.logo) parts.push(adifLogo(BOARD_WIDTH - 12, HEADER / 2, 10.5, '#ffffff'));
   return parts;
+}
+
+/**
+ * The header of a board for one service, as at Chamartín: "Llegadas: Alta
+ * velocidad" on the left, and the English on a darker band in the middle.
+ */
+function serviceHeader(options: AdifOptions): VNode[] {
+  const title = TITLES[options.mode];
+  const band = { x: BOARD_WIDTH * 0.36, width: BOARD_WIDTH * 0.4 };
+  const english = [title.en, options.serviceEn].filter(Boolean).join(': ');
+  return [
+    h('path', { d: `M2,0H${BOARD_WIDTH - 2}Q${BOARD_WIDTH},0 ${BOARD_WIDTH},2V${HEADER}H0V2Q0,0 2,0Z`, fill: GREEN }),
+    h('rect', { x: band.x, y: 6, width: band.width, height: HEADER - 12, fill: SERVICE_BAND }),
+    h('text', { x: FIELD_X.time, y: 18, fill: '#ffffff', 'font-size': 11, 'font-weight': 400 }, [`${title.es}: ${options.service}`]),
+    h('text', { x: band.x + band.width / 2, y: 16.6, fill: '#ffffff', 'font-size': 6.5, 'font-weight': 700, 'letter-spacing': 0.3, 'text-anchor': 'middle' }, [english]),
+    ...(options.logo ? [adifLogo(BOARD_WIDTH - 12, HEADER / 2, 10.5, '#ffffff')] : []),
+  ];
 }
 
 function legends(options: AdifOptions): VNode[] {
@@ -308,7 +328,7 @@ export function mount(host: Element, initial: AdifOptions, env: { ticker: Ticker
 
   /** The parts that do not move are rebuilt only when an option that shapes them changes. */
   const shapeKey = (o: AdifOptions): string =>
-    JSON.stringify([o.mode, o.regional, o.header, o.logo, o.remarksEn]);
+    JSON.stringify([o.mode, o.regional, o.header, o.logo, o.remarksEn, o.service, o.serviceEn]);
 
   const wideOffset = (): number => {
     const strip = wideStrip(frame.wide);

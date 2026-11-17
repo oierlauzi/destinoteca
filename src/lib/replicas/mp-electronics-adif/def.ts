@@ -34,6 +34,9 @@ export interface AdifOptions {
   regional: Regional;
   header: 'green' | 'tab';
   logo: boolean;
+  /** The service the board is for, after its title: "Alta velocidad", "HIGH SPEED". */
+  service: string;
+  serviceEn: string;
   remarksEn: string;
   color: string;
   wideColor: string;
@@ -83,6 +86,8 @@ export const optionsSchema: ParamSchema = {
       choices: [{ value: 'green', label: 'adif.header.green' }, { value: 'tab', label: 'adif.header.tab' }],
     },
     { key: 'logo', type: 'boolean', label: 'adif.opt.logo', help: 'adif.opt.logo.help', default: true, group: 'look' },
+    { key: 'service', urlKey: 'servicio', type: 'text', label: 'adif.opt.service', help: 'adif.opt.service.help', default: '', maxLength: 24, group: 'look' },
+    { key: 'serviceEn', urlKey: 'service', type: 'text', label: 'adif.opt.serviceEn', default: '', maxLength: 24, group: 'look' },
     {
       key: 'remarksEn', urlKey: 'obs', type: 'select', label: 'adif.opt.remarksEn', default: 'REMARKS', group: 'look', literal: true,
       choices: [{ value: 'REMARKS', label: 'REMARKS' }, { value: 'OBSERVATIONS', label: 'OBSERVATIONS' }],

@@ -13,6 +13,8 @@ export const KINDS = [
   'clock',
   'onboard-display',
   'other',
+  /** Several entries of the archive hung together, as they were at one place. */
+  'composition',
 ] as const;
 export type Kind = (typeof KINDS)[number];
 
