@@ -24,7 +24,26 @@ locations:
   - site: es/madrid-chamartin
     status: retired
     note: En el vestíbulo, sobre las taquillas y los accesos a las vías.
+variants:
+  - id: marco-negro-logotipos
+    name: Marco negro, con logotipos
+    description: >-
+      En 1995 el marco era negro y las paletas del tren llevaban el logotipo
+      de cada producto en su color, como los de Talgo, Intercity, Estrella,
+      Trenhotel o el de los Regionales.
 photos:
+  - id: chamartin-1995
+    src: ./chamartin-1995.jpg
+    alt: >-
+      El vestíbulo de Chamartín con viajeros bajo dos paneles de paletas de
+      marco negro, el de Cercanías y el de largo recorrido, uno junto al
+      otro, y una máquina de billetes en primer plano.
+    caption: Chamartín, 1995, con el marco negro, junto al panel de Cercanías.
+    date: '1995'
+    place: Madrid Chamartín
+    author: Archivo Renfe
+    source: Facebook (Bvemike)
+    license: rights-reserved-credited
   - id: chamartin-anos-80
     src: ./chamartin-anos-80.jpg
     alt: >-
@@ -94,7 +113,9 @@ microprocesadores; lo gobernaba el sistema NET 2000 de Solari.
 
 Son los mismos paneles en todas las fotografías; entre los años ochenta y
 2007 solo cambiaron los marcos y las paletas, que con el tiempo pasaron a
-mostrar el producto de cada tren con su logotipo. El nombre del fabricante,
+mostrar el producto de cada tren con su logotipo. En una fotografía de 1995
+el marco es negro y las paletas del tren llevan ya el logotipo de cada
+producto en su color, junto al panel de Cercanías, con el mismo marco. El nombre del fabricante,
 «solari&c. udine, italy», se lee en el marco inferior en una de las
 fotografías.
 

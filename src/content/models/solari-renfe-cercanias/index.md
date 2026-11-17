@@ -24,6 +24,19 @@ locations:
   - site: es/madrid-chamartin
     status: retired
     note: En el vestíbulo.
+photos:
+  - id: chamartin-1995
+    src: ./chamartin-1995.jpg
+    alt: >-
+      El vestíbulo de Chamartín con viajeros bajo dos paneles de paletas de
+      marco negro, el de Cercanías y el de largo recorrido, uno junto al
+      otro, y una máquina de billetes en primer plano.
+    caption: Chamartín, 1995, a la izquierda del panel de largo recorrido.
+    date: '1995'
+    place: Madrid Chamartín
+    author: Archivo Renfe
+    source: Facebook (Bvemike)
+    license: rights-reserved-credited
 references:
   - title: Nuevos indicadores de vía en la estación de Sants
     author: José Luis Ordóñez
@@ -38,7 +51,7 @@ stage: stub
 Es un panel de paletas de [Solari](../../fabricantes/solari/) con el título
 «CERCANIAS», que colgaba en el vestíbulo de Madrid Chamartín junto a los
 [de largo recorrido](../paletas-chamartin-vestibulo/), del mismo estilo: marco
-claro, paletas negras con letras blancas y leyendas impresas en minúsculas
+claro o negro, paletas negras con letras blancas y leyendas impresas en minúsculas
 sobre cada columna. Cada fila anuncia un tren a su paso por la estación:
 
 | Columna | Paletas |
@@ -57,7 +70,8 @@ instaló en 1975 VEMISA, la representante de Solari en España. El artículo, de
 1989, cuenta tableros de cercanías entre los equipos de esos sistemas, pero no
 dice desde cuándo estaba este.
 
-Se conoce por una fotografía que no se puede reproducir aquí.
+En una fotografía de 1995 cuelga a la izquierda del panel de largo recorrido,
+los dos con marco negro.
 
 ## Lo que no se sabe
 
