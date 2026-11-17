@@ -12,22 +12,12 @@ const LEADING = 0.55;
 const MARGIN = 0.08;
 
 /**
- * Letters of satin aluminium standing off the wall: a soft sheen from top to
- * bottom, and their depth showing as a darker edge below and to the right.
+ * Letters of aluminium standing off the wall: one solid metal grey, with
+ * their depth showing as a darker edge below and to the right.
  */
+const ALUMINIUM = '#a9aeb3';
 const DEPTH = 0.9;
 const DEPTH_COLOR = '#5f646a';
-
-function aluminium(id: string, top: number, bottom: number): { defs: VNode; fill: string } {
-  const gradient = `${id}-aluminio`;
-  const stops: [number, string][] = [[0, '#e3e6e9'], [0.45, '#c2c7cc'], [0.7, '#b1b6bb'], [1, '#cdd1d5']];
-  return {
-    defs: h('defs', {}, [
-      h('linearGradient', { id: gradient, gradientUnits: 'userSpaceOnUse', x1: 0, y1: top, x2: 0, y2: bottom }, stops.map(([offset, color]) => h('stop', { offset, 'stop-color': color }))),
-    ]),
-    fill: `url(#${gradient})`,
-  };
-}
 
 /** A printed plate, in the composition's centimetres. */
 export function panelNodes(member: PanelMember): VNode[] {
@@ -42,7 +32,7 @@ export function panelNodes(member: PanelMember): VNode[] {
     const baseline = top + line.size;
     const align = line.align ?? 'center';
     const lx = align === 'left' ? x + margin : align === 'right' ? x + width - margin : x + width / 2;
-    const metal = line.finish === 'aluminium' ? aluminium(`${member.id}-${i}`, baseline - line.size, baseline) : undefined;
+    const metal = line.finish === 'aluminium';
     const attrs = {
       x: lx,
       y: baseline,
@@ -55,10 +45,9 @@ export function panelNodes(member: PanelMember): VNode[] {
       ...(line.stretch ? { textLength: Math.round((width - 2 * margin) * 100) / 100, lengthAdjust: 'spacing' } : {}),
     };
     if (metal) {
-      nodes.push(metal.defs);
       nodes.push(h('text', { ...attrs, x: lx + DEPTH, y: baseline + DEPTH, fill: DEPTH_COLOR }, [line.text]));
     }
-    nodes.push(h('text', { ...attrs, fill: metal?.fill ?? line.color ?? '#ffffff', ...(metal ? { stroke: '#8d9399', 'stroke-width': 0.2 } : {}) }, [line.text]));
+    nodes.push(h('text', { ...attrs, fill: metal ? ALUMINIUM : (line.color ?? '#ffffff') }, [line.text]));
     top = baseline + (gaps[i] ?? 0);
   });
   if (panel.logo) {
