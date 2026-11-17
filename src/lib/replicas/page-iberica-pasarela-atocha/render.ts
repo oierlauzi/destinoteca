@@ -75,6 +75,16 @@ const sweep = (): DotTransition => new DotTransition(LINE_COUNT, COLS, ROWS, (_t
 /** The radius of the frame's top corners. */
 const CORNER = FRAME + 2;
 
+/** A face's outline, with its outer top corner rounded and the other three square. */
+function facePath(x: number, y: number, outer: 'left' | 'right'): string {
+  const r = 4;
+  const right = x + FACE.width;
+  const bottom = y + FACE.height;
+  return outer === 'left'
+    ? `M${x},${bottom}V${y + r}Q${x},${y} ${x + r},${y}H${right}V${bottom}Z`
+    : `M${x},${bottom}V${y}H${right - r}Q${right},${y} ${right},${y + r}V${bottom}Z`;
+}
+
 /** One face: its printed header and the band of each line. */
 function face(index: number): VNode[] {
   const { x, y } = faceAt(index);
@@ -82,8 +92,8 @@ function face(index: number): VNode[] {
   const big = 6 * PITCH;
   const small = 2.7 * PITCH;
   const nodes: VNode[] = [
-    // Rounded at the top only, like the frame around it.
-    h('path', { d: `M${x},${y + FACE.height}V${y + 4}Q${x},${y} ${x + 4},${y}H${x + FACE.width - 4}Q${x + FACE.width},${y} ${x + FACE.width},${y + 4}V${y + FACE.height}Z`, fill: FACE_FILL, stroke: '#0c0c0d', 'stroke-width': 1 }),
+    // Rounded only at the corner where the frame around it is: the outer top corner.
+    h('path', { d: facePath(x, y, index === 0 ? 'left' : 'right'), fill: FACE_FILL, stroke: '#0c0c0d', 'stroke-width': 1 }),
     h('text', { x: colX(index, 4), y: y + HEADER - 3.6 * PITCH, 'font-size': big / 0.72, ...legend }, ['Vía']),
     h('text', { x: colX(index, 41), y: y + HEADER - 3.6 * PITCH, 'font-size': big / 0.72, ...legend }, ['Destino']),
     h('text', { x: colX(index, 116), y: y + HEADER - 7.4 * PITCH, 'font-size': small / 0.72, 'text-anchor': 'middle', ...legend }, ['Próximo']),
