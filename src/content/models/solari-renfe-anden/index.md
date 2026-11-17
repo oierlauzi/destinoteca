@@ -86,6 +86,18 @@ photos:
     sourceUrl: https://x.com/ger58056/status/1986908102801887312
     source: X (@ger58056)
     license: rights-reserved-credited
+  - id: chamartin-1994
+    src: ./chamartin-1994.jpg
+    alt: >-
+      Dos andenes de Chamartín bajo la marquesina, con un indicador de
+      paletas colgado sobre cada uno y trenes esperando en las vías.
+    caption: Chamartín, vías 14 y 15, octubre de 1994.
+    date: '1994-10'
+    place: Madrid Chamartín
+    author: Falk2
+    sourceUrl: https://commons.wikimedia.org/wiki/File:06_172_Bf_Madrid_Chamart%C3%ADn,_Gleis_14._15.jpg
+    source: Wikimedia Commons
+    license: cc-by-sa-4.0
   - id: chamartin-anos-90
     src: ./chamartin-anos-90.jpg
     alt: >-
