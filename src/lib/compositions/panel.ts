@@ -11,6 +11,29 @@ const LEADING = 0.55;
 /** From the plate's edges to its lettering, as a fraction of the smaller side. */
 const MARGIN = 0.08;
 
+/**
+ * Letters cut from brushed aluminium: a metallic sheen from top to bottom of
+ * the letters, and fine horizontal grain over it.
+ */
+function brushedAluminium(id: string, top: number, bottom: number): { defs: VNode; fill: string; filter: string } {
+  const gradient = `${id}-aluminio`;
+  const grain = `${id}-veta`;
+  const stops: [number, string][] = [[0, '#eef0f2'], [0.3, '#b9bec3'], [0.52, '#dde0e3'], [0.78, '#9aa0a6'], [1, '#c8ccd0']];
+  return {
+    defs: h('defs', {}, [
+      h('linearGradient', { id: gradient, gradientUnits: 'userSpaceOnUse', x1: 0, y1: top, x2: 0, y2: bottom }, stops.map(([offset, color]) => h('stop', { offset, 'stop-color': color }))),
+      h('filter', { id: grain, x: 0, y: 0, width: 1, height: 1 }, [
+        h('feTurbulence', { type: 'fractalNoise', baseFrequency: '0.004 0.9', numOctaves: 2, seed: 7, result: 'noise' }),
+        h('feColorMatrix', { in: 'noise', type: 'matrix', values: '0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0.45 0.45 0.45 0 -0.34', result: 'streaks' }),
+        h('feComposite', { in: 'streaks', in2: 'SourceGraphic', operator: 'in', result: 'grain' }),
+        h('feBlend', { in: 'grain', in2: 'SourceGraphic', mode: 'multiply' }),
+      ]),
+    ]),
+    fill: `url(#${gradient})`,
+    filter: `url(#${grain})`,
+  };
+}
+
 /** A printed plate, in the composition's centimetres. */
 export function panelNodes(member: PanelMember): VNode[] {
   const { x, y, width, height, panel } = member;
@@ -24,6 +47,8 @@ export function panelNodes(member: PanelMember): VNode[] {
     const baseline = top + line.size;
     const align = line.align ?? 'center';
     const lx = align === 'left' ? x + margin : align === 'right' ? x + width - margin : x + width / 2;
+    const metal = line.finish === 'brushed-aluminium' ? brushedAluminium(`${member.id}-${i}`, baseline - line.size, baseline) : undefined;
+    if (metal) nodes.push(metal.defs);
     nodes.push(
       h('text', {
         x: lx,
@@ -33,7 +58,8 @@ export function panelNodes(member: PanelMember): VNode[] {
         'font-weight': line.weight ?? 400,
         'text-anchor': align === 'left' ? 'start' : align === 'right' ? 'end' : 'middle',
         ...(line.spacing ? { 'letter-spacing': line.spacing } : {}),
-        fill: line.color ?? '#ffffff',
+        fill: metal?.fill ?? line.color ?? '#ffffff',
+        ...(metal ? { filter: metal.filter, stroke: '#7e848a', 'stroke-width': 0.25 } : {}),
       }, [line.text]),
     );
     top = baseline + (gaps[i] ?? 0);

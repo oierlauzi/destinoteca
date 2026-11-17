@@ -31,7 +31,7 @@ stage: stub
 ---
 
 En una pared del vestíbulo subterráneo de Chamartín, detrás de la de los
-[tableros de salidas](../salidas-vestibulo-subterraneo-chamartin/), colgaban
+[tableros de salidas](../acceso-vestibulo-subterraneo-chamartin/), colgaban
 dos [paneles de Cercanías de MP Electronics](../mp-electronics-adif-cercanias/)
 uno junto al otro, casi tocándose; el de la derecha seguía con los trenes del de la
 izquierda. En septiembre de 2026 se retiraron y en su lugar se colgó una

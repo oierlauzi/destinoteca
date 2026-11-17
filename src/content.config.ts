@@ -197,6 +197,8 @@ const models = defineCollection({
                           color: z.string().optional(),
                           align: z.enum(['left', 'center', 'right']).optional(),
                           spacing: z.number().optional(),
+                          /** Letters of brushed metal rather than printed in `color`. */
+                          finish: z.enum(['brushed-aluminium']).optional(),
                         }),
                       ),
                       logo: z

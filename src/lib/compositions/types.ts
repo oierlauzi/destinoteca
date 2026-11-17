@@ -21,6 +21,8 @@ export interface PanelLine {
   align?: 'left' | 'center' | 'right';
   /** Spacing between letters, in cm. */
   spacing?: number;
+  /** Letters of brushed metal rather than printed in `color`. */
+  finish?: 'brushed-aluminium';
 }
 
 export type PanelLogo = 'adif' | 'cercanias';

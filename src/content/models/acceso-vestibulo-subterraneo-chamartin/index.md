@@ -1,5 +1,5 @@
 ---
-name: Salidas del vestíbulo subterráneo de Chamartín
+name: Acceso al vestíbulo subterráneo de Chamartín
 summary: >-
   En el acceso al nuevo vestíbulo subterráneo de Madrid-Chamartín-Clara
   Campoamor, dos tableros de salidas de MP Electronics y un reloj Festina
@@ -15,7 +15,6 @@ installations:
     note: En el acceso al nuevo vestíbulo subterráneo.
 composition:
   size: { width: 1040, height: 192 }
-  background: '#ecebe7'
   elements:
     - id: salidas-1
       model: mp-electronics-adif-teleindicador
@@ -41,7 +40,7 @@ composition:
       panel:
         fill: none
         lines:
-          - { text: MADRID-CHAMARTÍN - CLARA CAMPOAMOR, size: 32, weight: 600, color: '#5a5e62', align: left }
+          - { text: MADRID-CHAMARTÍN - CLARA CAMPOAMOR, size: 32, weight: 600, align: left, finish: brushed-aluminium }
 photos:
   - id: vestibulo-subterraneo
     src: ./chamartin-vestibulo-inferior.jpg
@@ -57,6 +56,8 @@ references:
     author: Adif Alta Velocidad
     url: https://www.adifaltavelocidad.es/documents/34745/2301034/Estaci%C3%B3n+Madrid-Chamart%C3%ADn_nuevo+vest%C3%ADbulo+subterr%C3%A1neo_paneles+y+nombre+de+estaci%C3%B3n_DBM_3745.png/9a3051c8-54a7-733d-0644-207a2c766f10
     note: Fotografía de la misma pared.
+aliases:
+  - salidas-vestibulo-subterraneo-chamartin
 stage: stub
 ---
 
@@ -67,7 +68,8 @@ trenes del de la izquierda. Al lado, un
 [reloj Festina cuadrado](../festina-adif-reloj-cuadrado/).
 
 Debajo van el logotipo de [adif](../../operadores/adif/) y el nombre de la
-estación, «Madrid-Chamartín - Clara Campoamor», en grandes letras grises.
+estación, «Madrid-Chamartín - Clara Campoamor», en grandes letras de aluminio
+cepillado.
 
 En una pared detrás de esta colgaban
 [dos tableros de Cercanías](../cercanias-vestibulo-subterraneo-chamartin/).
