@@ -2,16 +2,15 @@ import { FLAP } from './geometry';
 
 /**
  * How a train's word is lettered on its wide flap. The photographs are not
- * consistent, so the words they show are set as seen:
+ * consistent, so the words they show are set as seen, all against the
+ * flap's left:
  *
  * - `tall`: one line from the top of the flap to its foot, squeezed to the
  *   flap's width (TALGO, RAPIDO, ELECTROTREN, RAP. ARAGON);
  * - `wide`: one line in the letters of the place flaps, as large as the
  *   flap's height or width allows (INTERURBANO);
- * - `left`: two lines, each half the flap tall, against its left
- *   (TALGO PENDULAR);
- * - `block`: two lines, the first centred on the second, the pair against
- *   the flap's left (TALGO EXTREMADURA).
+ * - `left`: two lines, each half the flap tall (TALGO PENDULAR);
+ * - `block`: two lines, the first centred on the second (TALGO EXTREMADURA).
  *
  * Any other text is set on one line in the letters of the place flaps, as
  * large as the flap's height or width allows, whichever is tighter.
@@ -71,19 +70,22 @@ function split(text: string): [string, string] {
   return [text.slice(0, at), text.slice(at + 1)];
 }
 
-export function wordLines(text: string, flapWidth: number): WordLine[] {
+/** The train's words stand against the flap's left; `align` 'center' centres one line (the "por" column). */
+export function wordLines(text: string, flapWidth: number, align: 'left' | 'center' = 'left'): WordLine[] {
   const value = text.trim();
   if (!value) return [];
   const room = flapWidth - 2 * SIDE;
   const style = styleOf(value);
   const natural = (line: string, size: number): number => advance(line) * size * LETTER_SQUEEZE;
+  const x = align === 'left' ? SIDE : flapWidth / 2;
+  const anchor = align === 'left' ? 'start' : 'middle';
   if (style === 'tall') {
     const size = LETTER_SIZE;
-    return [{ text: value, x: flapWidth / 2, anchor: 'middle', baseline: FLAP.height - LETTER_MARGIN, size, width: Math.min(room, natural(value, size)) }];
+    return [{ text: value, x, anchor, baseline: FLAP.height - LETTER_MARGIN, size, width: Math.min(room, natural(value, size)) }];
   }
   if (style === 'wide') {
     const size = Math.min(LETTER_SIZE, room / (advance(value) * LETTER_SQUEEZE));
-    return [{ text: value, x: flapWidth / 2, anchor: 'middle', baseline: (FLAP.height + CAP * size) / 2, size, width: Math.min(room, natural(value, size)) }];
+    return [{ text: value, x, anchor, baseline: (FLAP.height + CAP * size) / 2, size, width: Math.min(room, natural(value, size)) }];
   }
   const cap = (FLAP.height - 2 * LETTER_MARGIN - LINE_GAP) / 2;
   const size = cap / CAP;
@@ -92,8 +94,8 @@ export function wordLines(text: string, flapWidth: number): WordLine[] {
   const block = Math.max(...widths);
   return lines.map((line, i) => ({
     text: line,
-    x: style === 'block' ? SIDE + block / 2 : SIDE,
-    anchor: style === 'block' ? 'middle' : 'start',
+    x: style === 'block' ? x + (align === 'left' ? block / 2 : 0) : x,
+    anchor: style === 'block' ? 'middle' : anchor,
     baseline: LETTER_MARGIN + cap + i * (cap + LINE_GAP),
     size,
     width: widths[i]!,

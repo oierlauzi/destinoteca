@@ -120,6 +120,11 @@ describe('Solari train words', () => {
     expect(long!.width).toBeCloseTo(width - 1.2, 5);
   });
 
+  it('stands every train word against the left, and centres the "por" column', () => {
+    expect(wordLines('TALGO', width).map((l) => [l.anchor, l.x])).toEqual([['start', 0.6]]);
+    expect(wordLines('AVILA', 60, 'center').map((l) => [l.anchor, l.x])).toEqual([['middle', 30]]);
+  });
+
   it('puts two-line words against the left, TALGO centred over EXTREMADURA', () => {
     const pendular = wordLines('TALGO PENDULAR', width);
     expect(pendular.map((l) => [l.text, l.anchor, l.x])).toEqual([['TALGO', 'start', 0.6], ['PENDULAR', 'start', 0.6]]);
