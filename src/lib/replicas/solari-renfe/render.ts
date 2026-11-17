@@ -184,8 +184,6 @@ interface FlapRefs {
 function flapNodes(flap: Flap, value: string, refs?: FlapRefs): VNode[] {
   const ref = (key: keyof FlapRefs) => (refs ? (element: SVGElement) => (refs[key] = element) : undefined);
   const nodes: VNode[] = [
-    // The opening each flap turns in, with a small bezel round it.
-    h('rect', { x: flap.x - 0.45, y: flap.y - 0.45, width: flap.width + 0.9, height: FLAP.height + 0.9, rx: 0.7, fill: '#090909', stroke: '#3c3d3b', 'stroke-width': 0.25 }),
     { ...halfNodes(flap, 'top', value), ref: ref('top') },
     { ...halfNodes(flap, 'bottom', value), ref: ref('bottom') },
   ];
@@ -210,6 +208,18 @@ function board(variant: Variant, l: Layout): VNode[] {
   ];
 }
 
+/** The openings in the facade, one per field and row, each with a small bezel: the flaps of a field share theirs. */
+function openings(l: Layout): VNode[] {
+  const nodes: VNode[] = [];
+  for (let row = 0; row < l.rows; row++) {
+    for (const field of l.fields) {
+      if (field.kind === 'lamps') continue;
+      nodes.push(h('rect', { x: field.x - 0.7, y: l.rowY(row) - 0.7, width: field.width + 1.4, height: FLAP.height + 1.4, rx: 0.9, fill: '#090909', stroke: '#3c3d3b', 'stroke-width': 0.3 }));
+    }
+  }
+  return nodes;
+}
+
 const lampNode = (lamp: Lamp, lit: boolean, ref?: (element: SVGElement) => void): VNode =>
   h('circle', { cx: lamp.cx, cy: lamp.cy, r: 1.15, fill: lit ? LAMP_ON : LAMP_OFF }, [], ref);
 
@@ -220,7 +230,7 @@ function scene(variant: Variant, frame: SolariFrame, options: SolariOptions, ref
   const nodes: VNode[] = [];
   for (let b = 0; b < across * down; b++) {
     const origin = boardOrigin(variant, across, b);
-    nodes.push(h('g', { transform: `translate(${origin.x},${origin.y})` }, board(variant, l)));
+    nodes.push(h('g', { transform: `translate(${origin.x},${origin.y})` }, [...board(variant, l), ...openings(l)]));
   }
   flaps.forEach((flap, i) => {
     const flapRefs = refs ? (refs.flaps[i] = {}) : undefined;

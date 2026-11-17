@@ -76,6 +76,7 @@ export interface Layout {
   frame: typeof FRAME;
   panel: { x: number; y: number; width: number; height: number };
   fields: Field[];
+  rows: number;
   legendY: number;
   rowY(row: number): number;
 }
@@ -98,6 +99,7 @@ export function layout(variant: Variant, rows: number): Layout {
     frame: FRAME,
     panel: { x: panelX, y: panelY, width: panelWidth, height: panelHeight },
     fields,
+    rows,
     legendY: panelY + 6,
     rowY: (row) => rowsTop + row * ROW_PITCH,
   };
