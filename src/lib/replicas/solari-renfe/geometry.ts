@@ -25,7 +25,8 @@ export const FLAP = { width: 7, height: 10 };
 export const FLAP_GAP = 0.8;
 const FIELD_GAP = 3.2;
 export const ROW_PITCH = FLAP.height + 2.8;
-export const MINUTE_DOT = 2.2;
+/** The room the hour flap has after its two digits, for the dot printed on it. */
+export const MINUTE_DOT = 2.8;
 
 const charsWidth = (count: number): number => count * FLAP.width + (count - 1) * FLAP_GAP;
 

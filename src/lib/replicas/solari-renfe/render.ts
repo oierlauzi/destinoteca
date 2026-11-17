@@ -69,9 +69,10 @@ function parts(l: Layout, variant: Variant, rows: number): { flaps: Flap[]; lamp
           for (let i = 0; i < 12; i++) flaps.push({ ...base, kind: 'char', x: field.x + i * (FLAP.width + FLAP_GAP), width: FLAP.width, seq: CHARS, index: i });
           break;
         case 'time': {
-          const hourWidth = charsWidth(2);
+          // The hour flap is a little wider than two digits: the dot after the hour is printed on it.
+          const hourWidth = charsWidth(2) + MINUTE_DOT - FLAP_GAP;
           flaps.push({ ...base, kind: 'hour', x: field.x, width: hourWidth, seq: HOURS, index: 0 });
-          const minutesX = field.x + hourWidth + MINUTE_DOT;
+          const minutesX = field.x + hourWidth + FLAP_GAP;
           for (let i = 0; i < 2; i++) flaps.push({ ...base, kind: 'digit', x: minutesX + i * (FLAP.width + FLAP_GAP), width: FLAP.width, seq: DIGITS, index: i + 1 });
           break;
         }
@@ -119,53 +120,59 @@ function wordLines(text: string): string[] {
   return [text.slice(0, at), text.slice(at + 1)];
 }
 
-function textAttrs(flap: Flap, line: number, lines: number, value: string): Record<string, string | number | undefined> {
-  const cx = flap.x + flap.width / 2;
+type Half = 'top' | 'bottom';
+
+/** What is printed on a flap showing `value`, in board coordinates. The dot of an hour is low enough to be on its bottom half only. */
+function printed(flap: Flap, value: string, half: Half): VNode[] {
   const cy = flap.y + FLAP.height / 2;
-  if (flap.kind !== 'word') return { x: cx, y: cy + FLAP.height * 0.27, 'font-size': FLAP.height * 0.74, 'text-anchor': 'middle' };
-  const size = lines === 1 ? FLAP.height * 0.42 : FLAP.height * 0.3;
-  const y = lines === 1 ? cy + size * 0.36 : cy + (line === 0 ? -0.6 : size + 0.4);
-  // Every word is set to a width of its own, never wider than the flap, so that it fits whatever the font.
-  const room = flap.width * 0.9;
-  const width = Math.min(room, value.length * size * 0.52);
-  return {
-    x: cx,
-    y,
-    'font-size': size,
-    'text-anchor': 'middle',
-    textLength: value ? width : undefined,
-    lengthAdjust: value ? 'spacingAndGlyphs' : undefined,
-  };
+  if (flap.kind === 'word') {
+    const lines = wordLines(value);
+    const size = lines.length === 1 ? FLAP.height * 0.42 : FLAP.height * 0.3;
+    const room = flap.width * 0.9;
+    return lines.filter(Boolean).map((line, i) => {
+      const y = lines.length === 1 ? cy + size * 0.36 : cy + (i === 0 ? -0.6 : size + 0.4);
+      // Every word is set to a width of its own, never wider than the flap, so that it fits whatever the font.
+      const width = Math.min(room, line.length * size * 0.52);
+      return h('text', { x: flap.x + flap.width / 2, y, 'font-size': size, 'text-anchor': 'middle', textLength: width, lengthAdjust: 'spacingAndGlyphs', fill: INK }, [line]);
+    });
+  }
+  if (!value.trim()) return [];
+  const digitsWidth = flap.kind === 'hour' ? charsWidth(2) : flap.width;
+  const nodes = [h('text', { x: flap.x + digitsWidth / 2, y: cy + FLAP.height * 0.27, 'font-size': FLAP.height * 0.74, 'text-anchor': 'middle', fill: INK }, [value])];
+  // The hour's dot is printed on its flap, after the digits.
+  if (flap.kind === 'hour' && half === 'bottom') nodes.push(h('circle', { cx: flap.x + charsWidth(2) + (MINUTE_DOT - FLAP_GAP) / 2, cy: flap.y + FLAP.height * 0.78, r: 0.55, fill: INK }));
+  return nodes;
 }
 
+/** One half of a flap: its card and whatever of the lettering falls in it. */
+function halfNodes(flap: Flap, half: Half, value: string): VNode {
+  const top = half === 'top' ? flap.y : flap.y + FLAP.height / 2;
+  const box = { x: flap.x, y: top, width: flap.width, height: FLAP.height / 2 };
+  return h('svg', { ...box, viewBox: `${box.x} ${box.y} ${box.width} ${box.height}`, overflow: 'hidden' }, halfContent(flap, half, value));
+}
+
+const halfContent = (flap: Flap, half: Half, value: string): VNode[] => [
+  h('rect', { x: flap.x, y: half === 'top' ? flap.y : flap.y + FLAP.height / 2, width: flap.width, height: FLAP.height / 2, rx: 0.4, fill: half === 'top' ? FLAP_TOP : FLAP_BOTTOM }),
+  ...printed(flap, value, half),
+];
+
 interface FlapRefs {
-  lines: SVGElement[];
-  shade?: SVGElement;
-  /** The dot after an hour, shown only with one. */
-  dot?: SVGElement;
+  top?: SVGElement;
+  bottom?: SVGElement;
+  /** The leaf that turns over the hinge during a change. */
+  leaf?: SVGElement;
+  leafHalf?: SVGElement;
 }
 
 function flapNodes(flap: Flap, value: string, refs?: FlapRefs): VNode[] {
-  const half = FLAP.height / 2;
+  const ref = (key: keyof FlapRefs) => (refs ? (element: SVGElement) => (refs[key] = element) : undefined);
   const nodes: VNode[] = [
-    h('rect', { x: flap.x, y: flap.y, width: flap.width, height: half, rx: 0.4, fill: FLAP_TOP }),
-    h('rect', { x: flap.x, y: flap.y + half, width: flap.width, height: half, rx: 0.4, fill: FLAP_BOTTOM }),
+    { ...halfNodes(flap, 'top', value), ref: ref('top') },
+    { ...halfNodes(flap, 'bottom', value), ref: ref('bottom') },
   ];
-  // A word flap keeps two lines ready, so that a change from one line to two needs no new element.
-  const count = flap.kind === 'word' ? 2 : 1;
-  const lines = flap.kind === 'word' ? wordLines(value) : [value];
-  for (let i = 0; i < count; i++) {
-    const textValue = lines[i] ?? '';
-    nodes.push(h('text', { ...textAttrs(flap, i, lines.length, textValue), fill: INK }, [textValue], refs ? (element) => (refs.lines[i] = element) : undefined));
-  }
-  nodes.push(
-    // The falling half, shaded while it turns.
-    h('rect', { x: flap.x, y: flap.y, width: flap.width, height: half, fill: '#000000', opacity: 0 }, [], refs ? (element) => (refs.shade = element) : undefined),
-    h('line', { x1: flap.x, y1: flap.y + half, x2: flap.x + flap.width, y2: flap.y + half, stroke: '#070707', 'stroke-width': 0.3 }),
-  );
-  if (flap.kind === 'hour') {
-    nodes.push(h('circle', { cx: flap.x + flap.width + MINUTE_DOT / 2, cy: flap.y + FLAP.height * 0.78, r: 0.55, fill: INK, opacity: value ? 1 : 0 }, [], refs ? (element) => (refs.dot = element) : undefined));
-  }
+  if (refs) nodes.push(h('g', { display: 'none' }, [{ ...halfNodes(flap, 'top', value), ref: ref('leafHalf') }], ref('leaf')));
+  const hinge = flap.y + FLAP.height / 2;
+  nodes.push(h('line', { x1: flap.x, y1: hinge, x2: flap.x + flap.width, y2: hinge, stroke: '#070707', 'stroke-width': 0.3 }));
   return nodes;
 }
 
@@ -193,7 +200,7 @@ function scene(variant: Variant, frame: SolariFrame, options: SolariOptions, ref
   const { flaps, lamps } = parts(l, variant, rows);
   const nodes: VNode[] = [...board(variant, l)];
   flaps.forEach((flap, i) => {
-    const flapRefs = refs ? (refs.flaps[i] = { lines: [] }) : undefined;
+    const flapRefs = refs ? (refs.flaps[i] = {}) : undefined;
     nodes.push(...flapNodes(flap, flapValue(flap, frame.rows[flap.row]), flapRefs));
   });
   lamps.forEach((lamp, i) => nodes.push(lampNode(lamp, lamp.which < lampsLit(frame.rows[lamp.row]), refs ? (element) => (refs.lamps[i] = element) : undefined)));
@@ -224,18 +231,20 @@ export function renderToString(variant: Variant, frame: SolariFrame, options: So
   return toDocument(svg, 'destinoteca · panel de paletas de Solari · https://oierlauzi.github.io/destinoteca/');
 }
 
-// --- Live: the flaps fall one by one until each shows what it should ---------------------------
+// --- Live: the flaps turn one by one until each shows what it should ---------------------------
 
 interface FlapState {
   flap: Flap;
   refs: FlapRefs;
-  /** Where in its sequence it is, and what it shows. */
+  /** Where in its sequence it is, what it shows, and what it is turning to. */
   position: number;
   shown: string;
   target: string;
   steps: number;
-  nextAt: number;
-  shadeOffAt: number;
+  /** The flap turning now: from `shown` to `next`, started at `since`. */
+  next?: string;
+  since: number;
+  phase: 0 | 1 | 2;
 }
 
 /** How many flaps fall to go from `from` to `to`; a value not on the flaps comes after a few. */
@@ -259,58 +268,80 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
   let options = initial;
   let frame: SolariFrame = { rows: [] };
   let states: FlapState[] = [];
+  let lamps: Lamp[] = [];
   let lampRefs: SVGElement[] = [];
   let title: SVGElement | undefined;
   let element: SVGElement | undefined;
   let now = 0;
 
-  const show = (state: FlapState, value: string): void => {
-    state.shown = value;
-    const lines = state.flap.kind === 'word' ? wordLines(value) : [value];
-    state.refs.lines.forEach((line, i) => {
-      const text = lines[i] ?? '';
-      const attrs = textAttrs(state.flap, i, lines.length, text);
-      for (const [name, attr] of Object.entries(attrs)) {
-        if (attr === undefined) line.removeAttribute(name);
-        else line.setAttribute(name, String(attr));
-      }
-      line.textContent = text;
-    });
-    state.refs.dot?.setAttribute('opacity', value ? '1' : '0');
+  const paint = (target: SVGElement | undefined, flap: Flap, half: Half, value: string): void => {
+    if (!target) return;
+    const top = half === 'top' ? flap.y : flap.y + FLAP.height / 2;
+    target.setAttribute('y', String(top));
+    target.setAttribute('viewBox', `${flap.x} ${top} ${flap.width} ${FLAP.height / 2}`);
+    target.replaceChildren(...halfContent(flap, half, value).map((node) => toDom(node, doc)));
   };
 
   const build = (): void => {
     const refs = { flaps: [] as FlapRefs[], lamps: [] as SVGElement[] };
     const rows = rowsOf(options, variant);
-    const { flaps } = parts(layout(variant, rows), variant, rows);
+    const shape = parts(layout(variant, rows), variant, rows);
+    lamps = shape.lamps;
     element = toDom(root(variant, frame, options, scene(variant, frame, options, refs), (node) => (title = node)), doc);
     element.setAttribute('width', '100%');
     element.style.display = 'block';
     host.replaceChildren(element);
     lampRefs = refs.lamps;
-    states = flaps.map((flap, i) => {
+    states = shape.flaps.map((flap, i) => {
       const value = flapValue(flap, frame.rows[flap.row]);
-      const position = Math.max(0, flap.seq.indexOf(value));
-      return { flap, refs: refs.flaps[i]!, position, shown: value, target: value, steps: 0, nextAt: 0, shadeOffAt: 0 };
+      return { flap, refs: refs.flaps[i]!, position: Math.max(0, flap.seq.indexOf(value)), shown: value, target: value, steps: 0, since: 0, phase: 0 };
     });
   };
 
   const stepMs = (): number => 1000 / Math.max(1, options.speed);
 
+  /** The next card falls: the top already shows it, the old top falls over the hinge. */
+  const beginStep = (state: FlapState): void => {
+    state.position = (state.position + 1) % state.flap.seq.length;
+    state.next = state.steps === 1 ? state.target : (state.flap.seq[state.position] ?? '');
+    state.since = now;
+    state.phase = 1;
+    paint(state.refs.top, state.flap, 'top', state.next);
+    paint(state.refs.leafHalf, state.flap, 'top', state.shown);
+    state.refs.leaf?.removeAttribute('display');
+  };
+
+  const endStep = (state: FlapState): void => {
+    state.shown = state.next ?? state.shown;
+    state.next = undefined;
+    state.steps--;
+    state.phase = 0;
+    paint(state.refs.bottom, state.flap, 'bottom', state.shown);
+    state.refs.leaf?.setAttribute('display', 'none');
+  };
+
+  const hinge = (state: FlapState, scale: number): string => {
+    const y = state.flap.y + FLAP.height / 2;
+    return `matrix(1,0,0,${Math.max(0.001, scale)},0,${y * (1 - Math.max(0.001, scale))})`;
+  };
+
   const unsubscribe = env.ticker.subscribe((time) => {
     now = time;
     for (const state of states) {
-      if (state.shadeOffAt && now >= state.shadeOffAt) {
-        state.refs.shade?.setAttribute('opacity', '0');
-        state.shadeOffAt = 0;
+      if (state.steps <= 0) continue;
+      if (state.phase === 0) beginStep(state);
+      const t = (now - state.since) / stepMs();
+      if (t >= 1) {
+        endStep(state);
+        if (state.steps > 0) beginStep(state);
+        continue;
       }
-      if (state.steps <= 0 || now < state.nextAt) continue;
-      state.steps--;
-      state.position = (state.position + 1) % state.flap.seq.length;
-      show(state, state.steps === 0 ? state.target : (state.flap.seq[state.position] ?? ''));
-      state.refs.shade?.setAttribute('opacity', '0.45');
-      state.shadeOffAt = now + stepMs() / 2;
-      state.nextAt = now + stepMs();
+      // First half: the old top folds down to the hinge. Second half: the new bottom unfolds from it.
+      if (t >= 0.5 && state.phase === 1) {
+        state.phase = 2;
+        paint(state.refs.leafHalf, state.flap, 'bottom', state.next ?? '');
+      }
+      state.refs.leaf?.setAttribute('transform', hinge(state, state.phase === 1 ? 1 - 2 * t : 2 * t - 1));
     }
   });
   build();
@@ -321,21 +352,22 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
       if (title) title.textContent = describe(variant, next);
       for (const state of states) {
         const target = flapValue(state.flap, next.rows[state.flap.row]);
-        if (target === state.target && (state.steps > 0 || target === state.shown)) continue;
+        if (target === state.target) continue;
         state.target = target;
         if (!options.animate) {
+          if (state.phase) endStep(state);
           state.steps = 0;
           state.position = Math.max(0, state.flap.seq.indexOf(target));
-          show(state, target);
+          state.shown = target;
+          paint(state.refs.top, state.flap, 'top', target);
+          paint(state.refs.bottom, state.flap, 'bottom', target);
           continue;
         }
-        state.steps = stepsBetween(state.flap.seq, state.position, target);
-        if (state.steps === 0) show(state, target);
-        state.nextAt = now;
+        // A flap already turning finishes its card, then goes on towards the new value.
+        state.steps = (state.phase ? 1 : 0) + stepsBetween(state.flap.seq, state.position, target);
+        if (state.steps === 0 && target !== state.shown) state.steps = 1;
       }
       lampRefs.forEach((lamp, i) => {
-        const rows = rowsOf(options, variant);
-        const { lamps } = parts(layout(variant, rows), variant, rows);
         const info = lamps[i];
         if (info) lamp.setAttribute('fill', info.which < lampsLit(next.rows[info.row]) ? LAMP_ON : LAMP_OFF);
       });
