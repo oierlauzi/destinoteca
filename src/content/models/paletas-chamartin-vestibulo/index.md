@@ -60,6 +60,12 @@ photos:
     source: Flickr
     license: rights-reserved-credited
 cover: chamartin-anos-80
+references:
+  - title: Nuevos indicadores de vía en la estación de Sants
+    author: José Luis Ordóñez
+    publication: Vía Libre
+    date: '1989-11'
+    note: Da el año de instalación del sistema de Chamartín, 1975, y el nombre de quien lo instaló, VEMISA. En la página siguiente, un anuncio de VEMISA como representante exclusiva de Solari.
 replica:
   id: solari-renfe-largo-recorrido
 stage: stub
@@ -74,6 +80,13 @@ producto, su destino, por dónde pasaba, la hora y la vía.
 Había también paneles de la misma marca para los trenes de
 [Cercanías](../solari-renfe-cercanias/), con otras columnas.
 
+Según *Vía Libre*, el sistema de información al público de Chamartín lo
+instaló en 1975 VEMISA (Venta y Explotación de Material Industrial, S.A.), de
+Madrid, representante exclusiva en España de los teleindicadores de Solari.
+En noviembre de 1989 la revista contaba que se le había cambiado el modo de
+control y que todos sus equipos de visualización llevaban ya
+microprocesadores; lo gobernaba el sistema NET 2000 de Solari.
+
 Son los mismos paneles en todas las fotografías; entre los años ochenta y
 2007 solo cambiaron los marcos y las paletas, que con el tiempo pasaron a
 mostrar el producto de cada tren con su logotipo. El nombre del fabricante,
@@ -83,6 +96,7 @@ fotografías.
 ## Lo que no se sabe
 
 - **Qué indicaban las dos luces del final de cada fila.**
-- **Cuándo se instalaron y cuándo se retiraron.**
+- **Cuándo se instalaron y cuándo se retiraron.** El sistema es de 1975, pero
+  no se sabe si estos paneles estaban desde el principio.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

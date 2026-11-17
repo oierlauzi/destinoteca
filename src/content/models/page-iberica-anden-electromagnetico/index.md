@@ -282,10 +282,18 @@ references:
     date: '2026'
     url: https://github.com/oierlauzi/renfe-flipdot-re
     note: Descripción del equipo, del firmware y del panel a partir de una unidad recuperada. Fuente principal de esta ficha.
+  - title: Cercanías
+    publication: Vía Libre
+    date: '1994-10'
+    note: Breve sobre la instalación piloto de PAGE Ibérica en los andenes de la línea C-5, entre Embajadores y Móstoles-El Soto.
+  - title: Un sistema de información basado en teleindicadores
+    publication: Vía Libre
+    date: '1996-12'
+    note: Recuadro sobre los teleindicadores del Pasillo Verde, sin nombre de fabricante.
   - title: Teleindicadores de andén electromagnéticos
     publication: Vía Libre
     date: '1997-03'
-    note: Apartado de un reportaje sobre la información al viajero en Cercanías, con declaraciones de José María Navarro, de PAGE Ibérica.
+    note: Apartado de un reportaje sobre la información al viajero en Cercanías, con declaraciones de José María Navarro, de PAGE Ibérica. El mismo dossier da los nueve minutos con que aparece el tren en el cartel.
 replica:
   id: page-iberica-anden-electromagnetico
   poster:
@@ -367,6 +375,16 @@ unidad coincide en una fabricación de mediados de los noventa.
 
 ## Dónde se instaló
 
+La primera noticia es de octubre de 1994. *Vía Libre* contaba entonces que
+los viajeros de la línea C-5 veían ya, en paneles teleindicadores instalados
+en los andenes de las estaciones entre Embajadores y Móstoles-El Soto,
+cuántos minutos faltaban para el próximo tren, su destino y sus paradas. El
+centro de control de tráfico centralizado procesaba los datos de la
+circulación y enviaba a cada andén lo que le correspondía; el corazón del
+sistema estaba en la sala de pantallas de Madrid-Atocha. La revista lo
+presentaba como una instalación piloto de Cercanías, desarrollada, instalada
+y puesta a punto por PAGE Ibérica.
+
 En marzo de 1997 la revista *Vía Libre* dedicó un reportaje a la información
 al viajero en Cercanías, con un apartado titulado «Teleindicadores de andén
 electromagnéticos». En él José María Navarro, de PAGE Ibérica, describe el
@@ -380,7 +398,10 @@ cartel:
 
 Según ese reportaje, el sistema de PAGE Ibérica estaba instalado en las líneas
 C-5 (Móstoles, Atocha, Fuenlabrada), C-8 (Atocha, Villalba) y C-10 (Villalba,
-Príncipe Pío, Atocha, Chamartín), y se estaba instalando en la C-4 y la C-1.
+Príncipe Pío, Atocha, Chamartín), y se estaba instalando en la C-4 (Atocha,
+Parla) y la C-1 (Tres Cantos, Atocha, Alcalá de Henares). El tren aparecía en
+el cartel cuando faltaban nueve minutos para su llegada, y la megafonía
+automática lo anunciaba cuando faltaba uno.
 Era un sistema de Madrid: en otras ciudades los suministradores eran otros,
 como AEG-Matra en Málaga y Valencia, Electrans en Barcelona o Ikusi en Bilbao.
 
@@ -390,6 +411,12 @@ el centro de control de Cercanías o desde el ordenador instalado en cada
 estación. Los enlaces iban por cuadretes telefónicos y fibra óptica, y todos
 los componentes se describían como comerciales, comprados en el mercado para
 facilitar el mantenimiento.
+
+Delicias y Méndez Álvaro, dos de las estaciones donde se han fotografiado,
+se abrieron con el Pasillo Verde en 1996. En diciembre de ese año *Vía Libre*
+describía el sistema de teleindicadores del Pasillo Verde, con los minutos
+que faltaban, el destino y las paradas, como un sistema «que ya funcionaba en
+las líneas C-5 y C-4». No nombra a su fabricante.
 
 El montaje variaba según la estación: bajo la marquesina o sobre un poste. El
 número de vía era un vinilo que no todas las estaciones recibieron, y algunos

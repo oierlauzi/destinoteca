@@ -17,3 +17,7 @@ conocido sobre todo por sus paneles de paletas, que durante décadas
 anunciaron salidas y llegadas en estaciones y aeropuertos de muchos países,
 hasta el punto de que en algunos lugares «Solari» se usa como nombre genérico
 de este tipo de panel.
+
+En España, a finales de los años ochenta, la representaba en exclusiva VEMISA
+(Venta y Explotación de Material Industrial, S.A.), de Madrid, según un
+anuncio publicado en *Vía Libre* en noviembre de 1989.

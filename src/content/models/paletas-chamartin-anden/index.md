@@ -88,6 +88,11 @@ references:
     date: '2010-02-21'
     url: https://ecomovilidad.net/madrid/imagen-de-la-semana-los-indicadores-de-chamartin/
     note: Cuenta su retirada, durante la renovación de las estaciones de Cercanías.
+  - title: Nuevos indicadores de vía en la estación de Sants
+    author: José Luis Ordóñez
+    publication: Vía Libre
+    date: '1989-11'
+    note: El sistema de información al público de Chamartín, instalado en 1975 por VEMISA.
 stage: stub
 ---
 
@@ -102,7 +107,10 @@ Cercanías, según contó entonces
 
 ## Lo que no se sabe
 
-- **Quién los fabricó.**
+- **Quién los fabricó.** El sistema de información al público de Chamartín
+  lo instaló en 1975 VEMISA, representante de Solari, según *Vía Libre*, que
+  en 1989 contaba indicadores de vía de una y de doble cara entre los equipos
+  de esos sistemas; pero no dice quién hizo los de Chamartín.
 - **Cuándo se instalaron.**
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

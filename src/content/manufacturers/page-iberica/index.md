@@ -11,9 +11,16 @@ city: Tres Cantos
 ---
 
 PAGE Ibérica, S.A. tenía su sede en la avenida de la Industria de Tres Cantos
-(Madrid). En los años noventa trabajaba para el ferrocarril, entre otros
-sectores: suministró a Renfe sistemas de información al viajero para
-Cercanías Madrid.
+(Madrid). En 1989 se anunciaba con la sede central en la calle de Lagasca, en
+Madrid, y en Tres Cantos su centro de investigación y producción; ya entonces
+ofrecía sistemas de información al público: teleindicadores electrónicos,
+redes de monitores de televisión, gestión automática de megafonía y
+teleindicadores de destino para trenes.
+
+En los años noventa trabajaba para el ferrocarril, entre otros sectores:
+suministró a Renfe sistemas de información al viajero para Cercanías Madrid,
+entre ellos una instalación piloto en la línea C-5 de la que *Vía Libre* dio
+noticia en octubre de 1994.
 
 En un anuncio publicado en *Vía Libre* en marzo de 1997 la empresa enumeraba
 sus actividades, que iban mucho más allá del ferrocarril: sistemas automáticos

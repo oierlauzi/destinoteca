@@ -24,6 +24,12 @@ installations:
   - site: es/madrid-chamartin
     status: retired
     note: En el vestíbulo.
+references:
+  - title: Nuevos indicadores de vía en la estación de Sants
+    author: José Luis Ordóñez
+    publication: Vía Libre
+    date: '1989-11'
+    note: Da el año de instalación del sistema de Chamartín, 1975, y el nombre de quien lo instaló, VEMISA.
 replica:
   id: solari-renfe-cercanias
 stage: stub
@@ -45,6 +51,11 @@ sobre cada columna. Cada fila anuncia un tren a su paso por la estación:
 | Vía | Una paleta de dos caracteres |
 
 Al final de cada fila hay dos luces.
+
+Según *Vía Libre*, el sistema de información al público de Chamartín lo
+instaló en 1975 VEMISA, la representante de Solari en España. El artículo, de
+1989, cuenta tableros de cercanías entre los equipos de esos sistemas, pero no
+dice desde cuándo estaba este.
 
 Se conoce por una fotografía que no se puede reproducir aquí.
 
