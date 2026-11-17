@@ -243,4 +243,21 @@ export const player: Record<string, string> = {
   'anden.mp.opt.lineColor': 'Color de la tercera fila',
   'anden.mp.frame.destination': 'Destino',
   'anden.mp.frame.line': 'Tercera fila',
+
+  // --- Panel LED de Cercanías de MP Electronics para ADIF ---
+  'cercanias.frame.platform': 'Vía',
+  'cercanias.frame.destination': 'Destino',
+  'cercanias.frame.time': 'Próximo tren',
+  'cercanias.frame.row1': 'Fila 1',
+  'cercanias.frame.row2': 'Fila 2',
+  'cercanias.frame.row3': 'Fila 3',
+  'cercanias.frame.row4': 'Fila 4',
+  'cercanias.frame.row5': 'Fila 5',
+  'cercanias.frame.row6': 'Fila 6',
+  'cercanias.frame.row7': 'Fila 7',
+  'cercanias.frame.row8': 'Fila 8',
+  'cercanias.frame.row9': 'Fila 9',
+  'cercanias.frame.row10': 'Fila 10',
+  'cercanias.frame.row11': 'Fila 11',
+  'cercanias.frame.row12': 'Fila 12',
 };
