@@ -2,8 +2,7 @@
 
 Archivo para documentar y preservar los teleindicadores, paneles de salidas y
 relojes de estación: su historia, fotografías en servicio y, cuando es posible,
-una **réplica web** que funciona en el navegador. Es un proyecto sin ánimo de
-lucro: no vende ni compra ningún equipo.
+una **réplica web** que funciona en el navegador.
 
 **<https://oierlauzi.github.io/destinoteca/>**
 

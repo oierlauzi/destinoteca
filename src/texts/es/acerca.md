@@ -5,9 +5,6 @@ retiran sin que quede constancia de cómo eran ni de cómo funcionaban; este
 proyecto intenta que no se pierdan. Empieza por los ferrocarriles españoles y
 está pensado para crecer hacia otros países y otros medios de transporte.
 
-No es una tienda ni un mercado: no vende, compra ni tasa ningún equipo, y no
-tiene ánimo de lucro.
-
 Cada ficha reúne dos cosas:
 
 - **La historia del equipo**: quién lo fabricó, para quién, dónde y cuándo
