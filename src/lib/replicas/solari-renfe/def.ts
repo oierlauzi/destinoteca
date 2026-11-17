@@ -1,7 +1,7 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
 import type { ReplicaDef } from '../types';
-import { DEFAULT_ROWS, layout, type Variant } from './geometry';
+import { DEFAULT_ROWS, layout, stackSize, type Variant } from './geometry';
 
 /**
  * Solari's split-flap boards for Renfe, in the dark skin of the 1970s and
@@ -19,18 +19,21 @@ export interface SolariFrame {
 }
 
 export interface SolariOptions {
-  rows: number;
+  across: number;
+  down: number;
   animate: boolean;
   speed: number;
   [key: string]: unknown;
 }
 
-const MAX_ROWS = 12;
+const MAX_ACROSS = 4;
+const MAX_DOWN = 3;
 
-function optionsSchema(variant: Variant): ParamSchema {
+function optionsSchema(): ParamSchema {
   return {
     fields: [
-      { key: 'rows', urlKey: 'filas', type: 'range', label: 'solari.opt.rows', default: DEFAULT_ROWS[variant], min: 4, max: MAX_ROWS, step: 1 },
+      { key: 'across', urlKey: 'ancho', type: 'range', label: 'adif.opt.across', default: 1, min: 1, max: MAX_ACROSS, step: 1 },
+      { key: 'down', urlKey: 'alto', type: 'range', label: 'adif.opt.down', help: 'adif.opt.stack.help', default: 1, min: 1, max: MAX_DOWN, step: 1 },
       { key: 'animate', urlKey: 'anim', type: 'boolean', label: 'solari.opt.animate', help: 'solari.opt.animate.help', default: true },
       { key: 'speed', type: 'range', label: 'solari.opt.speed', default: 14, min: 4, max: 30, step: 1, unit: 'paletas/s' },
     ],
@@ -89,7 +92,7 @@ function frameSchema(variant: Variant): ParamSchema {
 export function fromFlat(variant: Variant, flat: Values): SolariFrame {
   const keys = keysOf(variant);
   return {
-    rows: Array.from({ length: MAX_ROWS }, (_, i) => Object.fromEntries(keys.map((key) => [key, String(flat[`${key}${i + 1}`] ?? '')]))),
+    rows: Array.from({ length: DEFAULT_ROWS[variant] * MAX_ACROSS * MAX_DOWN }, (_, i) => Object.fromEntries(keys.map((key) => [key, String(flat[`${key}${i + 1}`] ?? '')]))),
   };
 }
 
@@ -101,7 +104,15 @@ export function toFlat(frame: SolariFrame): Values {
   return flat;
 }
 
-const rowsOf = (options: Values, variant: Variant): number => Math.max(4, Math.min(MAX_ROWS, Number(options.rows) || DEFAULT_ROWS[variant]));
+/** How many boards are hung together, and so how many rows there are in all: each board carries on from the one before. */
+export const boardsOf = (options: Values): { across: number; down: number } => ({
+  across: Math.max(1, Math.min(MAX_ACROSS, Number(options.across) || 1)),
+  down: Math.max(1, Math.min(MAX_DOWN, Number(options.down) || 1)),
+});
+const rowsOf = (options: Values, variant: Variant): number => {
+  const { across, down } = boardsOf(options);
+  return DEFAULT_ROWS[variant] * across * down;
+};
 
 const selection = (variant: Variant) => (options: Values): SelectionPolicy => ({
   events: variant === 'largo' ? 'departures' : 'both',
@@ -115,8 +126,8 @@ const selection = (variant: Variant) => (options: Values): SelectionPolicy => ({
 
 function solari(id: string, variant: Variant): ReplicaDef {
   const size = (options: Values) => {
-    const { width, height } = layout(variant, rowsOf(options, variant));
-    return { width, height };
+    const { across, down } = boardsOf(options);
+    return stackSize(variant, across, down);
   };
   return {
     id,
@@ -124,7 +135,7 @@ function solari(id: string, variant: Variant): ReplicaDef {
     size,
     accepts: 'board',
     needs: { services: DEFAULT_ROWS[variant], calls: false },
-    options: optionsSchema(variant),
+    options: optionsSchema(),
     frame: frameSchema(variant),
     selection: selection(variant),
     sourceDefaults: variant === 'largo' ? { demo: { network: 'long-distance' } } : undefined,

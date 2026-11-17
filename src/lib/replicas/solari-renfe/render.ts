@@ -1,8 +1,8 @@
 import { cp437, h, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { SolariFrame, SolariOptions, SolariRow } from './def';
-import { rowsOf } from './def';
-import { FLAP, FLAP_GAP, layout, MINUTE_DOT, TITLES, type Layout, type Variant } from './geometry';
+import { boardsOf } from './def';
+import { boardOrigin, DEFAULT_ROWS, FLAP, FLAP_GAP, layout, MINUTE_DOT, stackSize, TITLES, type Layout, type Variant } from './geometry';
 
 /** The dark skin: a light frame, black flaps with white lettering. */
 const FONT = "'DIN Condensed', 'Oswald', 'Roboto Condensed', 'Arial Narrow', sans-serif";
@@ -54,11 +54,28 @@ interface Lamp {
 
 const charsWidth = (count: number): number => count * FLAP.width + (count - 1) * FLAP_GAP;
 
-function parts(l: Layout, variant: Variant, rows: number): { flaps: Flap[]; lamps: Lamp[] } {
+/** Every flap and lamp of a stack of boards; rows are numbered board after board. */
+function stackParts(variant: Variant, options: SolariOptions): { flaps: Flap[]; lamps: Lamp[] } {
+  const { across, down } = boardsOf(options);
+  const perBoard = DEFAULT_ROWS[variant];
+  const l = layout(variant, perBoard);
   const flaps: Flap[] = [];
   const lamps: Lamp[] = [];
-  for (let row = 0; row < rows; row++) {
-    const y = l.rowY(row);
+  for (let b = 0; b < across * down; b++) {
+    const origin = boardOrigin(variant, across, b);
+    const board = parts(l, variant, perBoard, b * perBoard);
+    flaps.push(...board.flaps.map((flap) => ({ ...flap, x: flap.x + origin.x, y: flap.y + origin.y })));
+    lamps.push(...board.lamps.map((lamp) => ({ ...lamp, cx: lamp.cx + origin.x, cy: lamp.cy + origin.y })));
+  }
+  return { flaps, lamps };
+}
+
+function parts(l: Layout, variant: Variant, rows: number, first = 0): { flaps: Flap[]; lamps: Lamp[] } {
+  const flaps: Flap[] = [];
+  const lamps: Lamp[] = [];
+  for (let line = 0; line < rows; line++) {
+    const y = l.rowY(line);
+    const row = first + line;
     for (const field of l.fields) {
       const base = { y, row, key: field.key };
       switch (field.kind) {
@@ -195,10 +212,14 @@ const lampNode = (lamp: Lamp, lit: boolean, ref?: (element: SVGElement) => void)
   h('circle', { cx: lamp.cx, cy: lamp.cy, r: 1.15, fill: lit ? LAMP_ON : LAMP_OFF }, [], ref);
 
 function scene(variant: Variant, frame: SolariFrame, options: SolariOptions, refs?: { flaps: FlapRefs[]; lamps: SVGElement[] }): VNode[] {
-  const rows = rowsOf(options, variant);
-  const l = layout(variant, rows);
-  const { flaps, lamps } = parts(l, variant, rows);
-  const nodes: VNode[] = [...board(variant, l)];
+  const { across, down } = boardsOf(options);
+  const l = layout(variant, DEFAULT_ROWS[variant]);
+  const { flaps, lamps } = stackParts(variant, options);
+  const nodes: VNode[] = [];
+  for (let b = 0; b < across * down; b++) {
+    const origin = boardOrigin(variant, across, b);
+    nodes.push(h('g', { transform: `translate(${origin.x},${origin.y})` }, board(variant, l)));
+  }
   flaps.forEach((flap, i) => {
     const flapRefs = refs ? (refs.flaps[i] = {}) : undefined;
     nodes.push(...flapNodes(flap, flapValue(flap, frame.rows[flap.row]), flapRefs));
@@ -214,20 +235,25 @@ export function describe(variant: Variant, frame: SolariFrame): string {
   return [TITLES[variant], ...rows].join(' · ');
 }
 
+const sizeOf = (variant: Variant, options: SolariOptions) => {
+  const { across, down } = boardsOf(options);
+  return stackSize(variant, across, down);
+};
+
 function root(variant: Variant, frame: SolariFrame, options: SolariOptions, children: VNode[], titleRef?: (element: SVGElement) => void): VNode {
-  const l = layout(variant, rowsOf(options, variant));
+  const { width, height } = sizeOf(variant, options);
   return {
     tag: 'svg',
-    attrs: { viewBox: `0 0 ${l.width} ${l.height}`, 'font-family': FONT, role: 'img' },
+    attrs: { viewBox: `0 0 ${width} ${height}`, 'font-family': FONT, role: 'img' },
     children: [{ tag: 'title', attrs: {}, children: [describe(variant, frame)], ref: titleRef }, ...children],
   };
 }
 
 export function renderToString(variant: Variant, frame: SolariFrame, options: SolariOptions): string {
   const svg = root(variant, frame, options, scene(variant, frame, options));
-  const l = layout(variant, rowsOf(options, variant));
+  const { width, height } = sizeOf(variant, options);
   svg.attrs.width = 1200;
-  svg.attrs.height = Math.round(((1200 * l.height) / l.width) * 100) / 100;
+  svg.attrs.height = Math.round(((1200 * height) / width) * 100) / 100;
   return toDocument(svg, 'destinoteca · panel de paletas de Solari · https://oierlauzi.github.io/destinoteca/');
 }
 
@@ -284,8 +310,7 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
 
   const build = (): void => {
     const refs = { flaps: [] as FlapRefs[], lamps: [] as SVGElement[] };
-    const rows = rowsOf(options, variant);
-    const shape = parts(layout(variant, rows), variant, rows);
+    const shape = stackParts(variant, options);
     lamps = shape.lamps;
     element = toDom(root(variant, frame, options, scene(variant, frame, options, refs), (node) => (title = node)), doc);
     element.setAttribute('width', '100%');
@@ -373,7 +398,7 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
       });
     },
     setOptions(next: SolariOptions): void {
-      const reshape = rowsOf(next, variant) !== rowsOf(options, variant);
+      const reshape = JSON.stringify(boardsOf(next)) !== JSON.stringify(boardsOf(options));
       options = next;
       if (reshape) build();
     },

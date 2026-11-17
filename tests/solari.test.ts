@@ -14,7 +14,14 @@ describe('Solari split-flap boards', () => {
   it('lay out the columns of each variant', () => {
     expect(layout('largo', 8).fields.map((field) => field.legend)).toEqual(['tren', 'destino', 'por', 'salida', 'vía', '']);
     expect(layout('cercanias', 9).fields.map((field) => field.legend)).toEqual(['tren', 'procedencia', 'llegada', 'destino', 'salida', 'vía', '']);
-    expect(replicaSize(solariLargo, { rows: 12 }).height).toBeGreaterThan(replicaSize(solariLargo, {}).height);
+    // No row count to set: boards of 8 or 9 rows are hung together, and each carries on from the one before.
+    expect(solariLargo.options.fields.some((field) => field.key === 'rows')).toBe(false);
+    const one = replicaSize(solariLargo, {});
+    const four = replicaSize(solariLargo, { across: 2, down: 2 });
+    expect(four.width).toBeGreaterThan(2 * one.width);
+    expect(four.height).toBeGreaterThan(2 * one.height);
+    expect(solariLargo.selection({ across: 2, down: 2 }).window.size).toBe(32);
+    expect(solariCercanias.selection({ across: 3 }).window.size).toBe(27);
   });
 
   it('write the train, the place in twelve flaps cut at a whole word, the time as 14.05 and the platform', () => {
@@ -39,16 +46,16 @@ describe('Solari split-flap boards', () => {
 
   it('show the dot of a time only with one, and the lamps asked for', () => {
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
-    const svg = renderToString('largo', frame, { rows: 8, animate: true, speed: 14 });
+    const svg = renderToString('largo', frame, { across: 1, down: 1, animate: true, speed: 14 });
     // The dot is printed on the hour flap, so only flaps showing an hour have one.
     expect(svg.match(/r="0.55" fill="#f1eee2"/g)).toHaveLength(6);
     expect(svg.match(/fill="#ff5b38"/g)).toHaveLength(1);
   });
 
   it('carry a hand-typed board in the URL', () => {
-    const config = readConfig(solariCercanias, new URLSearchParams('t1=TRANVIA&o1=AVILA&a1=15.52&filas=10'));
+    const config = readConfig(solariCercanias, new URLSearchParams('t1=TRANVIA&o1=AVILA&a1=15.52&ancho=2'));
     expect(config.frame).toMatchObject({ t1: 'TRANVIA', o1: 'AVILA', a1: '15.52' });
-    expect(config.options).toMatchObject({ rows: 10 });
+    expect(config.options).toMatchObject({ across: 2, down: 1 });
     expect(readConfig(solariCercanias, writeConfig(solariCercanias, config))).toEqual(config);
     const frame = fromFlat('cercanias', config.frame);
     expect(fromFlat('cercanias', toFlat(frame))).toEqual(frame);

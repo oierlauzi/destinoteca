@@ -262,7 +262,6 @@ export const player: Record<string, string> = {
   'cercanias.frame.row12': 'Fila 12',
 
   // --- Paneles de paletas de Solari para Renfe ---
-  'solari.opt.rows': 'Filas',
   'solari.opt.animate': 'Animar las paletas',
   'solari.opt.animate.help': 'Cada paleta cae una tras otra hasta mostrar lo que toca.',
   'solari.opt.speed': 'Velocidad de las paletas',

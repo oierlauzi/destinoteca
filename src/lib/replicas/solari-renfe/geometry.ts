@@ -66,6 +66,9 @@ export const DEFAULT_ROWS: Record<Variant, number> = { largo: 8, cercanias: 9 };
 const FRAME = { side: 6, title: 13, bottom: 7 };
 const INNER = { side: 5, legends: 9, bottom: 4 };
 
+/** Between boards hung next to or above one another. */
+export const BOARD_GAP = 8;
+
 export interface Layout {
   width: number;
   height: number;
@@ -97,4 +100,16 @@ export function layout(variant: Variant, rows: number): Layout {
     legendY: panelY + 6,
     rowY: (row) => rowsTop + row * ROW_PITCH,
   };
+}
+
+/** Where board `index` of a stack `across` wide goes. */
+export function boardOrigin(variant: Variant, across: number, index: number): { x: number; y: number } {
+  const { width, height } = layout(variant, DEFAULT_ROWS[variant]);
+  return { x: (index % across) * (width + BOARD_GAP), y: Math.floor(index / across) * (height + BOARD_GAP) };
+}
+
+/** Several boards, `across` side by side and `down` one above another. */
+export function stackSize(variant: Variant, across: number, down: number): { width: number; height: number } {
+  const { width, height } = layout(variant, DEFAULT_ROWS[variant]);
+  return { width: across * width + (across - 1) * BOARD_GAP, height: down * height + (down - 1) * BOARD_GAP };
 }
