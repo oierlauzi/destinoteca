@@ -56,12 +56,11 @@ const EXAMPLES: Record<Variant, SolariRow[]> = {
     { t: '', o: 'ATOCHA', a: '', d: 'CANTOBLANCO', s: '15.02', v: '2', l: '' },
     { t: '', o: 'CANTOBLANCO', a: '', d: 'ATOCHA', s: '14.53', v: '1', l: '' },
     { t: '', o: '', a: '', d: '', s: '', v: '', l: '' },
-    { t: '', o: '', a: '', d: 'GUADALAJARA', s: '15.06', v: '3', l: '' },
-    { t: 'TRANVIA', o: 'EL ESCORIAL', a: '15.04', d: 'EL ESCORIAL', s: '15.25', v: '4', l: '' },
-    { t: 'TRANVIA', o: 'ALCALA H', a: '15.20', d: 'GUADALAJARA', s: '15.40', v: '3', l: '' },
-    { t: 'TRANVIA', o: 'CERCEDILLA', a: '15.39', d: 'CERCEDILLA', s: '15.47', v: '4', l: '' },
-    { t: 'TRANVIA', o: 'GUADALAJARA', a: '15.46', d: 'ATOCHA', s: '15.53', v: '3', l: '' },
-    { t: 'TRANVIA', o: 'AVILA', a: '15.52', d: '', s: '', v: '', l: '' },
+    { t: 'TRANVIA', o: 'EL ESCORIAL', a: '15.04', d: 'GUADALAJARA', s: '15.06', v: '3', l: '' },
+    { t: 'TRANVIA', o: 'ALCALA H', a: '15.20', d: 'EL ESCORIAL', s: '15.25', v: '4', l: '' },
+    { t: 'TRANVIA', o: 'CERCEDILLA', a: '15.39', d: 'GUADALAJARA', s: '15.40', v: '3', l: '' },
+    { t: 'TRANVIA', o: 'GUADALAJARA', a: '15.46', d: 'CERCEDILLA', s: '15.47', v: '4', l: '' },
+    { t: 'TRANVIA', o: 'AVILA', a: '15.52', d: 'ATOCHA', s: '15.53', v: '3', l: '' },
   ],
 };
 

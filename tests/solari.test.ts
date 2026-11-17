@@ -21,7 +21,7 @@ describe('Solari split-flap boards', () => {
     expect(four.width).toBeGreaterThan(2 * one.width);
     expect(four.height).toBeGreaterThan(2 * one.height);
     expect(solariLargo.selection({ across: 2, down: 2 }).window.size).toBe(32);
-    expect(solariCercanias.selection({ across: 3 }).window.size).toBe(27);
+    expect(solariCercanias.selection({ across: 3 }).window.size).toBe(24);
   });
 
   it('write the train, the place in twelve flaps cut at a whole word, the time as 14.05 and the platform', () => {

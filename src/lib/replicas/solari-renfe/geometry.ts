@@ -61,7 +61,8 @@ const COLUMNS: Record<Variant, [string, FieldKind, string][]> = {
 };
 
 export const TITLES: Record<Variant, string> = { largo: 'SALIDAS LARGO RECORRIDO', cercanias: 'CERCANIAS' };
-export const DEFAULT_ROWS: Record<Variant, number> = { largo: 8, cercanias: 9 };
+/** Every board photographed has eight rows. */
+export const DEFAULT_ROWS: Record<Variant, number> = { largo: 8, cercanias: 8 };
 
 const FRAME = { side: 6, title: 13, bottom: 7 };
 const INNER = { side: 5, legends: 9, bottom: 4 };
