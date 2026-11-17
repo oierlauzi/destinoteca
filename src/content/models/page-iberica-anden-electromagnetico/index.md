@@ -59,6 +59,15 @@ installations:
   - site: es/delicias
     status: unknown
     note: Uno por andén, colgados de la marquesina. Fotografiados en servicio en 2016.
+  - site: es/cercedilla
+    status: retired
+  - site: es/los-molinos
+    status: retired
+  - site: es/collado-mediano
+    status: retired
+  - site: es/galapagar
+    status: retired
+    note: Sobre poste.
   - site: es/mendez-alvaro
     line: C-5
     status: in-service
@@ -215,6 +224,53 @@ photos:
     sourceUrl: https://commons.wikimedia.org/wiki/File:Estaci%C3%B3n_de_Delicias_(Cercan%C3%ADas_Madrid),_andenes.JPG
     source: Wikimedia Commons
     license: cc-by-sa-4.0
+  - id: cercedilla
+    src: ./cercedilla-anden.jpg
+    alt: >-
+      Andén de Cercedilla junto a un tren de Cercanías, con un cartel sobre
+      poste y el edificio de la estación al fondo.
+    caption: Cercedilla, octubre de 2022.
+    date: '2022-10'
+    place: Cercedilla
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/4XuWXL4N5oVgrRrY9
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: los-molinos
+    src: ./los-molinos-anden.jpg
+    alt: >-
+      El andén de Los Molinos junto al edificio de la estación, con un cartel
+      al fondo.
+    caption: Los Molinos, agosto de 2017.
+    date: '2017-08'
+    place: Los Molinos
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/6cyyfnfLU3qHJVqU7
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: collado-mediano
+    src: ./collado-mediano-anden.jpg
+    alt: >-
+      Un cartel sobre poste en el andén de Collado Mediano, apagado, en un día
+      nublado.
+    caption: Collado Mediano, enero de 2020.
+    date: '2020-01'
+    place: Collado Mediano
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/sXeBukT8xyDEJcEH6
+    source: Google Maps
+    license: rights-reserved-credited
+  - id: galapagar
+    src: ./galapagar-anden.jpg
+    alt: >-
+      Un cartel sobre poste en el andén de Galapagar-La Navata, un día de cielo
+      despejado.
+    caption: Galapagar-La Navata.
+    place: Galapagar-La Navata
+    author: Usuario de Google Maps
+    sourceUrl: https://maps.app.goo.gl/ZfKrVdkBpczTezoz9
+    source: Google Maps
+    license: rights-reserved-credited
 cover: via-libre-1997
 references:
   - title: renfe-flipdot-re. Ingeniería inversa de un teleindicador PAGE Ibérica PI-T100-M
