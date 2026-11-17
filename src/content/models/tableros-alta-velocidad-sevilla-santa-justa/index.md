@@ -41,8 +41,7 @@ composition:
       at: { x: 304, y: 57.7, width: 176, height: 150 }
       panel: { fill: '#2b2d30', lines: [] }
     - id: reloj
-      model: festina-adif-reloj
-      variant: cuadrado
+      model: festina-adif-reloj-cuadrado
       at: { x: 317, y: 57.7, width: 150 }
     - id: rotulo-trains
       at: { x: 304, y: 209.7, width: 176, height: 55.7 }
@@ -84,7 +83,7 @@ llegadas a la izquierda y los de salidas a la derecha. En cada lado, el de
 abajo sigue con los trenes del de arriba. Sus cabeceras nombran el servicio,
 «Alta velocidad».
 
-En medio, un [reloj Festina](../festina-adif-reloj/) cuadrado, entre dos
+En medio, un [reloj Festina cuadrado](../festina-adif-reloj-cuadrado/), entre dos
 placas verdes con el logotipo de adif: «Trenes alta velocidad» encima y
 «High speed trains» debajo.
 

@@ -125,7 +125,7 @@ Es el tablero de salidas y llegadas que se ve en las estaciones de largo
 recorrido de ADIF, a menudo en grupo: en las grandes estaciones cuelgan
 varios uno al lado del otro, o uno encima de otro, y cada uno sigue con los
 trenes del anterior. Entre ellos suele colgar un
-[reloj Festina](../festina-adif-reloj/) cuadrado. Sigue en servicio, pero
+[reloj Festina cuadrado](../festina-adif-reloj-cuadrado/). Sigue en servicio, pero
 poco a poco lo sustituyen pantallas de vídeo.
 
 Lo fabricó [MP Electronics](../../fabricantes/mp-electronics/), de Palamós
