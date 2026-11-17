@@ -33,7 +33,17 @@ export const frameSchema: ParamSchema = {
   ],
 };
 
-export const optionsSchema = familyOptionsSchema;
+/** The family's settings, plus the printed legend over the minutes, which was not the same everywhere. */
+export const optionsSchema: ParamSchema = {
+  ...familyOptionsSchema,
+  fields: [
+    ...familyOptionsSchema.fields,
+    {
+      key: 'nextLegend', urlKey: 'rotulo', type: 'select', label: 'anden.opt.nextLegend', help: 'anden.opt.nextLegend.help', default: 'llegada', group: 'look',
+      choices: [{ value: 'llegada', label: 'anden.nextLegend.llegada' }, { value: 'tren', label: 'anden.nextLegend.tren' }],
+    },
+  ],
+};
 
 /** One platform, one train at a time, stepping through the next few. */
 const selection: SelectionPolicy = {

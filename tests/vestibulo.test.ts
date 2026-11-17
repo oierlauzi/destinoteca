@@ -101,7 +101,7 @@ describe('concourse board settings', () => {
 
   it('shares appearance and faults with the platform sign, less the LED idle text, plus platform alignment and the colon vinyl', () => {
     const keys = (fields: { key: string }[]) => fields.map((field) => field.key);
-    expect(keys(vestibulo2.options.fields)).toEqual([...keys(andenElectromagnetico.options.fields).filter((key) => key !== 'ledIdle'), 'platformAlign', 'colon']);
+    expect(keys(vestibulo2.options.fields)).toEqual([...keys(andenElectromagnetico.options.fields).filter((key) => key !== 'ledIdle' && key !== 'nextLegend'), 'platformAlign', 'colon']);
     expect(vestibulo2.needs.calls).toBe(false);
     expect(vestibulo4.selection(options)).toMatchObject({ platforms: 'any', window: { size: 4, mode: 'top' } });
   });

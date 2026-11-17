@@ -134,3 +134,15 @@ describe('flip sweep', () => {
     expect(sweep.settled).toBe(true);
   });
 });
+
+describe('the legend over the minutes', () => {
+  it('says "Próxima Llegada" unless set to "Próximo tren", as at Cercedilla', () => {
+    const options = defaults(optionsSchema) as AndenOptions;
+    const frame = { text: 'CHAMARTIN', minutes: '8', platform: '4', led: '' };
+    expect(renderToString(frame, options)).toContain('>Próxima<');
+    const tren = renderToString(frame, { ...options, nextLegend: 'tren' });
+    expect(tren).toContain('>Próximo<');
+    expect(tren).toContain('>tren<');
+    expect(tren).not.toContain('Llegada');
+  });
+});

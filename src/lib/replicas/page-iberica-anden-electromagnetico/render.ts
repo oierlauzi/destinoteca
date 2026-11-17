@@ -43,7 +43,11 @@ export function describe(frame: AndenFrame, options: FamilyOptions): string {
  * The fixed part of the sign: its frame, and the legends. On the real thing
  * those are vinyls on a sheet of metal mounted behind the glass.
  */
-function housing(frame: AndenFrame, _options: FamilyOptions, slots: Record<string, SVGElement>): VNode[] {
+/** The legend over the minutes: "Próxima Llegada" on most signs, "Próximo tren" on some (Cercedilla). */
+const nextLegend = (options: FamilyOptions): [string, string] => (options.nextLegend === 'tren' ? ['Próximo', 'tren'] : ['Próxima', 'Llegada']);
+
+function housing(frame: AndenFrame, options: FamilyOptions, slots: Record<string, SVGElement>): VNode[] {
+  const [first, second] = nextLegend(options);
   const panel = at(12.080421, 11.557226);
   const big = { fill: LEGEND, 'font-size': 23.2833, 'font-weight': 700, 'letter-spacing': 1 };
   const divider = (y: number): VNode => {
@@ -59,8 +63,8 @@ function housing(frame: AndenFrame, _options: FamilyOptions, slots: Record<strin
     minLegend(ROW.x + lineWidth(CELLS) + MIN_GAP, ROW.y),
     h('text', { x: via.x, y: via.y, ...big }, ['Vía']),
     h('text', { fill: LEGEND, 'font-size': 7.05556, 'font-weight': 700 }, [
-      h('tspan', { x: next.x, y: next.y }, ['Próxima']),
-      h('tspan', { x: next.x, y: next.y + 7.761116, 'letter-spacing': 0.15875 }, ['Llegada']),
+      h('tspan', { x: next.x, y: next.y }, [first], (element) => (slots.next1 = element)),
+      h('tspan', { x: next.x, y: next.y + 7.761116, 'letter-spacing': 0.15875 }, [second], (element) => (slots.next2 = element)),
     ]),
     divider(35.448382),
     divider(LED_RULE),
@@ -82,7 +86,10 @@ const spec: SignSpec<AndenFrame> = {
   ledText: (frame) => frame.led,
   describe,
   housing,
-  fill: (frame, slots) => {
+  fill: (frame, slots, options) => {
+    const [first, second] = nextLegend(options);
+    if (slots.next1) slots.next1.textContent = first;
+    if (slots.next2) slots.next2.textContent = second;
     if (slots.platform) slots.platform.textContent = frame.platform;
   },
 };

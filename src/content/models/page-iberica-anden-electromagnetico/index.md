@@ -89,6 +89,13 @@ variants:
       carteles nunca lo recibieron y dicen solo «Vía».
     replicaPreset:
       via: ''
+  - id: proximo-tren
+    name: Con «Próximo tren»
+    description: >-
+      Algunos carteles, como el de Cercedilla, llevan en la cabecera «Próximo
+      tren» en lugar de «Próxima Llegada».
+    replicaPreset:
+      rotulo: tren
 photos:
   - id: via-libre-1997
     src: ./via-libre-1997.jpg
