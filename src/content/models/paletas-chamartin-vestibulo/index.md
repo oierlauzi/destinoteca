@@ -66,6 +66,11 @@ references:
     publication: Vía Libre
     date: '1989-11'
     note: Da el año de instalación del sistema de Chamartín, 1975, y el nombre de quien lo instaló, VEMISA. En la página siguiente, un anuncio de VEMISA como representante exclusiva de Solari.
+  - title: Estación Madrid Chamartin Panel de horarios
+    author: SantanderXesco
+    publication: YouTube
+    url: https://www.youtube.com/watch?v=nWuDrpYqH7s
+    note: Vídeo de los paneles en servicio, grabado en 2009.
 replica:
   id: solari-renfe-largo-recorrido
 stage: stub
@@ -93,10 +98,15 @@ mostrar el producto de cada tren con su logotipo. El nombre del fabricante,
 «solari&c. udine, italy», se lee en el marco inferior en una de las
 fotografías.
 
+En 2009 seguían en servicio: hay un
+[vídeo](https://www.youtube.com/watch?v=nWuDrpYqH7s) de ese año en el que
+se ven funcionar.
+
 ## Lo que no se sabe
 
 - **Qué indicaban las dos luces del final de cada fila.**
 - **Cuándo se instalaron y cuándo se retiraron.** El sistema es de 1975, pero
-  no se sabe si estos paneles estaban desde el principio.
+  no se sabe si estos paneles estaban desde el principio, y en 2009 todavía
+  funcionaban.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
