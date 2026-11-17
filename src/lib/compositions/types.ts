@@ -21,8 +21,8 @@ export interface PanelLine {
   align?: 'left' | 'center' | 'right';
   /** Spacing between letters, in cm. */
   spacing?: number;
-  /** Letters of brushed metal rather than printed in `color`. */
-  finish?: 'brushed-aluminium';
+  /** Letters of satin aluminium standing off the wall, rather than printed in `color`. */
+  finish?: 'aluminium';
   /** Spread the letters out to fill the plate's width, inside its margins. */
   stretch?: boolean;
 }

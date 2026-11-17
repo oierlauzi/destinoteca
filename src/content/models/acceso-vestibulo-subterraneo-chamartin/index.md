@@ -53,7 +53,7 @@ composition:
             weight: 700
             align: left
             stretch: true
-            finish: brushed-aluminium
+            finish: aluminium
 photos:
   - id: vestibulo-subterraneo
     src: ./chamartin-vestibulo-inferior.jpg
@@ -81,8 +81,7 @@ trenes del de la izquierda. Al lado, un
 [reloj Festina cuadrado](../festina-adif-reloj-cuadrado/).
 
 Debajo van el logotipo de [adif](../../operadores/adif/) y el nombre de la
-estación, «Madrid-Chamartín - Clara Campoamor», en grandes letras de aluminio
-cepillado.
+estación, «Madrid-Chamartín - Clara Campoamor», en grandes letras de aluminio.
 
 En una pared detrás de esta colgaban
 [dos tableros de Cercanías](../cercanias-vestibulo-subterraneo-chamartin/).

@@ -197,8 +197,8 @@ const models = defineCollection({
                           color: z.string().optional(),
                           align: z.enum(['left', 'center', 'right']).optional(),
                           spacing: z.number().optional(),
-                          /** Letters of brushed metal rather than printed in `color`. */
-                          finish: z.enum(['brushed-aluminium']).optional(),
+                          /** Letters of satin aluminium standing off the wall, rather than printed in `color`. */
+                          finish: z.enum(['aluminium']).optional(),
                           /** Spread the letters out to fill the plate's width. */
                           stretch: z.boolean().optional(),
                         }),
