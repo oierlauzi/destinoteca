@@ -44,28 +44,6 @@ photos:
     author: Archivo Renfe
     source: Facebook (Bvemike)
     license: rights-reserved-credited
-  - id: chamartin-anos-80
-    src: ./chamartin-anos-80.jpg
-    alt: >-
-      El vestíbulo de Chamartín con viajeros caminando bajo un gran panel de
-      salidas de largo recorrido, de fondo oscuro y letras claras.
-    caption: Chamartín, años ochenta.
-    place: Madrid Chamartín
-    author: José Miguel Gómez
-    sourceUrl: https://x.com/ger58056/status/2087574002772357238
-    source: X (@ger58056)
-    license: rights-reserved-credited
-  - id: chamartin-archivo-renfe
-    src: ./chamartin-archivo-renfe.jpg
-    alt: >-
-      El vestíbulo de Chamartín desde un mostrador de información, con varios
-      paneles de salidas de paletas en lo alto.
-    caption: Chamartín, años ochenta, en una fotografía del archivo de Renfe.
-    place: Madrid Chamartín
-    author: Archivo Renfe
-    sourceUrl: https://x.com/ger58056/status/1602384737305513986
-    source: X (@ger58056)
-    license: rights-reserved-credited
   - id: chamartin-2007
     src: ./chamartin-2007.jpg
     alt: >-

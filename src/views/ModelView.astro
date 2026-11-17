@@ -25,6 +25,7 @@ const data = model.data;
 const facts = catalog.facts(model);
 const { Content } = await render(model);
 
+const photos = catalog.photos(model);
 const cover = catalog.cover(model);
 const social = cover ? (await getImage({ src: cover.src, width: Math.min(cover.src.width, 1200) })).src : undefined;
 // One list per family it belongs to, each without this entry.
@@ -173,10 +174,10 @@ const locations = data.locations.map((location) => {
     }
 
     {
-      data.photos.length > 0 && (
+      photos.length > 0 && (
         <section aria-labelledby="fotografias">
           <h2 id="fotografias">{t('catalog.model.photos')}</h2>
-          <PhotoGallery photos={data.photos} />
+          <PhotoGallery photos={photos} />
         </section>
       )
     }

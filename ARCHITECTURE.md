@@ -216,6 +216,8 @@ composes one SVG from each element's own drawing. On the page, one
 `SourceHub` feeds every element: a `ReplicaElement` handed a hub leaves the
 source to whoever handed it. Boards in the same `serie` carry on from one
 another through `Placement.skip`. Each element links to its own entry.
+An installation's photographs are listed after an element's own on the
+element's page (`Catalog.photos`), and can be its cover.
 
 Pages are thin wrappers over `src/views/`. Internal links go through
 `href()` in `src/site/url.ts`, which adds the base path (and, one day, a

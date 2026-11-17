@@ -175,7 +175,7 @@ export class Catalog {
       status: data.status,
       hasReplica: data.replica !== undefined || data.installation !== undefined,
       stage: data.stage,
-      photoCount: data.photos.length,
+      photoCount: this.photos(model).length,
       referenceCount: data.references.length,
       bodyLength: (model.body ?? '').trim().length,
     };
@@ -260,9 +260,19 @@ export class Catalog {
     }
   }
 
-  /** The photo that stands for a model on cards and in previews. */
+  /**
+   * A model's photographs: its own, then those of every installation it is
+   * part of. A photograph of signs hung together is kept once, in the
+   * installation, and still shows on the page of each sign in it.
+   */
+  photos(model: Model): Photo[] {
+    if (model.data.installation) return model.data.photos;
+    return [...model.data.photos, ...this.installationsWith(model).flatMap((installation) => installation.data.photos)];
+  }
+
+  /** The photo that stands for a model on cards and in previews: its `cover`, which may be one of its installations' photos. */
   cover(model: Model): Photo | undefined {
-    const photos = model.data.photos;
+    const photos = this.photos(model);
     return photos.find((photo) => photo.id === model.data.cover) ?? photos[0];
   }
 
@@ -357,10 +367,11 @@ export class Catalog {
       if (data.replica && !isReplicaId(data.replica.id)) report(where, `replica "${data.replica.id}" does not exist`);
       if (data.replica && !getReplica(data.replica.id)) report(where, `replica "${data.replica.id}" is not registered`);
       this.checkInstallation(model, report);
-      if (data.cover && !data.photos.some((photo) => photo.id === data.cover)) {
-        report(where, `cover "${data.cover}" is not the id of one of its photos`);
+      const photos = this.photos(model);
+      if (data.cover && !photos.some((photo) => photo.id === data.cover)) {
+        report(where, `cover "${data.cover}" is not the id of one of its photos or its installations'`);
       }
-      for (const id of collisions(data.photos.map((photo) => photo.id))) report(where, `photo id "${id}" is repeated`);
+      for (const id of collisions(photos.map((photo) => photo.id))) report(where, `photo id "${id}" is repeated, in it or in one of its installations`);
       for (const id of collisions(data.variants.map((variant) => variant.id))) report(where, `variant id "${id}" is repeated`);
       for (const photo of data.photos) {
         for (const problem of photoProblems(photo)) report(`${where}, photo "${photo.id}"`, problem);

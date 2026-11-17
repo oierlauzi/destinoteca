@@ -79,28 +79,6 @@ locations:
     status: in-service
     note: Un tablero de llegadas, según la fuente de la fotografía.
 photos:
-  - id: chamartin-vestibulo-inferior
-    src: ./chamartin-vestibulo-inferior.jpg
-    alt: >-
-      Dos tableros de salidas de adif, uno junto al otro, en lo alto de una
-      pared blanca con el nombre de la estación, junto a un reloj.
-    caption: Vestíbulo inferior de Madrid Chamartín-Clara Campoamor.
-    place: Madrid Chamartín-Clara Campoamor
-    author: Oier Lauzirika Zarrabeitia
-    ownWork: true
-    license: cc-by-sa-4.0
-  - id: reloj-cuatro-tableros-2026
-    src: ./reloj-cuatro-tableros-2026.jpg
-    alt: >-
-      El acceso a las vías de alta velocidad de una estación. Encima, cuatro
-      tableros de salidas y llegadas, dos a cada lado de un reloj Festina.
-    caption: Cuatro tableros de alta velocidad con un reloj Festina en medio, enero de 2026.
-    date: '2026-01-20'
-    place: Sevilla-Santa Justa
-    author: Agent Travel
-    sourceUrl: https://agenttravel.es/Fotos/AVE%20Madrid%20Sevilla%2020ene26.jpg
-    source: Agent Travel
-    license: rights-reserved-credited
   - id: reloj-entre-tableros-2026
     src: ./reloj-entre-tableros-2026.jpg
     alt: >-
@@ -112,7 +90,7 @@ photos:
     sourceUrl: https://e01-phantom-elmundo.uecdn.es/90003b1470ca7293765f921209945da9/crop/0x0/3072x2048/resize/828/f/jpg/assets/multimedia/imagenes/2026/11/09/17942568096223.jpg
     source: El Mundo
     license: rights-reserved-credited
-cover: chamartin-vestibulo-inferior
+cover: vestibulo-subterraneo
 references:
   - title: Sobre nosotros
     author: MP Electronics

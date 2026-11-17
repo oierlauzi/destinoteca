@@ -99,6 +99,8 @@ byte for byte the same; compare their `renderToString` output before and after.
 - Every element is an archive entry; the page links each one, and each entry
   lists the installations it is part of.
 - Boards that carry on from one another share a `serie`.
+- A photograph of an installation goes in the installation only: it also
+  shows on the page of each element, whose `cover` can name it.
 
 ## Git
 

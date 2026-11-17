@@ -33,19 +33,6 @@ photos:
     sourceUrl: https://unrelojista.wordpress.com/wp-content/uploads/2021/05/img_20210514_163247.jpeg
     source: Un relojista
     license: rights-reserved-credited
-  - id: reloj-cuatro-tableros-2026
-    src: ./reloj-cuatro-tableros-2026.jpg
-    alt: >-
-      El acceso a las vías de alta velocidad de una estación, con controles
-      de seguridad. Encima, un reloj Festina cuadrado entre cuatro tableros de
-      salidas y llegadas.
-    caption: Entre cuatro tableros de salidas y llegadas, enero de 2026.
-    date: '2026-01-20'
-    place: Sevilla-Santa Justa
-    author: Agent Travel
-    sourceUrl: https://agenttravel.es/Fotos/AVE%20Madrid%20Sevilla%2020ene26.jpg
-    source: Agent Travel
-    license: rights-reserved-credited
   - id: reloj-entre-tableros-2026
     src: ./reloj-entre-tableros-2026.jpg
     alt: >-
