@@ -11,7 +11,9 @@ transportModes:
   - rail
 features:
   - printed-legends
-manufacturerUnknown: true
+manufacturers:
+  - ref: solari
+    role: manufacturer
 operators:
   - ref: renfe
     role: operator
@@ -50,7 +52,7 @@ photos:
     alt: >-
       Dos paneles de salidas de paletas, de marco blanco, sobre los accesos a
       las vías 8 y 9, con el producto de cada tren en una paleta propia.
-    caption: Chamartín, agosto de 2007, con un panel de otra generación.
+    caption: Chamartín, agosto de 2007.
     date: '2007-08-07'
     place: Madrid Chamartín
     author: Jesús Sanz Mate
@@ -63,16 +65,18 @@ stage: stub
 
 Antes de los [paneles LED de MP Electronics](../mp-electronics-adif-teleindicador/),
 las salidas de largo recorrido de Chamartín se anunciaban en grandes paneles
-de paletas colgados en el vestíbulo. Cada línea anunciaba un tren: su
+de paletas de [Solari](../../fabricantes/solari/), de Udine, colgados en el
+vestíbulo. Cada línea anunciaba un tren: su
 producto, su destino, por dónde pasaba, la hora y la vía.
 
-Las fotografías muestran al menos dos generaciones: unos paneles de fondo
-oscuro en los años ochenta y, todavía en 2007, otros de marco blanco con el
-producto de cada tren en una paleta con su logotipo.
+Son los mismos paneles en todas las fotografías; entre los años ochenta y
+2007 solo cambiaron los marcos y las paletas, que con el tiempo pasaron a
+mostrar el producto de cada tren con su logotipo. El nombre del fabricante,
+«solari&c. udine, italy», se lee en el marco inferior en una de las
+fotografías.
 
 ## Lo que no se sabe
 
-- **Quién los fabricó.**
 - **Cuándo se instalaron y cuándo se retiraron.**
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
