@@ -31,8 +31,8 @@ export const HOUR_FLAP = 15;
 const charsWidth = (count: number): number => count * FLAP.width + (count - 1) * FLAP_GAP;
 
 const WIDTHS: Record<FieldKind, (key: string) => number> = {
-  // The train's word is about six characters wide, "por" five.
-  word: (key) => (key === 'p' ? charsWidth(5) : charsWidth(6)),
+  // The train's word is about six characters wide, "por" eight.
+  word: (key) => (key === 'p' ? charsWidth(8) : charsWidth(6)),
   place: () => charsWidth(12),
   time: () => HOUR_FLAP + FLAP_GAP + charsWidth(2),
   platform: () => charsWidth(2),
