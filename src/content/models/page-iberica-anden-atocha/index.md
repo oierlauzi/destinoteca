@@ -114,7 +114,9 @@ construcción, y pueden no coincidir con las reales.
 - **Cuándo cambia la primera línea del panel.** La réplica la cambia cuando
   el tren está a cero minutos, como en la fotografía con los trenes en el
   andén; no se sabe qué más la hace cambiar.
-- **Cuándo se instalaron.** Fue después de enero de 1995, cuando los andenes
-  todavía tenían los carteles de Ikusi.
+- **Cuándo se instalaron.** Después de 1997: en una fotografía publicada en
+  abril de ese año, los andenes todavía tenían los carteles de Ikusi.
+  Probablemente a la vez que los demás
+  [carteles de PAGE de la estación](../../familias/page-iberica-electromagneticos-atocha-cercanias/).
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

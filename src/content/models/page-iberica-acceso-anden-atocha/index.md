@@ -72,6 +72,8 @@ anteriores de la familia, tan ancha como la línea flip-dot.
 
 - **Qué muestra la fila de LED** con el servicio en marcha. La réplica pone
   las paradas del tren, como en los demás carteles de la familia.
-- **Cuándo se instalaron.**
+- **Cuándo se instalaron.** Probablemente a la vez que los demás
+  [carteles de PAGE de la estación](../../familias/page-iberica-electromagneticos-atocha-cercanias/),
+  después de 1997.
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

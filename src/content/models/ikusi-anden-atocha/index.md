@@ -70,6 +70,52 @@ photos:
     author: Archivo Renfe
     source: Facebook, compartida por Bvemike
     license: rights-reserved-credited
+  - id: trenes-hoy-1989
+    src: ./trenes-hoy-1989.jpg
+    alt: >-
+      La estación vista desde lo alto, con un tren a la izquierda, un andén
+      abarrotado y, al fondo, las escaleras y la pasarela. En medio del andén,
+      un cartel de dos mitades.
+    caption: Vías 3 y 1, en la fotografía más antigua que se conoce de los carteles.
+    date: '1989'
+    place: Atocha Cercanías
+    author: Trenes Hoy
+    source: Revista Trenes Hoy, n.º 26, 1989
+    license: rights-reserved-credited
+  - id: via-libre-1990
+    src: ./via-libre-1990.jpg
+    alt: >-
+      Un andén abarrotado de viajeros visto desde arriba, con un cartel de dos
+      mitades sobre un poste en medio de la gente.
+    caption: Vías 3 y 4, tal como lo publicó *Vía Libre* en febrero de 1990.
+    date: '1990-02'
+    place: Atocha Cercanías
+    author: Luna
+    source: Revista Vía Libre, febrero de 1990
+    license: rights-reserved-credited
+  - id: trenes-hoy-1991
+    src: ./trenes-hoy-1991.jpg
+    alt: >-
+      Viajeros esperando en un andén, alrededor de un poste con un cartel de
+      dos mitades.
+    caption: Vías 3 y 4, en *Trenes Hoy*, 1991.
+    date: '1991'
+    place: Atocha Cercanías
+    author: Trenes Hoy
+    source: Revista Trenes Hoy, n.º 42, 1991
+    license: rights-reserved-credited
+  - id: via-libre-1996
+    src: ./via-libre-1996.jpg
+    alt: >-
+      Un andén con bancos rojos y viajeros esperando junto a un tren. Arriba,
+      colgado de la estructura, un cartel de dos mitades y, junto al andén, el
+      rótulo de la estación.
+    caption: Vías 4 y 3, junto al rótulo de Madrid-Atocha, en *Vía Libre*, enero de 1996.
+    date: '1996-01'
+    place: Atocha Cercanías
+    author: Luna
+    source: Revista Vía Libre, enero de 1996
+    license: rights-reserved-credited
 cover: atocha-vias-3-4
 references:
   - title: Las pequeña y mediana empresa del ferrocarril busca el mercado exterior
@@ -79,7 +125,33 @@ references:
   - title: Orientar e informar
     publication: Vía Libre
     date: '1995-01'
-    note: Dossier sobre Cercanías; la fotografía de los carteles acompaña al texto.
+    note: Dossier sobre Cercanías; la fotografía de los carteles acompaña al texto. Otra, más adelante en el mismo dossier, los muestra en dos andenes.
+  - title: 3.000 trenes contra los atascos
+    publication: Trenes Hoy
+    date: '1989'
+    note: N.º 26. La fotografía más antigua que se conoce de los carteles.
+  - title: Renfe pide medio billón de pesetas para solucionar el problema de cercanías
+    author: Julio César Rivas
+    publication: Vía Libre
+    date: '1990-02'
+  - title: Cercanías inaugura el uso de billetes con banda magnética
+    author: José Luis Ordóñez
+    publication: Vía Libre
+    date: '1990-04'
+    note: Otra fotografía de los carteles, sobre un andén lleno de viajeros.
+  - title: Las Cercanías de Madrid, a examen
+    publication: Trenes Hoy
+    date: '1991'
+    note: N.º 42.
+  - title: 100 ideas 1995
+    publication: Vía Libre
+    date: '1996-01'
+    note: Dossier; la fotografía de los carteles, junto al rótulo de la estación, acompaña al apartado «Mejores escenarios».
+  - title: Cercanías ha superado en Madrid los seiscientos mil viajeros diarios
+    author: Yolanda del Val
+    publication: Vía Libre
+    date: '1997-04'
+    note: La fotografía más reciente que se conoce de los carteles.
 stage: stub
 ---
 
@@ -102,15 +174,16 @@ encendida de punta a punta y otras con dos o tres palabras.
 
 En marzo de 1992, *Vía Libre* contaba que Ikusi había instalado para Renfe
 los sistemas de información al público de Madrid-Atocha, sin decir de qué
-parte de la estación. En enero de 1995 la misma revista publicó una
-fotografía de estos carteles en servicio. Después los sustituyeron los de
-PAGE Ibérica.
+parte de la estación. Las fotografías que publicaron *Trenes Hoy* y *Vía
+Libre* los muestran en servicio desde 1989 hasta, por lo menos, 1997, y en
+varios andenes. Después los sustituyeron los de PAGE Ibérica.
 
 ## Lo que no se sabe
 
 - **Qué muestra la línea roja.** En una fotografía lleva texto, pero no se
   lee; en las demás se ve encendida entera. Tampoco se sabe de qué tecnología
   es.
-- **Cuándo se instalaron y cuándo se retiraron.**
+- **Cuándo se instalaron y cuándo se retiraron.** La fotografía más antigua
+  que se conoce es de 1989, y la más reciente, de 1997.
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

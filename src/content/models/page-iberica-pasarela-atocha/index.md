@@ -82,6 +82,10 @@ los minutos se escriben con «min» en minúsculas, aquí pegado a la cifra:
 - **Cómo se reparten los trenes entre las dos pantallas.** La réplica pone
   los cinco primeros en la de la izquierda y los cinco siguientes en la de la
   derecha.
-- **Cuándo se instaló.**
+- **Cuándo se instaló.** Probablemente a la vez que los demás
+  [carteles de PAGE de la estación](../../familias/page-iberica-electromagneticos-atocha-cercanias/), que sustituyeron a los de Ikusi
+  después de 1997, el último año en que se fotografiaron los de andén. En
+  enero de 1995 la pasarela tenía otro panel, de varias líneas, que está
+  [por documentar](../../pendientes/#panel-de-la-pasarela-de-atocha-cercanías).
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

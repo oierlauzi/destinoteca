@@ -54,6 +54,32 @@ dice dónde se tomó.
 
 **Falta:** saber si es Atocha Cercanías u otra estación.
 
+### Panel de la pasarela de Atocha Cercanías
+
+En la fotografía que abre el dossier de Cercanías de *Vía Libre* de enero de
+1995 se ve, al fondo y sobre las vías, un panel ancho de varias líneas de
+caracteres amarillo verdoso: el de la pasarela, antes del
+[panel de PAGE Ibérica](../catalogo/page-iberica-pasarela-atocha/) que hay hoy.
+Por la tecnología y la época, sería de Ikusi, como los carteles de andén de
+entonces.
+
+**Falta:** una fotografía en la que se lea, saber quién lo fabricó y cuántas
+líneas tenía.
+
+### Carteles de andén de Bilbao
+
+En un reportaje de *Vía Libre* de julio y agosto de 2000 sobre las nuevas
+estaciones de Cercanías de Bilbao, la del andén central de Autonomía muestra
+dos carteles colgados del techo, uno a cada lado de un reloj: cada uno con el
+logotipo de Cercanías, «Vía» y su número impresos, el destino y los minutos
+en caracteres amarillos, y una franja roja debajo. Se parecen a los de
+[Ikusi de Atocha Cercanías](../catalogo/ikusi-anden-atocha/), pero la caja es
+distinta, con los bordes redondeados. *Vía Libre* contaba en 1997 que los
+teleindicadores de Cercanías Bilbao eran de Ikusi.
+
+**Falta:** confirmar el fabricante, fotografías de cerca y en qué otras
+estaciones de Bilbao había.
+
 ### Otras estaciones
 
 Según *Vía Libre*, Ikusi instaló sistemas de información al público de Renfe

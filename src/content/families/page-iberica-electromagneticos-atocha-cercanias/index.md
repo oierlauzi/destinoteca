@@ -53,12 +53,16 @@ estilo.
 
 En los andenes hubo antes
 [carteles de cristal líquido de Ikusi](../../catalogo/ikusi-anden-atocha/),
-que en enero de 1995 seguían en servicio, y en el vestíbulo un
+fotografiados en servicio entre 1989 y 1997; en el vestíbulo, un
 [tablero de Ikusi](../../pendientes/#tablero-del-vestíbulo-de-atocha-cercanías)
-con la misma división que el panel de PAGE que vino después.
+con la misma división que el panel de PAGE que vino después, y en la
+pasarela, un [panel de varias líneas](../../pendientes/#panel-de-la-pasarela-de-atocha-cercanías)
+que todavía está por documentar.
 
 ## Lo que no se sabe
 
-- **Cuándo se instalaron.** Los de andén, después de enero de 1995.
+- **Cuándo se instalaron.** Probablemente todos a la vez, cuando sustituyeron
+  a los de Ikusi, y después de 1997: en una fotografía publicada en abril de
+  ese año, los carteles de andén de Ikusi seguían en servicio.
 
 Si tienes fotografías o documentación, [puedes aportarlas](../../contribuir/).
