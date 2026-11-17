@@ -63,6 +63,18 @@ photos:
     sourceUrl: https://maps.app.goo.gl/NMZHqnzu1PT5AkTeA
     source: Google Maps
     license: rights-reserved-credited
+  - id: pinar-video
+    src: ./pinar-video.jpg
+    alt: >-
+      El panel de cuatro líneas en una pared amarilla, visto de frente, con
+      las líneas flip-dot encendidas sobre sus tubos fluorescentes y la fila
+      de LED roja recorriendo un aviso.
+    caption: Pinar de las Rozas, en un fotograma del vídeo. En la fila de LED, la eñe sale como Q.
+    place: Pinar de las Rozas
+    author: Ferrocarril Ibérico - Canal Oficial
+    sourceUrl: https://www.youtube.com/watch?v=8SDaOLen0Uw
+    source: YouTube
+    license: rights-reserved-credited
 references:
   - title: Renfe Cercanías - Panel de información en Pinar
     author: Ferrocarril Ibérico - Canal Oficial

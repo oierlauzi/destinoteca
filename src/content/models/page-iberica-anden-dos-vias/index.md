@@ -23,6 +23,22 @@ family: page-iberica-electromagneticos
 countries:
   - es
 status: unknown
+installations:
+  - site: es/villaverde-bajo
+    status: unknown
+    note: Muy probablemente la estación del vídeo, que no la nombra. Sobre un pilar, con las vías 5 y 4.
+photos:
+  - id: villaverde-bajo-video
+    src: ./villaverde-bajo-video.jpg
+    alt: >-
+      El cartel de dos vías visto desde abajo, montado sobre un pilar de
+      hormigón: dos cabeceras con «Vía», una encima de otra, la línea flip-dot
+      de la de abajo encendida en verde y su fila de LED en rojo.
+    caption: El cartel de las vías 5 y 4, muy probablemente en Villaverde Bajo, en un fotograma del vídeo.
+    author: Ferrocarril Ibérico - Canal Oficial
+    sourceUrl: https://www.youtube.com/watch?v=a1PcPwgaw50
+    source: YouTube
+    license: rights-reserved-credited
 references:
   - title: Renfe Cercanias - Panel indicando Sol y Valladolid
     author: Ferrocarril Ibérico - Canal Oficial
@@ -50,7 +66,8 @@ la vía 5 y la de abajo la de la vía 4.
 
 ## Lo que no se sabe
 
-- **En qué estación está el del vídeo**, y en qué otras hubo.
+- **En qué estación está el del vídeo.** Muy probablemente en Villaverde
+  Bajo, pero el vídeo no lo dice. Tampoco se sabe si hubo en otras.
 - **Las medidas de la caja.** La réplica sigue al cartel sencillo en el
   ancho, el marco y cada fila, y apila las de las dos mitades en un solo
   panel.

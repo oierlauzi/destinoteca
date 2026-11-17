@@ -27,6 +27,19 @@ installations:
     line: C-2
     status: unknown
     note: Colgados de la marquesina, uno por vía. Grabados en vídeo junto a las pantallas nuevas que se instalaron a su lado.
+photos:
+  - id: vallecas-video
+    src: ./vallecas-video.jpg
+    alt: >-
+      Un andén de Vallecas bajo la marquesina, de día. Arriba, una pantalla
+      nueva; debajo, más al fondo, el cartel alargado de una sola línea
+      flip-dot, colgado de la marquesina sobre el ascensor del andén.
+    caption: Vallecas, en un fotograma del vídeo. Debajo de la pantalla nueva, el cartel sin fila de LED.
+    place: Vallecas
+    author: Ferrocarril Ibérico - Canal Oficial
+    sourceUrl: https://www.youtube.com/watch?v=Igshp6E8I6U
+    source: YouTube
+    license: rights-reserved-credited
 references:
   - title: Adif / Renfe Cercanías - Nuevo Panel informativo en Vallecas (Renfe + C2 Chamartín)
     author: Ferrocarril Ibérico - Canal Oficial
