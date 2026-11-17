@@ -58,6 +58,8 @@ export function panelNodes(member: PanelMember): VNode[] {
         'font-weight': line.weight ?? 400,
         'text-anchor': align === 'left' ? 'start' : align === 'right' ? 'end' : 'middle',
         ...(line.spacing ? { 'letter-spacing': line.spacing } : {}),
+        // Spread to the plate's width whatever the font: only the spaces between letters grow.
+        ...(line.stretch ? { textLength: Math.round((width - 2 * margin) * 100) / 100, lengthAdjust: 'spacing' } : {}),
         fill: metal?.fill ?? line.color ?? '#ffffff',
         ...(metal ? { filter: metal.filter, stroke: '#7e848a', 'stroke-width': 0.25 } : {}),
       }, [line.text]),

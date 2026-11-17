@@ -27,6 +27,11 @@ composition:
       model: mp-electronics-adif-cercanias
       serie: cercanias
       at: { x: 114, y: 0, width: 112 }
+references:
+  - title: Estación Madrid-Chamartín, nuevo vestíbulo subterráneo, paneles y nombre de estación
+    author: Adif Alta Velocidad
+    url: https://www.adifaltavelocidad.es/documents/34745/2301034/Estaci%C3%B3n+Madrid-Chamart%C3%ADn_nuevo+vest%C3%ADbulo+subterr%C3%A1neo_paneles+y+nombre+de+estaci%C3%B3n_DBM_3745.png/9a3051c8-54a7-733d-0644-207a2c766f10
+    note: Los dos paneles se ven al fondo, tras los tornos de acceso.
 stage: stub
 ---
 
@@ -40,7 +45,6 @@ pantalla de vídeo.
 ## Lo que no se sabe
 
 - **Desde cuándo estaban.**
-- **Cómo era la pared**, y si llevaba algún rótulo.
 - **Las medidas.** La composición las estima con la misma separación entre
   LED que los tableros de largo recorrido.
 

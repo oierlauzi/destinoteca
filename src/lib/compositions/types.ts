@@ -23,6 +23,8 @@ export interface PanelLine {
   spacing?: number;
   /** Letters of brushed metal rather than printed in `color`. */
   finish?: 'brushed-aluminium';
+  /** Spread the letters out to fill the plate's width, inside its margins. */
+  stretch?: boolean;
 }
 
 export type PanelLogo = 'adif' | 'cercanias';

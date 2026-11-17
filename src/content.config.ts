@@ -199,6 +199,8 @@ const models = defineCollection({
                           spacing: z.number().optional(),
                           /** Letters of brushed metal rather than printed in `color`. */
                           finish: z.enum(['brushed-aluminium']).optional(),
+                          /** Spread the letters out to fill the plate's width. */
+                          stretch: z.boolean().optional(),
                         }),
                       ),
                       logo: z

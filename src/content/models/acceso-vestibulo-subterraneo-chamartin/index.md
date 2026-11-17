@@ -14,33 +14,46 @@ installations:
     status: in-service
     note: En el acceso al nuevo vestíbulo subterráneo.
 composition:
-  size: { width: 1040, height: 192 }
+  size: { width: 1048, height: 192 }
   elements:
+    - id: logotipo
+      at: { x: 16, y: 0, width: 237, height: 78 }
+      panel:
+        fill: none
+        lines: []
+        logo: { kind: adif, height: 66, color: '#5c6670', symbolColor: '#3aaa35' }
+    - id: administrador
+      at: { x: 114, y: 58, width: 150, height: 16 }
+      panel:
+        fill: none
+        valign: top
+        lines:
+          - { text: ADMINISTRADOR DE, size: 4.8, color: '#4a5056', align: left }
+          - { text: INFRAESTRUCTURAS FERROVIARIAS, size: 4.8, color: '#4a5056', align: left }
     - id: salidas-1
       model: mp-electronics-adif-teleindicador
       params: { color: '#5df08f' }
       serie: salidas
-      at: { x: 175, y: 4, width: 300 }
+      at: { x: 280, y: 6, width: 300 }
     - id: salidas-2
       model: mp-electronics-adif-teleindicador
       params: { color: '#5df08f' }
       serie: salidas
-      at: { x: 479, y: 4, width: 300 }
+      at: { x: 588, y: 6, width: 300 }
     - id: reloj
       model: festina-adif-reloj-cuadrado
-      at: { x: 794, y: 4, width: 130.7 }
-    - id: logotipo
-      at: { x: 0, y: 0, width: 165, height: 50 }
-      panel:
-        fill: none
-        lines: []
-        logo: { kind: adif, height: 42, color: '#5c6670', symbolColor: '#3aaa35' }
+      at: { x: 894, y: 6, width: 130.7 }
     - id: nombre
-      at: { x: 0, y: 146, width: 1040, height: 44 }
+      at: { x: 0, y: 150, width: 1048, height: 40 }
       panel:
         fill: none
         lines:
-          - { text: MADRID-CHAMARTÍN - CLARA CAMPOAMOR, size: 32, weight: 600, align: left, finish: brushed-aluminium }
+          - text: "MADRID\u2013CHAMARTÍN\u00a0\u00a0\u00a0\u2013\u00a0\u00a0\u00a0CLARA CAMPOAMOR"
+            size: 32
+            weight: 700
+            align: left
+            stretch: true
+            finish: brushed-aluminium
 photos:
   - id: vestibulo-subterraneo
     src: ./chamartin-vestibulo-inferior.jpg

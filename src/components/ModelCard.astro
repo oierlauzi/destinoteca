@@ -4,6 +4,7 @@ import PlaceholderArt from './PlaceholderArt.astro';
 import { t } from '@/i18n';
 import { yearsLabel } from '@/lib/catalog';
 import { getCatalog, type Model } from '@/site/catalog';
+import { hasPoster, posterHref } from '@/site/poster';
 import { href } from '@/site/url';
 
 interface Props {
@@ -18,7 +19,7 @@ const facts = catalog.facts(model);
 const cover = catalog.cover(model);
 // An entry with a replica is pictured by the replica itself, drawn at build
 // time: sharper than any period photograph, and it is what the card leads to.
-const poster = model.data.replica || model.data.composition ? href(`posters/${model.id}.svg`).replace(/\/$/, '') : undefined;
+const poster = hasPoster(model) ? await posterHref(model) : undefined;
 const Heading = `h${level}` as 'h3';
 const years = yearsLabel(facts.years, facts.status);
 const meta = [years, facts.stage === 'stub' ? t('catalog.stage.stub') : ''].filter(Boolean).join(' · ');
