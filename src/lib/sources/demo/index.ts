@@ -39,10 +39,13 @@ function seedOf(station: string): number {
   return Array.from(station || '0').reduce((hash, char) => (hash * 31 + char.charCodeAt(0)) >>> 0, 7);
 }
 
-/** Six trains ahead of `now`, the same ones for the same seed. */
+/**
+ * Twenty-four trains ahead of `now`, the same ones for the same seed: enough
+ * to fill a Cercanías board of twelve rows, or two hung together.
+ */
 export function buildBoard(seed: number, now: number): Service[] {
   const services: Service[] = [];
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 24; i++) {
     // The stride is coprime with the table length, or destinations would repeat every few rows.
     const pick = (seed + i * 5) % RUNS.length;
     const run = RUNS[pick]!;

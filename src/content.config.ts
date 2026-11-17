@@ -199,7 +199,9 @@ const models = defineCollection({
                           spacing: z.number().optional(),
                         }),
                       ),
-                      logo: z.object({ kind: z.enum(['adif', 'cercanias']), height: z.number().positive(), color: z.string().optional() }).optional(),
+                      logo: z
+                        .object({ kind: z.enum(['adif', 'cercanias']), height: z.number().positive(), color: z.string().optional(), symbolColor: z.string().optional() })
+                        .optional(),
                     })
                     .optional(),
                 })

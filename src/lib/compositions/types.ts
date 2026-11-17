@@ -33,8 +33,8 @@ export interface PanelSpec {
   /** Where the block of lines sits: in the middle, or against the top or bottom. */
   valign?: 'top' | 'middle' | 'bottom';
   lines: PanelLine[];
-  /** Height of the logo in cm; it sits in the bottom right corner. */
-  logo?: { kind: PanelLogo; height: number; color?: string };
+  /** Height of the logo in cm; it sits in the bottom right corner. `symbolColor` paints the adif symbol apart from the word. */
+  logo?: { kind: PanelLogo; height: number; color?: string; symbolColor?: string };
 }
 
 /** How an element is written in the entry: an archive entry, or a printed panel. */

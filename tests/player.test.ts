@@ -258,7 +258,7 @@ describe('demo source', () => {
   it('builds the same board for the same seed, soonest first', () => {
     const board = buildBoard(42, T0);
     expect(board).toEqual(buildBoard(42, T0));
-    expect(board).toHaveLength(6);
+    expect(board).toHaveLength(24);
     const times = board.map((service) => service.here!.departure!.estimated!);
     expect([...times].sort((a, b) => a - b)).toEqual(times);
     expect(times[0]).toBeGreaterThan(T0);

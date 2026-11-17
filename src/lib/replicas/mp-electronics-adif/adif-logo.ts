@@ -18,13 +18,20 @@ const WORD = [
 /** The drawn part of the artwork, so that the logo can be placed by what is visible. */
 const BOX = { x: 18, y: 14, width: 437, height: 128 };
 
-/** The logo in one colour, its visible part `height` tall, its right edge at `right`, centred on `cy`. */
-export function adifLogo(right: number, cy: number, height: number, fill: string): VNode {
+/** How wide the logo is for its height. */
+export const ADIF_LOGO_ASPECT = BOX.width / BOX.height;
+
+/**
+ * The logo, its visible part `height` tall, its right edge at `right`,
+ * centred on `cy`: in one colour, or with the symbol in a colour of its own
+ * as printed on a wall.
+ */
+export function adifLogo(right: number, cy: number, height: number, fill: string, symbolFill = fill): VNode {
   const scale = height / BOX.height;
   const x = right - (BOX.x + BOX.width) * scale;
   const y = cy - (BOX.y + BOX.height / 2) * scale;
   return h('g', { transform: `translate(${x},${y}) scale(${scale})`, fill }, [
-    h('path', { d: SYMBOL }),
+    h('path', { d: SYMBOL, ...(symbolFill !== fill ? { fill: symbolFill } : {}) }),
     ...WORD.map((d) => h('path', { d, 'fill-rule': 'evenodd' })),
   ]);
 }

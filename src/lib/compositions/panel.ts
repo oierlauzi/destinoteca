@@ -39,10 +39,10 @@ export function panelNodes(member: PanelMember): VNode[] {
     top = baseline + (gaps[i] ?? 0);
   });
   if (panel.logo) {
-    const { kind, height: size, color } = panel.logo;
+    const { kind, height: size, color, symbolColor } = panel.logo;
     const right = x + width - margin;
     const cy = y + height - margin - size / 2;
-    nodes.push(kind === 'adif' ? adifLogo(right, cy, size, color ?? '#ffffff') : cercaniasRoundel(right - size / 2, cy, size / 2));
+    nodes.push(kind === 'adif' ? adifLogo(right, cy, size, color ?? '#ffffff', symbolColor) : cercaniasRoundel(right - size / 2, cy, size / 2));
   }
   return nodes;
 }
