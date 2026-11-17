@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { memberOptions, resolveComposition } from '../src/lib/compositions/layout';
-import { composeSvg, nestSvg } from '../src/lib/compositions/render';
-import type { CompositionInput, EntryInput } from '../src/lib/compositions/types';
+import { memberOptions, resolveInstallation } from '../src/lib/installations/layout';
+import { composeSvg, nestSvg } from '../src/lib/installations/render';
+import type { InstallationInput, EntryInput } from '../src/lib/installations/types';
 import { getReplica } from '../src/lib/replicas/registry';
 
 const ENTRIES: EntryInput[] = [
@@ -17,7 +17,7 @@ const ENTRIES: EntryInput[] = [
 ];
 const entry = (id: string) => ENTRIES.find((e) => e.id === id);
 
-const wall: CompositionInput = {
+const wall: InstallationInput = {
   size: { width: 800, height: 300 },
   elements: [
     { id: 'llegadas-1', model: 'tablero', variant: 'av', params: { modo: 'arrivals' }, serie: 'llegadas', at: { x: 0, y: 0, width: 300 } },
@@ -28,11 +28,11 @@ const wall: CompositionInput = {
   ],
 };
 
-describe('compositions', () => {
-  const resolved = resolveComposition(wall, entry);
+describe('installations', () => {
+  const resolved = resolveInstallation(wall, entry);
   const member = (id: string) => resolved.members.find((m) => m.id === id)!;
 
-  it("take each display's settings from its entry, then its variant, then the composition", () => {
+  it("take each display's settings from its entry, then its variant, then the installation", () => {
     const board = member('llegadas-1');
     expect(board.kind).toBe('replica');
     if (board.kind !== 'replica') return;
@@ -57,8 +57,8 @@ describe('compositions', () => {
   });
 
   it('refuse an element the archive cannot draw', () => {
-    expect(() => resolveComposition({ ...wall, elements: [{ id: 'x', model: 'sin-replica', at: { x: 0, y: 0, width: 10 } }] }, entry)).toThrow(/replica/);
-    expect(() => resolveComposition({ ...wall, elements: [{ id: 'x', model: 'reloj', variant: 'azul', at: { x: 0, y: 0, width: 10 } }] }, entry)).toThrow(/variant/);
+    expect(() => resolveInstallation({ ...wall, elements: [{ id: 'x', model: 'sin-replica', at: { x: 0, y: 0, width: 10 } }] }, entry)).toThrow(/replica/);
+    expect(() => resolveInstallation({ ...wall, elements: [{ id: 'x', model: 'reloj', variant: 'azul', at: { x: 0, y: 0, width: 10 } }] }, entry)).toThrow(/variant/);
   });
 
   it('nest each display in one SVG file, with ids of its own', () => {
@@ -75,7 +75,7 @@ describe('compositions', () => {
   });
 
   it('draw the Solari boards without their frame when the installation has its own', async () => {
-    const paletas = resolveComposition({ size: { width: 300, height: 120 }, elements: [{ id: 'p', model: 'paletas', params: { marco: false }, at: { x: 0, y: 0, width: 292.8 } }] }, entry);
+    const paletas = resolveInstallation({ size: { width: 300, height: 120 }, elements: [{ id: 'p', model: 'paletas', params: { marco: false }, at: { x: 0, y: 0, width: 292.8 } }] }, entry);
     expect(paletas.members[0]!.height).toBeCloseTo(115.1, 1);
   });
 });

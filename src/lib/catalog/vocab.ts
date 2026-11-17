@@ -14,19 +14,19 @@ export const KINDS = [
   'onboard-display',
   'other',
   /** Several entries of the archive hung together, as they were at one place. */
-  'composition',
+  'installation',
 ] as const;
 export type Kind = (typeof KINDS)[number];
 
 export const TRANSPORT_MODES = ['rail', 'metro', 'tram', 'bus', 'air', 'ferry'] as const;
 export type TransportMode = (typeof TRANSPORT_MODES)[number];
 
-/** Where the model stands today, as a whole. Single units carry their own status in `installations`. */
+/** Where the model stands today, as a whole. Single units carry their own status in `locations`. */
 export const STATUSES = ['in-service', 'retiring', 'retired', 'unknown'] as const;
 export type Status = (typeof STATUSES)[number];
 
-export const INSTALLATION_STATUSES = ['in-service', 'retired', 'preserved', 'unknown'] as const;
-export type InstallationStatus = (typeof INSTALLATION_STATUSES)[number];
+export const LOCATION_STATUSES = ['in-service', 'retired', 'preserved', 'unknown'] as const;
+export type LocationStatus = (typeof LOCATION_STATUSES)[number];
 
 /** Noteworthy extras, from a closed list so that they can be filtered on. */
 export const FEATURES = [

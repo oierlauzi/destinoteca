@@ -20,7 +20,7 @@ operators:
 countries:
   - es
 status: retired
-installations:
+locations:
   - site: es/madrid-atocha-cercanias
     status: retired
     note: Sobre los andenes, en lo alto de postes, con una mitad para cada vía. Sustituidos por los carteles de PAGE Ibérica.

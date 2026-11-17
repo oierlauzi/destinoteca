@@ -18,7 +18,7 @@ operators:
 countries:
   - es
 status: retired
-installations:
+locations:
   - site: es/madrid-chamartin
     status: retired
     note: Colgados de las marquesinas, sobre los andenes.

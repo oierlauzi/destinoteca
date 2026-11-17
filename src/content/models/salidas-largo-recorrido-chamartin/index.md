@@ -4,16 +4,16 @@ summary: >-
   Pares de paneles de paletas de Solari bajo un mismo marco claro con el
   rótulo «Salidas largo recorrido», colgados en fila sobre el vestíbulo de
   Chamartín.
-kind: composition
+kind: installation
 operators:
   - ref: renfe
     role: operator
 status: retired
-installations:
+locations:
   - site: es/madrid-chamartin
     status: retired
     note: En el vestíbulo, sobre las taquillas y los accesos a las vías.
-composition:
+installation:
   size: { width: 601, height: 138 }
   elements:
     - id: marco
@@ -74,12 +74,12 @@ Chamartín: iban de dos en dos bajo un mismo marco claro, con el rótulo
 el borde inferior. El segundo panel de cada par sigue con los trenes del
 primero.
 
-Los pares se sucedían en fila a lo largo del vestíbulo. La composición
+Los pares se sucedían en fila a lo largo del vestíbulo. La réplica
 muestra uno.
 
 ## Lo que no se sabe
 
 - **Cuántos pares había**, y si todos eran de salidas de largo recorrido.
-- **Las medidas.** La composición las estima a partir de las fotografías.
+- **Las medidas.** La réplica las estima a partir de las fotografías.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

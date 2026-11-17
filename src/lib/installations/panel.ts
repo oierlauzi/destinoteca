@@ -19,7 +19,7 @@ const ALUMINIUM = '#a9aeb3';
 const DEPTH = 0.9;
 const DEPTH_COLOR = '#5f646a';
 
-/** A printed plate, in the composition's centimetres. */
+/** A printed plate, in the installation's centimetres. */
 export function panelNodes(member: PanelMember): VNode[] {
   const { x, y, width, height, panel } = member;
   const margin = Math.min(width, height) * MARGIN;

@@ -31,7 +31,7 @@ variants:
       En Cantoblanco Universidad, la segunda línea lleva un vinilo de dos
       puntos, ámbar como «min.», antes de los dos últimos caracteres; las
       demás no. La réplica lo muestra así, y deja elegir las líneas.
-installations:
+locations:
   - site: es/cantoblanco
     line: C-4
     status: unknown

@@ -4,16 +4,16 @@ summary: >-
   En el acceso al nuevo vestíbulo subterráneo de Madrid-Chamartín-Clara
   Campoamor, dos tableros de salidas de MP Electronics y un reloj Festina
   cuadrado, sobre el logotipo de adif y el nombre de la estación.
-kind: composition
+kind: installation
 operators:
   - ref: adif
     role: owner
 status: in-service
-installations:
+locations:
   - site: es/madrid-chamartin
     status: in-service
     note: En el acceso al nuevo vestíbulo subterráneo.
-composition:
+installation:
   size: { width: 1096, height: 240 }
   # The wall is painted white; a touch of grey keeps it apart from the page.
   background: '#f3f3f1'
@@ -103,6 +103,6 @@ En una pared detrás de esta colgaban
 ## Lo que no se sabe
 
 - **Desde cuándo están así.**
-- **Las medidas.** La composición las estima a partir de las fotografías.
+- **Las medidas.** La réplica las estima a partir de las fotografías.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

@@ -25,7 +25,7 @@ families:
 countries:
   - es
 status: in-service
-installations:
+locations:
   - site: es/madrid-atocha-cercanias
     status: in-service
     note: A la entrada de los andenes.

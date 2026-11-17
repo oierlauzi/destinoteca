@@ -24,7 +24,7 @@ families:
 countries:
   - es
 status: in-service
-installations:
+locations:
   - site: es/madrid-atocha-cercanias
     status: in-service
     note: En la pasarela sobre las vías.

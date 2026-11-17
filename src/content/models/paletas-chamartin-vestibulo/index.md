@@ -20,7 +20,7 @@ operators:
 countries:
   - es
 status: retired
-installations:
+locations:
   - site: es/madrid-chamartin
     status: retired
     note: En el vestíbulo, sobre las taquillas y los accesos a las vías.

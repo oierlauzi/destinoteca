@@ -38,7 +38,7 @@ variants:
       panel de cuatro líneas, y las líneas no tienen dos puntos.
     replicaPreset:
       dospuntos: ''
-installations:
+locations:
   - site: es/tres-cantos
     line: C-4
     status: unknown

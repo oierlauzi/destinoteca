@@ -2,7 +2,7 @@
 import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import Infobox from '@/components/Infobox.astro';
-import CompositionPlayer from '@/components/CompositionPlayer.astro';
+import InstallationPlayer from '@/components/InstallationPlayer.astro';
 import ModelGrid from '@/components/ModelGrid.astro';
 import PhotoGallery from '@/components/PhotoGallery.astro';
 import References from '@/components/References.astro';
@@ -32,31 +32,31 @@ const siblings = facts.families
   .map((id) => ({ family: catalog.family(id), models: catalog.modelsWith('familia', id).filter((other) => other.id !== model.id) }))
   .filter(({ models }) => models.length > 0);
 const elements = catalog.elementsOf(model);
-const partOf = catalog.compositionsWith(model);
+const partOf = catalog.installationsWith(model);
 
 /** "1996–2026", "desde 1996", "hasta 2026": whatever is known of a period. */
 function span(from?: number, to?: number): string {
   if (from !== undefined && to !== undefined) return from === to ? String(from) : `${from}–${to}`;
-  if (from !== undefined) return t('catalog.model.installations.since', { year: from });
-  if (to !== undefined) return t('catalog.model.installations.until', { year: to });
+  if (from !== undefined) return t('catalog.model.locations.since', { year: from });
+  if (to !== undefined) return t('catalog.model.locations.until', { year: to });
   return '';
 }
 
-/** "C-4 · hasta 2026 · Retirado": what is known of an installation, as one line of text. */
-const installationFacts = (installation: { line?: string; years: string; status: string }): string =>
-  [installation.line, installation.years, installation.status !== 'unknown' ? t(`catalog.status.${installation.status}`) : '']
+/** "C-4 · hasta 2026 · Retirado": what is known of a location, as one line of text. */
+const locationFacts = (location: { line?: string; years: string; status: string }): string =>
+  [location.line, location.years, location.status !== 'unknown' ? t(`catalog.status.${location.status}`) : '']
     .filter(Boolean)
     .join(' · ');
 
-const installations = data.installations.map((installation) => {
-  const site = installation.site ? catalog.site(installation.site.id) : undefined;
+const locations = data.locations.map((location) => {
+  const site = location.site ? catalog.site(location.site.id) : undefined;
   return {
-    place: site?.data.name ?? installation.placeName ?? installation.fleet ?? '',
+    place: site?.data.name ?? location.placeName ?? location.fleet ?? '',
     town: site && site.data.town !== site.data.name ? site.data.town : undefined,
-    line: installation.line,
-    years: span(installation.from, installation.to),
-    status: installation.status,
-    note: installation.note,
+    line: location.line,
+    years: span(location.from, location.to),
+    status: location.status,
+    note: location.note,
   };
 });
 ---
@@ -109,12 +109,12 @@ const installations = data.installations.map((installation) => {
     }
 
     {
-      data.composition && (
+      data.installation && (
         <section class="replica" aria-labelledby="replica-title">
           <h2 id="replica-title" class="visually-hidden">
-            {t('catalog.model.composition')}
+            {t('catalog.model.installation')}
           </h2>
-          <CompositionPlayer id={model.id} title={data.name} composition={catalog.composition(model)} />
+          <InstallationPlayer id={model.id} title={data.name} installation={catalog.installation(model)} />
         </section>
       )
     }
@@ -137,18 +137,18 @@ const installations = data.installations.map((installation) => {
     </div>
 
     {
-      installations.length > 0 && (
-        <section aria-labelledby="instalaciones">
-          <h2 id="instalaciones">{t('catalog.model.installations')}</h2>
-          <ul class="installations">
-            {installations.map((installation) => (
+      locations.length > 0 && (
+        <section aria-labelledby="ubicaciones">
+          <h2 id="ubicaciones">{t('catalog.model.locations')}</h2>
+          <ul class="locations">
+            {locations.map((location) => (
               <li>
                 <p class="where">
-                  <strong>{installation.place}</strong>
-                  {installation.town && <span class="muted"> · {installation.town}</span>}
+                  <strong>{location.place}</strong>
+                  {location.town && <span class="muted"> · {location.town}</span>}
                 </p>
-                {installationFacts(installation) && <p class="facts muted">{installationFacts(installation)}</p>}
-                {installation.note && <p class="note muted" set:html={inlineMarkdown(installation.note)} />}
+                {locationFacts(location) && <p class="facts muted">{locationFacts(location)}</p>}
+                {location.note && <p class="note muted" set:html={inlineMarkdown(location.note)} />}
               </li>
             ))}
           </ul>
@@ -258,7 +258,7 @@ const installations = data.installations.map((installation) => {
     }
   }
 
-  .installations {
+  .locations {
     list-style: none;
     padding: 0;
     margin: 0 0 1em;
@@ -267,7 +267,7 @@ const installations = data.installations.map((installation) => {
     gap: 12px;
   }
 
-  .installations > li {
+  .locations > li {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -277,16 +277,16 @@ const installations = data.installations.map((installation) => {
     align-content: start;
   }
 
-  .installations p {
+  .locations p {
     margin: 0;
   }
 
-  .installations .facts {
+  .locations .facts {
     margin: 0;
     font-size: 0.9rem;
   }
 
-  .installations .note {
+  .locations .note {
     font-size: 0.9rem;
   }
 

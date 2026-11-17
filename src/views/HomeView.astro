@@ -13,11 +13,13 @@ interface Props {
 
 const catalog = await getCatalog();
 const withReplica = catalog.modelsWith('replica', 'si');
-// Families first: each tells the story its entries share. Then whatever
-// belongs to none, those with a replica ahead.
+// Families first: each tells the story its entries share. Then the
+// installations, units as they hung together at one place. Then whatever
+// belongs to neither, those with a replica ahead.
 const families = catalog.families;
+const installations = catalog.models.filter((model) => model.data.kind === 'installation');
 const loose = catalog.models
-  .filter((model) => model.data.families.length === 0)
+  .filter((model) => model.data.families.length === 0 && model.data.kind !== 'installation')
   .sort((a, b) => Number(withReplica.includes(b)) - Number(withReplica.includes(a)));
 const photos = catalog.models.reduce((sum, model) => sum + model.data.photos.length, 0);
 
@@ -67,6 +69,16 @@ const axes = FACETS.filter((facet) => facet.id !== 'replica')
               <FamilyCard family={family} />
             ))}
           </ul>
+        </section>
+      )
+    }
+
+    {
+      installations.length > 0 && (
+        <section aria-labelledby="instalaciones">
+          <h2 id="instalaciones">{t('catalog.home.installations')}</h2>
+          <p class="muted intro">{t('catalog.home.installationsLead')}</p>
+          <ModelGrid models={installations} />
         </section>
       )
     }

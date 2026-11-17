@@ -13,7 +13,7 @@ export function modelProblems(model: ModelFacts): string[] {
   if (!ID_PATTERN.test(model.id)) problems.push('the id must be lower-case words joined by hyphens, with no dots');
   if (model.technologies.length === 0) problems.push('needs at least one technology');
   if (model.transportModes.length === 0) problems.push('needs at least one transport mode');
-  if (model.countries.length === 0) problems.push('needs at least one country, or an installation at a known site');
+  if (model.countries.length === 0) problems.push('needs at least one country, or a location at a known site');
   for (const country of model.countries) {
     if (!COUNTRY_PATTERN.test(country)) problems.push(`"${country}" is not a lower-case ISO 3166-1 country code`);
   }

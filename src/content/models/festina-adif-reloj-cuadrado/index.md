@@ -17,7 +17,7 @@ operators:
 countries:
   - es
 status: in-service
-installations:
+locations:
   - site: es/sevilla-santa-justa
     status: in-service
     note: Entre los tableros de llegadas y de salidas del acceso a las vías de alta velocidad.

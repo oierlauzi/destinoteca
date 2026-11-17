@@ -23,7 +23,7 @@ families:
 countries:
   - es
 status: unknown
-installations:
+locations:
   - site: es/vallecas
     line: C-2
     status: unknown

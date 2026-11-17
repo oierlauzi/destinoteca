@@ -1,5 +1,5 @@
 /**
- * A composition: archive entries hung together as they really were, at one
+ * An installation: archive entries hung together as they really were, at one
  * place, with the printed panels that went with them. Everything is measured
  * in centimetres on the wall, from its top-left corner.
  */
@@ -58,7 +58,7 @@ export interface ElementInput {
   panel?: PanelSpec;
 }
 
-export interface CompositionInput {
+export interface InstallationInput {
   size: { width: number; height: number };
   background?: string;
   elements: ElementInput[];
@@ -80,7 +80,7 @@ export interface ReplicaMember extends Box {
   name: string;
   variant?: string;
   replica: string;
-  /** The entry's settings, then its variant's, then the composition's own. */
+  /** The entry's settings, then its variant's, then the installation's own. */
   params: Settings;
   /** How many services the earlier boards of its series show. */
   skip: number;
@@ -95,7 +95,7 @@ export interface PanelMember extends Box {
 
 export type Member = ReplicaMember | PanelMember;
 
-export interface ResolvedComposition {
+export interface ResolvedInstallation {
   width: number;
   height: number;
   background?: string;

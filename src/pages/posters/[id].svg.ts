@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { getCatalog } from '@/site/catalog';
 import { hasPoster, posterSvg } from '@/site/poster';
 
-// One still image per entry that has a replica or is a composition, drawn by
+// One still image per entry that has a replica or is an installation, drawn by
 // the replicas themselves. Catalog cards show it, at an address that changes
 // with the picture (see src/site/poster.ts); being a file of its own, it is
 // cached and loaded lazily instead of weighing down every page that lists it.

@@ -1,11 +1,11 @@
 import { h, toString, type VNode } from '../hardware';
 import { panelNodes } from './panel';
-import type { Box, ResolvedComposition } from './types';
+import type { Box, ResolvedInstallation } from './types';
 
 const round = (n: number): string => String(Math.round(n * 100) / 100);
 
 /**
- * One member's standalone SVG document, nested in the composition at `box`.
+ * One member's standalone SVG document, nested in the installation at `box`.
  * Its ids are prefixed so that several boards drawn with the same ids
  * (patterns, clip paths) do not take each other's.
  */
@@ -23,21 +23,21 @@ export function nestSvg(svg: string, prefix: string, box: Box): string {
 }
 
 /** The wall and its printed panels, without the displays. */
-export function wallNodes(composition: ResolvedComposition): VNode[] {
+export function wallNodes(installation: ResolvedInstallation): VNode[] {
   return [
-    ...(composition.background ? [h('rect', { x: 0, y: 0, width: composition.width, height: composition.height, fill: composition.background })] : []),
-    ...composition.members.flatMap((member) => (member.kind === 'panel' ? panelNodes(member) : [])),
+    ...(installation.background ? [h('rect', { x: 0, y: 0, width: installation.width, height: installation.height, fill: installation.background })] : []),
+    ...installation.members.flatMap((member) => (member.kind === 'panel' ? panelNodes(member) : [])),
   ];
 }
 
 /**
- * The whole composition as one standalone SVG file: the wall, its panels and
+ * The whole installation as one standalone SVG file: the wall, its panels and
  * each display as drawn by its own replica (`drawn`, by member id).
  */
-export function composeSvg(composition: ResolvedComposition, drawn: Map<string, string>, title: string): string {
-  const { width, height } = composition;
-  const wall = wallNodes(composition).map((node) => toString(node)).join('');
-  const displays = composition.members
+export function composeSvg(installation: ResolvedInstallation, drawn: Map<string, string>, title: string): string {
+  const { width, height } = installation;
+  const wall = wallNodes(installation).map((node) => toString(node)).join('');
+  const displays = installation.members
     .filter((member) => member.kind === 'replica' && drawn.has(member.id))
     .map((member, i) => nestSvg(drawn.get(member.id)!, `m${i}`, member))
     .join('');

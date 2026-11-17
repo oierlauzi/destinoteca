@@ -64,7 +64,7 @@ variants:
       2009, no llevan el logotipo de adif en la cabecera.
     replicaPreset:
       logo: false
-installations:
+locations:
   - site: es/madrid-chamartin
     status: in-service
     note: Vestíbulo inferior.
@@ -74,7 +74,7 @@ installations:
     status: in-service
   - site: es/sevilla-santa-justa
     status: in-service
-    note: Cuatro tableros con un reloj Festina en medio; véase la composición.
+    note: Cuatro tableros con un reloj Festina en medio; véase la instalación.
   - site: es/leon
     status: in-service
     note: Un tablero de llegadas, según la fuente de la fotografía.

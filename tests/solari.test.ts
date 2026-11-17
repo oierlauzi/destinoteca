@@ -15,7 +15,7 @@ describe('Solari split-flap boards', () => {
   it('lay out the columns of each variant', () => {
     expect(layout('largo', 8).fields.map((field) => field.legend)).toEqual(['tren', 'destino', 'por', 'salida', 'vía', '']);
     expect(layout('cercanias', 9).fields.map((field) => field.legend)).toEqual(['tren', 'procedencia', 'llegada', 'destino', 'salida', 'vía', '']);
-    // One board of eight rows: boards hung together are compositions.
+    // One board of eight rows: boards hung together are installations.
     expect(solariLargo.options.fields.some((field) => ['rows', 'across', 'down'].includes(field.key))).toBe(false);
     expect(solariLargo.selection({}).window.size).toBe(8);
     expect(solariCercanias.selection({}).window.size).toBe(8);

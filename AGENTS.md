@@ -44,7 +44,7 @@ byte for byte the same; compare their `renderToString` output before and after.
   réplica") or listing components.
 - **Manufacturer pages** describe the company, not its products; the products
   are the entries that link to it.
-- **Families** tell what their members share (history, installation, how the
+- **Families** tell what their members share (history, where they were put, how the
   system worked, curiosities); an entry tells only what is its own. An entry
   can belong to several families (`families:`), such as a city's network and
   one station's signs.
@@ -73,11 +73,12 @@ byte for byte the same; compare their `renderToString` output before and after.
 
 ## Replicas
 
-- One replica draws **one unit**. Units hung together at a place are a
-  *composition* (an archive entry with `kind: composition`), not an option of
-  the replica. Printed plates that belong to an installation go in the
-  composition; parts of the unit itself (an MP board's green header) stay in
-  the replica.
+- One replica draws **one unit**. Units hung together at a place are an
+  *installation* (an archive entry with `kind: installation`), not an option
+  of the replica. Printed plates that belong to the installation go in it;
+  parts of the unit itself (an MP board's green header) stay in the replica.
+- Where an entry's units stood is its `locations` («Ubicaciones conocidas»),
+  not to be confused with installations.
 - Replica ids, option `urlKey`s and frame keys appear in embed URLs on other
   sites: never rename them. Unknown keys in old URLs must keep decoding to
   something sensible.
@@ -90,13 +91,13 @@ byte for byte the same; compare their `renderToString` output before and after.
   `src/lib/replicas/registry.ts` and `src/i18n/es/player.ts`, with tests in
   `tests/`.
 
-## Compositions
+## Installations
 
 - Measured in centimetres from the wall's top-left corner; an element's
   height follows from its replica's shape. Sizes are estimates from
   photographs, and the entry says so.
 - Every element is an archive entry; the page links each one, and each entry
-  lists the compositions it is part of.
+  lists the installations it is part of.
 - Boards that carry on from one another share a `serie`.
 
 ## Git

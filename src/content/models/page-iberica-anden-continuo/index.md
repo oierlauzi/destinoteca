@@ -24,7 +24,7 @@ families:
 countries:
   - es
 status: retired
-installations:
+locations:
   - site: es/alcala-de-henares
     status: retired
     note: El único lugar donde se conoce esta versión. Fotografiados los de las vías 1, 2 y 4; ya retirados.

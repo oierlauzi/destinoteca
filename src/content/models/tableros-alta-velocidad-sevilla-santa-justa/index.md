@@ -4,16 +4,16 @@ summary: >-
   Sobre el acceso a las vías de alta velocidad, dos tableros de llegadas y dos
   de salidas de MP Electronics, con un reloj Festina cuadrado en medio, entre
   dos placas verdes de adif.
-kind: composition
+kind: installation
 operators:
   - ref: adif
     role: owner
 status: in-service
-installations:
+locations:
   - site: es/sevilla-santa-justa
     status: in-service
     note: Sobre el acceso a las vías de alta velocidad.
-composition:
+installation:
   size: { width: 784, height: 266 }
   background: '#1d1f21'
   elements:
@@ -90,6 +90,6 @@ placas verdes con el logotipo de adif: «Trenes alta velocidad» encima y
 ## Lo que no se sabe
 
 - **Cuándo se colgaron así.** La fotografía es de enero de 2026.
-- **Las medidas.** La composición las estima a partir de la fotografía.
+- **Las medidas.** La réplica las estima a partir de la fotografía.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

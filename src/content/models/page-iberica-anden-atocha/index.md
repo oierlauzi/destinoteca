@@ -25,7 +25,7 @@ families:
 countries:
   - es
 status: in-service
-installations:
+locations:
   - site: es/madrid-atocha-cercanias
     status: in-service
     note: Sobre los andenes, colgados de pórticos de dos en dos con un reloj entre ellos.

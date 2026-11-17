@@ -22,7 +22,7 @@ families:
 countries:
   - es
 status: unknown
-installations:
+locations:
   - site: es/madrid-chamartin
     status: retired
     to: 2026

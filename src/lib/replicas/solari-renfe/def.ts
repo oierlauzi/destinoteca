@@ -29,7 +29,7 @@ export interface SolariOptions {
 function optionsSchema(): ParamSchema {
   return {
     fields: [
-      // The frame and title belong to the installation: a composition turns them off and draws its own.
+      // The frame and title belong to the installation, which turns them off and draws its own.
       { key: 'surround', urlKey: 'marco', type: 'boolean', label: 'solari.opt.surround', default: true, hidden: true },
       { key: 'animate', urlKey: 'anim', type: 'boolean', label: 'solari.opt.animate', help: 'solari.opt.animate.help', default: true },
       { key: 'speed', type: 'range', label: 'solari.opt.speed', default: 14, min: 4, max: 30, step: 1, unit: 'paletas/s' },

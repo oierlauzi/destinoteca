@@ -3,7 +3,7 @@ import type { Values } from '../params';
 import { readConfig, replicaSize, type PlayerConfig } from '../player/config';
 import { getReplica } from '../replicas/registry';
 import type { ReplicaDef } from '../replicas/types';
-import type { CompositionInput, EntryInput, Member, ReplicaMember, ResolvedComposition, Settings } from './types';
+import type { InstallationInput, EntryInput, Member, ReplicaMember, ResolvedInstallation, Settings } from './types';
 
 const query = (params: Settings): URLSearchParams => new URLSearchParams(Object.entries(params).map(([key, value]) => [key, String(value)]));
 
@@ -11,15 +11,15 @@ const query = (params: Settings): URLSearchParams => new URLSearchParams(Object.
 export const memberOptions = (def: ReplicaDef, params: Settings): Values => readConfig(def, query(params)).options;
 
 /**
- * Places every element of a composition: an entry's replica with its
- * settings (the entry's, then its variant's, then the composition's own), its
+ * Places every element of an installation: an entry's replica with its
+ * settings (the entry's, then its variant's, then the installation's own), its
  * height from the replica's shape, and, for boards in a series, how many
  * services the boards before it already show.
  *
  * Throws on an element the catalog cannot draw; the catalog checks report
  * those first, with the entry's name.
  */
-export function resolveComposition(input: CompositionInput, entry: (id: string) => EntryInput | undefined): ResolvedComposition {
+export function resolveInstallation(input: InstallationInput, entry: (id: string) => EntryInput | undefined): ResolvedInstallation {
   const shown = new Map<string, number>();
   const members = input.elements.map((element): Member => {
     if (element.panel) {
@@ -61,7 +61,7 @@ export const memberPlacement = (member: ReplicaMember): Placement => ({ platform
 
 /**
  * A member's whole configuration on a page whose data comes from `source`:
- * its own appearance, the composition's source, its placement.
+ * its own appearance, the installation's source, its placement.
  */
 export function memberConfig(def: ReplicaDef, member: ReplicaMember, source: string, sourceConfig: Values): PlayerConfig {
   const q = query(member.params);

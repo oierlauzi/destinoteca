@@ -95,11 +95,15 @@ const facets = FACETS.map((facet) => ({ facet, values: catalog.facetValues(facet
       history.replaceState(null, '', search ? `?${search}` : location.pathname);
     };
 
+    // Values that have been renamed, so that links made before still filter: kind → { old: new }.
+    const renamed: Record<string, Record<string, string>> = { tipo: { composition: 'installation' } };
+
     // Start from the URL, so that a filtered view can be linked to.
     const initial = new URLSearchParams(location.search);
     for (const control of controls) {
-      const value = initial.get(control.name);
-      if (value === null) continue;
+      const given = initial.get(control.name);
+      if (given === null) continue;
+      const value = renamed[control.name]?.[given] ?? given;
       control.value = value;
       // A value this list does not offer leaves a <select> blank; treat it as no filter.
       if (control.value !== value) control.value = '';

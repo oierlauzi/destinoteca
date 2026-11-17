@@ -1,20 +1,20 @@
 ---
-// A composition and nothing else, for iframes on other people's pages. Its
+// An installation and nothing else, for iframes on other people's pages. Its
 // data source comes from the query string, as on its page.
-import CompositionPlayer from '@/components/CompositionPlayer.astro';
+import InstallationPlayer from '@/components/InstallationPlayer.astro';
 import { t } from '@/i18n';
 import { getCatalog } from '@/site/catalog';
 import { href } from '@/site/url';
 
 export async function getStaticPaths() {
   const catalog = await getCatalog();
-  return catalog.models.filter((model) => model.data.composition).map((model) => ({ params: { id: model.id } }));
+  return catalog.models.filter((model) => model.data.installation).map((model) => ({ params: { id: model.id } }));
 }
 
 const { id } = Astro.params;
 const catalog = await getCatalog();
 const model = catalog.model(id!);
-const composition = catalog.composition(model);
+const installation = catalog.installation(model);
 ---
 
 <!doctype html>
@@ -25,7 +25,7 @@ const composition = catalog.composition(model);
     <title>{model.data.name} · {t('site.name')}</title>
     <meta name="robots" content="noindex" />
     <link rel="canonical" href={new URL(href(`catalogo/${id}/`), Astro.site)} />
-    <style define:vars={{ ratio: composition.width / composition.height }}>
+    <style define:vars={{ ratio: installation.width / installation.height }}>
       html,
       body {
         height: 100%;
@@ -52,6 +52,6 @@ const composition = catalog.composition(model);
     </style>
   </head>
   <body>
-    <CompositionPlayer id={id!} title={model.data.name} composition={composition} bare />
+    <InstallationPlayer id={id!} title={model.data.name} installation={installation} bare />
   </body>
 </html>

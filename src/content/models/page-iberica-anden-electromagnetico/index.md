@@ -27,7 +27,7 @@ families:
 countries:
   - es
 status: retiring
-installations:
+locations:
   - site: es/embajadores
     line: C-5
     status: unknown

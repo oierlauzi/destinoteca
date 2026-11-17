@@ -5,7 +5,7 @@ import {
   COUNTRY_PATTERN,
   FEATURES,
   ID_PATTERN,
-  INSTALLATION_STATUSES,
+  LOCATION_STATUSES,
   KINDS,
   LICENSES,
   MANUFACTURER_ROLES,
@@ -61,7 +61,7 @@ const models = defineCollection({
       alsoKnownAs: z.array(z.string()).default([]),
       summary: z.string().max(300),
       kind: z.enum(KINDS),
-      /** A composition takes these from its elements as well; anything else needs at least one of each. */
+      /** An installation takes these from its elements as well; anything else needs at least one of each. */
       technologies: z.array(reference('technologies')).default([]),
       transportModes: z.array(z.enum(TRANSPORT_MODES)).default([]),
       features: z.array(z.enum(FEATURES)).default([]),
@@ -95,7 +95,7 @@ const models = defineCollection({
         )
         .default([]),
       /** Where units stood. Exactly one of site, placeName or fleet. */
-      installations: z
+      locations: z
         .array(
           z
             .object({
@@ -105,7 +105,7 @@ const models = defineCollection({
               line: z.string().optional(),
               from: year.optional(),
               to: year.optional(),
-              status: z.enum(INSTALLATION_STATUSES).default('unknown'),
+              status: z.enum(LOCATION_STATUSES).default('unknown'),
               note: z.string().optional(),
             })
             .refine((i) => [i.site, i.placeName, i.fleet].filter((v) => v !== undefined).length === 1, {
@@ -162,11 +162,11 @@ const models = defineCollection({
         })
         .optional(),
       /**
-       * For `kind: composition`: entries of the archive hung together as they
-       * were at the place of its one installation, with the printed panels
+       * For `kind: installation`: entries of the archive hung together as they
+       * were at the place of its one location, with the printed panels
        * that went with them. Measured in centimetres from the top left.
        */
-      composition: z
+      installation: z
         .object({
           size: z.object({ width: z.number().positive(), height: z.number().positive() }),
           /** The wall behind, when it shows between the elements. */

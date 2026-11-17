@@ -1,7 +1,7 @@
 import { t } from '../../i18n';
-import { memberConfig } from '../compositions/layout';
-import { composeSvg } from '../compositions/render';
-import type { ReplicaMember, ResolvedComposition } from '../compositions/types';
+import { memberConfig } from '../installations/layout';
+import { composeSvg } from '../installations/render';
+import type { ReplicaMember, ResolvedInstallation } from '../installations/types';
 import { decode, defaults, encode, type Values } from '../params';
 import { sourceSchema } from '../player/config';
 import { defineReplicaElement, REPLICA_TAG, type ReplicaElement } from '../player/element';
@@ -17,12 +17,12 @@ import { setupFullscreen } from './fullscreen';
 import { servicesEditor } from './services-editor';
 
 /**
- * A composition on its page or in an embed: one data source for the whole
+ * An installation on its page or in an embed: one data source for the whole
  * station, shared by every display hung there, each showing it as its own
  * replica would. Each display links to its entry of the archive.
  *
  * The settings that travel in the address are only the source's: how each
- * display looks is fixed by the composition, as it was on the wall.
+ * display looks is fixed by the installation, as it was on the wall.
  */
 interface Mounted {
   hub: SourceHub;
@@ -34,20 +34,20 @@ interface Mounted {
 const editors: FormContext['editors'] = { services: servicesEditor };
 
 /** The display whose settings the source follows: the first board. */
-function leadOf(composition: ResolvedComposition): ReplicaDef | undefined {
-  for (const member of composition.members) {
+function leadOf(installation: ResolvedInstallation): ReplicaDef | undefined {
+  for (const member of installation.members) {
     const def = member.kind === 'replica' ? getReplica(member.replica) : undefined;
     if (def?.accepts === 'board') return def;
   }
   return undefined;
 }
 
-/** Brings the displays of a composition to life on one shared hub. */
-function mountDisplays(root: HTMLElement, composition: ResolvedComposition, title: string): Mounted {
+/** Brings the displays of an installation to life on one shared hub. */
+function mountDisplays(root: HTMLElement, installation: ResolvedInstallation, title: string): Mounted {
   defineReplicaElement();
   const hub = new SourceHub();
   const elements = new Map<string, ReplicaElement>();
-  const members = composition.members.filter((member): member is ReplicaMember => member.kind === 'replica');
+  const members = installation.members.filter((member): member is ReplicaMember => member.kind === 'replica');
   let source = 'demo';
   let sourceConfig: Values = {};
 
@@ -86,7 +86,7 @@ function mountDisplays(root: HTMLElement, composition: ResolvedComposition, titl
         const svg = element.toSVG();
         if (svg) drawn.set(id, svg);
       }
-      return composeSvg(composition, drawn, title);
+      return composeSvg(installation, drawn, title);
     },
   };
 }
@@ -105,23 +105,23 @@ function writeSource(lead: ReplicaDef | undefined, source: string, config: Value
   return query;
 }
 
-/** A composition alone, as in an embed: its source from the address. */
-export function mountCompositionEmbed(root: HTMLElement): void {
-  const composition = JSON.parse(root.dataset.composition ?? '{}') as ResolvedComposition;
-  const mounted = mountDisplays(root, composition, root.dataset.title ?? '');
-  const { source, config } = readSource(leadOf(composition), new URLSearchParams(location.search));
+/** An installation alone, as in an embed: its source from the address. */
+export function mountInstallationEmbed(root: HTMLElement): void {
+  const installation = JSON.parse(root.dataset.installation ?? '{}') as ResolvedInstallation;
+  const mounted = mountDisplays(root, installation, root.dataset.title ?? '');
+  const { source, config } = readSource(leadOf(installation), new URLSearchParams(location.search));
   mounted.setSource(source, config);
 }
 
-/** A composition with its controls: where the data comes from, and the ways of taking it elsewhere. */
-export function mountComposition(root: HTMLElement): void {
-  const composition = JSON.parse(root.dataset.composition ?? '{}') as ResolvedComposition;
+/** An installation with its controls: where the data comes from, and the ways of taking it elsewhere. */
+export function mountInstallation(root: HTMLElement): void {
+  const installation = JSON.parse(root.dataset.installation ?? '{}') as ResolvedInstallation;
   const stage = root.querySelector<HTMLElement>('.stage');
   const ui = root.querySelector<HTMLElement>('.playground-ui');
   if (!stage || !ui) return;
   const title = root.dataset.title ?? '';
-  const lead = leadOf(composition);
-  const mounted = mountDisplays(root, composition, title);
+  const lead = leadOf(installation);
+  const mounted = mountDisplays(root, installation, title);
   const query = new URLSearchParams(location.search);
   let { source, config } = readSource(lead, query);
   const remembered = new Map<string, Values>([[source, config]]);
@@ -137,7 +137,7 @@ export function mountComposition(root: HTMLElement): void {
     return url.toString();
   };
   const embedCode = (): string =>
-    `<iframe src="${embedUrl().replace(/&/g, '&amp;')}" title="${title.replace(/"/g, '&quot;')}" width="1200" height="${Math.round((1200 * composition.height) / composition.width)}" style="border:0;max-width:100%;height:auto;aspect-ratio:${composition.width}/${composition.height}" allow="fullscreen" loading="lazy"></iframe>`;
+    `<iframe src="${embedUrl().replace(/&/g, '&amp;')}" title="${title.replace(/"/g, '&quot;')}" width="1200" height="${Math.round((1200 * installation.height) / installation.width)}" style="border:0;max-width:100%;height:auto;aspect-ratio:${installation.width}/${installation.height}" allow="fullscreen" loading="lazy"></iframe>`;
 
   // --- Toolbar ---------------------------------------------------------------
   const embedText = el('textarea', { attrs: { readonly: true, rows: 4, 'aria-label': t('player.embed.label') } });
@@ -270,7 +270,7 @@ export function mountComposition(root: HTMLElement): void {
   void drawPanel();
 }
 
-/** Brings every composition on the page to life. */
-export function mountCompositions(): void {
-  document.querySelectorAll<HTMLElement>('.composition-player').forEach(mountComposition);
+/** Brings every installation on the page to life. */
+export function mountInstallations(): void {
+  document.querySelectorAll<HTMLElement>('.installation-player').forEach(mountInstallation);
 }

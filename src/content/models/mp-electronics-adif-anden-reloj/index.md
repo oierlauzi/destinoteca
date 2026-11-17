@@ -42,7 +42,7 @@ variants:
     description: El reloj lleva la esfera de MP Electronics, sin números y con agujas de barra, en lugar de la de Festina.
     replicaPreset:
       esfera: mp
-installations:
+locations:
   - site: es/alcazar-de-san-juan
     status: in-service
 photos:

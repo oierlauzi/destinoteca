@@ -24,7 +24,7 @@ families:
 countries:
   - es
 status: unknown
-installations:
+locations:
   - site: es/villaverde-bajo
     status: unknown
     note: Muy probablemente la estación del vídeo, que no la nombra. Sobre un pilar, con las vías 5 y 4.

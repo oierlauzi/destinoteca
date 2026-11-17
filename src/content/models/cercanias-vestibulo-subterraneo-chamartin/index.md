@@ -4,17 +4,17 @@ summary: >-
   Dos paneles de Cercanías de MP Electronics, uno junto al otro, en una pared
   del vestíbulo subterráneo de Chamartín. Se retiraron en septiembre de 2026,
   sustituidos por una pantalla de vídeo.
-kind: composition
+kind: installation
 operators:
   - ref: adif
     role: owner
 status: retired
-installations:
+locations:
   - site: es/madrid-chamartin
     status: retired
     to: 2026
     note: En el vestíbulo subterráneo. Sustituidos por una pantalla de vídeo en septiembre de 2026.
-composition:
+installation:
   size: { width: 226, height: 104 }
   elements:
     - id: cercanias-1
@@ -43,7 +43,7 @@ pantalla de vídeo.
 ## Lo que no se sabe
 
 - **Desde cuándo estaban.**
-- **Las medidas.** La composición las estima con la misma separación entre
+- **Las medidas.** La réplica las estima con la misma separación entre
   LED que los tableros de largo recorrido.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

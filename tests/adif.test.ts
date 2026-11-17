@@ -63,7 +63,7 @@ describe('the board', () => {
     expect(Math.abs(wide.x + wide.cols - (FIELD_X.remarks + CELLS.remarks * 4))).toBeLessThanOrEqual(4);
     const one = replicaSize(def, { ...options, regional: '' });
     expect(one.width).toBe(BOARD_WIDTH);
-    // Boards hung together are compositions, not a setting of the board.
+    // Boards hung together are installations, not a setting of the board.
     expect(def.options.fields.some((field) => ['across', 'down'].includes(field.key))).toBe(false);
     expect(def.selection(options).window.size).toBe(7);
   });

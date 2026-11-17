@@ -35,7 +35,7 @@ variants:
     description: La franja verde a la derecha y el reloj a la izquierda del número.
     replicaPreset:
       lado: right
-installations:
+locations:
   - site: es/alcazar-de-san-juan
     status: in-service
 photos:

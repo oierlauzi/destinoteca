@@ -37,7 +37,7 @@ variants:
     name: Redondo, con aro oscuro
     replicaPreset:
       caja: dark
-installations:
+locations:
   - site: es/zaragoza-delicias
     status: in-service
   - site: es/huesca

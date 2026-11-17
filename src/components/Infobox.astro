@@ -14,7 +14,7 @@ const data = model.data;
 const facts = catalog.facts(model);
 const years = yearsLabel(facts.years, facts.status);
 
-// A composition shows what its elements are made with, by and for.
+// An installation shows what its elements are made with, by and for.
 const sources = [model, ...catalog.elementsOf(model)].map((entry) => entry.data);
 const technologies = facts.technologies.map((id) => catalog.technology(id));
 const manufacturers = [
