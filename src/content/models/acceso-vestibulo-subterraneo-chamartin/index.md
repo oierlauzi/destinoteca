@@ -14,18 +14,18 @@ installations:
     status: in-service
     note: En el acceso al nuevo vestíbulo subterráneo.
 composition:
-  size: { width: 1048, height: 192 }
+  size: { width: 1096, height: 240 }
   # The wall is painted white; a touch of grey keeps it apart from the page.
   background: '#f3f3f1'
   elements:
     - id: logotipo
-      at: { x: 16, y: 0, width: 237, height: 78 }
+      at: { x: 40, y: 24, width: 237, height: 78 }
       panel:
         fill: none
         lines: []
         logo: { kind: adif, height: 66, color: '#5c6670', symbolColor: '#3aaa35' }
     - id: administrador
-      at: { x: 114, y: 58, width: 150, height: 16 }
+      at: { x: 138, y: 82, width: 150, height: 16 }
       panel:
         fill: none
         valign: top
@@ -36,17 +36,17 @@ composition:
       model: mp-electronics-adif-teleindicador
       params: { color: '#5df08f' }
       serie: salidas
-      at: { x: 280, y: 6, width: 300 }
+      at: { x: 304, y: 30, width: 300 }
     - id: salidas-2
       model: mp-electronics-adif-teleindicador
       params: { color: '#5df08f' }
       serie: salidas
-      at: { x: 588, y: 6, width: 300 }
+      at: { x: 612, y: 30, width: 300 }
     - id: reloj
       model: festina-adif-reloj-cuadrado
-      at: { x: 894, y: 6, width: 130.7 }
+      at: { x: 918, y: 30, width: 130.7 }
     - id: nombre
-      at: { x: 0, y: 150, width: 1048, height: 40 }
+      at: { x: 24, y: 174, width: 1048, height: 40 }
       panel:
         fill: none
         lines:
