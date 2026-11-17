@@ -25,6 +25,9 @@ Se han visto en servicio estos montajes de esta generación:
   misma caja, una matriz flip-dot continua iluminada por LED y la hora de
   salida en lugar de los minutos. Solo se conoce en Alcalá de Henares, ya
   retirado.
+- **Cartel de andén sin fila de LED**, el
+  [mismo cartel reducido a su línea flip-dot](../../catalogo/page-iberica-anden-sin-led/),
+  con los minutos y el «min.» pero sin más rótulos. Visto en Vallecas.
 - **Cartel de andén de dos caras**, para andenes centrales.
 - **Los carteles de Atocha Cercanías**, de caja gris y con la placa de PAGE
   bajo la pantalla. Sus líneas flip-dot son matrices continuas iluminadas por

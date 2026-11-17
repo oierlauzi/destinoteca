@@ -18,13 +18,14 @@ export interface SignSpec<F, L = OctagonFlapLook> {
   credit: string;
   flipDots: DotMatrix<L>;
   sweep(): DotTransition;
-  led: LedRow;
+  /** The LED row or panel. A sign with only flip-dots has none. */
+  led?: LedRow;
   /** The dots of the flip-dot matrix for a frame, faults included. */
   dots(frame: F, options: FamilyOptions): DotState;
   /** How the flip-dot matrix looks with these options. */
   look(options: FamilyOptions): L;
-  /** What the LED panel shows: one text per line, or the one text of a row. */
-  ledText(frame: F): string | string[];
+  /** What the LED panel shows: one text per line, or the one text of a row. Only with a panel. */
+  ledText?(frame: F): string | string[];
   /** What a screen reader says instead of the dots. */
   describe(frame: F, options: FamilyOptions): string;
   /**
@@ -44,18 +45,20 @@ function svg(spec: { width: number; height: number }, title: string, children: V
   };
 }
 
-/** The texts of the LED panel, one per line it has. */
+/** The texts of the LED panel, one per line it has; none without a panel. */
 function ledLines<F, L>(spec: SignSpec<F, L>, frame: F): string[] {
-  const text = spec.ledText(frame);
+  if (!spec.led) return [];
+  const text = spec.ledText?.(frame) ?? '';
   const lines = typeof text === 'string' ? [text] : text;
   return spec.led.lines.map((_, i) => lines[i] ?? '');
 }
 
 /** One frame as a standalone SVG file, with the LED text at its start and nothing moving. */
 export function renderSign<F, L>(spec: SignSpec<F, L>, frame: F, options: FamilyOptions): string {
+  const led = spec.led;
   const root = svg(spec, spec.describe(frame, options), [
     ...spec.housing(frame, options, {}),
-    spec.led.matrix.render(panelState(spec.led, ledLines(spec, frame).map((line) => spec.led.strip(line)), []), spec.led.look(options)),
+    ...(led ? [led.matrix.render(panelState(led, ledLines(spec, frame).map((line) => led.strip(line)), []), led.look(options))] : []),
     spec.flipDots.render(spec.dots(frame, options), spec.look(options)),
   ], {});
   root.attrs.width = 1200;
@@ -76,36 +79,39 @@ export function mountSign<F, L>(spec: SignSpec<F, L>, blankFrame: F, host: Eleme
   const doc = host.ownerDocument;
   let frame = blankFrame;
   let options = initial;
+  const panel = spec.led;
   let flipAppearance = spec.look(options);
-  let ledAppearance = spec.led.look(options);
+  let ledAppearance = panel?.look(options);
   let texts = ledLines(spec, frame);
-  let strips = texts.map((line) => spec.led.strip(line));
+  let strips = panel ? texts.map((line) => panel.strip(line)) : [];
   let shownOffsets = '';
   let now = 0;
   // Each line runs on its own, from its own beginning.
-  const runs = spec.led.lines.map(() => new MarqueeRun());
+  const runs = (panel?.lines ?? []).map(() => new MarqueeRun());
   const sweep = spec.sweep();
 
   const flip = spec.flipDots.mount(doc, sweep.at(0), flipAppearance);
-  const led = spec.led.matrix.mount(doc, panelState(spec.led, strips, []), ledAppearance);
+  const led = panel && ledAppearance ? panel.matrix.mount(doc, panelState(panel, strips, []), ledAppearance) : undefined;
   const slots: Record<string, SVGElement> = {};
   // The housing is built from the same tree as the export; the two dot
   // matrices are live and go in after it, LED row first.
   const root = toDom(svg(spec, spec.describe(frame, options), spec.housing(frame, options, slots), slots), doc);
-  root.append(led.element, flip.element);
+  if (led) root.append(led.element);
+  root.append(flip.element);
   root.setAttribute('width', '100%');
   root.style.display = 'block';
   host.replaceChildren(root);
 
   const drawLed = (force: boolean): void => {
+    if (!panel || !led || !ledAppearance) return;
     // A new announcement is read from its beginning; a redraw of the same one is not.
     const offsets = strips.map((strip, i) =>
-      options.ledScroll && scrolls(strip, spec.led.cols) ? runs[i]!.offset(now, texts[i] ?? '', options.ledSpeed) : 0,
+      options.ledScroll && scrolls(strip, panel.cols) ? runs[i]!.offset(now, texts[i] ?? '', options.ledSpeed) : 0,
     );
     const key = offsets.join(',');
     if (!force && key === shownOffsets) return;
     shownOffsets = key;
-    led.update(panelState(spec.led, strips, offsets), ledAppearance);
+    led.update(panelState(panel, strips, offsets), ledAppearance);
   };
 
   const draw = (): void => {
@@ -131,7 +137,7 @@ export function mountSign<F, L>(spec: SignSpec<F, L>, blankFrame: F, host: Eleme
       const nextTexts = ledLines(spec, next);
       if (nextTexts.join('\n') !== texts.join('\n')) {
         texts = nextTexts;
-        strips = texts.map((line) => spec.led.strip(line));
+        strips = panel ? texts.map((line) => panel.strip(line)) : [];
       }
       frame = next;
       draw();
@@ -141,7 +147,7 @@ export function mountSign<F, L>(spec: SignSpec<F, L>, blankFrame: F, host: Eleme
       // Looks are compared by identity when redrawing, so a new one is made only when it differs.
       const nextLook = spec.look(next);
       if (JSON.stringify(nextLook) !== JSON.stringify(flipAppearance)) flipAppearance = nextLook;
-      const nextLed = spec.led.look(next);
+      const nextLed = panel?.look(next);
       if (JSON.stringify(nextLed) !== JSON.stringify(ledAppearance)) ledAppearance = nextLed;
       options = next;
       draw();

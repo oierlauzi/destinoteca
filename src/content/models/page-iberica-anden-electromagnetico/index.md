@@ -328,7 +328,9 @@ faltaban. Se instalaron desde mediados de los años noventa y se están
 retirando a medida que se reforman las estaciones.
 
 Más tarde se instaló una [versión con matriz continua](../page-iberica-anden-continuo/)
-en la misma caja.
+en la misma caja. Hubo también una
+[versión sin fila de LED](../page-iberica-anden-sin-led/), con solo la línea
+flip-dot.
 
 ## Qué muestra
 
