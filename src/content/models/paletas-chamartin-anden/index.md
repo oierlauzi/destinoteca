@@ -1,9 +1,9 @@
 ---
-name: Indicador de andén de paletas de Madrid Chamartín
+name: Indicador de andén de paletas de Chamartín y Príncipe Pío
 summary: >-
-  Los indicadores de paletas que colgaban sobre los andenes de Chamartín, con
-  la vía, la hora y el destino del próximo tren, sustituidos por los
-  teleindicadores LED de MP Electronics.
+  Los indicadores de paletas de los andenes de Chamartín y de la estación del
+  Norte, hoy Príncipe Pío, con la vía, la hora y el destino del próximo tren.
+  En Chamartín los sustituyeron los teleindicadores LED de MP Electronics.
 kind: platform-indicator
 technologies:
   - split-flap
@@ -21,7 +21,10 @@ status: retired
 installations:
   - site: es/madrid-chamartin
     status: retired
-    note: Sobre los andenes.
+    note: Colgados de las marquesinas, sobre los andenes.
+  - site: es/madrid-principe-pio
+    status: retired
+    note: En la antigua estación del Norte, colgados del brazo de un poste. Fotografiados en 1989.
 photos:
   - id: chamartin-anos-80
     src: ./chamartin-anos-80.jpg
@@ -33,6 +36,41 @@ photos:
     author: José Miguel Gómez
     sourceUrl: https://x.com/ger58056/status/2098810500070945123
     source: X (@ger58056)
+    license: rights-reserved-credited
+  - id: principe-pio-1989
+    src: ./principe-pio-1989.jpg
+    alt: >-
+      La estación del Norte vista desde lo alto, con trenes de viajeros bajo
+      la marquesina. En primer plano, entre jardineras, dos indicadores de
+      caja roja colgados del brazo de un poste.
+    caption: La estación del Norte, hoy Príncipe Pío, en 1989.
+    date: '1989'
+    place: Madrid Príncipe Pío
+    author: Archivo Renfe
+    source: Facebook, compartida por Gato por Madrid
+    license: rights-reserved-credited
+  - id: principe-pio-talgo
+    src: ./principe-pio-talgo.jpg
+    alt: >-
+      Un indicador de paletas colgado del brazo de un poste, junto a un Talgo
+      parado en el andén, bajo la gran marquesina de hierro y cristal con un
+      reloj al fondo.
+    caption: La estación del Norte, hoy Príncipe Pío. Vía 2, un tren a Coruña y Vigo.
+    place: Madrid Príncipe Pío
+    author: Archivo Renfe
+    source: Facebook, compartida por Bvemike
+    license: rights-reserved-credited
+  - id: chamartin-1991
+    src: ./chamartin-1991.jpg
+    alt: >-
+      Viajeros caminando por un andén de Chamartín junto a un tren, bajo un
+      indicador de paletas colgado de la marquesina.
+    caption: Chamartín, marzo de 1991. Un tren a París.
+    date: '1991-03'
+    place: Madrid Chamartín
+    author: Fundación de los Ferrocarriles Españoles
+    sourceUrl: https://archivo.docutren.com/uploads/r/fototeca-2/1/8/1/1814b6be6e71f8f81dc723fc9fc968398db17c75bb335cb598c1b5e3be4d413b/FD_05791_141.jpg
+    source: Fototeca, FD_05791
     license: rights-reserved-credited
   - id: chamartin-anos-90-renfe
     src: ./chamartin-anos-90-renfe.jpg
@@ -101,6 +139,13 @@ los andenes de Chamartín tenían indicadores de paletas colgados de las
 marquesinas, con la vía, la hora y el destino del próximo tren. En los años
 noventa tenían al lado monitores de tubo.
 
+En la fila de arriba van «VIA» y el número, la hora y dos luces; en la de
+abajo, el destino.
+
+Los mismos indicadores estaban en la estación del Norte, hoy Príncipe Pío.
+Allí no colgaban de una marquesina, sino del brazo de un poste, y así se
+fotografiaron en 1989.
+
 Se retiraron a principios de 2010, durante la renovación de las estaciones de
 Cercanías, según contó entonces
 [ecomovilidad.net](https://ecomovilidad.net/madrid/imagen-de-la-semana-los-indicadores-de-chamartin/).
@@ -111,6 +156,7 @@ Cercanías, según contó entonces
   lo instaló en 1975 VEMISA, representante de Solari, según *Vía Libre*, que
   en 1989 contaba indicadores de vía de una y de doble cara entre los equipos
   de esos sistemas; pero no dice quién hizo los de Chamartín.
-- **Cuándo se instalaron.**
+- **Cuándo se instalaron**, y cuándo se retiraron de Príncipe Pío.
+- **Qué indicaban las dos luces** de la fila de arriba.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
