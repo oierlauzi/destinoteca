@@ -184,6 +184,8 @@ interface FlapRefs {
 function flapNodes(flap: Flap, value: string, refs?: FlapRefs): VNode[] {
   const ref = (key: keyof FlapRefs) => (refs ? (element: SVGElement) => (refs[key] = element) : undefined);
   const nodes: VNode[] = [
+    // The opening each flap turns in, with a small bezel round it.
+    h('rect', { x: flap.x - 0.45, y: flap.y - 0.45, width: flap.width + 0.9, height: FLAP.height + 0.9, rx: 0.7, fill: '#090909', stroke: '#3c3d3b', 'stroke-width': 0.25 }),
     { ...halfNodes(flap, 'top', value), ref: ref('top') },
     { ...halfNodes(flap, 'bottom', value), ref: ref('bottom') },
   ];
