@@ -62,6 +62,7 @@ const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
 <style>
   /* The whole sign, on the same ground as the stage of its page, rather than a crop. */
   .card-media.is-replica {
+    position: relative;
     background: var(--stage);
     border-bottom: 1px solid var(--line);
   }
@@ -72,7 +73,14 @@ const search = [facts.name, ...model.data.alsoKnownAs, facts.summary].join(' ');
     color: var(--muted);
   }
 
+  /*
+   * Pinned to the 16:9 box: as a grid item, a height of 100% falls back to
+   * the drawing's own proportions, and a tall sign (a clock, a vertical
+   * indicator) overflowed the box and lost its bottom to the crop.
+   */
   .card-media.is-replica img {
+    position: absolute;
+    inset: 0;
     object-fit: contain;
     padding: 7%;
   }
