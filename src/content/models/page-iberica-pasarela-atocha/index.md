@@ -1,5 +1,5 @@
 ---
-name: Panel electromagnético de pasarela de PAGE Ibérica, Atocha Cercanías
+name: Panel electromagnético de PAGE Ibérica, Pasarela de Atocha Cercanías
 summary: >-
   El panel de la pasarela sobre las vías de Atocha Cercanías: dos pantallas
   flip-dot iluminadas por LED, lado a lado, de cinco líneas cada una con vía,
