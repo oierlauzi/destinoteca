@@ -40,7 +40,6 @@ Todos comparten:
   [carteles de Atocha Cercanías](../../catalogo/ikusi-anden-atocha/), con
   caracteres amarillos de 7 por 9 puntos sobre cristales que brillan en un
   pardo anaranjado.
-- **Una caja negra** con una ventana por la que asoman las filas.
 - **El euskera y el castellano.**
 - **El código NaviLens**, junto a cada cartel desde mayo de 2024, que se lee
   con el teléfono y dice en voz alta lo que muestra el cartel.
