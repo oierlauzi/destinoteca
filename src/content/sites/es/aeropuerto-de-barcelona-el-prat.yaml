@@ -1,0 +1,10 @@
+name: Aeropuerto de Barcelona-El Prat
+alsoKnownAs:
+  - El Prat
+  - Barcelona-El Prat Josep Tarradellas
+type: airport
+country: es
+region: ES-CT
+town: El Prat de Llobregat
+codes:
+  iata: BCN

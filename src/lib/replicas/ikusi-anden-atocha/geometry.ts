@@ -1,44 +1,23 @@
-import { IKUSI_COLS, IKUSI_ROWS, lcdSize, type LcdModule } from '../../hardware';
+import type { LcdModule } from '../../hardware';
+import { CELL, DOTS, FILLERS, GLASS, INSET, LIP, MODULE, rowLayout, type Box, type RowLayout } from '../ikusi/modules';
+
+export { CELL, DOTS, FILLERS, GLASS, INSET, LIP, MODULE, type Box, type RowLayout };
 
 /*
  * One unit, in centimetres. The proportions are measured in the photographs
  * of the two-platform boxes of Atocha Cercanías in units of one character's
  * pitch, and scaled to a guessed real size: about 120 cm wide and 53 cm
  * tall, with characters about 8.5 cm tall. No unit has been measured. In a box, the two
- * units are about three characters apart, with a filler between them.
+ * units are about three characters apart, with a filler between them. The
+ * modules the rows are made of are Ikusi's own (../ikusi/modules.ts).
  */
-
-/** From one character to the next. */
-export const CELL = 6.9;
 
 /** The logo, about 9 cm wide, on the sheet's margin under the end of the red strip. */
 export const LOGO_HEIGHT = 3.2;
 
-/** The dots: 7 × 11 on each glass, nearly touching. */
-export const DOTS = { pitch: 0.74, dot: 0.7, pad: 0.2 };
-export const GLASS = lcdSize({ cols: IKUSI_COLS, rows: IKUSI_ROWS }, DOTS);
-
 /** Characters in the destination line, and in the time. */
 export const LINE = 12;
 export const TIME = 5;
-
-/*
- * Each row of characters is a rail with modules clipped onto it, one per
- * character, as on Ikusi's airport boards: a block of dark plastic one
- * character's pitch wide with the glass set in it. Each end of a row is
- * made up with two blank modules of the same width.
- */
-/**
- * A module's height; its width is the pitch, less the seam between two
- * modules. Above and below the glass it has a ledge with a groove along it.
- */
-export const MODULE = { height: 12, seam: 0.16 };
-/** The rail, showing above and below the modules. */
-export const LIP = 0.6;
-/** Blank modules at each end of a row. */
-export const FILLERS = 2;
-/** Where the glass sits in its module. */
-export const INSET = { x: (CELL - GLASS.width) / 2, y: (MODULE.height - GLASS.height) / 2 };
 
 /** The sheet's margin around the openings, the same on every side. */
 export const BEZEL = 5;
@@ -60,43 +39,14 @@ export const HEIGHT = STRIP.y + STRIP.height + STRIP_MARGIN + BEZEL;
 
 export type Side = 'left' | 'right';
 
-export interface Box {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-export interface RowLayout {
-  /** The rail, which fills the row's opening in the sheet. */
-  rail: Box;
-  /** The modules on it, by their left edge: blank ones at the ends. */
-  modules: { x: number; blank: boolean }[];
-  moduleY: number;
-  /** The glasses of the character modules. */
-  glasses: LcdModule[];
-}
-
-function layout(firstChar: number, glassY: number, chars: number): RowLayout {
-  const first = firstChar - FILLERS * CELL;
-  const total = chars + 2 * FILLERS;
-  const moduleY = glassY - INSET.y;
-  return {
-    rail: { x: first, y: moduleY - LIP, width: total * CELL, height: MODULE.height + 2 * LIP },
-    modules: Array.from({ length: total }, (_, i) => ({ x: first + i * CELL, blank: i < FILLERS || i >= FILLERS + chars })),
-    moduleY,
-    glasses: Array.from({ length: chars }, (_, i) => ({ x: firstChar + INSET.x + i * CELL, y: glassY })),
-  };
-}
-
 /**
  * The time is at the outer end of the top row, over the start or the end of
  * the destination. A unit hung on the left of its pole has it at the left,
  * and the printed «VIA» towards the pole; the one on the right is its mirror
  * image, but writes the same way.
  */
-export const timeRow = (side: Side): RowLayout => layout(LINE_START + (side === 'left' ? 0 : (LINE - TIME) * CELL), TOP_Y, TIME);
-export const lineRow = (): RowLayout => layout(LINE_START, LINE_Y, LINE);
+export const timeRow = (side: Side): RowLayout => rowLayout(LINE_START + (side === 'left' ? 0 : (LINE - TIME) * CELL), TOP_Y, TIME);
+export const lineRow = (): RowLayout => rowLayout(LINE_START, LINE_Y, LINE);
 export const timeModules = (side: Side): LcdModule[] => timeRow(side).glasses;
 export const lineModules = (): LcdModule[] => lineRow().glasses;
 

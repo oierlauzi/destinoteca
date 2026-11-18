@@ -1,0 +1,10 @@
+name: Aeropuerto de Madrid-Barajas
+alsoKnownAs:
+  - Barajas
+  - Adolfo Suárez Madrid-Barajas
+type: airport
+country: es
+region: ES-MD
+town: Madrid
+codes:
+  iata: MAD

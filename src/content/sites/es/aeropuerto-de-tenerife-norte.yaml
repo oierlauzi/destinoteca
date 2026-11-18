@@ -1,0 +1,10 @@
+name: Aeropuerto de Tenerife Norte
+alsoKnownAs:
+  - Los Rodeos
+  - Tenerife Norte-Ciudad de La Laguna
+type: airport
+country: es
+region: ES-CN
+town: San Cristóbal de La Laguna
+codes:
+  iata: TFN

@@ -1,0 +1,9 @@
+name: Aeropuerto de Valencia
+alsoKnownAs:
+  - Valencia-Manises
+type: airport
+country: es
+region: ES-VC
+town: Manises
+codes:
+  iata: VLC

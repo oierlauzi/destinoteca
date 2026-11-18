@@ -154,6 +154,14 @@ Atocha Cercanías signs (`page-iberica-acceso-atocha/`,
 makers' plate (a vector tracing of PAGE's logo, `page-logo.ts`) through
 `atocha.ts`.
 
+Ikusi's liquid-crystal signs share their character modules through
+`replicas/ikusi/`: the rail, the modules with their grooves, the blank ones
+at each end, and Ikusi's logo. The platform sign of Atocha Cercanías
+(`ikusi-anden-atocha/`) and the airport boards (`ikusi-aeropuerto/`) are
+both drawn from them. An airport board's row is one run of modules; its
+columns are only where the controller writes and the header prints its
+legends (`columns.ts`), so every airport's layout runs on the same rows.
+
 A replica whose shape follows its settings declares `size(options)` next
 to its default `viewBox` (the ADIF boards, hung several together); one that
 wants a source started differently declares `sourceDefaults` (the same

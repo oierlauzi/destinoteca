@@ -1,22 +1,15 @@
 import { DotMatrix, MarqueeRun, h, ikusiLcd, lcdModules, roundLed, telenorma5x7, telenormaCp437, textColumns, toCells, toDocument, toDom, updateLcd, type DotState, type LcdLook, type LcdModule, type LcdRefs, type RoundLedLook, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { IkusiFrame, IkusiOptions } from './def';
-import { ikusiLogo } from './ikusi-logo';
-import { CELL, DOTS, GLASS, HEIGHT, INSET, LINE, LOGO_HEIGHT, MODULE, STRIP, TIME, TOP_Y, WIDTH, labelSpan, lineModules, lineRow, logoAt, openings, timeModules, timeRow, type Box, type RowLayout } from './geometry';
+import { ikusiLogo } from '../ikusi/ikusi-logo';
+import { railRow } from '../ikusi/modules';
+import { CELL, DOTS, HEIGHT, LINE, LOGO_HEIGHT, STRIP, TIME, TOP_Y, WIDTH, labelSpan, lineModules, lineRow, logoAt, openings, timeModules, timeRow, type Box } from './geometry';
 
 const FONT = 'Helvetica, Arial, Liberation Sans, sans-serif';
 /** The front sheet. */
 const SHEET = '#1e2122';
 /** The edge of the box, catching the light. */
 const RIM = '#3b4042';
-/** The rail the modules are clipped onto, and its lips. */
-const RAIL = '#2a2e33';
-const RAIL_LIGHT = '#474c53';
-const RAIL_SHADOW = '#0f1113';
-/** The modules' dark plastic, and the light along their top edge. */
-const PLASTIC = '#1c1f23';
-const PLASTIC_LIGHT = '#2e3238';
-const GROOVE = '#0c0d0f';
 /** The red strip's opening, darker than the others. */
 const STRIP_BACK = '#030404';
 const PRINT = '#ebeae3';
@@ -96,35 +89,6 @@ function opening(box: Box, fill: string): VNode[] {
     h('rect', { x: box.x + 0.2, y: box.y + 0.2, width: box.width - 0.4, height: 0.6, fill: '#000000', 'fill-opacity': 0.35 }),
     h('rect', { x: box.x + 0.4, y: box.y + box.height, width: box.width - 0.8, height: 0.3, fill: RIM, 'fill-opacity': 0.7 }),
   ];
-}
-
-/** A row: the rail across its opening, the modules on it, blank ones at the ends, and a recess round each glass. */
-function railRow(row: RowLayout): VNode[] {
-  const { rail, moduleY } = row;
-  const width = CELL - MODULE.seam;
-  const nodes: VNode[] = [
-    h('rect', { ...rail, fill: RAIL, stroke: '#070808', 'stroke-width': 0.3 }),
-    h('rect', { x: rail.x, y: rail.y, width: rail.width, height: 0.25, fill: RAIL_LIGHT }),
-    h('rect', { x: rail.x, y: rail.y + rail.height - 0.3, width: rail.width, height: 0.3, fill: RAIL_SHADOW }),
-  ];
-  for (const module of row.modules) {
-    const x = module.x + MODULE.seam / 2;
-    nodes.push(
-      h('rect', { x, y: moduleY, width, height: MODULE.height, rx: 0.25, fill: PLASTIC }),
-      h('rect', { x: x + 0.2, y: moduleY, width: width - 0.4, height: 0.22, fill: PLASTIC_LIGHT }),
-    );
-    // The grooves along the ledges above and below the glass: a dark line, lit along its lower edge.
-    for (const y of [moduleY + INSET.y / 2, moduleY + MODULE.height - INSET.y / 2]) {
-      nodes.push(
-        h('rect', { x, y: y - 0.16, width, height: 0.32, fill: GROOVE }),
-        h('rect', { x, y: y + 0.16, width, height: 0.14, fill: PLASTIC_LIGHT }),
-      );
-    }
-  }
-  for (const glass of row.glasses) {
-    nodes.push(h('rect', { x: glass.x - 0.2, y: glass.y - 0.2, width: GLASS.width + 0.4, height: GLASS.height + 0.4, fill: '#0b0c0e' }));
-  }
-  return nodes;
 }
 
 function scene(frame: IkusiFrame, options: IkusiOptions, slots: Slots): VNode[] {

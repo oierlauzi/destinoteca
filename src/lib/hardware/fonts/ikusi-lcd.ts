@@ -35,7 +35,8 @@ const GLYPHS: Record<string, string[]> = {
   T: ['#######', '#######', '..##...', '..##...', '..##...', '..##...', '..##...', '..##...', '..##...', '..##...', '..##...'],
   U: ['##...##', '##...##', '##...##', '##...##', '##...##', '##...##', '##...##', '##...##', '##...##', '#######', '.#####.'],
   V: ['##...##', '##...##', '##...##', '##...##', '##...##', '##...##', '.##.##.', '.##.##.', '..###..', '..###..', '..###..'],
-  W: ['##...##', '##...##', '##...##', '##...##', '##...##', '##...##', '##.#.##', '#######', '#######', '###.###', '##...##'],
+  // The U with a stem up the middle, closed at the bottom (KATOWICE, NEW GATE).
+  W: ['##...##', '##...##', '##...##', '##...##', '##.#.##', '##.#.##', '##.#.##', '##.#.##', '##.#.##', '#######', '.#####.'],
   X: ['##...##', '##...##', '.##.##.', '.##.##.', '..###..', '..###..', '..###..', '.##.##.', '.##.##.', '##...##', '##...##'],
   Y: ['##...##', '##...##', '.##.##.', '.##.##.', '..###..', '..###..', '..##...', '..##...', '..##...', '..##...', '..##...'],
   Z: ['#######', '#######', '.....##', '....##.', '...##..', '..##...', '.##....', '##.....', '##.....', '#######', '#######'],
@@ -57,6 +58,8 @@ const GLYPHS: Record<string, string[]> = {
   '.': ['.......', '.......', '.......', '.......', '.......', '.......', '.......', '.......', '.......', '..##...', '..##...'],
   ',': ['.......', '.......', '.......', '.......', '.......', '.......', '.......', '.......', '..##...', '..##...', '.##....'],
   '/': ['.....##', '.....##', '....##.', '....##.', '...##..', '...##..', '..##...', '..##...', '.##....', '##.....', '##.....'],
+  // A small a, seen only between the numbers of two check-in desks («07a08»).
+  a: ['.......', '.......', '.......', '######.', '.######', '.....##', '.######', '#######', '##...##', '#######', '.######'],
   "'": ['..##...', '..##...', '..##...', '.......', '.......', '.......', '.......', '.......', '.......', '.......', '.......'],
 };
 
@@ -64,7 +67,7 @@ export const IKUSI_COLS = 7;
 export const IKUSI_ROWS = 11;
 
 /** Seen in photographs of Ikusi boards (Atocha Cercanías and airports), in shape if not dot by dot. */
-export const IKUSI_SEEN: readonly string[] = [...'ABCDEFGHIJKLMNOPRSTUX', 'Ñ', ...'0123456789', ':', '-', '.'];
+export const IKUSI_SEEN: readonly string[] = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'Ñ', ...'0123456789', ':', '-', '.', '/', 'a'];
 /** Drawn in the same style, for want of a photograph. */
 export const IKUSI_RECONSTRUCTED: readonly string[] = Object.keys(GLYPHS).filter((char) => !IKUSI_SEEN.includes(char));
 
@@ -78,17 +81,29 @@ const COLUMNS = new Map<string, number[]>(
 /** The rows a glyph is drawn from, for tests and documentation. */
 export const ikusiRows = (char: string): readonly string[] | undefined => GLYPHS[char];
 
+const foldChar = (char: string): string => {
+  if (char === 'Ñ' || char === ' ' || COLUMNS.has(char)) return char;
+  const bare = char.normalize('NFD').replace(/\p{Mn}/gu, '');
+  return COLUMNS.has(bare) ? bare : ' ';
+};
+
 /**
  * Text as the boards write it: capitals without accents but the Ñ, and a
  * blank cell for anything they have no character for, so that every
  * character keeps its own cell.
  */
 function fold(text: string): string {
-  return Array.from(text.normalize('NFC').toUpperCase(), (char) => {
-    if (char === 'Ñ' || char === ' ' || COLUMNS.has(char)) return char;
-    const bare = char.normalize('NFD').replace(/\p{Mn}/gu, '');
-    return COLUMNS.has(bare) ? bare : ' ';
-  }).join('');
+  return Array.from(text.normalize('NFC').toUpperCase(), foldChar).join('');
+}
+
+/**
+ * As `fold`, but an «a» between two digits stays small, as the airport
+ * boards write a range of check-in desks («07a08»).
+ */
+function foldKeepingRanges(text: string): string {
+  const chars = Array.from(text.normalize('NFC'));
+  const digit = (char: string | undefined): boolean => char !== undefined && char >= '0' && char <= '9';
+  return chars.map((char, i) => (char === 'a' && digit(chars[i - 1]) && digit(chars[i + 1]) ? 'a' : Array.from(char.toUpperCase(), foldChar).join(''))).join('');
 }
 
 export const ikusiLcd = {
@@ -98,4 +113,5 @@ export const ikusiLcd = {
   /** One number per column, bit 0 the top dot; a blank for a character the font lacks. */
   glyph: (char: string): number[] => COLUMNS.get(char) ?? Array.from({ length: IKUSI_COLS }, () => 0),
   fold,
+  foldKeepingRanges,
 };

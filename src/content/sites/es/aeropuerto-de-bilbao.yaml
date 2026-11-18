@@ -1,0 +1,9 @@
+name: Aeropuerto de Bilbao
+alsoKnownAs:
+  - Loiu
+type: airport
+country: es
+region: ES-PV
+town: Loiu
+codes:
+  iata: BIO

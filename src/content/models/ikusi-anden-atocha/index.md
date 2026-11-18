@@ -95,8 +95,8 @@ comparten la fila de arriba, con el rótulo hacia el poste y la hora hacia el
 extremo, así que los de un lado del poste son la imagen en espejo de los del
 otro; el destino se escribe siempre de izquierda a derecha. Los caracteres son
 módulos separados, uno por carácter (también los dos puntos de la hora tienen
-el suyo), montados en fila sobre un carril, como en los tableros de Ikusi de
-los aeropuertos; los extremos de cada fila parecen rellenos con módulos en
+el suyo), montados en fila sobre un carril, como en los
+[paneles de Ikusi de los aeropuertos](../ikusi-aeropuertos-aena/); los extremos de cada fila parecen rellenos con módulos en
 blanco del mismo ancho. Cada cristal brilla en verde con un tono algo
 distinto, más claro u oscuro, también los que quedan en blanco. La línea del
 destino también da avisos: en una fotografía, la de la vía 1 dice «NO
@@ -133,7 +133,7 @@ los sustituyeron los de PAGE Ibérica.
 - **Dónde estaban los carteles de una sola vía.** No se conoce ninguna
   fotografía de ellos.
 - **Cuántos puntos tiene cada carácter.** Las fotografías de estos carteles
-  no dejan contarlos. En los tableros de Ikusi de los aeropuertos, de la
+  no dejan contarlos. En los paneles de Ikusi de los aeropuertos, de la
   misma época y con caracteres parecidos, son 7 de ancho por 11 de alto, con
   trazos de dos puntos, y así se dibujan en la réplica.
 - **Las medidas.** Se estiman las proporciones de la réplica a partir de las 

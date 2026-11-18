@@ -4,7 +4,7 @@ import type { Service, View } from '../src/lib/model';
 import { defaults } from '../src/lib/params';
 import { ikusiAndenAtocha, optionsSchema, type IkusiOptions } from '../src/lib/replicas/ikusi-anden-atocha/def';
 import { BEZEL, CELL, FILLER, FILLERS, GLASS, LINE_X, logoAt, openings, HEIGHT, LOGO_HEIGHT, LINE, STRIP, TIME, WIDTH, labelSpan, lineModules, lineRow, timeModules, timeRow } from '../src/lib/replicas/ikusi-anden-atocha/geometry';
-import { ikusiLogoWidth } from '../src/lib/replicas/ikusi-anden-atocha/ikusi-logo';
+import { ikusiLogoWidth } from '../src/lib/replicas/ikusi/ikusi-logo';
 import { blank, present } from '../src/lib/replicas/ikusi-anden-atocha/presenter';
 import { LED_COLS, describe as describeFrame, lcdLook, ledStrip, ledWindow, renderToString } from '../src/lib/replicas/ikusi-anden-atocha/render';
 import { getReplica } from '../src/lib/replicas/registry';
@@ -33,7 +33,8 @@ describe('the Ikusi liquid-crystal font', () => {
 
   it('keeps what was seen apart from what was drawn to match', () => {
     expect(IKUSI_SEEN.filter((char) => IKUSI_RECONSTRUCTED.includes(char))).toEqual([]);
-    expect(IKUSI_RECONSTRUCTED).toContain('Q');
+    expect(IKUSI_RECONSTRUCTED).toContain(',');
+    expect(IKUSI_SEEN).toContain('W');
   });
 
   it('writes capitals without accents, but keeps the Ñ, and a blank for what it cannot write', () => {
