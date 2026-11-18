@@ -162,6 +162,30 @@ photos:
     sourceUrl: https://img.rtve.es/n/1997323/?w=1600
     source: RTVE
     license: rights-reserved-credited
+  - id: bilbao-2015
+    src: ./bilbao-2015.jpg
+    alt: >-
+      De frente, dos paneles de salidas de doce filas, uno junto al otro, con
+      los rótulos en euskera, inglés y castellano.
+    caption: Dos paneles de salidas de Bilbao, julio de 2015.
+    date: '2015-07'
+    place: Aeropuerto de Bilbao
+    author: El Mundo
+    sourceUrl: https://e01-elmundo.uecdn.es/assets/multimedia/imagenes/2015/07/22/14375656063137.jpg
+    source: El Mundo
+    license: rights-reserved-credited
+  - id: bilbao-2010
+    src: ./bilbao-2010.jpg
+    alt: >-
+      Dos paneles de salidas de marco de aluminio, uno junto al otro, bajo un
+      reloj, sobre el vestíbulo de una terminal.
+    caption: Bilbao, abril de 2010, con muchos vuelos cancelados.
+    date: '2010-04'
+    place: Aeropuerto de Bilbao
+    author: El Mundo
+    sourceUrl: https://e01-elmundo.uecdn.es/elmundo/imagenes/2010/04/16/1271411911_0.jpg
+    source: El Mundo
+    license: rights-reserved-credited
   - id: tenerife-norte-2012
     src: ./tenerife-norte-2012.jpg
     alt: >-
@@ -347,8 +371,8 @@ filete amarillo recorre el marco, la cabecera lleva el nombre de la
 terminal entre el pictograma y el título, y arriba a la izquierda tiene un
 reloj de cinco módulos, como los de las filas pero más grandes, en una
 ventana oscura. En las fotografías de Asturias el reloj está apagado. En
-Bilbao los paneles cuelgan de dos en dos, en los
-[paneles de salidas del aeropuerto de Bilbao](../paneles-salidas-aeropuerto-bilbao/).
+Bilbao los paneles cuelgan de dos en dos, uno junto al otro, y el de la
+derecha sigue con los vuelos del de la izquierda.
 
 ## Lo que no se sabe
 
