@@ -21,7 +21,7 @@ import {
  * The modules are those measured on the recovered PI-T100-M, in the units of
  * the platform sign's drawing: see dimensions.ts.
  */
-import { CELL_COLS, CELL_GAP, CELL_ROWS, FLAP_PITCH as PITCH, FLAP_PITCH_Y as PITCH_Y, MODULE_MARGIN as MARGIN, MODULE_MARGIN_Y as MARGIN_Y } from './dimensions';
+import { CELL_COLS, CELL_GAP, CELL_ROWS, FLAP_PITCH as PITCH, FLAP_PITCH_Y as PITCH_Y, OPENING_MARGIN as MARGIN, OPENING_MARGIN_Y as MARGIN_Y, MODULE_INSET as INSET, MODULE_INSET_Y as INSET_Y } from './dimensions';
 
 export { CELL_COLS, CELL_ROWS, CELL_STEP, CELL_WIDTH, CELL_GAP, LINE_HEIGHT, lineWidth } from './dimensions';
 const FLAP = 4.3 / 11;
@@ -56,15 +56,16 @@ export function flipDotLines(spec: FlipDotLinesSpec): DotMatrix<OctagonFlapLook>
     pitch: PITCH,
     pitchY: PITCH_Y,
     skin: octagonFlap({ size: FLAP, corner: 0.5 }),
+    // The character's opening in the steel sheet of the face, and the module
+    // behind it, a little smaller.
     backing: (module, width, height) => [
+      h('rect', { x: module.x - MARGIN, y: module.y - MARGIN_Y, width: width + MARGIN * 2, height: height + MARGIN_Y * 2, fill: '#000000' }),
       h('rect', {
-        x: module.x - MARGIN,
-        y: module.y - MARGIN_Y,
-        width: width + MARGIN * 2,
-        height: height + MARGIN_Y * 2,
+        x: module.x - MARGIN + INSET,
+        y: module.y - MARGIN_Y + INSET_Y,
+        width: width + (MARGIN - INSET) * 2,
+        height: height + (MARGIN_Y - INSET_Y) * 2,
         fill: '#292929',
-        stroke: '#000000',
-        'stroke-width': 0.2,
       }),
     ],
   });

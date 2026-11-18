@@ -276,9 +276,9 @@ export function minLegend(x: number, top: number): VNode {
   );
 }
 
-const REFLECTOR = '#0d0d0d';
-const TUBE = '#e6e8e1';
-const SOCKET = '#cfcfc8';
+const REFLECTOR = '#262626';
+const TUBE = '#7d7e79';
+const SOCKET = '#494946';
 
 /**
  * The fluorescent tube that lights a flip-dot line from below, in front of

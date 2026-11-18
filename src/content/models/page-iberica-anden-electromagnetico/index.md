@@ -375,8 +375,8 @@ Sus medidas, tomadas sobre la unidad recuperada:
 | --- | --- |
 | Ancho | 161 cm, más unas orejas de bastidor de 3 cm a cada lado, que el marco del cartel tapa una vez montada |
 | Alto | 20 cm. La cara frontal está inclinada y mide 20,5 cm de arriba abajo |
-| Caracteres | 8 cm de ancho por 11 cm de alto, sobre la cara inclinada, uno cada 9 cm |
-| Márgenes | 9 cm antes del primer carácter y 9 cm después del último, que son el sitio del «min.»; sobre la cara, 4 cm por encima de los caracteres y 5,5 cm por debajo |
+| Caracteres | Huecos de 8 cm de ancho por 11 cm de alto en la chapa de la cara, medidos sobre la inclinación, uno cada 9 cm. Los módulos, detrás, son unos milímetros más pequeños |
+| Márgenes | 9 cm antes del primer carácter y 9 cm después del último, que son el sitio del «min.»; sobre la cara, 4 cm por encima de los huecos y 5,5 cm por debajo |
 | «min.» | 9 cm de ancho; la «i», 5 cm de alto |
 | Tubo fluorescente | 150 cm de largo y unos 2,5 cm de diámetro, centrado, con un portalámparas giratorio de unos 1,5 cm en cada extremo |
 | Reflector | 2,5 cm de alto desde la parte inferior y 153 cm de largo: tapa la mitad inferior del tubo y los portalámparas |

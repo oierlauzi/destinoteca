@@ -1,7 +1,7 @@
 import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import { CELLS } from '../page-iberica-anden-electromagnetico/def';
-import { MIN_GAP, ROW_HEIGHT, lineWidth, rowWidth } from '../page-iberica-electromagneticos/dimensions';
+import { MIN_GAP, PI_T100_M_WIDTH, ROW_HEIGHT, lineWidth } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
 import { flipLook, HOUSING, lineLamp, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
@@ -29,7 +29,7 @@ function housing(): VNode[] {
     h('rect', { x: 0, y: 0, width: WIDTH, height: HEIGHT, rx: 10, fill: HOUSING }),
     h('rect', { x: PANEL_X, y: PANEL_Y, width: PANEL_WIDTH, height: PANEL_HEIGHT, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': 3 }),
     minLegend(ROW_X + lineWidth(CELLS) + MIN_GAP, ROW_Y),
-    lineLamp(UNIT_X, UNIT_Y + ROW_HEIGHT, rowWidth(CELLS)),
+    lineLamp(UNIT_X, UNIT_Y + ROW_HEIGHT, PI_T100_M_WIDTH),
   ];
 }
 

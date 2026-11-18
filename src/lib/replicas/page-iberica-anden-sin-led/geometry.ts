@@ -1,4 +1,5 @@
-import { ROW_DOTS, ROW_HEIGHT } from '../page-iberica-electromagneticos/dimensions';
+import { DOTS_TOP, PI_T100_M, ROW_HEIGHT, dotsInUnit } from '../page-iberica-electromagneticos/dimensions';
+import { CELLS } from '../page-iberica-anden-electromagnetico/def';
 
 /*
  * The platform sign with only its flip-dot line. The videos it is known from
@@ -25,8 +26,8 @@ export const UNIT_X = PANEL_X + PANEL_EDGE;
 export const UNIT_Y = PANEL_Y + PANEL_EDGE;
 
 /** The line's top-left corner. */
-export const ROW_X = UNIT_X + ROW_DOTS.x;
-export const ROW_Y = UNIT_Y + ROW_DOTS.y;
+export const ROW_X = UNIT_X + dotsInUnit(CELLS, PI_T100_M.tubeLength);
+export const ROW_Y = UNIT_Y + DOTS_TOP;
 
 export const PANEL_HEIGHT = ROW_HEIGHT + PANEL_EDGE * 2;
 export const HEIGHT = PANEL_Y + PANEL_HEIGHT + BEZEL_BOTTOM;

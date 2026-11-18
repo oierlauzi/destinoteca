@@ -7,7 +7,7 @@ import { boardGeometry } from '../src/lib/replicas/page-iberica-vestibulo/geomet
 import { implementation } from '../src/lib/replicas/page-iberica-vestibulo/index';
 import { rowCells } from '../src/lib/replicas/page-iberica-vestibulo/render';
 import { andenElectromagnetico } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
-import { MIN_GAP, MIN_WIDTH, ROW_HEIGHT, rowWidth } from '../src/lib/replicas/page-iberica-electromagneticos/dimensions';
+import { CM, MIN_GAP, MIN_WIDTH, ROW_HEIGHT, lineWidth } from '../src/lib/replicas/page-iberica-electromagneticos/dimensions';
 
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
 const options = defaults(vestibulo4.options) as VestibuloOptions;
@@ -44,10 +44,11 @@ describe('concourse board layout', () => {
     expect(two.minX + MIN_WIDTH).toBeLessThan(two.panel.x + two.panel.width);
   });
 
-  it('builds each line like the platform sign’s unit, with 20 characters', () => {
+  it('builds each line like the platform sign’s unit, with 20 characters and a 2 m tube', () => {
     const g = boardGeometry(4);
-    // 9 cm at each end, 19 steps of 9 cm and a last character of 8.
-    expect(g.units.width / rowWidth(16)).toBeCloseTo(197 / 161, 9);
+    // 2 m of tube, 1.5 cm sockets, 4 cm to each end: 211 cm, with the characters centred.
+    expect(g.units.width / CM).toBeCloseTo(211, 9);
+    expect(g.linesX - g.units.x).toBeCloseTo(g.units.x + g.units.width - (g.linesX + lineWidth(20)), 9);
     expect(g.panel.width - g.units.width).toBeCloseTo(3, 9);
     g.dividers.slice(1).forEach((y, i) => expect(y - g.dividers[i]!).toBeCloseTo(ROW_HEIGHT, 9));
   });

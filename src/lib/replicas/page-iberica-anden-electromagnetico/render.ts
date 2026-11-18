@@ -1,6 +1,6 @@
 import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { MIN_GAP, ROW_DOTS, ROW_HEIGHT, lineWidth, rowWidth } from '../page-iberica-electromagneticos/dimensions';
+import { DOTS_TOP, MIN_GAP, PI_T100_M, PI_T100_M_WIDTH, ROW_HEIGHT, dotsInUnit, lineWidth } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
 import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, lineLamp, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
@@ -23,9 +23,9 @@ const PANEL_EDGE = 1.5;
 const LINE_TOP = 35.448382;
 const LED_RULE = LINE_TOP + ROW_HEIGHT;
 /** The flip-dot line's unit: its top-left corner and its width, as seen from the front. */
-export const LINE_UNIT = { x: PANEL_X + PANEL_EDGE, y: at(0, LINE_TOP).y, width: rowWidth(CELLS) };
+export const LINE_UNIT = { x: PANEL_X + PANEL_EDGE, y: at(0, LINE_TOP).y, width: PI_T100_M_WIDTH };
 /** The flip-dot line's top-left corner. */
-export const ROW = { x: LINE_UNIT.x + ROW_DOTS.x, y: LINE_UNIT.y + ROW_DOTS.y };
+export const ROW = { x: LINE_UNIT.x + dotsInUnit(CELLS, PI_T100_M.tubeLength), y: LINE_UNIT.y + DOTS_TOP };
 /** The LED row's top-left corner, and its width. */
 export const LED = at(20.358263, 60.55167);
 export const LED_WIDTH = 158.50243;

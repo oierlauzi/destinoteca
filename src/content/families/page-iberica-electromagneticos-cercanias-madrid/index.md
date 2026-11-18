@@ -141,8 +141,9 @@ caracteres en el cartel de andén y 20 en los paneles de vestíbulo.
 Cada carácter es un módulo independiente de 5 puntos de ancho por 7 de alto,
 de «placa móvil», como llama la etiqueta de la línea a la tecnología
 [flip-dot](../../tecnologias/flip-dot/). La etiqueta los da como módulos de
-100 mm; en la línea del cartel de andén que se ha medido, cada módulo ocupa
-8 cm de ancho por 11 cm de alto sobre la cara, que está inclinada. Al cambiar
+100 mm; en la línea del cartel de andén que se ha medido, cada carácter se ve
+por un hueco de 8 cm de ancho por 11 cm de alto en la chapa de la cara, que
+está inclinada, y el módulo de detrás es unos milímetros menor. Al cambiar
 el texto solo se redibujan los caracteres que han cambiado.
 
 La línea se lee con luz natural sin iluminación propia. Un tubo fluorescente

@@ -1,4 +1,4 @@
-import { LED_HEIGHT, LINE_HEIGHT, MIN_GAP, ROW_DOTS, ROW_HEIGHT, lineWidth, rowWidth } from '../page-iberica-electromagneticos/dimensions';
+import { DOTS_TOP, LED_HEIGHT, LINE_HEIGHT, MIN_GAP, ROW_HEIGHT, dotsInUnit, lineWidth, unitWidth } from '../page-iberica-electromagneticos/dimensions';
 
 /**
  * Where everything goes on a concourse board of `lines` lines, in the units
@@ -7,12 +7,19 @@ import { LED_HEIGHT, LINE_HEIGHT, MIN_GAP, ROW_DOTS, ROW_HEIGHT, lineWidth, rowW
  * photographs taken at an angle.
  *
  * Each line is taken to be a unit built like the platform sign's PI-T100-M,
- * which was measured, with 20 characters instead of 16: the same margins at
- * its ends, the same height, the same tube under the characters. That is
- * why the lines are far apart. Like that unit on the platform sign, each one
- * fills the panel between its black edges, from one hairline to the next.
+ * which was measured, with 20 characters instead of 16 and a longer tube:
+ * the same height, the same characters, the same 4 cm from the ends of the
+ * unit to the reflector, the characters centred. The tube under each line
+ * is why the lines are far apart. Like that unit on the platform sign, each
+ * one fills the panel between its black edges, from one hairline to the next.
  */
 export const CELLS = 20;
+/**
+ * The tube under each line, in centimetres: probably a 2 m one, by the
+ * maintainer's reckoning, which photographs agree with (it reaches well past
+ * the first and last characters).
+ */
+const TUBE = 200;
 /** From the edge of the housing to the inner panel. */
 const FRAME = { side: 7.7189846, top: 6.7270778, bottom: 6.6713 };
 /** The panel's black edge, half of it inside the panel. */
@@ -43,21 +50,20 @@ export interface BoardGeometry {
 }
 
 export function boardGeometry(lines: number): BoardGeometry {
-  const unitWidth = rowWidth(CELLS);
-  const panelWidth = unitWidth + PANEL_EDGE * 2;
+  const unit = unitWidth(TUBE);
+  const panelWidth = unit + PANEL_EDGE * 2;
   const width = panelWidth + FRAME.side * 2;
   const panelX = FRAME.side;
   const panelY = FRAME.top;
   const ledX = panelX + LED_MARGIN.side;
   const ledWidth = panelWidth - LED_MARGIN.side * 2;
-  // The lines' flaps sit as far from both ends of their unit, so they are
-  // centred over the LED row; the "min." beside them sticks out to the
-  // right, as in the photographs.
+  // The lines' flaps are centred in their unit, and so over the LED row;
+  // the "min." beside them sticks out to the right, as in the photographs.
   const unitX = panelX + PANEL_EDGE;
-  const linesX = unitX + ROW_DOTS.x;
+  const linesX = unitX + dotsInUnit(CELLS, TUBE);
   const headerBottom = panelY + HEADER_HEIGHT;
   const tops = Array.from({ length: lines }, (_, i) => headerBottom + i * ROW_HEIGHT);
-  const lineTops = tops.map((top) => top + ROW_DOTS.y);
+  const lineTops = tops.map((top) => top + DOTS_TOP);
   const dividers = [headerBottom, ...tops.map((top) => top + ROW_HEIGHT)];
   const ledY = dividers[dividers.length - 1]! + LED_AFTER_DIVIDER;
   const panelHeight = ledY + LED_HEIGHT + LED_MARGIN.bottom - panelY;
@@ -65,7 +71,7 @@ export function boardGeometry(lines: number): BoardGeometry {
     width,
     height: panelY + panelHeight + FRAME.bottom,
     panel: { x: panelX, y: panelY, width: panelWidth, height: panelHeight },
-    units: { x: unitX, width: unitWidth, tops },
+    units: { x: unitX, width: unit, tops },
     linesX,
     lineTops,
     lineGap: ROW_HEIGHT - LINE_HEIGHT,

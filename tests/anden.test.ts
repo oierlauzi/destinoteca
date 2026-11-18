@@ -153,21 +153,21 @@ describe('the PI-T100-M line, as measured', () => {
   const face = dims.FORESHORTENING;
 
   it('adds up across: 9 + 15 × 9 + 8 + 9 = 161 cm', () => {
-    expect(dims.rowWidth(16) / cm).toBeCloseTo(161, 9);
+    expect(dims.PI_T100_M_WIDTH / cm).toBeCloseTo(161, 9);
     expect(dims.CELL_STEP / cm).toBeCloseTo(9, 9);
-    expect((dims.CELL_WIDTH + 2 * dims.MODULE_MARGIN) / cm).toBeCloseTo(8, 9);
-    expect((ROW.x - dims.MODULE_MARGIN - LINE_UNIT.x) / cm).toBeCloseTo(9, 9);
-    const lastEdge = ROW.x + dims.lineWidth(16) + dims.MODULE_MARGIN;
+    expect((dims.CELL_WIDTH + 2 * dims.OPENING_MARGIN) / cm).toBeCloseTo(8, 9);
+    expect((ROW.x - dims.OPENING_MARGIN - LINE_UNIT.x) / cm).toBeCloseTo(9, 9);
+    const lastEdge = ROW.x + dims.lineWidth(16) + dims.OPENING_MARGIN;
     expect((LINE_UNIT.x + LINE_UNIT.width - lastEdge) / cm).toBeCloseTo(dims.MIN_WIDTH / cm, 9);
   });
 
   it('adds up down the slanted face, seen from the front: 4 + 11 + 5.5 = 20.5 cm', () => {
     expect(face).toBeCloseTo(20 / 20.5, 9);
-    const module = dims.LINE_HEIGHT + 2 * dims.MODULE_MARGIN_Y;
-    expect(module / (cm * face)).toBeCloseTo(11, 9);
-    expect((dims.ROW_DOTS.y - dims.MODULE_MARGIN_Y) / (cm * face)).toBeCloseTo(4, 9);
-    expect((dims.ROW_BELOW_DOTS - dims.MODULE_MARGIN_Y) / (cm * face)).toBeCloseTo(5.5, 9);
-    expect(dims.ROW_DOTS.y + dims.LINE_HEIGHT + dims.ROW_BELOW_DOTS).toBeCloseTo(dims.ROW_HEIGHT, 9);
+    const opening = dims.LINE_HEIGHT + 2 * dims.OPENING_MARGIN_Y;
+    expect(opening / (cm * face)).toBeCloseTo(11, 9);
+    expect((dims.DOTS_TOP - dims.OPENING_MARGIN_Y) / (cm * face)).toBeCloseTo(4, 9);
+    expect((dims.ROW_BELOW_DOTS - dims.OPENING_MARGIN_Y) / (cm * face)).toBeCloseTo(5.5, 9);
+    expect(dims.DOTS_TOP + dims.LINE_HEIGHT + dims.ROW_BELOW_DOTS).toBeCloseTo(dims.ROW_HEIGHT, 9);
   });
 
   it('fills the panel between its black edges, and sits between the drawing’s hairlines', () => {
@@ -179,6 +179,6 @@ describe('the PI-T100-M line, as measured', () => {
   it('draws the tube under the line, and "min." after it', () => {
     const svg = renderToString({ text: 'CHAMARTIN', minutes: '8', platform: '1', led: '' }, options);
     expect(svg).toContain('>min.<');
-    expect(svg).toContain('fill="#e6e8e1"');
+    expect(svg).toContain('fill="#7d7e79"');
   });
 });
