@@ -3,7 +3,8 @@ import type { Placement, Service, View } from '../src/lib/model';
 import { defaults } from '../src/lib/params';
 import { optionsSchema, type AndenOptions } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
 import { blank, present } from '../src/lib/replicas/page-iberica-anden-electromagnetico/presenter';
-import { lineCells, renderToString, describe as describeFrame } from '../src/lib/replicas/page-iberica-anden-electromagnetico/render';
+import { LINE_UNIT, ROW, lineCells, renderToString, describe as describeFrame } from '../src/lib/replicas/page-iberica-anden-electromagnetico/render';
+import * as dims from '../src/lib/replicas/page-iberica-electromagneticos/dimensions';
 
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
 const options = defaults(optionsSchema) as AndenOptions;
@@ -144,5 +145,40 @@ describe('the legend over the minutes', () => {
     expect(tren).toContain('>Próximo<');
     expect(tren).toContain('>tren<');
     expect(tren).not.toContain('Llegada');
+  });
+});
+
+describe('the PI-T100-M line, as measured', () => {
+  const cm = dims.CM;
+  const face = dims.FORESHORTENING;
+
+  it('adds up across: 9 + 15 × 9 + 8 + 9 = 161 cm', () => {
+    expect(dims.rowWidth(16) / cm).toBeCloseTo(161, 9);
+    expect(dims.CELL_STEP / cm).toBeCloseTo(9, 9);
+    expect((dims.CELL_WIDTH + 2 * dims.MODULE_MARGIN) / cm).toBeCloseTo(8, 9);
+    expect((ROW.x - dims.MODULE_MARGIN - LINE_UNIT.x) / cm).toBeCloseTo(9, 9);
+    const lastEdge = ROW.x + dims.lineWidth(16) + dims.MODULE_MARGIN;
+    expect((LINE_UNIT.x + LINE_UNIT.width - lastEdge) / cm).toBeCloseTo(dims.MIN_WIDTH / cm, 9);
+  });
+
+  it('adds up down the slanted face, seen from the front: 4 + 11 + 5.5 = 20.5 cm', () => {
+    expect(face).toBeCloseTo(20 / 20.5, 9);
+    const module = dims.LINE_HEIGHT + 2 * dims.MODULE_MARGIN_Y;
+    expect(module / (cm * face)).toBeCloseTo(11, 9);
+    expect((dims.ROW_DOTS.y - dims.MODULE_MARGIN_Y) / (cm * face)).toBeCloseTo(4, 9);
+    expect((dims.ROW_BELOW_DOTS - dims.MODULE_MARGIN_Y) / (cm * face)).toBeCloseTo(5.5, 9);
+    expect(dims.ROW_DOTS.y + dims.LINE_HEIGHT + dims.ROW_BELOW_DOTS).toBeCloseTo(dims.ROW_HEIGHT, 9);
+  });
+
+  it('fills the panel between its black edges, and sits between the drawing’s hairlines', () => {
+    expect(LINE_UNIT.width).toBeCloseTo(176.00145 - 3, 9);
+    // The drawing has 21.45 between the hairlines over and under the line.
+    expect(Math.abs(dims.ROW_HEIGHT - (56.89837 - 35.448382))).toBeLessThan(0.05);
+  });
+
+  it('draws the tube under the line, and "min." after it', () => {
+    const svg = renderToString({ text: 'CHAMARTIN', minutes: '8', platform: '1', led: '' }, options);
+    expect(svg).toContain('>min.<');
+    expect(svg).toContain('fill="#e6e8e1"');
   });
 });

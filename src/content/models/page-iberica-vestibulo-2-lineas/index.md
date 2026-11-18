@@ -100,7 +100,9 @@ Cada línea tiene 20 caracteres, cuatro más que la del cartel de andén. Por lo
 demás tiene el lenguaje de su
 [familia](../../familias/page-iberica-electromagneticos-cercanias-madrid/), y es probable que
 comparta con el cartel de andén los módulos de cada carácter, aunque no se ha
-comprobado en ninguna unidad.
+comprobado en ninguna unidad. Tampoco se sabe si cada línea está hecha como la
+del cartel de andén, que sí se ha medido, con cuatro caracteres más, ni cómo
+es de largo su tubo fluorescente.
 
 Como los carteles de andén, estos paneles se han ido retirando, y es probable
 que ya no quede ninguno en servicio.

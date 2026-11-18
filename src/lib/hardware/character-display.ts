@@ -17,6 +17,8 @@ export interface CellGridSpec {
   cols: number;
   rows: number;
   pitch: number;
+  /** Distance between rows of dots, where it differs from `pitch`. */
+  pitchY?: number;
   /** Space between two characters, and between two lines. */
   cellGap: number;
   lineGap?: number;
@@ -28,7 +30,7 @@ export interface CellGridSpec {
 export function cellGrid(spec: CellGridSpec): DotModule[] {
   const out: DotModule[] = [];
   const stepX = spec.cols * spec.pitch + spec.cellGap;
-  const stepY = spec.rows * spec.pitch + (spec.lineGap ?? 0);
+  const stepY = spec.rows * (spec.pitchY ?? spec.pitch) + (spec.lineGap ?? 0);
   for (let line = 0; line < spec.lines; line++) {
     for (let cell = 0; cell < spec.cells; cell++) {
       out.push({ x: (spec.x ?? 0) + cell * stepX, y: (spec.y ?? 0) + line * stepY });

@@ -73,8 +73,9 @@ como en él la ilumina de noche un tubo fluorescente que se ve justo debajo.
 ## Lo que no se sabe
 
 - **Las medidas de la caja.** Los vídeos muestran poco de ella. La réplica
-  toma del cartel con fila de LED el ancho, el marco, las esquinas del panel
-  y la posición de la línea, y lo reduce al alto de una línea.
+  toma del cartel con fila de LED el ancho, el marco y las esquinas del
+  panel, y lo reduce al alto de su línea, que supone igual a la que se ha
+  medido de ese cartel.
 - **Quién lo fabricó.** En los vídeos no se ve ninguna placa; se atribuye a
   PAGE Ibérica por la línea, igual que la del cartel completo.
 - **En qué otras estaciones hubo**, cuándo se instalaron y si siguen.

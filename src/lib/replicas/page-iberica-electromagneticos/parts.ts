@@ -6,6 +6,7 @@ import {
   h,
   hashText,
   marqueeWindow,
+  num,
   roundLed,
   textColumns,
   withStuckDots,
@@ -15,7 +16,16 @@ import {
   type VNode,
 } from '../../hardware';
 import type { ParamSchema } from '../../params';
-import { LED_HEIGHT, LINE_HEIGHT, MIN_BASELINE } from './dimensions';
+import {
+  LED_HEIGHT,
+  LINE_HEIGHT,
+  MIN_HEIGHT,
+  MIN_WIDTH,
+  REFLECTOR_HEIGHT,
+  REFLECTOR_INSET,
+  SOCKET_WIDTH,
+  TUBE_RADIUS,
+} from './dimensions';
 import { CELL_COLS, CELL_ROWS, FLIP_DOT_UNLIT, flipDotCharset, flipDotFont } from './flip-dot-lines';
 
 export { LED_HEIGHT };
@@ -241,11 +251,48 @@ export function cercaniasRoundel(cx: number, cy: number, radius: number): VNode 
   ]);
 }
 
-/** The narrow "min." beside the end of a flip-dot line whose top is at `top`. */
+// "min." is set in a stack with known metrics, so that it fills its room the
+// same everywhere. From Liberation Sans, whose metrics are Arial's and so
+// Helvetica's: the top of the "i", and where the ink of "min." starts and
+// ends, in ems from the start of the text.
+const MIN_FONT = 'Helvetica, Arial, Liberation Sans, sans-serif';
+const I_TOP = 0.7246;
+const MIN_INK = { from: 0.0664, to: 1.7979 };
+const MIN_SIZE = MIN_HEIGHT / I_TOP;
+const MIN_SQUEEZE = MIN_WIDTH / ((MIN_INK.to - MIN_INK.from) * MIN_SIZE);
+
+/**
+ * The narrow "min." at the end of a flip-dot line whose flaps start at `top`:
+ * its ink fills the room from `x`, the edge of the last character, to the end
+ * of the line. It stands on the characters' middle, as in photographs.
+ */
 export function minLegend(x: number, top: number): VNode {
+  const baseline = top + LINE_HEIGHT / 2 + MIN_HEIGHT / 2;
+  const start = x - MIN_INK.from * MIN_SIZE * MIN_SQUEEZE;
   return h(
     'text',
-    { transform: `translate(${x},${top + LINE_HEIGHT * MIN_BASELINE}) scale(0.81099995,1.2330457)`, fill: MIN_LEGEND, 'font-size': 5.65488 },
+    { transform: `translate(${num(start)},${num(baseline)}) scale(${num(MIN_SQUEEZE)},1)`, fill: MIN_LEGEND, 'font-family': MIN_FONT, 'font-size': MIN_SIZE },
     ['min.'],
   );
+}
+
+const REFLECTOR = '#0d0d0d';
+const TUBE = '#e6e8e1';
+const SOCKET = '#cfcfc8';
+
+/**
+ * The fluorescent tube that lights a flip-dot line from below, in front of
+ * the bottom of the line's unit, whose bottom-left corner is (x, bottom) and
+ * which is `width` wide. The reflector hides the lower half of the tube and
+ * the sockets at its ends; what shows over it is the upper half.
+ */
+export function lineLamp(x: number, bottom: number, width: number): VNode {
+  const top = bottom - REFLECTOR_HEIGHT;
+  const reflector = { x: x + REFLECTOR_INSET, width: width - REFLECTOR_INSET * 2 };
+  const tube = { x: reflector.x + SOCKET_WIDTH, y: top - TUBE_RADIUS, width: reflector.width - SOCKET_WIDTH * 2, height: TUBE_RADIUS };
+  return h('g', {}, [
+    h('rect', { ...tube, fill: TUBE }),
+    ...[reflector.x, tube.x + tube.width].map((at) => h('rect', { x: at, y: tube.y, width: SOCKET_WIDTH, height: TUBE_RADIUS, fill: SOCKET })),
+    h('rect', { x: reflector.x, y: top, width: reflector.width, height: REFLECTOR_HEIGHT, fill: REFLECTOR }),
+  ]);
 }

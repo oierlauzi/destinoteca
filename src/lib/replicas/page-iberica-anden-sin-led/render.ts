@@ -1,12 +1,12 @@
 import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import { CELLS } from '../page-iberica-anden-electromagnetico/def';
-import { MIN_GAP, lineWidth } from '../page-iberica-electromagneticos/dimensions';
+import { MIN_GAP, ROW_HEIGHT, lineWidth, rowWidth } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
-import { flipLook, HOUSING, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
+import { flipLook, HOUSING, lineLamp, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
 import type { SinLedFrame, SinLedOptions } from './def';
-import { HEIGHT, PANEL_HEIGHT, PANEL_WIDTH, PANEL_X, PANEL_Y, ROW_X, ROW_Y, WIDTH } from './geometry';
+import { HEIGHT, PANEL_HEIGHT, PANEL_WIDTH, PANEL_X, PANEL_Y, ROW_X, ROW_Y, UNIT_X, UNIT_Y, WIDTH } from './geometry';
 
 /** The 16 characters of the line: the text, with the minutes written over its end. */
 export function lineCells(frame: SinLedFrame, options: FamilyOptions): string[] {
@@ -23,12 +23,13 @@ export function describe(frame: SinLedFrame, options: FamilyOptions): string {
   return parts.join(' · ');
 }
 
-/** The enclosure and inner panel of the sign with the LED row, one line tall, and "min." after the line. */
+/** The enclosure and inner panel of the sign with the LED row, one line tall, "min." after the line and its tube under it. */
 function housing(): VNode[] {
   return [
     h('rect', { x: 0, y: 0, width: WIDTH, height: HEIGHT, rx: 10, fill: HOUSING }),
     h('rect', { x: PANEL_X, y: PANEL_Y, width: PANEL_WIDTH, height: PANEL_HEIGHT, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': 3 }),
     minLegend(ROW_X + lineWidth(CELLS) + MIN_GAP, ROW_Y),
+    lineLamp(UNIT_X, UNIT_Y + ROW_HEIGHT, rowWidth(CELLS)),
   ];
 }
 

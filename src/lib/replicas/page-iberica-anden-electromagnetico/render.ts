@@ -1,9 +1,9 @@
 import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { LINE_HEIGHT, MIN_GAP, lineWidth } from '../page-iberica-electromagneticos/dimensions';
+import { MIN_GAP, ROW_DOTS, ROW_HEIGHT, lineWidth, rowWidth } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
-import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
+import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, lineLamp, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
 import { CELLS, type AndenFrame, type AndenOptions } from './def';
 
 // Everything is in millimetres of the reference drawing (renfe-flipdot-re,
@@ -13,13 +13,19 @@ export const WIDTH = 190.87605;
 export const HEIGHT = 81.160835;
 const at = (x: number, y: number) => ({ x: x - ORIGIN.x, y: y - ORIGIN.y });
 
-// The line keeps the drawing's left edge, and sits higher than in the
-// drawing to leave room under it for the fluorescent tube (not drawn) before
-// the rule above the LED row, which stays where the drawing has it.
-const LED_RULE = 56.89837;
-const TUBE_GAP = 7.4;
+// The flip-dot line (the PI-T100-M unit) fills the inner panel between its
+// black edges, and runs from the hairline under "Vía" to the one over the LED
+// row, which follows from its height. Inside it, everything is as measured on
+// the recovered unit.
+const PANEL_X = at(12.080421, 0).x;
+const PANEL_WIDTH = 176.00145;
+const PANEL_EDGE = 1.5;
+const LINE_TOP = 35.448382;
+const LED_RULE = LINE_TOP + ROW_HEIGHT;
+/** The flip-dot line's unit: its top-left corner and its width, as seen from the front. */
+export const LINE_UNIT = { x: PANEL_X + PANEL_EDGE, y: at(0, LINE_TOP).y, width: rowWidth(CELLS) };
 /** The flip-dot line's top-left corner. */
-export const ROW = at(24.658236, LED_RULE - TUBE_GAP - LINE_HEIGHT);
+export const ROW = { x: LINE_UNIT.x + ROW_DOTS.x, y: LINE_UNIT.y + ROW_DOTS.y };
 /** The LED row's top-left corner, and its width. */
 export const LED = at(20.358263, 60.55167);
 export const LED_WIDTH = 158.50243;
@@ -56,13 +62,12 @@ const nextLegend = (options: FamilyOptions): [string, string] => (options.nextLe
 /** The inner panel, from `top` and `height` tall, with the sign's rounded corners and black edge. */
 export function panelRect(top: number, height: number): VNode {
   const corner = at(12.080421, 11.557226);
-  return h('rect', { x: corner.x, y: top, width: 176.00145, height, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': 3 });
+  return h('rect', { x: corner.x, y: top, width: PANEL_WIDTH, height, rx: 5, fill: PANEL, stroke: '#000000', 'stroke-width': PANEL_EDGE * 2 });
 }
 
 /** A hairline between two rows of the panel, at `y` in sign coordinates. */
 export function panelRule(y: number): VNode {
-  const x = at(12.080421, 0).x;
-  return h('line', { x1: x, y1: y, x2: x + 176.00145, y2: y, stroke: '#000000', 'stroke-width': 0.2 });
+  return h('line', { x1: PANEL_X, y1: y, x2: PANEL_X + PANEL_WIDTH, y2: y, stroke: '#000000', 'stroke-width': 0.2 });
 }
 
 /**
@@ -79,7 +84,7 @@ export function signFace(dy: number, platform: string, options: FamilyOptions, s
   const big = { fill: LEGEND, 'font-size': 23.2833, 'font-weight': 700, 'letter-spacing': 1 };
   const divider = (y: number): VNode => {
     const p = here(12.080421, y);
-    return h('line', { x1: p.x, y1: p.y, x2: p.x + 176.00145, y2: p.y, stroke: '#000000', 'stroke-width': 0.2 });
+    return h('line', { x1: p.x, y1: p.y, x2: p.x + PANEL_WIDTH, y2: p.y, stroke: '#000000', 'stroke-width': 0.2 });
   };
   const via = here(58.99646, 33.011734);
   const next = here(146.3284, 23.902781);
@@ -88,12 +93,13 @@ export function signFace(dy: number, platform: string, options: FamilyOptions, s
   return [
     ...(panel ? [panelRect(corner.y, PANEL_HEIGHT)] : []),
     minLegend(ROW.x + lineWidth(CELLS) + MIN_GAP, ROW.y + dy),
+    lineLamp(LINE_UNIT.x, LINE_UNIT.y + ROW_HEIGHT + dy, LINE_UNIT.width),
     h('text', { x: via.x, y: via.y, ...big }, ['Vía']),
     h('text', { fill: LEGEND, 'font-size': 7.05556, 'font-weight': 700 }, [
       h('tspan', { x: next.x, y: next.y }, [first], (element) => (slots[`next1${key}`] = element)),
       h('tspan', { x: next.x, y: next.y + 7.761116, 'letter-spacing': 0.15875 }, [second], (element) => (slots[`next2${key}`] = element)),
     ]),
-    divider(35.448382),
+    divider(LINE_TOP),
     divider(LED_RULE),
     cercaniasRoundel(roundel.x + 8.218758, roundel.y + 8.218758, 8.218758),
     // The platform number: a vinyl stuck on beside "Vía".

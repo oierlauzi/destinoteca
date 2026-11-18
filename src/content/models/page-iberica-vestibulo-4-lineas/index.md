@@ -121,7 +121,9 @@ Cada línea tiene 20 caracteres, cuatro más que la del cartel de andén. Por lo
 demás tiene el lenguaje de su
 [familia](../../familias/page-iberica-electromagneticos-cercanias-madrid/), y es probable que
 comparta con el cartel de andén los módulos de cada carácter, aunque no se ha
-comprobado en ninguna unidad.
+comprobado en ninguna unidad. Tampoco se sabe si cada línea está hecha como la
+del cartel de andén, que sí se ha medido, con cuatro caracteres más, ni cómo
+es de largo su tubo fluorescente.
 
 En el vídeo de Pinar de las Rozas, la fila de LED recorre un aviso que prohíbe
 subir o bajar del tren una vez que suenan o se encienden las señales de

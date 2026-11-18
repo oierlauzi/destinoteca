@@ -1,35 +1,34 @@
-import { LED_HEIGHT, LINE_HEIGHT, MIN_GAP, lineWidth } from '../page-iberica-electromagneticos/dimensions';
+import { LED_HEIGHT, LINE_HEIGHT, MIN_GAP, ROW_DOTS, ROW_HEIGHT, lineWidth, rowWidth } from '../page-iberica-electromagneticos/dimensions';
 
 /**
  * Where everything goes on a concourse board of `lines` lines, in the units
  * of the platform sign's drawing (its flaps, LEDs and legends are the same
- * parts). Margins follow the platform sign; the header and the spacing of
- * the lines are estimated from photographs taken at an angle.
+ * parts). Margins follow the platform sign; the header is estimated from
+ * photographs taken at an angle.
+ *
+ * Each line is taken to be a unit built like the platform sign's PI-T100-M,
+ * which was measured, with 20 characters instead of 16: the same margins at
+ * its ends, the same height, the same tube under the characters. That is
+ * why the lines are far apart. Like that unit on the platform sign, each one
+ * fills the panel between its black edges, from one hairline to the next.
  */
 export const CELLS = 20;
 /** From the edge of the housing to the inner panel. */
 const FRAME = { side: 7.7189846, top: 6.7270778, bottom: 6.6713 };
-/** The LED row is a little wider than the flip-dot lines, as in the photographs. */
-const LED_WIDTH = 197;
+/** The panel's black edge, half of it inside the panel. */
+const PANEL_EDGE = 1.5;
 /** Inner panel edge to the LED row, and LED row to the bottom of the panel, as on the platform sign. */
 const LED_MARGIN = { side: 8, bottom: 7.6 };
-/**
- * Sizes measured against the height of a line of characters in photographs
- * of the boards at Tres Cantos and Cantoblanco. Under each line runs a
- * fluorescent tube (not drawn), which is why the lines are far apart: one
- * line starts about two line-heights below the previous one.
- */
+/** Measured against the height of a line of characters in photographs of the boards at Tres Cantos and Cantoblanco. */
 const HEADER_HEIGHT = 25.5;
-/** From the bottom of a line to the rule under it: the tube's place. */
-const BELOW_LINE = 7.5;
-/** From a rule to the top of the next line. */
-const ABOVE_LINE = 3.7;
 const LED_AFTER_DIVIDER = 3.65318;
 
 export interface BoardGeometry {
   width: number;
   height: number;
   panel: { x: number; y: number; width: number; height: number };
+  /** The line units: their left edge and width, and the top of each. */
+  units: { x: number; width: number; tops: number[] };
   /** Left edge of the flip-dot lines. */
   linesX: number;
   /** Top of each line. */
@@ -44,30 +43,34 @@ export interface BoardGeometry {
 }
 
 export function boardGeometry(lines: number): BoardGeometry {
-  const panelWidth = LED_WIDTH + LED_MARGIN.side * 2;
+  const unitWidth = rowWidth(CELLS);
+  const panelWidth = unitWidth + PANEL_EDGE * 2;
   const width = panelWidth + FRAME.side * 2;
   const panelX = FRAME.side;
   const panelY = FRAME.top;
   const ledX = panelX + LED_MARGIN.side;
-  // The lines are centred over the LED row on their own; the "min." beside
-  // them sticks out to the right, as in the photographs.
-  const linesX = ledX + (LED_WIDTH - lineWidth(CELLS)) / 2;
+  const ledWidth = panelWidth - LED_MARGIN.side * 2;
+  // The lines' flaps sit as far from both ends of their unit, so they are
+  // centred over the LED row; the "min." beside them sticks out to the
+  // right, as in the photographs.
+  const unitX = panelX + PANEL_EDGE;
+  const linesX = unitX + ROW_DOTS.x;
   const headerBottom = panelY + HEADER_HEIGHT;
-  const firstTop = headerBottom + ABOVE_LINE;
-  const lineGap = BELOW_LINE + ABOVE_LINE;
-  const lineTops = Array.from({ length: lines }, (_, i) => firstTop + i * (LINE_HEIGHT + lineGap));
-  const dividers = [headerBottom, ...lineTops.map((top) => top + LINE_HEIGHT + BELOW_LINE)];
+  const tops = Array.from({ length: lines }, (_, i) => headerBottom + i * ROW_HEIGHT);
+  const lineTops = tops.map((top) => top + ROW_DOTS.y);
+  const dividers = [headerBottom, ...tops.map((top) => top + ROW_HEIGHT)];
   const ledY = dividers[dividers.length - 1]! + LED_AFTER_DIVIDER;
   const panelHeight = ledY + LED_HEIGHT + LED_MARGIN.bottom - panelY;
   return {
     width,
     height: panelY + panelHeight + FRAME.bottom,
     panel: { x: panelX, y: panelY, width: panelWidth, height: panelHeight },
+    units: { x: unitX, width: unitWidth, tops },
     linesX,
     lineTops,
-    lineGap,
+    lineGap: ROW_HEIGHT - LINE_HEIGHT,
     dividers,
-    led: { x: ledX, y: ledY, width: LED_WIDTH },
+    led: { x: ledX, y: ledY, width: ledWidth },
     headerTop: panelY,
     headerBottom,
     minX: linesX + lineWidth(CELLS) + MIN_GAP,

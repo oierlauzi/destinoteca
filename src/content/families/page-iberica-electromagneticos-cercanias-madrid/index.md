@@ -138,10 +138,12 @@ caracteres en el cartel de andén y 20 en los paneles de vestíbulo.
 
 ## Las líneas flip-dot
 
-Cada carácter es un módulo independiente de 5 puntos de ancho por 7 de alto y
-100 mm de altura, de «placa móvil», como llama la etiqueta de la línea a la
-tecnología [flip-dot](../../tecnologias/flip-dot/). Al cambiar el texto solo
-se redibujan los caracteres que han cambiado.
+Cada carácter es un módulo independiente de 5 puntos de ancho por 7 de alto,
+de «placa móvil», como llama la etiqueta de la línea a la tecnología
+[flip-dot](../../tecnologias/flip-dot/). La etiqueta los da como módulos de
+100 mm; en la línea del cartel de andén que se ha medido, cada módulo ocupa
+8 cm de ancho por 11 cm de alto sobre la cara, que está inclinada. Al cambiar
+el texto solo se redibujan los caracteres que han cambiado.
 
 La línea se lee con luz natural sin iluminación propia. Un tubo fluorescente
 debajo de cada línea la alumbra de noche, y por eso las líneas de los paneles

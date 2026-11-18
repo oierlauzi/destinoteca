@@ -369,6 +369,21 @@ montados por parejas en ocho placas portadoras. Su electrónica y su panel son
 de Telenorma, como se cuenta en la
 [familia](../../familias/page-iberica-electromagneticos-cercanias-madrid/#quién-los-hizo).
 
+Sus medidas, tomadas sobre la unidad recuperada:
+
+| Parte | Medida |
+| --- | --- |
+| Ancho | 161 cm, más unas orejas de bastidor de 3 cm a cada lado, que el marco del cartel tapa una vez montada |
+| Alto | 20 cm. La cara frontal está inclinada y mide 20,5 cm de arriba abajo |
+| Caracteres | 8 cm de ancho por 11 cm de alto, sobre la cara inclinada, uno cada 9 cm |
+| Márgenes | 9 cm antes del primer carácter y 9 cm después del último, que son el sitio del «min.»; sobre la cara, 4 cm por encima de los caracteres y 5,5 cm por debajo |
+| «min.» | 9 cm de ancho; la «i», 5 cm de alto |
+| Tubo fluorescente | 150 cm de largo y unos 2,5 cm de diámetro, centrado, con un portalámparas giratorio de unos 1,5 cm en cada extremo |
+| Reflector | 2,5 cm de alto desde la parte inferior y 153 cm de largo: tapa la mitad inferior del tubo y los portalámparas |
+
+A lo ancho, las medidas cuadran: 9 cm de margen, quince caracteres con su
+separación de 9 cm, el último de 8 cm y los 9 cm del «min.» suman 161 cm.
+
 La EPROM de la unidad estudiada lleva una pegatina que dice
 `TELENORMA 18 JUN 96`: su firmware se grabó el 18 de junio de 1996. El resto
 de marcas de la unidad coincide en una fabricación de mediados de los

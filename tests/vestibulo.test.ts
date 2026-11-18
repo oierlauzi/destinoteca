@@ -7,6 +7,7 @@ import { boardGeometry } from '../src/lib/replicas/page-iberica-vestibulo/geomet
 import { implementation } from '../src/lib/replicas/page-iberica-vestibulo/index';
 import { rowCells } from '../src/lib/replicas/page-iberica-vestibulo/render';
 import { andenElectromagnetico } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
+import { MIN_GAP, MIN_WIDTH, ROW_HEIGHT, rowWidth } from '../src/lib/replicas/page-iberica-electromagneticos/dimensions';
 
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
 const options = defaults(vestibulo4.options) as VestibuloOptions;
@@ -38,9 +39,17 @@ describe('concourse board layout', () => {
     expect(vestibulo2.viewBox).toEqual({ width: two.width, height: two.height });
     // The LED row is a little wider than the lines, which are centred over it on their own.
     expect(two.led.x).toBeLessThan(two.linesX);
-    const lineEnd = two.minX - 0.76992;
+    const lineEnd = two.minX - MIN_GAP;
     expect(two.linesX - two.led.x).toBeCloseTo(two.led.x + two.led.width - lineEnd, 6);
-    expect(two.minX + 8.4).toBeLessThan(two.panel.x + two.panel.width);
+    expect(two.minX + MIN_WIDTH).toBeLessThan(two.panel.x + two.panel.width);
+  });
+
+  it('builds each line like the platform sign’s unit, with 20 characters', () => {
+    const g = boardGeometry(4);
+    // 9 cm at each end, 19 steps of 9 cm and a last character of 8.
+    expect(g.units.width / rowWidth(16)).toBeCloseTo(197 / 161, 9);
+    expect(g.panel.width - g.units.width).toBeCloseTo(3, 9);
+    g.dividers.slice(1).forEach((y, i) => expect(y - g.dividers[i]!).toBeCloseTo(ROW_HEIGHT, 9));
   });
 });
 

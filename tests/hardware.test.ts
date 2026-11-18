@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cp437, sevenBit, telenormaCp437, DotTransition, garble, hash01, marqueeWindow, overlay, telenorma5x7, textColumns, toCells, toString, h, withStuckDots } from '../src/lib/hardware';
+import { cp437, sevenBit, telenormaCp437, DotTransition, garble, hash01, marqueeWindow, overlay, telenorma5x7, textColumns, toCells, toString, h, withStuckDots, DotMatrix, cellGrid, type DotSkin } from '../src/lib/hardware';
 
 describe('telenorma 5x7 font', () => {
   it('draws a capital A as in the ROM', () => {
@@ -154,5 +154,25 @@ describe('transition', () => {
     transition.jump(full);
     expect(transition.settled).toBe(true);
     expect(transition.at(0)).toEqual(full);
+  });
+});
+
+describe('dot matrix rows', () => {
+  const skin: DotSkin<null> = {
+    draw: (x, y, pitch) => [h('rect', { x, y, width: pitch, height: pitch })],
+    update: () => {},
+    visible: () => true,
+  };
+  const ys = (svg: string) => [...svg.matchAll(/ y="(-?[\d.]+)"/g)].map((m) => Number(m[1]));
+
+  it('spaces rows by pitchY where given, each dot centred on its row', () => {
+    const matrix = new DotMatrix({ modules: [{ x: 0, y: 0 }], cols: 1, rows: 3, pitch: 2, pitchY: 1.5, skin });
+    expect(ys(toString(matrix.render([[0]], null)))).toEqual([-0.25, 1.25, 2.75]);
+    expect(cellGrid({ lines: 2, cells: 1, cols: 1, rows: 3, pitch: 2, pitchY: 1.5, cellGap: 0, lineGap: 1 })[1]!.y).toBe(5.5);
+  });
+
+  it('draws as before without it', () => {
+    const matrix = new DotMatrix({ modules: [{ x: 0, y: 0 }], cols: 1, rows: 3, pitch: 2, skin });
+    expect(ys(toString(matrix.render([[0]], null)))).toEqual([0, 2, 4]);
   });
 });

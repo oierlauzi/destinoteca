@@ -30,6 +30,12 @@ export interface DotMatrixSpec<L> {
   rows: number;
   /** Distance between the centres of neighbouring dots. */
   pitch: number;
+  /**
+   * Distance between the centres of neighbouring rows, where it differs from
+   * `pitch`: a face tilted back, drawn as seen from the front, is shorter
+   * than it is wide. Each dot is still drawn as by `pitch`, centred on its row.
+   */
+  pitchY?: number;
   skin: DotSkin<L>;
   /** Drawn behind each module: its carrier board, a window in the housing... */
   backing?(module: DotModule, width: number, height: number, index: number): VNode[];
@@ -53,7 +59,13 @@ export class DotMatrix<L> {
   private backings(): VNode[] {
     const { modules, cols, rows, pitch, backing } = this.spec;
     if (!backing) return [];
-    return modules.flatMap((module, index) => backing(module, cols * pitch, rows * pitch, index));
+    return modules.flatMap((module, index) => backing(module, cols * pitch, rows * (this.spec.pitchY ?? pitch), index));
+  }
+
+  /** The top of the pitch x pitch square that `skin.draw` fills for row `r` of a module whose top is `y`. */
+  private rowTop(y: number, r: number): number {
+    const { pitch, pitchY } = this.spec;
+    return pitchY === undefined ? y + r * pitch : y + r * pitchY + (pitchY - pitch) / 2;
   }
 
   /** The whole matrix in one state, with nothing kept for later. Dots that cannot be seen are left out. */
@@ -64,7 +76,7 @@ export class DotMatrix<L> {
       for (let c = 0; c < cols; c++) {
         for (let r = 0; r < rows; r++) {
           const on = isOn(state, m, c, r);
-          if (skin.visible(on, look)) nodes.push(...skin.draw(module.x + c * pitch, module.y + r * pitch, pitch, on, look));
+          if (skin.visible(on, look)) nodes.push(...skin.draw(module.x + c * pitch, this.rowTop(module.y, r), pitch, on, look));
         }
       }
     });
@@ -82,7 +94,7 @@ export class DotMatrix<L> {
         for (let r = 0; r < rows; r++) {
           const on = isOn(state, m, c, r);
           const elements: SVGElement[] = [];
-          for (const node of skin.draw(module.x + c * pitch, module.y + r * pitch, pitch, on, look)) {
+          for (const node of skin.draw(module.x + c * pitch, this.rowTop(module.y, r), pitch, on, look)) {
             nodes.push({ ...node, ref: (element) => elements.push(element) });
           }
           dots.push(elements);

@@ -11,21 +11,20 @@ import {
 
 /**
  * The text lines of PAGE Ibérica's electromagnetic signs of the 1990s: rows of
- * separate 5x7 flip-dot character modules by Telenorma, 100 mm tall.
+ * separate 5x7 flip-dot character modules by Telenorma, which the label calls
+ * 100 mm modules.
  *
  * The platform sign carries one line of 16 characters (the unit labelled
  * PI-T100-M); the concourse boards of the same family stack two to four lines
  * of 20. Both are this function with different numbers.
  *
- * Dimensions are millimetres of the platform sign's artwork, measured from
- * the reference drawing in renfe-flipdot-re.
+ * The modules are those measured on the recovered PI-T100-M, in the units of
+ * the platform sign's drawing: see dimensions.ts.
  */
-import { CELL_COLS, CELL_GAP, CELL_ROWS, FLAP_PITCH as PITCH } from './dimensions';
+import { CELL_COLS, CELL_GAP, CELL_ROWS, FLAP_PITCH as PITCH, FLAP_PITCH_Y as PITCH_Y, MODULE_MARGIN as MARGIN, MODULE_MARGIN_Y as MARGIN_Y } from './dimensions';
 
 export { CELL_COLS, CELL_ROWS, CELL_STEP, CELL_WIDTH, CELL_GAP, LINE_HEIGHT, lineWidth } from './dimensions';
 const FLAP = 4.3 / 11;
-// The carrier of each module shows around its dots by this much.
-const MARGIN = PITCH - PITCH * FLAP * 2;
 
 export const FLIP_DOT_UNLIT = '#26261e';
 
@@ -46,6 +45,7 @@ export function flipDotLines(spec: FlipDotLinesSpec): DotMatrix<OctagonFlapLook>
       cols: CELL_COLS,
       rows: CELL_ROWS,
       pitch: PITCH,
+      pitchY: PITCH_Y,
       cellGap: CELL_GAP,
       lineGap: spec.lineGap ?? CELL_GAP * 3,
       x: spec.x,
@@ -54,13 +54,14 @@ export function flipDotLines(spec: FlipDotLinesSpec): DotMatrix<OctagonFlapLook>
     cols: CELL_COLS,
     rows: CELL_ROWS,
     pitch: PITCH,
+    pitchY: PITCH_Y,
     skin: octagonFlap({ size: FLAP, corner: 0.5 }),
     backing: (module, width, height) => [
       h('rect', {
         x: module.x - MARGIN,
-        y: module.y - MARGIN,
+        y: module.y - MARGIN_Y,
         width: width + MARGIN * 2,
-        height: height + MARGIN * 2,
+        height: height + MARGIN_Y * 2,
         fill: '#292929',
         stroke: '#000000',
         'stroke-width': 0.2,

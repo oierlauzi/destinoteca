@@ -1,9 +1,9 @@
 import { h, overlay, toCells, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { CELL_GAP, CELL_STEP, CELL_WIDTH, LINE_HEIGHT } from '../page-iberica-electromagneticos/dimensions';
+import { CELL_GAP, CELL_STEP, CELL_WIDTH, LINE_HEIGHT, MIN_WIDTH, ROW_HEIGHT } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
-import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, MIN_LEGEND, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
+import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, lineLamp, MIN_LEGEND, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
 import { colonLines, PLATFORM_CELLS, type BoardRow, type VestibuloFrame } from './def';
 import { boardGeometry, CELLS } from './geometry';
 
@@ -53,8 +53,8 @@ export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFra
   if (nextArrival) {
     header.push(
       h('text', { fill: LEGEND, 'font-size': 8, 'font-weight': 700, 'text-anchor': 'end' }, [
-        h('tspan', { x: g.minX + 8.4, y: g.headerTop + 9.6 }, ['Próxima']),
-        h('tspan', { x: g.minX + 8.4, y: g.headerTop + 18.4 }, ['Llegada']),
+        h('tspan', { x: g.minX + MIN_WIDTH, y: g.headerTop + 9.6 }, ['Próxima']),
+        h('tspan', { x: g.minX + MIN_WIDTH, y: g.headerTop + 18.4 }, ['Llegada']),
       ]),
     );
   }
@@ -73,6 +73,7 @@ export function spec(lines: number, nextArrival: boolean): SignSpec<VestibuloFra
     ...g.dividers.map((y) => h('line', { x1: g.panel.x, y1: y, x2: g.panel.x + g.panel.width, y2: y, stroke: '#000000', 'stroke-width': 0.2 })),
     ...header,
     ...g.lineTops.map((top) => minLegend(g.minX, top)),
+    ...g.units.tops.map((top) => lineLamp(g.units.x, top + ROW_HEIGHT, g.units.width)),
     ...[...colonLines(options.colon, lines)].map((line) => colon(line, (element) => (slots[`colon${line}`] = element))),
   ];
   // Live, the colon is added the first time it is asked for, then shown or hidden.
