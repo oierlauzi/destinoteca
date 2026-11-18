@@ -23,7 +23,7 @@ families:
   - page-iberica-electromagneticos-cercanias-madrid
 countries:
   - es
-status: retiring
+status: retired
 variants:
   - id: dos-puntos
     name: Dos puntos en algunas líneas
@@ -34,10 +34,10 @@ variants:
 locations:
   - site: es/cantoblanco
     line: C-4
-    status: unknown
+    status: retired
     note: En el vestíbulo. La estación tuvo también teleindicadores de andén de la misma familia, ya retirados.
   - site: es/pinar-de-las-rozas
-    status: unknown
+    status: retired
     note: En una pared. Grabado en vídeo en servicio.
 photos:
   - id: cantoblanco-vestibulo

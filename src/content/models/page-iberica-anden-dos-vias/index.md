@@ -23,10 +23,10 @@ families:
   - page-iberica-electromagneticos-cercanias-madrid
 countries:
   - es
-status: unknown
+status: retired
 locations:
   - site: es/villaverde-bajo
-    status: unknown
+    status: retired
     note: Muy probablemente la estación del vídeo, que no la nombra. Sobre un pilar, con las vías 5 y 4.
 photos:
   - id: villaverde-bajo-video

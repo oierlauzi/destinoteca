@@ -30,13 +30,13 @@ status: retiring
 locations:
   - site: es/embajadores
     line: C-5
-    status: unknown
+    status: retired
     note: Colgado del techo del andén subterráneo. Fotografiado en 1994, la fotografía más antigua que se conoce del cartel.
   - site: es/mostoles
-    status: unknown
+    status: retired
     note: Fotografiado en servicio en 1997.
   - site: es/villalba
-    status: unknown
+    status: retired
     note: Fotografiado en servicio en 1997, montado sobre poste.
   - site: es/pitis
     to: 2026
@@ -56,10 +56,10 @@ locations:
     note: Ya no están. En el vestíbulo hubo un panel de cuatro líneas de la misma familia.
   - site: es/el-goloso
     line: C-4
-    status: unknown
+    status: retired
     note: Sobre postes, uno por vía, con un reloj entre ambos.
   - site: es/delicias
-    status: unknown
+    status: retired
     note: Uno por andén, colgados de la marquesina. Fotografiados en servicio en 2016.
   - site: es/cercedilla
     status: retired

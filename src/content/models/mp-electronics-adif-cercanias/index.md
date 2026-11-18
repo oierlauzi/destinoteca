@@ -21,7 +21,7 @@ families:
   - mp-electronics-adif
 countries:
   - es
-status: unknown
+status: retired
 locations:
   - site: es/madrid-chamartin
     status: retired

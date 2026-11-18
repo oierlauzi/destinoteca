@@ -23,7 +23,7 @@ families:
   - mp-electronics-adif
 countries:
   - es
-status: retiring
+status: in-service
 variants:
   - id: castellano
     name: Castellano e inglés

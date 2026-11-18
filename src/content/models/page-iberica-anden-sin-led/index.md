@@ -22,11 +22,11 @@ families:
   - page-iberica-electromagneticos-cercanias-madrid
 countries:
   - es
-status: unknown
+status: retired
 locations:
   - site: es/vallecas
     line: C-2
-    status: unknown
+    status: retired
     note: Colgados de la marquesina, uno por vía. Grabados en vídeo junto a las pantallas nuevas que se instalaron a su lado.
 photos:
   - id: vallecas-video

@@ -23,7 +23,7 @@ families:
   - page-iberica-electromagneticos-cercanias-madrid
 countries:
   - es
-status: retiring
+status: retired
 variants:
   - id: tres-cantos
     name: Tres Cantos
@@ -41,10 +41,10 @@ variants:
 locations:
   - site: es/tres-cantos
     line: C-4
-    status: unknown
+    status: retired
     note: En el vestíbulo. La estación tuvo también teleindicadores de andén de la misma familia, ya retirados.
   - site: es/delicias
-    status: unknown
+    status: retired
     note: En el vestíbulo.
 photos:
   - id: tres-cantos-vestibulo
