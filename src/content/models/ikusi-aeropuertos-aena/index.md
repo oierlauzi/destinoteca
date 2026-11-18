@@ -52,13 +52,11 @@ variants:
     name: Bilbao
     description: >-
       Marco de aluminio, con el símbolo del logotipo de Ikusi en verde, doce
-      filas, los rótulos también en euskera y los cristales con un brillo
-      verde.
+      filas y los rótulos también en euskera.
     replicaPreset:
       lengua: eu
       columnas: bilbao
       marco: plata
-      cristal: verde
       titulo: mediano
   - id: tenerife-norte
     name: Tenerife Norte
@@ -155,7 +153,7 @@ photos:
     src: ./bilbao-retrasos.jpg
     alt: >-
       Una viajera de espaldas mira un panel de salidas de marco de aluminio,
-      con los cristales apagados brillando en verde.
+      de doce filas y con los rótulos también en euskera.
     caption: Salidas del aeropuerto de Bilbao.
     place: Aeropuerto de Bilbao
     author: RTVE
@@ -330,9 +328,8 @@ un bloque de plástico oscuro con su cristal y, encima y debajo del cristal,
 una ranura a lo largo. Cada extremo de la fila acaba en dos módulos iguales
 pero sin cristal. Los caracteres son amarillos, de 7 puntos de ancho por 11
 de alto, con trazos de dos puntos. Los cristales sin carácter brillan
-débilmente, cada uno con su tono: en verde en Bilbao, en verde oliva en
-Valencia, Barcelona y Madrid, y entre el ámbar y el gris en Canarias y en
-Asturias.
+débilmente, cada uno con su tono: en verde oliva en Bilbao, Valencia,
+Barcelona y Madrid, y entre el ámbar y el gris en Canarias y en Asturias.
 
 El panel no tiene columnas propias: cada fila es una sola tira de módulos, y
 entre lo que se escribe en ella queda un módulo en blanco. En casi todos los

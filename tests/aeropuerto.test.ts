@@ -126,6 +126,8 @@ describe('the Ikusi airport board', () => {
   it('decodes settings it does not know into something sensible', () => {
     expect(shapeOf({ rows: 99, cells: 'x' })).toEqual({ rows: 16, cells: 51 });
     expect(layoutOf('nowhere')).toBe(LAYOUTS.valencia);
+    // The green glass was dropped: Bilbao's are olive too, and old links show them so.
+    expect(readConfig(def, new URLSearchParams('cristal=verde')).options.glass).toBe('oliva');
     const svg = renderToString(fromFlat({}), { ...options, frame: 'oro' as never, glass: 'azul' as never, picto: 'enorme' as never });
     expect(svg.startsWith('<?xml')).toBe(true);
   });

@@ -94,7 +94,7 @@ export const optionsSchema: ParamSchema = {
     },
     {
       key: 'glass', urlKey: 'cristal', type: 'select', label: 'aeropuerto.opt.glass', help: 'aeropuerto.opt.glass.help', default: 'oliva', group: 'look',
-      choices: [{ value: 'verde', label: 'aeropuerto.glass.verde' }, { value: 'oliva', label: 'aeropuerto.glass.oliva' }, { value: 'ambar', label: 'aeropuerto.glass.ambar' }],
+      choices: [{ value: 'oliva', label: 'aeropuerto.glass.oliva' }, { value: 'ambar', label: 'aeropuerto.glass.ambar' }],
     },
     { key: 'uneven', urlKey: 'tono', type: 'range', label: 'ikusi.opt.uneven', help: 'ikusi.opt.uneven.help', default: 40, min: 0, max: 100, step: 5, unit: '%', group: 'defects' },
     { key: 'delamination', urlKey: 'despegado', type: 'range', label: 'ikusi.opt.delamination', help: 'ikusi.opt.delamination.help', default: 0, min: 0, max: 50, step: 1, unit: '%', group: 'defects' },
