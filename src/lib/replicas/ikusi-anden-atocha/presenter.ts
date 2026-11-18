@@ -1,9 +1,9 @@
-import { ikusiLcd, telenormaCp437 } from '../../hardware';
+import { ikusi7x9, telenormaCp437 } from '../../hardware';
 import { boardTime, clockTime, confirmedPlatform, destinationsOf, fitNames, nameLadder, platformDigits, text, type Service, type View } from '../../model';
 import type { IkusiFrame } from './def';
 import { LINE } from './geometry';
 
-const fold = ikusiLcd.fold;
+const fold = ikusi7x9.fold;
 
 /** The vía is printed: a sign bolted to one platform always reads its number. */
 function printedPlatform(view: View): string {

@@ -8,6 +8,8 @@ import { andenSinLed } from './page-iberica-anden-sin-led/def';
 import { andenDosVias } from './page-iberica-anden-dos-vias/def';
 import { ikusiAndenAtocha } from './ikusi-anden-atocha/def';
 import { ikusiAeropuerto } from './ikusi-aeropuerto/def';
+import { ikusiMetroBilbaoAnden } from './ikusi-metro-bilbao-anden/def';
+import { ikusiMetroBilbaoAvisos } from './ikusi-metro-bilbao-avisos/def';
 import { festinaAdif } from './festina-adif/def';
 import { andenMp, andenMpReloj, andenMpVertical } from './mp-electronics-adif-anden/def';
 import { mpCercanias } from './mp-electronics-adif-cercanias/def';
@@ -43,6 +45,8 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'page-iberica-anden-dos-vias': andenDosVias,
   'ikusi-anden-atocha': ikusiAndenAtocha,
   'ikusi-aeropuerto': ikusiAeropuerto,
+  'ikusi-metro-bilbao-anden': ikusiMetroBilbaoAnden,
+  'ikusi-metro-bilbao-avisos': ikusiMetroBilbaoAvisos,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {

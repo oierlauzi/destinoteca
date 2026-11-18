@@ -1,10 +1,10 @@
-import { DotMatrix, MarqueeRun, h, ikusiLcd, lcdModules, roundLed, telenorma5x7, telenormaCp437, textColumns, toCells, toDocument, toDom, updateLcd, type DotState, type LcdLook, type LcdModule, type LcdRefs, type RoundLedLook, type VNode } from '../../hardware';
+import { DotMatrix, MarqueeRun, h, ikusi7x9, lcdModules, roundLed, telenorma5x7, telenormaCp437, textColumns, toCells, toDocument, toDom, updateLcd, type DotState, type LcdLook, type LcdModule, type LcdRefs, type RoundLedLook, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { IkusiFrame, IkusiOptions } from './def';
 import { ikusiLogo } from '../ikusi/ikusi-logo';
 import { IKUSI_GLASSES } from '../ikusi/glass';
 import { railRow } from '../ikusi/modules';
-import { CELL, DOTS, HEIGHT, LINE, LOGO_HEIGHT, STRIP, TIME, TOP_Y, WIDTH, labelSpan, lineModules, lineRow, logoAt, openings, timeModules, timeRow, type Box } from './geometry';
+import { CELL, DOTS, DOTS_7X9, HEIGHT, LINE, LOGO_HEIGHT, STRIP, TIME, TOP_Y, WIDTH, labelSpan, lineModules, lineRow, logoAt, openings, timeModules, timeRow, type Box } from './geometry';
 
 const FONT = 'Helvetica, Arial, Liberation Sans, sans-serif';
 /** The front sheet. */
@@ -22,7 +22,7 @@ const PRINT = '#ebeae3';
  * others.
  */
 export const lcdLook = (options: IkusiOptions): LcdLook => ({
-  ...DOTS,
+  ...DOTS_7X9,
   lit: IKUSI_GLASSES.ambar.lit,
   litAged: IKUSI_GLASSES.ambar.litAged,
   blank: '#4a6a4a',
@@ -34,7 +34,7 @@ export const lcdLook = (options: IkusiOptions): LcdLook => ({
 
 /** The five characters of the time and the twelve of the line, numbered one after the other. */
 export function lines(frame: IkusiFrame): { time: string[]; line: string[] } {
-  return { time: toCells(ikusiLcd.fold(frame.time), TIME), line: toCells(ikusiLcd.fold(frame.text), LINE) };
+  return { time: toCells(ikusi7x9.fold(frame.time), TIME), line: toCells(ikusi7x9.fold(frame.text), LINE) };
 }
 
 export function describe(frame: IkusiFrame): string {
@@ -101,6 +101,7 @@ function scene(frame: IkusiFrame, options: IkusiOptions, slots: Slots): VNode[] 
   const label = labelSpan(side);
   const open = openings(side);
   const logo = logoAt(side);
+  // The foot of the characters: where the eleventh row of 7 × 11 dots ends, and the ninth of 7 × 9.
   const baseline = TOP_Y + DOTS.pad + 10 * DOTS.pitch + DOTS.dot;
   return [
     // A deep box with square corners, whose front is one sheet with three openings, one per row.
@@ -111,8 +112,8 @@ function scene(frame: IkusiFrame, options: IkusiOptions, slots: Slots): VNode[] 
     // «VIA» and the number, printed on the sheet, with the number at the end nearer the pole on either side.
     h('text', { x: label.from, y: baseline, 'font-size': 12.3, 'font-weight': 700, fill: PRINT, textLength: 2.8 * CELL, lengthAdjust: 'spacingAndGlyphs' }, ['VIA']),
     h('text', { x: label.to, y: baseline, 'font-size': 12.3, 'font-weight': 700, fill: PRINT, 'text-anchor': 'end' }, [frame.platform], (element) => (slots.number = element)),
-    ...lcdModules(timeModules(side), time, ikusiLcd, look, 0, slots.time),
-    ...lcdModules(lineModules(), line, ikusiLcd, look, TIME, slots.line),
+    ...lcdModules(timeModules(side), time, ikusi7x9, look, 0, slots.time),
+    ...lcdModules(lineModules(), line, ikusi7x9, look, TIME, slots.line),
     ikusiLogo(logo.x, logo.y, LOGO_HEIGHT, '#c9cbc6'),
   ];
 }
@@ -189,8 +190,8 @@ export function mount(host: Element, initial: IkusiOptions, env: { ticker: Ticke
       const look = lcdLook(options);
       const { time, line } = lines(frame);
       const at = modules();
-      updateLcd(slots.time, at.time, time, ikusiLcd, look);
-      updateLcd(slots.line, at.line, line, ikusiLcd, look);
+      updateLcd(slots.time, at.time, time, ikusi7x9, look);
+      updateLcd(slots.line, at.line, line, ikusi7x9, look);
       if (slots.number) slots.number.textContent = frame.platform;
       if (title) title.textContent = describe(frame);
       drawLed(true);

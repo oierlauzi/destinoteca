@@ -24,6 +24,9 @@ export interface LcdLook {
   pitch: number;
   /** Side of a dot. */
   dot: number;
+  /** For glasses whose dots are further apart, or taller, down than across: the pitch and the height of a dot down. Default `pitch` and `dot`. */
+  pitchY?: number;
+  dotY?: number;
   /** Glass around the dots, on every side. */
   pad: number;
   /** A lit dot. */
@@ -47,9 +50,11 @@ export interface LcdModule {
 }
 
 /** Size of one module's glass. */
-export function lcdSize(font: Pick<LcdFont, 'cols' | 'rows'>, look: Pick<LcdLook, 'pitch' | 'dot' | 'pad'>): { width: number; height: number } {
-  const span = (n: number) => (n - 1) * look.pitch + look.dot + 2 * look.pad;
-  return { width: span(font.cols), height: span(font.rows) };
+export function lcdSize(font: Pick<LcdFont, 'cols' | 'rows'>, look: Pick<LcdLook, 'pitch' | 'dot' | 'pad' | 'pitchY' | 'dotY'>): { width: number; height: number } {
+  return {
+    width: (font.cols - 1) * look.pitch + look.dot + 2 * look.pad,
+    height: (font.rows - 1) * (look.pitchY ?? look.pitch) + (look.dotY ?? look.dot) + 2 * look.pad,
+  };
 }
 
 // --- Colour -------------------------------------------------------------------------
@@ -87,13 +92,15 @@ export function lcdShades(i: number, look: LcdLook): { lit: string; blank: strin
 // --- Shapes -------------------------------------------------------------------------
 
 /** The lit dots of a character, as one path, from the module's corner. */
-export function lcdGlyphPath(char: string, at: LcdModule, font: LcdFont, look: Pick<LcdLook, 'pitch' | 'dot' | 'pad'>): string {
+export function lcdGlyphPath(char: string, at: LcdModule, font: LcdFont, look: Pick<LcdLook, 'pitch' | 'dot' | 'pad' | 'pitchY' | 'dotY'>): string {
   const columns = font.glyph(char);
+  const pitchY = look.pitchY ?? look.pitch;
+  const dotY = look.dotY ?? look.dot;
   let d = '';
   columns.forEach((bits, col) => {
     for (let row = 0; row < font.rows; row++) {
       if (!(bits & (1 << row))) continue;
-      d += `M${num(at.x + look.pad + col * look.pitch)} ${num(at.y + look.pad + row * look.pitch)}h${num(look.dot)}v${num(look.dot)}h${num(-look.dot)}z`;
+      d += `M${num(at.x + look.pad + col * look.pitch)} ${num(at.y + look.pad + row * pitchY)}h${num(look.dot)}v${num(dotY)}h${num(-look.dot)}z`;
     }
   });
   return d;
@@ -155,7 +162,7 @@ export function lcdModules(modules: LcdModule[], chars: string[], font: LcdFont,
 }
 
 /** Brings modules drawn with `refs` up to date with new characters. */
-export function updateLcd(refs: LcdRefs, modules: LcdModule[], chars: string[], font: LcdFont, look: Pick<LcdLook, 'pitch' | 'dot' | 'pad'>): void {
+export function updateLcd(refs: LcdRefs, modules: LcdModule[], chars: string[], font: LcdFont, look: Pick<LcdLook, 'pitch' | 'dot' | 'pad' | 'pitchY' | 'dotY'>): void {
   modules.forEach((at, k) => {
     const char = chars[k] ?? ' ';
     refs.glyph[k]?.setAttribute('d', lcdGlyphPath(char, at, font, look));

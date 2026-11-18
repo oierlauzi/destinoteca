@@ -23,7 +23,9 @@ Electrónicos fue elegida para los sistemas de información al público de los
 aeropuertos de Barcelona y Sevilla, con teleindicadores de cristal líquido,
 monitores y megafonía, y en diciembre de
 1994 eran ya 25 las estaciones de Renfe con sus equipos de información al
-viajero, además de otras de FEVE y de Eusko Trenbideak.
+viajero, además de otras de FEVE y de Eusko Trenbideak. En 1995 concibió,
+desarrolló y fabricó la megafonía y los teleindicadores del metro de
+Bilbao, gobernados desde el puesto de mando con un programa propio.
 
-Fuentes: *Vía Libre*, noviembre de 1991, marzo de 1992, diciembre de 1994 y
-abril de 1997.
+Fuentes: *Vía Libre*, noviembre de 1991, marzo de 1992, diciembre de 1994,
+febrero de 1996 y abril de 1997.

@@ -135,9 +135,11 @@ los sustituyeron los de PAGE Ibérica.
 - **Dónde estaban los carteles de una sola vía.** No se conoce ninguna
   fotografía de ellos.
 - **Cuántos puntos tiene cada carácter.** Las fotografías de estos carteles
-  no dejan contarlos. En los paneles de Ikusi de los aeropuertos, de la
-  misma época y con caracteres parecidos, son 7 de ancho por 11 de alto, con
-  trazos de dos puntos, y así se dibujan en la réplica.
+  no dejan contarlos. Por la forma de las letras, sobre todo la A, de
+  arriba estrecha, la réplica les da los caracteres de 7 puntos de ancho por
+  9 de alto de los [carteles de Ikusi de Metro Bilbao](../ikusi-metro-bilbao-anden/),
+  y no los de 7 por 11 de los paneles de los aeropuertos. El 1 de Atocha
+  tiene pie, como se ve en la fotografía de las vías 3 y 4.
 - **Las medidas.** Se estiman las proporciones de la réplica a partir de las 
   fotografías.
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { IKUSI_RECONSTRUCTED, IKUSI_SEEN, ikusiLcd, ikusiRows, lcdBlot, lcdModules, lcdShades, lcdSize, toString, type LcdLook } from '../src/lib/hardware';
+import { IKUSI_RECONSTRUCTED, IKUSI_SEEN, ikusi7x9, ikusi7x9Rows, ikusiLcd, ikusiRows, lcdBlot, lcdModules, lcdShades, lcdSize, toString, type LcdLook } from '../src/lib/hardware';
 import type { Service, View } from '../src/lib/model';
 import { defaults } from '../src/lib/params';
 import { ikusiAndenAtocha, optionsSchema, type IkusiOptions } from '../src/lib/replicas/ikusi-anden-atocha/def';
@@ -78,6 +78,15 @@ describe('liquid-crystal modules', () => {
 });
 
 describe('the Ikusi platform sign', () => {
+  it('has Ikusi’s 7 × 9 railway glasses, as large as the airports’ 7 × 11', () => {
+    const look = lcdLook(options);
+    expect(look.pitchY).toBeGreaterThan(look.pitch);
+    const size = lcdSize(ikusi7x9, look);
+    expect(size.width).toBeCloseTo(GLASS.width);
+    expect(size.height).toBeCloseTo(GLASS.height);
+    expect(ikusi7x9Rows('1')![8]).toBe('.######');
+  });
+
   it('is registered under its own id', () => {
     expect(getReplica('ikusi-anden-atocha')).toBe(ikusiAndenAtocha);
     expect(ikusiAndenAtocha.viewBox).toEqual({ width: WIDTH, height: HEIGHT });

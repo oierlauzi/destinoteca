@@ -1,7 +1,7 @@
 import type { LcdModule } from '../../hardware';
-import { CELL, DOTS, FILLERS, GLASS, INSET, LIP, MODULE, rowLayout, type Box, type RowLayout } from '../ikusi/modules';
+import { CELL, DOTS, DOTS_7X9, FILLERS, GLASS, INSET, LIP, MODULE, rowLayout, type Box, type RowLayout } from '../ikusi/modules';
 
-export { CELL, DOTS, FILLERS, GLASS, INSET, LIP, MODULE, type Box, type RowLayout };
+export { CELL, DOTS, DOTS_7X9, FILLERS, GLASS, INSET, LIP, MODULE, type Box, type RowLayout };
 
 /*
  * One unit, in centimetres. The proportions are measured in the photographs

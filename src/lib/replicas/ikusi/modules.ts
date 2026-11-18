@@ -20,6 +20,11 @@ export const CELL = 6.9;
 /** The dots: 7 × 11 on each glass, nearly touching. */
 export const DOTS = { pitch: 0.74, dot: 0.7, pad: 0.2 };
 export const GLASS = lcdSize({ cols: IKUSI_COLS, rows: IKUSI_ROWS }, DOTS);
+/**
+ * The dots of the railway signs' glasses, 7 × 9 in a glass as large as the
+ * airports' 7 × 11: further apart, and taller, down than across.
+ */
+export const DOTS_7X9 = { ...DOTS, pitchY: 0.92, dotY: 0.74 };
 
 /**
  * A module's height; its width is the pitch, less the seam between two
