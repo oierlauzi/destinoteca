@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { getImage } from 'astro:assets';
 import sharp from 'sharp';
-import { bakeTextLength, h, helveticaWidth, SVG_NS, toString } from '@/lib/hardware';
+import { bakeTextLength, h, SVG_NS, toString } from '@/lib/hardware';
 import { nestSvg } from '@/lib/installations/render';
 import type { Model, Photo } from '@/site/catalog';
 import { hasPoster, posterSvg } from '@/site/poster';
@@ -11,53 +11,23 @@ import { wordmark } from '@/site/wordmark';
 /*
  * The picture a social network shows when an entry is shared: the entry's
  * poster (its replica, or its installation) on the white ground replicas
- * stand on across the site, over a dark band with the site's name and the
- * entry's. Networks want a raster image, so it is drawn as SVG and turned
- * into a PNG at build time.
+ * stand on across the site, over a dark band with the site's name, so the
+ * picture says where it comes from. The entry's name is left to the network,
+ * which prints the page's title beside it. Networks want a raster image, so
+ * it is drawn as SVG and turned into a PNG at build time.
  */
 
 export const BANNER = { width: 1200, height: 630 } as const;
 
-const BAND = 112;
-const PAD = { x: 48, y: 36 };
+const BAND = 84;
+const PAD = { x: 48, y: 40 };
 const STAGE = '#ffffff';
 const HOUSING = '#121212';
-const HOUSING_INK = '#f4f2e9';
 const DOT = '#aede5a';
-const FONT = "'Liberation Sans', Arial, Helvetica, sans-serif";
-const MARK_HEIGHT = 26;
-/** Sizes the name may take on one line, and then on two. */
-const ONE_LINE = { max: 36, min: 28 };
-const TWO_LINES = { max: 30, min: 22 };
-const LEADING = 1.18;
+const MARK_HEIGHT = 30;
 
 /** Whether an entry has a banner of its own; otherwise its cover photo stands in. */
 export const hasBanner = hasPoster;
-
-/** The lines and size the name is set in to fit `room`, shrinking, then wrapping, then cutting short. */
-export function fitName(name: string, room: number): { lines: string[]; size: number } {
-  const width = (text: string, size: number) => helveticaWidth(text, size, true);
-  for (let size = ONE_LINE.max; size >= ONE_LINE.min; size--) if (width(name, size) <= room) return { lines: [name], size };
-  const words = name.split(' ');
-  for (let size = TWO_LINES.max; size >= TWO_LINES.min; size--) {
-    // The break that leaves the longer line shortest.
-    let best: string[] | undefined;
-    let bestWidth = Infinity;
-    for (let i = 1; i < words.length; i++) {
-      const lines = [words.slice(0, i).join(' '), words.slice(i).join(' ')];
-      const widest = Math.max(...lines.map((line) => width(line, size)));
-      if (widest <= room && widest < bestWidth) [best, bestWidth] = [lines, widest];
-    }
-    if (best) return { lines: best, size };
-  }
-  const size = TWO_LINES.min;
-  let first = '';
-  let i = 0;
-  while (i < words.length && width(`${first} ${words[i]}`.trim(), size) <= room) first = `${first} ${words[i++]}`.trim();
-  let rest = words.slice(i).join(' ');
-  while (rest && width(`${rest}…`, size) > room) rest = rest.slice(0, -1).trimEnd();
-  return { lines: [first, `${rest}…`], size };
-}
 
 /** The viewBox's aspect of a standalone SVG. */
 function aspect(svg: string): number {
@@ -66,8 +36,8 @@ function aspect(svg: string): number {
   return box[2]! / box[3]!;
 }
 
-/** The banner as SVG, from an entry's poster and its name. */
-export function composeBanner(poster: string, name: string): string {
+/** The banner as SVG, from an entry's poster. */
+export function composeBanner(poster: string): string {
   const { width: W, height: H } = BANNER;
   const stage = H - BAND;
   const room = { width: W - 2 * PAD.x, height: stage - 2 * PAD.y };
@@ -77,23 +47,10 @@ export function composeBanner(poster: string, name: string): string {
 
   const mark = wordmark();
   const markWidth = (mark.width * MARK_HEIGHT) / mark.height;
-  const title = fitName(name, W - 3 * PAD.x - markWidth);
-  const lineHeight = title.size * LEADING;
-  // Cap height of the font, to centre the lines on the band by their letters.
-  const cap = 0.716 * title.size;
-  const first = stage + (BAND - (cap + lineHeight * (title.lines.length - 1))) / 2 + cap;
-
-  const nodes = [
-    h('rect', { x: 0, y: 0, width: W, height: stage, fill: STAGE }),
-    h('rect', { x: 0, y: stage, width: W, height: BAND, fill: HOUSING }),
-    h(
-      'text',
-      { x: PAD.x, 'font-family': FONT, 'font-size': title.size, 'font-weight': 700, fill: HOUSING_INK },
-      title.lines.map((line, i) => h('tspan', { x: PAD.x, y: Math.round((first + i * lineHeight) * 100) / 100 }, [line])),
-    ),
-  ];
-  const markBox = { x: W - PAD.x - markWidth, y: stage + (BAND - MARK_HEIGHT) / 2 };
-  const body = nodes.map(toString).join('') +
+  const markBox = { x: (W - markWidth) / 2, y: stage + (BAND - MARK_HEIGHT) / 2 };
+  const body =
+    toString(h('rect', { x: 0, y: 0, width: W, height: stage, fill: STAGE })) +
+    toString(h('rect', { x: 0, y: stage, width: W, height: BAND, fill: HOUSING })) +
     `<svg x="${markBox.x}" y="${markBox.y}" width="${markWidth}" height="${MARK_HEIGHT}" viewBox="0 0 ${mark.width} ${mark.height}" color="${DOT}">${mark.dots}</svg>` +
     nestSvg(poster, 'poster', box);
   return `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="${SVG_NS}" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${body}</svg>\n`;
@@ -105,7 +62,7 @@ const banners = new Map<string, Promise<string>>();
 export function bannerSvg(model: Model): Promise<string> {
   let svg = banners.get(model.id);
   if (!svg) {
-    svg = posterSvg(model).then((poster) => composeBanner(poster, model.data.name));
+    svg = posterSvg(model).then((poster) => composeBanner(poster));
     banners.set(model.id, svg);
   }
   return svg;

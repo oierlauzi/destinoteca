@@ -231,7 +231,8 @@ element's page (`Catalog.photos`), and can be its cover.
 
 An entry with a poster is previewed on social networks by a banner
 (`src/site/social.ts`, served at `social/<id>.png`): the poster on the white
-stage over a dark band with the site's wordmark and the entry's name. Other
+stage over a dark band with the site's wordmark (the entry's name is left
+to the network, which prints the page's title). Other
 entries, and families, are previewed by their cover photo. The banner is
 turned into a PNG at build time by sharp (librsvg), which ignores
 `textLength`, so `bakeTextLength` rewrites those texts into a scale or a
