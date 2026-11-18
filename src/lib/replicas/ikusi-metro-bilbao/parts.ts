@@ -62,8 +62,8 @@ export const lcdLook = (options: WearOptions): LcdLook => ({
 
 /**
  * The LED modules, as large as the glasses they replaced: 7 × 9 dots,
- * further apart down than across, amber when lit; a blank cell lights all
- * its dots faintly.
+ * further apart down than across, amber when lit; the others glow faintly,
+ * the same in every module, with a character or without.
  */
 export const ledLook = (options: WearOptions): LedCellLook => ({
   width: GLASS.width,
@@ -74,8 +74,7 @@ export const ledLook = (options: WearOptions): LedCellLook => ({
   radius: 0.27,
   back: '#120b09',
   lit: '#ffc244',
-  faint: '#966128',
-  dark: '#2a1912',
+  faint: '#5e3c1a',
   uneven: options.uneven / 100,
   seed: options.wearSeed,
 });

@@ -93,18 +93,18 @@ describe('LED character cells', () => {
     expect(8 * look.pitchY + 2 * look.litRadius).toBeLessThan(look.height);
   });
 
-  it('light a character’s dots, and all the dots of a blank cell faintly', () => {
+  it('light a character’s dots, and leave every other dot glowing faintly, with a character or without', () => {
     const at = { x: 0, y: 0 };
     const a = ledCellPaths('A', at, ikusi7x9, look);
     const space = ledCellPaths(' ', at, ikusi7x9, look);
     const dots = (d: string) => (d.match(/M/g) ?? []).length;
-    expect(a.blank).toBe(false);
+    expect(dots(a.lit)).toBeGreaterThan(0);
     expect(dots(a.lit) + dots(a.rest)).toBe(63);
-    expect(space.blank).toBe(true);
+    expect(space.lit).toBe('');
     expect(dots(space.rest)).toBe(63);
+    // With the cells all alike in shade, the unlit dots of a character and of a blank are one colour.
     const svg = ledCells([at, { x: 7, y: 0 }], ['A', ' '], ikusi7x9, look).map(toString).join('');
-    expect(svg).toContain(`fill="${look.dark}"`);
-    expect(svg).toContain(`fill="${look.faint}"`);
+    expect(svg.match(new RegExp(`fill="${look.faint}"`, 'g'))).toHaveLength(2);
   });
 });
 
