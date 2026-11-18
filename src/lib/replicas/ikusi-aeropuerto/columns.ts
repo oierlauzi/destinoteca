@@ -193,3 +193,28 @@ export function columnLegend(key: ColumnKey, mode: Mode, areaGate: boolean): Leg
 export function legendLines(legend: Legend, regional: Regional): { text: string; lang: 'regional' | 'en' | 'es' }[] {
   return [...(regional ? [{ text: legend.regional[regional], lang: 'regional' as const }] : []), { text: legend.en, lang: 'en' }, { text: legend.es, lang: 'es' }];
 }
+
+// --- Remarks ----------------------------------------------------------------------
+
+export type Remark = 'cancelled' | 'delayed' | 'boarding' | 'landed';
+export type RemarkLang = 'es' | 'en' | Exclude<Regional, ''>;
+
+/**
+ * What the remarks say, in each language the boards write them in. The
+ * remarks of a board go round its languages: Spanish, English and the one
+ * printed over them, if any. Photographed: CANCELADO, RETRASADO, EMBARQUE,
+ * LLEGADA, CANCELLED, BOARDING and, in the Canary Islands, VERSPATET
+ * (without its umlaut). The rest are the usual words, shortened to fit,
+ * and may not be what the boards wrote.
+ */
+export const REMARK_WORDS: Record<RemarkLang, Record<Remark, string>> = {
+  es: { cancelled: 'CANCELADO', delayed: 'RETRASADO', boarding: 'EMBARQUE', landed: 'LLEGADA' },
+  en: { cancelled: 'CANCELLED', delayed: 'DELAYED', boarding: 'BOARDING', landed: 'LANDED' },
+  va: { cancelled: 'CANCELLAT', delayed: 'RETARDAT', boarding: 'EMBARCANT', landed: 'ATERRAT' },
+  ca: { cancelled: 'CANCELLAT', delayed: 'RETARDAT', boarding: 'EMBARCANT', landed: 'ATERRAT' },
+  eu: { cancelled: 'EZEZTATU', delayed: 'ATZERATU', boarding: 'ONTZIRATU', landed: 'LURRERATU' },
+  de: { cancelled: 'ANNULLIERT', delayed: 'VERSPATET', boarding: 'EINSTIEG', landed: 'GELANDET' },
+};
+
+/** The languages a board's remarks go round, in order. */
+export const remarkLanguages = (regional: Regional): RemarkLang[] => (regional ? ['es', 'en', regional] : ['es', 'en']);

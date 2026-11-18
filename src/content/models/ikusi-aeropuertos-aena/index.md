@@ -349,8 +349,9 @@ va en cada parte de la fila cambia de un aeropuerto a otro:
 Las filas de Barajas no caben en 51 caracteres: tienen al menos 52. En el
 panel de esquinas redondeadas, los mostradores se escriben con una *a*
 minúscula entre los dos números, el único carácter en minúscula que se ha
-visto. Las observaciones aparecen unas veces en castellano y otras en inglés
-o, en Canarias, en alemán.
+visto. Las observaciones van rotando entre el castellano, el inglés y la
+otra lengua del panel, si la tiene: en las fotografías se ven unas veces en
+castellano, otras en inglés y, en Canarias, en alemán.
 
 ## Variantes
 
@@ -387,7 +388,10 @@ derecha sigue con los vuelos del de la izquierda.
 - **Los paneles de llegadas fuera de Canarias**: cómo se reparten sus
   columnas y qué dicen sus rótulos en valenciano, catalán y euskera. La
   réplica los deduce de los de salidas y usa las palabras habituales.
-- **Qué decide la lengua de las observaciones**, y qué significa la letra
-  sola que, en las llegadas fotografiadas en Canarias, va delante de ellas.
+- **Cuánto dura cada lengua en las observaciones**, y qué dicen en
+  valenciano, catalán y euskera, que no se han fotografiado. La réplica
+  cambia cada cinco segundos y usa las palabras habituales.
+- **Qué significa la letra sola** que, en las llegadas fotografiadas en
+  Canarias, va delante de las observaciones.
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).

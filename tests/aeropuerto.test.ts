@@ -4,12 +4,18 @@ import type { Service, View } from '../src/lib/model';
 import { defaults } from '../src/lib/params';
 import { readConfig, replicaSize, writeConfig } from '../src/lib/player/config';
 import { columnLegend, columnSpans, composeRow, flightText, LAYOUTS, layoutOf, splitFlight, TITLES, type BoardRow } from '../src/lib/replicas/ikusi-aeropuerto/columns';
-import { fromFlat, ikusiAeropuerto as def, toFlat, type AirportOptions } from '../src/lib/replicas/ikusi-aeropuerto/def';
+import { fromFlat, ikusiAeropuerto as def, toFlat, type AirportFrame, type AirportOptions } from '../src/lib/replicas/ikusi-aeropuerto/def';
+import impl from '../src/lib/replicas/ikusi-aeropuerto/index';
 import { boardRow, boardSize, clockLayout, glassX, HEADER_BOTTOM, shapeOf } from '../src/lib/replicas/ikusi-aeropuerto/geometry';
-import { blank, flightOf, present } from '../src/lib/replicas/ikusi-aeropuerto/presenter';
+import { blank, flightOf, present, REMARKS_HOLD_MS } from '../src/lib/replicas/ikusi-aeropuerto/presenter';
 import { describe as describeFrame, renderToString, rowChars } from '../src/lib/replicas/ikusi-aeropuerto/render';
 import { CELL, FILLERS } from '../src/lib/replicas/ikusi/modules';
 import { getReplica } from '../src/lib/replicas/registry';
+import { FixedClock, StationClock } from '../src/lib/model';
+import { ReplicaSession, SourceHub } from '../src/lib/player/session';
+import { ManualTicker } from '../src/lib/player/ticker';
+import type { Frame, ReplicaImpl } from '../src/lib/replicas/types';
+import type { SourceDef, SourceHandlers } from '../src/lib/sources/types';
 
 const options = defaults(def.options) as AirportOptions;
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
@@ -150,14 +156,59 @@ describe('the Ikusi airport board', () => {
       destination: { name: 'Barcelona Sants', names: ['BARCELONA'] },
       here: { departure: { scheduled: NOW + 10 * 60_000, estimated: NOW + 22 * 60_000 }, platform: { name: '4', confirmed: true }, allocations: [{ kind: 'check-in', name: '35-36' }] },
     };
-    const frame = present(view([train, { ...train, id: 'b', status: 'cancelled' }]), options);
+    const shown = pagesOf(present(view([train, { ...train, id: 'b', status: 'cancelled' }]), options));
+    const frame = shown[0]!.frame;
     expect(frame.rows[0]).toEqual({ time: '10:10', place: 'BARCELONA', flight: 'AVE 2109', counter: '35-36', second: '', gate: '4', remarks: 'RETRASADO' });
     expect(frame.rows[1]!.remarks).toBe('CANCELADO');
     expect(frame.clock).toBe('10:00');
     expect(flightOf({ id: 'f', operator: { name: 'Iberia', shortName: 'IB' }, number: '3910' })).toBe('IB 3910');
     const arriving: Service = { ...train, origin: { name: 'Madrid' }, here: { arrival: { scheduled: NOW, estimated: NOW + 4 * 60_000 } } };
-    const arrivals = present(view([arriving]), { ...options, mode: 'arrivals' });
+    // With nothing to remark, there is nothing to go round: one frame.
+    const arrivals = present(view([arriving]), { ...options, mode: 'arrivals' }) as AirportFrame;
     expect(arrivals.rows[0]).toMatchObject({ time: '10:00', place: 'MADRID', second: '10:04', remarks: '' });
     expect(blank(view([])).rows.every((r) => r.time === '')).toBe(true);
   });
+
+  it('goes round Spanish, English and the board’s other language in the remarks, and changes nothing else', () => {
+    const late: Service = { id: 'l', operator: { name: 'Iberia', shortName: 'IB' }, number: '3910', destination: { name: 'Madrid' }, here: { departure: { scheduled: NOW, estimated: NOW + 30 * 60_000 } } };
+    const gone: Service = { ...late, id: 'c', status: 'cancelled' };
+    const remarksOf = (o: AirportOptions) => pagesOf(present(view([late, gone]), o)).map((page) => page.frame.rows.slice(0, 2).map((r) => r.remarks));
+    expect(remarksOf(options)).toEqual([['RETRASADO', 'CANCELADO'], ['DELAYED', 'CANCELLED'], ['RETARDAT', 'CANCELLAT']]);
+    expect(remarksOf({ ...options, regional: 'de' })[2]).toEqual(['VERSPATET', 'ANNULLIERT']);
+    expect(remarksOf({ ...options, regional: '' })).toHaveLength(2);
+    const pages = pagesOf(present(view([late, gone]), options));
+    expect(pages.every((page) => page.holdMs === REMARKS_HOLD_MS)).toBe(true);
+    const others = (frame: AirportFrame) => frame.rows.map((r) => ({ ...r, remarks: '' }));
+    expect(others(pages[1]!.frame)).toEqual(others(pages[0]!.frame));
+    // Through the replica's boundary, each page is a flat frame.
+    const flat = impl.present(view([late]), options as never) as { pages: { frame: Record<string, unknown> }[] };
+    expect(flat.pages.map((page) => page.frame.o1)).toEqual(['RETRASADO', 'DELAYED', 'RETARDAT']);
+  });
 });
+
+describe('the remarks on a running board', () => {
+  it('change language every few seconds through the player', async () => {
+    const hub = new SourceHub(new StationClock(new FixedClock(NOW)));
+    const ticker = new ManualTicker();
+    const frames: Frame[] = [];
+    const recording = { ...impl, mount: () => ({ setFrame: (frame: Frame) => void frames.push(frame), setOptions: () => {}, destroy: () => {} }) } as ReplicaImpl;
+    new ReplicaSession(def, recording, {} as Element, hub, ticker, { options: { ...options, regional: 'eu' }, placement: { platforms: [], cycle: true } });
+    let handlers: SourceHandlers | undefined;
+    const source: SourceDef = { id: 'fake', label: '', kind: 'live', config: { fields: [] }, load: async () => ({ create: () => ({ start: (h) => void (handlers = h), stop: () => {} }) }) };
+    await hub.setSource(source);
+    const gone: Service = { id: 'c', status: 'cancelled', operator: { name: 'Iberia', shortName: 'IB' }, number: '3910', destination: { name: 'Madrid' }, here: { departure: { scheduled: NOW + 600_000 } } };
+    handlers!.onSnapshot({ kind: 'board', generatedAt: NOW, services: [gone] });
+    const seen: unknown[] = [];
+    for (let t = 0; t < 4; t++) {
+      ticker.advance(t === 0 ? 16 : REMARKS_HOLD_MS);
+      seen.push(frames.at(-1)!.o1);
+    }
+    expect(seen).toEqual(['CANCELADO', 'CANCELLED', 'EZEZTATU', 'CANCELADO']);
+  });
+});
+
+function pagesOf(shown: unknown): { frame: AirportFrame; holdMs: number }[] {
+  const pages = (shown as { pages?: { frame: AirportFrame; holdMs: number }[] }).pages;
+  if (!pages) throw new Error('expected pages');
+  return pages;
+}

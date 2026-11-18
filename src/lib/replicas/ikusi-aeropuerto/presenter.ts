@@ -1,6 +1,7 @@
 import { ikusiLcd } from '../../hardware';
 import { bestTime, clockTime, confirmedPlatform, delayMinutes, destinationsOf, fitNames, platformDigits, portionsOf, text, type EventTime, type Place, type Service, type View } from '../../model';
-import { columnSpans, layoutOf, type BoardRow, type Mode } from './columns';
+import type { Presentation } from '../types';
+import { columnSpans, layoutOf, REGIONAL, REMARK_WORDS, remarkLanguages, type RemarkLang, type BoardRow, type Mode, type Regional, type Remark } from './columns';
 import type { AirportFrame, AirportOptions } from './def';
 import { MAX_ROWS, shapeOf } from './geometry';
 
@@ -39,24 +40,25 @@ export function flightOf(service: Service): string {
   return number.length > 4 ? `${airline}${number}` : `${airline} ${number}`.trim();
 }
 
-/** What the remarks say, in Spanish. */
-function remarks(service: Service, event: EventTime | undefined, mode: Mode): string {
-  if (service.status === 'cancelled') return 'CANCELADO';
-  if (mode === 'arrivals' && (service.presence === 'at-stop' || event?.actual !== undefined)) return 'LLEGADA';
-  if (mode === 'departures' && service.presence === 'at-stop') return 'EMBARQUE';
+/** What the remarks have to say of a flight, if anything. */
+function remark(service: Service, event: EventTime | undefined, mode: Mode): Remark | undefined {
+  if (service.status === 'cancelled') return 'cancelled';
+  if (mode === 'arrivals' && (service.presence === 'at-stop' || event?.actual !== undefined)) return 'landed';
+  if (mode === 'departures' && service.presence === 'at-stop') return 'boarding';
   const late = delayMinutes(event);
-  if ((late !== undefined && late >= SHOW_DELAY) || service.status === 'delayed') return 'RETRASADO';
-  return '';
+  if ((late !== undefined && late >= SHOW_DELAY) || service.status === 'delayed') return 'delayed';
+  return undefined;
 }
 
-function row(service: Service, view: View, options: AirportOptions, placeWidth: number): BoardRow {
+function row(service: Service, view: View, options: AirportOptions, placeWidth: number): { row: BoardRow; remark?: Remark } {
   const mode: Mode = options.mode === 'arrivals' ? 'arrivals' : 'departures';
   const event = eventOf(service, mode);
   const scheduled = event?.scheduled ?? bestTime(event);
   const places = mode === 'arrivals' ? originsOf(service) : destinationsOf(service);
   const place = mode === 'departures' && service.headsign !== undefined ? fold(text(service.headsign)).slice(0, placeWidth).trimEnd() : fitNames(places, placeWidth, '/', fold);
   const expected = bestTime(event);
-  return {
+  const said = remark(service, event, mode);
+  const out: BoardRow = {
     time: scheduled === undefined ? '' : clockTime(scheduled, view.timeZone),
     place,
     flight: flightOf(service),
@@ -64,8 +66,9 @@ function row(service: Service, view: View, options: AirportOptions, placeWidth: 
     // The boarding time is not known from a timetable; an arrival's expected time is.
     second: mode === 'arrivals' && expected !== undefined ? clockTime(expected, view.timeZone) : '',
     gate: platformDigits(confirmedPlatform(service.here?.platform)) ?? '',
-    remarks: remarks(service, event, mode),
+    remarks: said ? REMARK_WORDS.es[said] : '',
   };
+  return { row: out, remark: said };
 }
 
 const clockOf = (view: View): string => (view.now ? clockTime(view.now, view.timeZone) : '');
@@ -74,11 +77,25 @@ export function blank(view: View): AirportFrame {
   return { rows: Array.from({ length: MAX_ROWS }, blankRow), clock: clockOf(view) };
 }
 
-export function present(view: View, options: AirportOptions): AirportFrame {
+/** How long the remarks stay in one language before the next. A guess: the photographs cannot tell. */
+export const REMARKS_HOLD_MS = 5000;
+
+/**
+ * The next flights, one to a row. The remarks go round Spanish, English and
+ * the board's other language, if it has one; nothing else changes.
+ */
+export function present(view: View, options: AirportOptions): Presentation<AirportFrame> {
   const { rows: count, cells } = shapeOf(options);
   const mode: Mode = options.mode === 'arrivals' ? 'arrivals' : 'departures';
   const placeWidth = columnSpans(layoutOf(options.layout)[mode], cells).find((span) => span.key === 'place')?.width ?? 10;
-  const rows = view.services.slice(0, count).map((service) => row(service, view, options, placeWidth));
-  while (rows.length < MAX_ROWS) rows.push(blankRow());
-  return { rows, clock: clockOf(view) };
+  const shown = view.services.slice(0, count).map((service) => row(service, view, options, placeWidth));
+  const clock = clockOf(view);
+  const frameIn = (lang: RemarkLang): AirportFrame => {
+    const rows = shown.map(({ row: r, remark: said }) => ({ ...r, remarks: said ? REMARK_WORDS[lang][said] : '' }));
+    while (rows.length < MAX_ROWS) rows.push(blankRow());
+    return { rows, clock };
+  };
+  const regional: Regional = (REGIONAL as readonly unknown[]).includes(options.regional) ? options.regional : '';
+  if (!shown.some((r) => r.remark)) return frameIn('es');
+  return { pages: remarkLanguages(regional).map((lang) => ({ frame: frameIn(lang), holdMs: REMARKS_HOLD_MS })) };
 }
