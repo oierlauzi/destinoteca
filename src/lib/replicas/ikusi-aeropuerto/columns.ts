@@ -212,7 +212,7 @@ export const REMARK_WORDS: Record<RemarkLang, Record<Remark, string>> = {
   en: { cancelled: 'CANCELLED', delayed: 'DELAYED', boarding: 'BOARDING', landed: 'LANDED' },
   va: { cancelled: 'CANCELLAT', delayed: 'RETARDAT', boarding: 'EMBARCANT', landed: 'ATERRAT' },
   ca: { cancelled: 'CANCELLAT', delayed: 'RETARDAT', boarding: 'EMBARCANT', landed: 'ATERRAT' },
-  eu: { cancelled: 'EZEZTATU', delayed: 'ATZERATU', boarding: 'ONTZIRATU', landed: 'LURRERATU' },
+  eu: { cancelled: 'EZEZTATU', delayed: 'ATZERATUTA', boarding: 'ONTZIRATU', landed: 'LURRERATUTA' },
   de: { cancelled: 'ANNULLIERT', delayed: 'VERSPATET', boarding: 'EINSTIEG', landed: 'GELANDET' },
 };
 
