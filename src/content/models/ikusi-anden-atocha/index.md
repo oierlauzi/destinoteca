@@ -136,7 +136,7 @@ los sustituyeron los de PAGE Ibérica.
   no dejan contarlos. En los tableros de Ikusi de los aeropuertos, de la
   misma época y con caracteres parecidos, son 7 de ancho por 11 de alto, con
   trazos de dos puntos, y así se dibujan en la réplica.
-- **Las medidas.** Se estiman a partir de las fotografías, en unos 120 cm de
-  ancho y 53 de alto, con caracteres de unos 8,5 cm.
+- **Las medidas.** Se estiman las proporciones de la réplica a partir de las 
+  fotografías.
 
 Si tienes más fotografías o datos, [puedes aportarlos](../../contribuir/).
