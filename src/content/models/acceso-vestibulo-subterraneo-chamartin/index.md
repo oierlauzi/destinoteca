@@ -96,9 +96,6 @@ trenes del de la izquierda. Al lado, un
 Debajo van el logotipo de [adif](../../operadores/adif/) y el nombre de la
 estación, «Madrid-Chamartín - Clara Campoamor», en grandes letras de aluminio.
 
-En una pared detrás de esta colgaban
-[dos tableros de Cercanías](../cercanias-vestibulo-subterraneo-chamartin/).
-
 ## Lo que no se sabe
 
 - **Desde cuándo están así.**
