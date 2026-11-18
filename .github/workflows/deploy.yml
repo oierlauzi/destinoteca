@@ -26,6 +26,8 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+      # The social banners are drawn with Liberation Sans (src/site/social.ts).
+      - run: sudo apt-get update -q && sudo apt-get install -y --no-install-recommends fonts-liberation
       # Builds the site and uploads it as the Pages artifact.
       - uses: withastro/action@v6
         with:

@@ -1,7 +1,6 @@
 ---
 // The page of one manufacturer, operator, family or technology: what it is,
 // and every model of the catalog that belongs to it.
-import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import ModelGrid from '@/components/ModelGrid.astro';
 import References from '@/components/References.astro';
@@ -10,6 +9,7 @@ import Base from '@/layouts/Base.astro';
 import type { CollectionName } from '@/lib/catalog';
 import { countryName, getCatalog, type Family, type Manufacturer, type Operator } from '@/site/catalog';
 import { ENTITY_PAGES } from '@/site/entities';
+import { photoPreview } from '@/site/social';
 import { href } from '@/site/url';
 
 interface Props {
@@ -55,7 +55,7 @@ if (collection === 'operators') {
 const references = collection === 'families' ? (entry as Family).data.references : [];
 const coverModel = collection === 'families' && (entry as Family).data.cover ? catalog.model((entry as Family).data.cover!.id) : undefined;
 const coverPhoto = coverModel ? catalog.cover(coverModel) : undefined;
-const social = coverPhoto ? (await getImage({ src: coverPhoto.src, width: Math.min(coverPhoto.src.width, 1200) })).src : undefined;
+const social = coverPhoto && (await photoPreview(coverPhoto));
 
 if (collection === 'families') {
   const makers = (entry as Family).data.manufacturers.map((ref) => catalog.manufacturer(ref.id));

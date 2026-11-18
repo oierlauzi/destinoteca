@@ -9,8 +9,8 @@ interface Props {
   description?: string;
   /** Repository path of the file behind this page, for the "edit" link. */
   source?: string;
-  /** Social preview image, absolute or site-relative. */
-  image?: string;
+  /** Social preview image, absolute or site-relative, with its size and what it shows. */
+  image?: { src: string; width?: number; height?: number; alt?: string };
 }
 
 const { title, description = t('site.description'), source, image } = Astro.props;
@@ -43,7 +43,17 @@ const here = Astro.url.pathname;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    {
+      image && (
+        <>
+          <meta property="og:image" content={new URL(image.src, Astro.site)} />
+          {image.width && <meta property="og:image:width" content={String(image.width)} />}
+          {image.height && <meta property="og:image:height" content={String(image.height)} />}
+          {image.alt && <meta property="og:image:alt" content={image.alt} />}
+          <meta name="twitter:card" content="summary_large_image" />
+        </>
+      )
+    }
     <meta name="theme-color" content="#121212" />
   </head>
   <body>

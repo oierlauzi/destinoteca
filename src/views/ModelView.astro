@@ -1,5 +1,4 @@
 ---
-import { getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import Infobox from '@/components/Infobox.astro';
 import InstallationPlayer from '@/components/InstallationPlayer.astro';
@@ -11,6 +10,7 @@ import { t } from '@/i18n';
 import Base from '@/layouts/Base.astro';
 import { inlineMarkdown } from '@/lib/catalog';
 import { getCatalog } from '@/site/catalog';
+import { BANNER, bannerHref, hasBanner, photoPreview } from '@/site/social';
 import { href } from '@/site/url';
 
 interface Props {
@@ -27,7 +27,10 @@ const { Content } = await render(model);
 
 const photos = catalog.photos(model);
 const cover = catalog.cover(model);
-const social = cover ? (await getImage({ src: cover.src, width: Math.min(cover.src.width, 1200) })).src : undefined;
+// Shared on a social network, an entry shows its replica; one without, its cover photo.
+const social = hasBanner(model)
+  ? { src: await bannerHref(model), ...BANNER, alt: t('site.social.alt', { name: data.name }) }
+  : cover && (await photoPreview(cover));
 // One list per family it belongs to, each without this entry.
 const siblings = facts.families
   .map((id) => ({ family: catalog.family(id), models: catalog.modelsWith('familia', id).filter((other) => other.id !== model.id) }))
