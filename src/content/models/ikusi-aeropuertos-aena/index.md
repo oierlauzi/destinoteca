@@ -387,7 +387,6 @@ derecha sigue con los vuelos del de la izquierda.
 - **Los paneles de llegadas fuera de Canarias**: cómo se reparten sus
   columnas y qué dicen sus rótulos en valenciano, catalán y euskera. La
   réplica los deduce de los de salidas y usa las palabras habituales.
-- **Por qué los de Asturias llevan impreso «Terminal T1».**
 - **Qué decide la lengua de las observaciones**, y qué significa la letra
   sola que, en las llegadas fotografiadas en Canarias, va delante de ellas.
 
