@@ -4,6 +4,7 @@ import type { FestinaFrame, FestinaOptions } from './def';
 import { mpMark, mpWord } from '../mp-electronics-adif/mp-logo';
 import { festinaMark, festinaWord } from './festina-logo';
 import { C, R, SIZE } from './geometry';
+import { GLYPHS, PLACES } from './numerals';
 
 const FONT = 'Helvetica Neue, Helvetica, Arial, sans-serif';
 /** The print of the dial: a very dark blue. */
@@ -14,6 +15,8 @@ const SECOND: Record<FestinaOptions['secondHand'], string> = { blue: '#2a34a8', 
 const RESTING = { hours: 10, minutes: 10, seconds: 32 };
 
 const r = (k: number): number => k * R;
+/** The outer end of the minute bars. */
+const BARS = 0.97;
 const fmt = (n: number): string => String(Math.round(n * 1000) / 1000);
 
 // --- The case ---------------------------------------------------------------------
@@ -68,15 +71,18 @@ function dial(brand: FestinaOptions['dial'] = 'festina'): VNode[] {
     const hour = minute % 5 === 0;
     const width = hour ? r(mp ? 0.035 : 0.05) : r(0.017);
     const length = hour ? r(mp ? 0.15 : 0.095) : r(0.07);
-    nodes.push(h('rect', { x: C - width / 2, y: C - r(0.97), width, height: length, fill: INK, transform: `rotate(${minute * 6} ${C} ${C})` }));
+    nodes.push(h('rect', { x: C - width / 2, y: C - r(BARS), width, height: length, fill: INK, transform: `rotate(${minute * 6} ${C} ${C})` }));
   }
   if (brand === 'mp') {
     nodes.push(mpMark(C, C - r(0.47), r(0.2), INK), mpWord(C, C + r(0.43), r(0.062), INK));
     return nodes;
   }
-  const numeral = (text: string, x: number, y: number) =>
-    h('text', { x: C + x, y: C + y, 'font-size': r(0.27), 'font-weight': 800, 'text-anchor': 'middle', 'dominant-baseline': 'central', fill: INK, 'letter-spacing': r(-0.01) }, [text]);
-  nodes.push(numeral('12', 0, r(-0.68)), numeral('3', r(0.7), 0), numeral('6', 0, r(0.68)), numeral('9', r(-0.7), 0));
+  // The numerals, traced from a photograph in units where the bars end at 100, each centred on its place.
+  const unit = r(BARS) / 100;
+  for (const { glyph, x, y } of PLACES) {
+    const at = `translate(${fmt(C + x * unit)} ${fmt(C + y * unit)}) scale(${fmt(unit)})`;
+    nodes.push(h('path', { d: GLYPHS[glyph]!, transform: at, fill: INK, 'fill-rule': 'evenodd' }));
+  }
   nodes.push(festinaMark(C, C - r(0.44), r(0.14), INK), festinaWord(C, C - r(0.28), r(0.5), INK));
   return nodes;
 }

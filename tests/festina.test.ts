@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { defaults } from '../src/lib/params';
 import { festinaAdif as def, type FestinaOptions } from '../src/lib/replicas/festina-adif/def';
+import { GLYPHS, PLACES, RECONSTRUCTED, SEEN } from '../src/lib/replicas/festina-adif/numerals';
 import { angles, daySeconds, renderToString } from '../src/lib/replicas/festina-adif/render';
 
 const options = defaults(def.options) as FestinaOptions;
@@ -26,6 +27,16 @@ describe('the Festina clock', () => {
     expect(impl.present(view, options)).toEqual({ time: view.now, zone: 'Europe/Madrid' });
     expect(impl.blank({ ...view, now: 0 }, options)).toEqual({});
     expect(renderToString({}, options)).toContain('10:10');
+  });
+
+  it('draws its numerals from the shapes traced on a photograph, not from a font', () => {
+    const svg = renderToString({}, options);
+    expect(svg).not.toContain('<text');
+    expect(PLACES.map((place) => place.glyph).join('')).toBe('12369');
+    for (const { glyph } of PLACES) expect(SEEN.has(glyph) && GLYPHS[glyph] !== undefined).toBe(true);
+    expect([...RECONSTRUCTED].filter((glyph) => SEEN.has(glyph))).toEqual([]);
+    // One path a digit, scaled to where the bars end; the 6 and the 9 keep their counters.
+    expect(svg.match(/ scale\(0\.97\)" fill="#1b1d33" fill-rule="evenodd"/g)).toHaveLength(5);
   });
 
   it('draws its cases, the blue pieces and the second hand as asked', () => {
