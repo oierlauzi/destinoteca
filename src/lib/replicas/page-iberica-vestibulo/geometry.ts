@@ -8,20 +8,22 @@ import { CM, DOTS_TOP, LED_HEIGHT, LINE_HEIGHT, MIN_GAP, ROW_HEIGHT, dotsInUnit,
  *
  * Each line is taken to be a unit built like the platform sign's PI-T100-M,
  * which was measured, with 20 characters instead of 16 and a longer tube:
- * the same height, the same characters, the same 4 cm from the ends of the
- * unit to the reflector, the characters centred. The tube under each line
+ * the same height, the same characters, the same 9 cm from the ends of the
+ * unit to the characters and 4 cm to the reflector. The tube under each line
  * is why the lines are far apart. Like that unit on the platform sign, each
  * one fills the panel between its black edges, from one hairline to the next.
  */
 export const CELLS = 20;
 /**
- * The tube under each line, in centimetres: probably a 2 m one, by the
- * maintainer's reckoning, which photographs agree with (it reaches well past
- * the first and last characters).
+ * The tube under each line, in centimetres: what is left of the unit once
+ * the 4 cm at each end and the sockets are taken off, which makes the unit
+ * 197 cm. Photographs show it reaching a little past the first and last
+ * characters, as this does. It is not a standard length, and it has not
+ * been measured.
  */
-const TUBE = 200;
-/** The LED row: about 2 m, by the maintainer's reckoning, as long as the tubes. Centred, like them. */
-const LED_WIDTH = 200 * CM;
+const TUBE = 186;
+/** The LED row, as long as the tubes, as on the platform sign. Centred, like them. */
+const LED_WIDTH = TUBE * CM;
 /** From the edge of the housing to the inner panel. */
 const FRAME = { side: 7.7189846, top: 6.7270778, bottom: 6.6713 };
 /** The panel's black edge, half of it inside the panel. */

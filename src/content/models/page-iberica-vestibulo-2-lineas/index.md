@@ -102,9 +102,10 @@ demás tiene el lenguaje de su
 comparta con el cartel de andén los módulos de cada carácter, aunque no se ha
 comprobado en ninguna unidad. Tampoco se sabe si cada línea está hecha como la
 del cartel de andén, que sí se ha medido, con cuatro caracteres más. Su tubo
-fluorescente es más largo que el de aquella y pasa bastante más allá del
-primer y el último carácter: probablemente sea de 2 m, aunque no se ha
-medido. La fila de LED parece de la misma longitud.
+fluorescente es más largo que el de aquella y pasa un poco más allá del
+primer y el último carácter, pero no se ha medido, y no parece de ninguna de
+las longitudes normalizadas: la de 70 W, de 176,4 cm, se quedaría más corta
+que los caracteres. La fila de LED parece tan larga como el tubo.
 
 Como los carteles de andén, estos paneles se han ido retirando, y es probable
 que ya no quede ninguno en servicio.
