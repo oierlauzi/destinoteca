@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { LED_COLS } from '../src/lib/replicas/page-iberica-anden-electromagnetico/render';
 import type { Placement, Service, View } from '../src/lib/model';
 import { defaults } from '../src/lib/params';
 import { andenElectromagnetico } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
@@ -58,8 +59,8 @@ describe('two platform signs in one box', () => {
     const svg = renderToString(fromFlat(defaults(frameSchema)), options);
     expect(svg.startsWith('<?xml')).toBe(true);
     expect(svg.match(/<polygon /g)).toHaveLength(2 * 16 * 5 * 7);
-    // Two LED rows of 111 columns and seven rows, plus the two Cercanías roundels.
-    expect(svg.match(/<circle /g)).toHaveLength(2 * 111 * 7 + 2);
+    // Two LED rows of seven rows each, plus the two Cercanías roundels.
+    expect(svg.match(/<circle /g)).toHaveLength(2 * LED_COLS * 7 + 2);
     expect(svg.match(/>Vía</g)).toHaveLength(2);
     expect(svg.match(/>min\.</g)).toHaveLength(2);
   });

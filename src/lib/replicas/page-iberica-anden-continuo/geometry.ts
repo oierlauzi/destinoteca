@@ -1,3 +1,5 @@
+import { PLATFORM_LED_WIDTH } from '../page-iberica-electromagneticos/dimensions';
+
 /**
  * The enclosure is the earlier platform sign's, so its outline and LED row
  * keep that sign's drawing (renfe-flipdot-re, web-replica/reference.svg).
@@ -16,8 +18,9 @@ export const ROWS = 7;
 const SPAN = 16 * 7.9834499 + 15 * 1.4552071;
 export const PITCH = SPAN / COLS;
 export const MATRIX = at(24.658236, 39.877911);
-export const LED = at(20.358263, 60.55167);
-export const LED_WIDTH = 158.50243;
 export const PANEL = { ...at(12.080421, 11.557226), width: 176.00145, height: 67.75975 };
+/** The LED row, as on the earlier sign: centred in the panel. */
+export const LED_WIDTH = PLATFORM_LED_WIDTH;
+export const LED = { x: PANEL.x + (PANEL.width - LED_WIDTH) / 2, y: at(0, 60.55167).y };
 /** Rules above and below the matrix, where the earlier sign has them. */
 export const RULES = [at(0, 35.448382).y, at(0, 56.89837).y];

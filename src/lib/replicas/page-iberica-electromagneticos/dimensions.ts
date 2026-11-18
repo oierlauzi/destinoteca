@@ -114,6 +114,12 @@ export const DOTS_TOP = M.above * FACE + OPENING_MARGIN_Y;
 /** From the bottom of a line's flaps to the bottom of its unit. */
 export const ROW_BELOW_DOTS = M.below * FACE + OPENING_MARGIN_Y;
 
+/**
+ * Width of the platform sign's LED row: about 150 cm, by the maintainer's
+ * reckoning, as long as the tube of the line above it. It is centred under
+ * the line, like the tube.
+ */
+export const PLATFORM_LED_WIDTH = 150 * CM;
 /** Height of the LED row. */
 export const LED_HEIGHT = 11.181376;
 /** From the end of a line's flaps to "min.": it starts at the edge of the last opening. */

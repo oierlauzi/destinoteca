@@ -125,7 +125,7 @@ comprobado en ninguna unidad. Tampoco se sabe si cada línea está hecha como la
 del cartel de andén, que sí se ha medido, con cuatro caracteres más. Su tubo
 fluorescente es más largo que el de aquella y pasa bastante más allá del
 primer y el último carácter: probablemente sea de 2 m, aunque no se ha
-medido.
+medido. La fila de LED parece de la misma longitud.
 
 En el vídeo de Pinar de las Rozas, la fila de LED recorre un aviso que prohíbe
 subir o bajar del tren una vez que suenan o se encienden las señales de

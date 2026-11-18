@@ -3,7 +3,7 @@ import type { Placement, Service, View } from '../src/lib/model';
 import { defaults } from '../src/lib/params';
 import { optionsSchema, type AndenOptions } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
 import { blank, present } from '../src/lib/replicas/page-iberica-anden-electromagnetico/presenter';
-import { LINE_UNIT, ROW, lineCells, renderToString, describe as describeFrame } from '../src/lib/replicas/page-iberica-anden-electromagnetico/render';
+import { LED_COLS, LED_WIDTH, LINE_UNIT, ROW, lineCells, renderToString, describe as describeFrame } from '../src/lib/replicas/page-iberica-anden-electromagnetico/render';
 import * as dims from '../src/lib/replicas/page-iberica-electromagneticos/dimensions';
 
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
@@ -91,7 +91,7 @@ describe('rendering', () => {
     expect(svg.startsWith('<?xml')).toBe(true);
     expect(svg).toContain('xmlns="http://www.w3.org/2000/svg"');
     expect(svg.match(/<polygon /g)).toHaveLength(16 * 5 * 7);
-    expect(svg.match(/<circle /g)).toHaveLength(111 * 7 + 1);
+    expect(svg.match(/<circle /g)).toHaveLength(LED_COLS * 7 + 1);
     // Lit flaps: C H A M A R T I N and 6, counted from the font.
     expect(svg.match(new RegExp(`<polygon [^>]*fill="${options.dotColor}"`, 'g'))!.length).toBeGreaterThan(100);
   });
@@ -174,6 +174,11 @@ describe('the PI-T100-M line, as measured', () => {
     expect(LINE_UNIT.width).toBeCloseTo(176.00145 - 3, 9);
     // The drawing has 21.45 between the hairlines over and under the line.
     expect(Math.abs(dims.ROW_HEIGHT - (56.89837 - 35.448382))).toBeLessThan(0.05);
+  });
+
+  it('has an LED row as long as the tube, centred under the line', () => {
+    expect(LED_WIDTH / cm).toBeCloseTo(150, 9);
+    expect(LED_COLS).toBe(113);
   });
 
   it('draws the tube under the line, and "min." after it', () => {

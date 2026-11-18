@@ -104,7 +104,7 @@ comprobado en ninguna unidad. Tampoco se sabe si cada línea está hecha como la
 del cartel de andén, que sí se ha medido, con cuatro caracteres más. Su tubo
 fluorescente es más largo que el de aquella y pasa bastante más allá del
 primer y el último carácter: probablemente sea de 2 m, aunque no se ha
-medido.
+medido. La fila de LED parece de la misma longitud.
 
 Como los carteles de andén, estos paneles se han ido retirando, y es probable
 que ya no quede ninguno en servicio.

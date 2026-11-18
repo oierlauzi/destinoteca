@@ -1,4 +1,4 @@
-import { DOTS_TOP, LED_HEIGHT, LINE_HEIGHT, MIN_GAP, ROW_HEIGHT, dotsInUnit, lineWidth, unitWidth } from '../page-iberica-electromagneticos/dimensions';
+import { CM, DOTS_TOP, LED_HEIGHT, LINE_HEIGHT, MIN_GAP, ROW_HEIGHT, dotsInUnit, lineWidth, unitWidth } from '../page-iberica-electromagneticos/dimensions';
 
 /**
  * Where everything goes on a concourse board of `lines` lines, in the units
@@ -20,12 +20,14 @@ export const CELLS = 20;
  * the first and last characters).
  */
 const TUBE = 200;
+/** The LED row: about 2 m, by the maintainer's reckoning, as long as the tubes. Centred, like them. */
+const LED_WIDTH = 200 * CM;
 /** From the edge of the housing to the inner panel. */
 const FRAME = { side: 7.7189846, top: 6.7270778, bottom: 6.6713 };
 /** The panel's black edge, half of it inside the panel. */
 const PANEL_EDGE = 1.5;
-/** Inner panel edge to the LED row, and LED row to the bottom of the panel, as on the platform sign. */
-const LED_MARGIN = { side: 8, bottom: 7.6 };
+/** LED row to the bottom of the panel, as on the platform sign. */
+const LED_BOTTOM = 7.6;
 /** Measured against the height of a line of characters in photographs of the boards at Tres Cantos and Cantoblanco. */
 const HEADER_HEIGHT = 25.5;
 const LED_AFTER_DIVIDER = 3.65318;
@@ -55,8 +57,7 @@ export function boardGeometry(lines: number): BoardGeometry {
   const width = panelWidth + FRAME.side * 2;
   const panelX = FRAME.side;
   const panelY = FRAME.top;
-  const ledX = panelX + LED_MARGIN.side;
-  const ledWidth = panelWidth - LED_MARGIN.side * 2;
+  const ledX = panelX + (panelWidth - LED_WIDTH) / 2;
   // The lines' flaps are centred in their unit, and so over the LED row;
   // the "min." beside them sticks out to the right, as in the photographs.
   const unitX = panelX + PANEL_EDGE;
@@ -66,7 +67,7 @@ export function boardGeometry(lines: number): BoardGeometry {
   const lineTops = tops.map((top) => top + DOTS_TOP);
   const dividers = [headerBottom, ...tops.map((top) => top + ROW_HEIGHT)];
   const ledY = dividers[dividers.length - 1]! + LED_AFTER_DIVIDER;
-  const panelHeight = ledY + LED_HEIGHT + LED_MARGIN.bottom - panelY;
+  const panelHeight = ledY + LED_HEIGHT + LED_BOTTOM - panelY;
   return {
     width,
     height: panelY + panelHeight + FRAME.bottom,
@@ -76,7 +77,7 @@ export function boardGeometry(lines: number): BoardGeometry {
     lineTops,
     lineGap: ROW_HEIGHT - LINE_HEIGHT,
     dividers,
-    led: { x: ledX, y: ledY, width: ledWidth },
+    led: { x: ledX, y: ledY, width: LED_WIDTH },
     headerTop: panelY,
     headerBottom,
     minX: linesX + lineWidth(CELLS) + MIN_GAP,

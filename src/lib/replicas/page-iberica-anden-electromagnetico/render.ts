@@ -1,6 +1,6 @@
 import { h, overlay, toCells, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { DOTS_TOP, MIN_GAP, PI_T100_M, PI_T100_M_WIDTH, ROW_HEIGHT, dotsInUnit, lineWidth } from '../page-iberica-electromagneticos/dimensions';
+import { DOTS_TOP, MIN_GAP, PI_T100_M, PI_T100_M_WIDTH, PLATFORM_LED_WIDTH, ROW_HEIGHT, dotsInUnit, lineWidth } from '../page-iberica-electromagneticos/dimensions';
 import { flipDotLines, flipDotSweep } from '../page-iberica-electromagneticos/flip-dot-lines';
 import { characterDots, mountSign, renderSign, type MountedSign, type SignSpec } from '../page-iberica-electromagneticos/live';
 import { cercaniasRoundel, flipLook, HOUSING, LEGEND, ledRow, lineLamp, minLegend, PANEL, type FamilyOptions } from '../page-iberica-electromagneticos/parts';
@@ -27,8 +27,8 @@ export const LINE_UNIT = { x: PANEL_X + PANEL_EDGE, y: at(0, LINE_TOP).y, width:
 /** The flip-dot line's top-left corner. */
 export const ROW = { x: LINE_UNIT.x + dotsInUnit(CELLS, PI_T100_M.tubeLength), y: LINE_UNIT.y + DOTS_TOP };
 /** The LED row's top-left corner, and its width. */
-export const LED = at(20.358263, 60.55167);
-export const LED_WIDTH = 158.50243;
+export const LED_WIDTH = PLATFORM_LED_WIDTH;
+export const LED = { x: PANEL_X + (PANEL_WIDTH - LED_WIDTH) / 2, y: at(0, 60.55167).y };
 /** Height of the inner panel, which holds everything printed and both displays. */
 export const PANEL_HEIGHT = 67.75975;
 /** Where the inner panel starts. */

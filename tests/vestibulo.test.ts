@@ -48,6 +48,7 @@ describe('concourse board layout', () => {
     const g = boardGeometry(4);
     // 2 m of tube, 1.5 cm sockets, 4 cm to each end: 211 cm, with the characters centred.
     expect(g.units.width / CM).toBeCloseTo(211, 9);
+    expect(g.led.width / CM).toBeCloseTo(200, 9);
     expect(g.linesX - g.units.x).toBeCloseTo(g.units.x + g.units.width - (g.linesX + lineWidth(20)), 9);
     expect(g.panel.width - g.units.width).toBeCloseTo(3, 9);
     g.dividers.slice(1).forEach((y, i) => expect(y - g.dividers[i]!).toBeCloseTo(ROW_HEIGHT, 9));

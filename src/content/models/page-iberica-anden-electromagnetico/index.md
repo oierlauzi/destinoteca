@@ -384,6 +384,9 @@ Sus medidas, tomadas sobre la unidad recuperada:
 A lo ancho, las medidas cuadran: 9 cm de margen, quince caracteres con su
 separación de 9 cm, el último de 8 cm y los 9 cm del «min.» suman 161 cm.
 
+La fila de LED de debajo no forma parte de la línea. No se ha medido, pero
+parece de unos 150 cm de ancho, lo mismo que el tubo.
+
 La EPROM de la unidad estudiada lleva una pegatina que dice
 `TELENORMA 18 JUN 96`: su firmware se grabó el 18 de junio de 1996. El resto
 de marcas de la unidad coincide en una fabricación de mediados de los
