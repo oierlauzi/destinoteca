@@ -6,7 +6,7 @@ import { ikusiAndenAtocha, optionsSchema, type IkusiOptions } from '../src/lib/r
 import { BEZEL, CELL, FILLER, FILLERS, GLASS, LINE_X, logoAt, openings, HEIGHT, LOGO_HEIGHT, LINE, STRIP, TIME, WIDTH, labelSpan, lineModules, lineRow, timeModules, timeRow } from '../src/lib/replicas/ikusi-anden-atocha/geometry';
 import { ikusiLogoWidth } from '../src/lib/replicas/ikusi-anden-atocha/ikusi-logo';
 import { blank, present } from '../src/lib/replicas/ikusi-anden-atocha/presenter';
-import { describe as describeFrame, lcdLook, renderToString } from '../src/lib/replicas/ikusi-anden-atocha/render';
+import { LED_COLS, describe as describeFrame, lcdLook, ledStrip, ledWindow, renderToString } from '../src/lib/replicas/ikusi-anden-atocha/render';
 import { getReplica } from '../src/lib/replicas/registry';
 
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
@@ -135,24 +135,39 @@ describe('the Ikusi platform sign', () => {
     }
   });
 
-  it('shows the scheduled time and the destination of the next train', () => {
-    expect(present(view([train()], ['3']))).toEqual({ time: '10:07', text: 'ALCALA DE HE', platform: '3' });
-    expect(present(view([train({ destination: { name: 'Parla' } })]))).toEqual({ time: '10:07', text: 'PARLA', platform: '3' });
-    expect(present(view([train({ here: { activity: 'passes', departure: { scheduled: NOW }, platform: { name: '3' } } })], ['3'])).text).toBe('SIN PARADA');
-    expect(blank(view([], ['4']))).toEqual({ time: '', text: '', platform: '4' });
+  it('shows the scheduled time and the destination of the next train, and its calls on the LED row', () => {
+    const calling = { callsAfter: [{ place: { name: 'Vallecas' } }, { place: { name: 'Torrejón de Ardoz' } }] };
+    expect(present(view([train(calling)], ['3']))).toEqual({ time: '10:07', text: 'ALCALA DE HE', platform: '3', led: 'PARADA EN VALLECAS, TORREJON DE ARDOZ' });
+    expect(present(view([train({ destination: { name: 'Parla' } })]))).toEqual({ time: '10:07', text: 'PARLA', platform: '3', led: '' });
+    expect(present(view([train({ ...calling, here: { activity: 'passes', departure: { scheduled: NOW }, platform: { name: '3' } } })], ['3']))).toMatchObject({ text: 'SIN PARADA', led: '' });
+    expect(blank(view([], ['4']))).toEqual({ time: '', text: '', platform: '4', led: '' });
   });
 
-  it('draws one glass per character, and the red strip lit', () => {
-    const svg = renderToString({ time: '18:47', text: 'ALCALA', platform: '3' }, options);
+  it('draws one glass per character, and a red LED row seven dots high', () => {
+    const frame = { time: '18:47', text: 'ALCALA', platform: '3', led: 'PARADA EN VALLECAS' };
+    const svg = renderToString(frame, options);
     expect(svg.startsWith('<?xml')).toBe(true);
     expect(svg.match(/<rect [^>]*width="5\.54"[^>]*fill="#/g)).toHaveLength(5 + 12);
-    expect(svg).toContain('#ff2b1c');
+    expect(svg.match(/<circle /g)).toHaveLength(7 * LED_COLS);
+    expect(svg).toContain('fill="#ff3b2e"');
     expect(svg).toContain('>VIA<');
-    expect(describeFrame({ time: '18:47', text: 'ALCALA', platform: '3' })).toBe('Vía 3 · 18:47 · ALCALA');
+    expect(describeFrame(frame)).toBe('Vía 3 · 18:47 · ALCALA · PARADA EN VALLECAS');
+    // Embeds made before the LED row have no `led`.
+    expect(describeFrame({ time: '18:47', text: 'ALCALA', platform: '3' } as never)).toBe('Vía 3 · 18:47 · ALCALA');
+  });
+
+  it('runs the LED text in from the right and out to the left, with its beginning at the left end on a still picture', () => {
+    const strip = ledStrip('PARADA EN VALLECAS');
+    const still = ledWindow(strip, LED_COLS)[0]!;
+    expect(still).toEqual(strip.slice(0, LED_COLS));
+    expect(strip.length).toBeGreaterThan(LED_COLS);
+    expect(ledWindow(strip, 0)[0]!.every((column) => column === 0)).toBe(true);
+    expect(ledWindow(strip, 1)[0]![LED_COLS - 1]).toBe(strip[0]);
+    expect(ledWindow(strip, LED_COLS + strip.length)).toEqual(ledWindow(strip, 0));
   });
 
   it('ages as asked, and the same for the same seed', () => {
-    const frame = { time: '', text: 'MOSTOL/SOTO', platform: '8' };
+    const frame = { time: '', text: 'MOSTOL/SOTO', platform: '8', led: '' };
     const worn = { ...options, delamination: 50, wearSeed: 7 };
     expect(renderToString(frame, worn)).toBe(renderToString(frame, worn));
     expect(renderToString(frame, worn)).toContain('#56543c');

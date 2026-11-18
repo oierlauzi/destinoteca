@@ -3,11 +3,12 @@ name: Teleindicador de andén de cristal líquido de Ikusi, Atocha Cercanías
 summary: >-
   Los carteles de andén de Atocha Cercanías antes de los de PAGE Ibérica: uno
   por vía, con la hora y el destino en caracteres de cristal líquido y una
-  línea roja debajo, casi siempre de dos en dos en lo alto de un poste. Ya
-  retirados.
+  fila de LED rojos debajo, casi siempre de dos en dos en lo alto de un poste.
+  Ya retirados.
 kind: platform-indicator
 technologies:
   - lcd
+  - led
 transportModes:
   - rail
 features:
@@ -99,12 +100,19 @@ los aeropuertos; los extremos de cada fila parecen rellenos con módulos en
 blanco del mismo ancho. Cada cristal brilla en verde con un tono algo
 distinto, más claro u oscuro, también los que quedan en blanco. La línea del
 destino también da avisos: en una fotografía, la de la vía 1 dice «NO
-ADMITE». Debajo corre una tercera línea, roja, que unas veces aparece
-encendida de punta a punta y otras con dos o tres palabras. El frente es una
-chapa con tres aberturas, una por fila: por las de los caracteres asoman los
-carriles con sus módulos, y la de la línea roja es mayor que la línea y más
-oscura. En la chapa van impresos el rótulo de la vía y, abajo, bajo el final
-de la línea roja, el logotipo de Ikusi.
+ADMITE».
+
+Debajo hay una fila de LED rojos de siete puntos de alto, como las de los
+carteles de PAGE Ibérica que vinieron después, por la que pasan, de derecha a
+izquierda, las paradas del tren: «PARADA EN» y sus nombres, sin dos puntos
+detrás de «EN». Se sabe por testimonios; en las fotografías, que no dejan
+leerla, se ve unas veces encendida de punta a punta y otras con dos o tres
+palabras.
+
+El frente es una chapa con tres aberturas, una por fila: por las de los
+caracteres asoman los carriles con sus módulos, y la de los LED es mayor que
+la fila y más oscura. En la chapa van impresos el rótulo de la vía y, abajo,
+bajo el final de la fila de LED, el logotipo de Ikusi.
 
 Atocha Cercanías se inauguró en 1988, y estos fueron, probablemente, los
 primeros teleindicadores de sus andenes, instalados poco antes de la
@@ -117,9 +125,8 @@ los sustituyeron los de PAGE Ibérica.
 
 ## Lo que no se sabe
 
-- **Qué muestra la línea roja.** En una fotografía lleva texto, pero no se
-  lee; en las demás se ve encendida entera. Tampoco se sabe de qué tecnología
-  es.
+- **Cómo separaba las paradas la fila de LED**, y qué mostraba cuando no
+  había tren. En la réplica, los nombres van separados por comas.
 - **Cuándo se instalaron y cuándo se retiraron.** Que se instalaran con la
   estación, entre 1988 y 1989, es una suposición: la fotografía más antigua
   que se conoce es de 1989, y la más reciente, de 1997.

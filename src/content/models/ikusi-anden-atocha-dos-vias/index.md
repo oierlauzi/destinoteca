@@ -89,7 +89,7 @@ photos:
       La estación vista desde lo alto, con un tren a la izquierda, un andén
       abarrotado y, al fondo, las escaleras y la pasarela. En medio del andén,
       un cartel de dos mitades.
-    caption: Vías 3 y 1, en la fotografía más antigua que se conoce de los carteles.
+    caption: Vías 2 y 1, en la fotografía más antigua que se conoce de los carteles.
     date: '1989'
     place: Atocha Cercanías
     author: Trenes Hoy

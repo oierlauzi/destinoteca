@@ -308,6 +308,7 @@ export const player: Record<string, string> = {
 
   // --- Teleindicador de andén de cristal líquido de Ikusi ---
   'ikusi.group.board': 'Cartel',
+  'ikusi.group.look': 'Aspecto',
   'ikusi.group.wear': 'Desgaste',
   'ikusi.opt.side': 'Lado del poste',
   'ikusi.opt.side.help': 'El rótulo de la vía va hacia el poste, y la hora hacia fuera.',
@@ -320,4 +321,5 @@ export const player: Record<string, string> = {
   'ikusi.opt.wearSeed': 'Semilla del desgaste',
   'ikusi.frame.time': 'Hora',
   'ikusi.frame.text': 'Destino o aviso',
+  'ikusi.frame.led': 'Fila de LED',
 };

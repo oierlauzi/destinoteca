@@ -1,4 +1,4 @@
-import { h, ikusiLcd, lcdModules, toCells, toDocument, toDom, updateLcd, type LcdLook, type LcdModule, type LcdRefs, type VNode } from '../../hardware';
+import { DotMatrix, MarqueeRun, h, ikusiLcd, lcdModules, roundLed, telenorma5x7, telenormaCp437, textColumns, toCells, toDocument, toDom, updateLcd, type DotState, type LcdLook, type LcdModule, type LcdRefs, type RoundLedLook, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { IkusiFrame, IkusiOptions } from './def';
 import { ikusiLogo } from './ikusi-logo';
@@ -20,7 +20,6 @@ const GROOVE = '#0c0d0f';
 /** The red strip's opening, darker than the others. */
 const STRIP_BACK = '#030404';
 const PRINT = '#ebeae3';
-const RED = '#ff2b1c';
 
 /**
  * In the photographs the characters are yellow over the green glow of their
@@ -43,23 +42,43 @@ export function lines(frame: IkusiFrame): { time: string[]; line: string[] } {
 }
 
 export function describe(frame: IkusiFrame): string {
-  return [`Vía ${frame.platform}`.trim(), frame.time.trim(), frame.text.trim()].filter(Boolean).join(' · ');
+  return [`Vía ${frame.platform}`.trim(), frame.time.trim(), frame.text.trim(), (frame.led ?? '').trim()].filter(Boolean).join(' · ');
 }
 
-/**
- * The red strip, lit end to end: what it showed is not known, so it is
- * drawn as a glow, with layers of fading red around it instead of a filter.
+// --- The LED row --------------------------------------------------------------
+
+/*
+ * A red LED matrix seven dots high in the strip under the destination, like
+ * the rows of PAGE Ibérica's platform signs, and drawn the same way: round
+ * LEDs, their proportions, their colours and their 5 × 7 characters.
  */
-function strip(x: number): VNode[] {
-  const { y, height, width } = STRIP;
-  const halo = [1.3, 0.85, 0.45].map((grow, i) =>
-    h('rect', { x: x - grow, y: y - grow, width: width + 2 * grow, height: height + 2 * grow, rx: grow, fill: RED, 'fill-opacity': [0.12, 0.2, 0.35][i] }),
-  );
-  return [
-    ...halo,
-    h('rect', { x, y, width, height, fill: RED }),
-    h('rect', { x: x + 0.8, y: y + height * 0.3, width: width - 1.6, height: height * 0.4, fill: '#ff6a4c', 'fill-opacity': 0.35 }),
-  ];
+const LED_ROWS = 7;
+const LED_PITCH = (STRIP.height * 12) / 95;
+export const LED_COLS = Math.floor((STRIP.width - LED_PITCH) / LED_PITCH);
+const LED_LOOK: RoundLedLook = { lit: '#ff3b2e', unlit: '#40101a' };
+
+const ledMatrix = new DotMatrix<RoundLedLook>({
+  modules: [{ x: STRIP.x + (STRIP.width - LED_COLS * LED_PITCH) / 2, y: STRIP.y + (STRIP.height - LED_ROWS * LED_PITCH) / 2 }],
+  cols: LED_COLS,
+  rows: LED_ROWS,
+  pitch: LED_PITCH,
+  skin: roundLed(),
+  backing: () => [h('rect', { ...STRIP, fill: '#2c0a11', stroke: '#000000', 'stroke-width': 0.2 })],
+});
+
+/** A text as columns of the LED row. */
+export const ledStrip = (text: string): number[] => textColumns(telenormaCp437.fold(text), telenorma5x7, telenormaCp437, 1);
+
+/**
+ * The row `offset` columns into its run. The text comes in from the right,
+ * crosses the row and leaves on the left, and then comes in again; at an
+ * offset of `LED_COLS` its beginning stands at the left end, as on a still
+ * picture or with scrolling turned off.
+ */
+export function ledWindow(strip: number[], offset: number): DotState {
+  const run = LED_COLS + strip.length;
+  const at = ((Math.floor(offset) % run) + run) % run;
+  return [Array.from({ length: LED_COLS }, (_, c) => strip[at - LED_COLS + c] ?? 0)];
 }
 
 interface Slots {
@@ -127,7 +146,6 @@ function scene(frame: IkusiFrame, options: IkusiOptions, slots: Slots): VNode[] 
     h('text', { x: label.to, y: baseline, 'font-size': 12.3, 'font-weight': 700, fill: PRINT, 'text-anchor': 'end' }, [frame.platform], (element) => (slots.number = element)),
     ...lcdModules(timeModules(side), time, ikusiLcd, look, 0, slots.time),
     ...lcdModules(lineModules(), line, ikusiLcd, look, TIME, slots.line),
-    ...strip(STRIP.x),
     ikusiLogo(logo.x, logo.y, LOGO_HEIGHT, '#c9cbc6'),
   ];
 }
@@ -137,7 +155,7 @@ function root(frame: IkusiFrame, children: VNode[], titleRef?: (element: SVGElem
 }
 
 export function renderToString(frame: IkusiFrame, options: IkusiOptions): string {
-  const svg = root(frame, scene(frame, options, newSlots()));
+  const svg = root(frame, [...scene(frame, options, newSlots()), ledMatrix.render(ledWindow(ledStrip(frame.led ?? ''), LED_COLS), LED_LOOK)]);
   svg.attrs.width = 1200;
   svg.attrs.height = Math.round(((1200 * HEIGHT) / WIDTH) * 100) / 100;
   return toDocument(svg, 'destinoteca · teleindicador de andén de cristal líquido de Ikusi · https://oierlauzi.github.io/destinoteca/');
@@ -149,32 +167,57 @@ export interface MountedIkusi {
   destroy(): void;
 }
 
-/** Liquid crystal changes at once: nothing moves between frames, so the sign is only redrawn when they change. */
-export function mount(host: Element, initial: IkusiOptions, _env: { ticker: Ticker }): MountedIkusi {
+/**
+ * Liquid crystal changes at once, so the characters are only redrawn when the
+ * frame changes; the LED row runs on the shared ticker.
+ */
+export function mount(host: Element, initial: IkusiOptions, env: { ticker: Ticker }): MountedIkusi {
   const doc = host.ownerDocument;
   let options = initial;
-  let frame: IkusiFrame = { time: '', text: '', platform: '' };
+  let frame: IkusiFrame = { time: '', text: '', platform: '', led: '' };
   let slots = newSlots();
   let title: SVGElement | undefined;
   let element: SVGElement | undefined;
+  let strip = ledStrip(frame.led);
+  let now = 0;
+  let shown = -1;
+  const run = new MarqueeRun();
+  let led = ledMatrix.mount(doc, ledWindow(strip, LED_COLS), LED_LOOK);
 
   const modules = (): { time: LcdModule[]; line: LcdModule[] } => {
     const side = options.side === 'right' ? 'right' : 'left';
     return { time: timeModules(side), line: lineModules() };
   };
 
+  /** Starts with the text's beginning at the left end, as the still picture shows it. */
+  const offset = (): number => (options.ledScroll && strip.length > 0 ? LED_COLS + run.offset(now, frame.led ?? '', options.ledSpeed) : LED_COLS);
+
+  const drawLed = (force: boolean): void => {
+    const at = offset();
+    if (!force && at === shown) return;
+    shown = at;
+    led.update(ledWindow(strip, at), LED_LOOK);
+  };
+
   const build = (): void => {
     slots = newSlots();
     element = toDom(root(frame, scene(frame, options, slots), (node) => (title = node)), doc);
+    led = ledMatrix.mount(doc, ledWindow(strip, offset()), LED_LOOK);
+    element.append(led.element);
     element.setAttribute('width', '100%');
     element.style.display = 'block';
     host.replaceChildren(element);
   };
 
+  const unsubscribe = env.ticker.subscribe((time) => {
+    now = time;
+    drawLed(false);
+  });
   build();
 
   return {
     setFrame(next: IkusiFrame): void {
+      if (next.led !== frame.led) strip = ledStrip(next.led ?? '');
       frame = next;
       const look = lcdLook(options);
       const { time, line } = lines(frame);
@@ -183,12 +226,14 @@ export function mount(host: Element, initial: IkusiOptions, _env: { ticker: Tick
       updateLcd(slots.line, at.line, line, ikusiLcd, look);
       if (slots.number) slots.number.textContent = frame.platform;
       if (title) title.textContent = describe(frame);
+      drawLed(true);
     },
     setOptions(next: IkusiOptions): void {
       options = next;
       build();
     },
     destroy(): void {
+      unsubscribe();
       element?.remove();
     },
   };
