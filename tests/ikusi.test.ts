@@ -84,7 +84,7 @@ describe('the Ikusi platform sign', () => {
     const size = lcdSize(ikusi7x9, look);
     expect(size.width).toBeCloseTo(GLASS.width);
     expect(size.height).toBeCloseTo(GLASS.height);
-    expect(ikusi7x9Rows('1')![8]).toBe('.######');
+    expect(ikusi7x9Rows('1')![8]).toBe('.####..');
   });
 
   it('is registered under its own id', () => {

@@ -1,21 +1,23 @@
 /**
  * The characters of Ikusi's liquid-crystal railway signs: a matrix 7 dots
  * wide and 9 tall per character, on the glasses of the platform signs of
- * Atocha Cercanías and of Metro Bilbao's platform signs and notice boards,
- * and on the LED modules that later replaced Metro Bilbao's platform
+ * Atocha Cercanías and of Euskotren, of Metro Bilbao's platform signs and
+ * notice boards, and on the LED modules that later replaced Metro Bilbao's platform
  * glasses, which draw the same letters. The glasses are as large as those
  * of Ikusi's 7 × 11 airport boards, so the dots are further apart up and
  * down than across. Heavy capitals with strokes two dots thick both ways;
  * bars at the top (rows 0 and 1), in the middle (4 and 5) and at the bottom
  * (7 and 8). Some characters have marks of their own: the S ends in a
- * single dot at each tip, the B has a foot at both ends of its stem, the N
- * a single dot at the top of one stem and the foot of the other, the 1 a
- * foot; the I, the T and the N are six dots wide.
+ * single dot at each tip, the B and the D have serifs at both ends of their
+ * stems, the N a single dot at the top of one stem and the foot of the
+ * other, the 1 a one-dot flag and a foot; the I, the T and the N are six
+ * dots wide.
  *
  * Read dot by dot on a frontal photograph of a Metro Bilbao platform sign
- * with LED modules (B, A, S, U, R, I, 0, 2, 7), and in shape on others, with
- * glasses and with LED (N, E, T, X, 3, 4, 5, the brackets and the asterisk
- * in Bilbao; the 1 at Atocha). That Atocha's signs have these characters
+ * with LED modules (B, A, S, U, R, I, 0, 2, 7) and on one of Euskotren's
+ * platform signs at Atxuri (1), and in shape on others, with glasses and
+ * with LED (N, E, T, X, 3, 4, the brackets and the asterisk in Bilbao; the
+ * D and the 5 at Atxuri). That Atocha's signs have these characters
  * and not the airports' is inferred from the shapes of their letters, the
  * A's narrow top above all: their photographs do not let the dots be
  * counted. No ROM has been read: the rest are drawn on the same grid to
@@ -26,7 +28,8 @@ const GLYPHS: Record<string, string[]> = {
   A: ['..###..', '.#####.', '##...##', '##...##', '#######', '#######', '##...##', '##...##', '##...##'],
   B: ['#####..', '.##.##.', '.##.##.', '.####..', '.#####.', '.##..##', '.##..##', '.######', '######.'],
   C: ['.#####.', '#######', '##...##', '##.....', '##.....', '##.....', '##...##', '#######', '.#####.'],
-  D: ['######.', '#######', '##...##', '##...##', '##...##', '##...##', '##...##', '#######', '######.'],
+  // Slab serifs at the top and the foot of the stem, the corners round on the other side (read at Atxuri).
+  D: ['######.', '.######', '.##..##', '.##..##', '.##..##', '.##..##', '.##..##', '.######', '######.'],
   E: ['#######', '#######', '##.....', '##.....', '######.', '######.', '##.....', '#######', '#######'],
   F: ['#######', '#######', '##.....', '##.....', '######.', '######.', '##.....', '##.....', '##.....'],
   G: ['.#####.', '#######', '##.....', '##.....', '##.####', '##.####', '##...##', '#######', '.#####.'],
@@ -54,12 +57,13 @@ const GLYPHS: Record<string, string[]> = {
   Z: ['#######', '#######', '....###', '...###.', '..###..', '.###...', '###....', '#######', '#######'],
   Ñ: ['.###.##', '##.###.', '.......', '##...##', '###..##', '####.##', '##.####', '##..###', '##...##'],
   '0': ['.#####.', '#######', '##...##', '##...##', '##...##', '##...##', '##...##', '#######', '.#####.'],
-  // With a foot, as photographed at Atocha.
-  '1': ['...##..', '..###..', '.####..', '...##..', '...##..', '...##..', '...##..', '.######', '.######'],
+  // A single dot for the flag, and a foot one dot high reaching one past the stem on each side (read at Atxuri; the stem in the colon's columns).
+  '1': ['..##...', '.###...', '..##...', '..##...', '..##...', '..##...', '..##...', '..##...', '.####..'],
   '2': ['.#####.', '#######', '##...##', '....###', '...###.', '..###..', '.###...', '#######', '#######'],
   '3': ['.#####.', '#######', '##...##', '.....##', '..####.', '.....##', '##...##', '#######', '.#####.'],
   '4': ['....##.', '...###.', '..####.', '.##.##.', '##..##.', '#######', '#######', '....##.', '....##.'],
-  '5': ['#######', '#######', '##.....', '######.', '#######', '.....##', '##...##', '#######', '.#####.'],
+  // The tip of the hook is one dot wide (seen at Atxuri).
+  '5': ['#######', '#######', '##.....', '######.', '#######', '.....##', '#....##', '#######', '.#####.'],
   '6': ['.######', '#######', '##.....', '######.', '#######', '##...##', '##...##', '#######', '.#####.'],
   '7': ['#######', '#######', '.....##', '....###', '...###.', '..###..', '.###...', '###....', '##.....'],
   '8': ['.#####.', '#######', '##...##', '.#####.', '.#####.', '##...##', '##...##', '#######', '.#####.'],
@@ -79,9 +83,9 @@ export const IKUSI_7X9_COLS = 7;
 export const IKUSI_7X9_ROWS = 9;
 
 /** Read dot by dot on a frontal photograph. */
-export const IKUSI_7X9_READ: readonly string[] = [...'ABSURI', ...'027'];
+export const IKUSI_7X9_READ: readonly string[] = [...'ABSURI', ...'027', '1'];
 /** Seen in photographs, in shape if not dot by dot. */
-export const IKUSI_7X9_SEEN: readonly string[] = [...IKUSI_7X9_READ, 'N', ...'ETX', ...'1345', '(', ')', '*'];
+export const IKUSI_7X9_SEEN: readonly string[] = [...IKUSI_7X9_READ, 'N', ...'ETX', 'D', ...'345', '(', ')', '*'];
 /** Drawn in the same style, for want of a photograph. */
 export const IKUSI_7X9_RECONSTRUCTED: readonly string[] = Object.keys(GLYPHS).filter((char) => !IKUSI_7X9_SEEN.includes(char));
 

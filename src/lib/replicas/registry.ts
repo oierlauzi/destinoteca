@@ -10,6 +10,7 @@ import { ikusiAndenAtocha } from './ikusi-anden-atocha/def';
 import { ikusiAeropuerto } from './ikusi-aeropuerto/def';
 import { ikusiMetroBilbaoAnden } from './ikusi-metro-bilbao-anden/def';
 import { ikusiMetroBilbaoAvisos } from './ikusi-metro-bilbao-avisos/def';
+import { ikusiEuskotrenAnden } from './ikusi-euskotren-anden/def';
 import { festinaAdif } from './festina-adif/def';
 import { relojCercanias } from './reloj-cercanias/def';
 import { andenMp, andenMpReloj, andenMpVertical } from './mp-electronics-adif-anden/def';
@@ -48,6 +49,7 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'ikusi-aeropuerto': ikusiAeropuerto,
   'ikusi-metro-bilbao-anden': ikusiMetroBilbaoAnden,
   'ikusi-metro-bilbao-avisos': ikusiMetroBilbaoAvisos,
+  'ikusi-euskotren-anden': ikusiEuskotrenAnden,
   'reloj-cercanias': relojCercanias,
 };
 
