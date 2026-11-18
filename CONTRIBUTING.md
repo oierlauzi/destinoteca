@@ -1,8 +1,8 @@
 # Cómo contribuir
 
 Gracias por querer aportar. El archivo entero vive en este repositorio, así
-que contribuir es proponer un cambio en un archivo de texto. Hay tres maneras,
-de menos a más técnica:
+que contribuir es proponer un cambio en un archivo de texto. Hay cuatro
+maneras, de menos a más técnica:
 
 1. **Abrir una incidencia** con uno de los
    [formularios](https://github.com/oierlauzi/destinoteca/issues/new/choose):
@@ -10,6 +10,11 @@ de menos a más técnica:
 2. **Editar una ficha en GitHub** con el enlace «Editar esta página» que hay
    al pie de cada una. GitHub crea la propuesta de cambio por ti.
 3. **Clonar el repositorio** y trabajar en local (ver [Desarrollo](#desarrollo)).
+4. **Escribir al mantenedor**, si prefieres no usar GitHub: por correo a
+   [olauzirika@gmail.com](mailto:olauzirika@gmail.com) o por mensaje a
+   `oierlauzi` en Instagram, X o Bluesky. Basta con contar lo que sabes y
+   adjuntar las fotografías, con su autor y de dónde salen; la ficha la
+   redacta él.
 
 Antes de publicarse, cada cambio pasa unas comprobaciones automáticas y una
 revisión.
