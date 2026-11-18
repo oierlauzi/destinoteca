@@ -4,10 +4,10 @@ import type { Ticker } from '../../player/ticker';
 import { angles, daySeconds } from '../clock-hands';
 import { railRow } from '../ikusi/modules';
 import { navilensPlate } from '../ikusi-metro-bilbao/navilens';
-import { boxNodes, cellNodes, fold, newCellRefs, updateCells, windowNodes, type CellRefs } from '../ikusi-metro-bilbao/parts';
+import { bezelBoxNodes, cellNodes, fold, newCellRefs, updateCells, windowNodes, type CellRefs } from '../ikusi-metro-bilbao/parts';
 import { clockNodes, rotate, type HandRefs } from './clock';
 import { composeRow, sideOf, techOf, type BilbaoFrame, type BilbaoOptions } from './def';
-import { CHARS, layout, type Layout } from './geometry';
+import { BEAM, BEZEL, CHARS, layout, type Layout } from './geometry';
 
 const FONT = 'Helvetica, Arial, Liberation Sans, sans-serif';
 /** What a clock shows with no time to show: the catalogues' 10:10. */
@@ -25,6 +25,47 @@ export function describe(frame: BilbaoFrame): string {
   return ['Metro Bilbao', ...rows].join(' · ');
 }
 
+/** The stainless tube and posts the sign hangs from, as long as the sign; plates bolted to the box's top hold the box's posts. */
+function beamNodes(l: Layout, id: string): VNode[] {
+  const steel = (gid: string, x2: number, y2: number) =>
+    h('linearGradient', { id: gid, x1: 0, y1: 0, x2, y2 }, [
+      h('stop', { offset: 0, 'stop-color': '#7e8389' }),
+      h('stop', { offset: 0.3, 'stop-color': '#e4e6e9' }),
+      h('stop', { offset: 0.55, 'stop-color': '#a6abb1' }),
+      h('stop', { offset: 1, 'stop-color': '#5d6167' }),
+    ]);
+  const nodes: VNode[] = [h('defs', {}, [steel(`${id}-tube`, 0, 1), steel(`${id}-post`, 1, 0)])];
+  for (const post of l.posts) nodes.push(h('rect', { ...post, fill: `url(#${id}-post)` }));
+  nodes.push(h('rect', { ...l.beam, rx: l.beam.height / 2, fill: `url(#${id}-tube)` }));
+  // The plates under the box's posts, with a bolt at each end.
+  for (const post of l.posts.slice(0, 2)) {
+    const cx = post.x + post.width / 2;
+    const y = l.box.y - 0.5;
+    nodes.push(
+      h('rect', { x: cx - BEAM.plate / 2, y, width: BEAM.plate, height: 0.6, rx: 0.15, fill: '#9a9fa5' }),
+      h('circle', { cx: cx - BEAM.plate / 2 + 1.2, cy: y - 0.15, r: 0.55, fill: '#80858b' }),
+      h('circle', { cx: cx + BEAM.plate / 2 - 1.2, cy: y - 0.15, r: 0.55, fill: '#80858b' }),
+    );
+  }
+  return nodes;
+}
+
+/** The pane of glass over the opening: a faint sheen, brighter towards the top, and the light along its top edge. */
+function paneNodes(l: Layout, id: string): VNode[] {
+  const o = l.opening;
+  return [
+    h('defs', {}, [
+      h('linearGradient', { id: `${id}-pane`, x1: 0, y1: 0, x2: 0.25, y2: 1 }, [
+        h('stop', { offset: 0, 'stop-color': '#ffffff', 'stop-opacity': 0.09 }),
+        h('stop', { offset: 0.45, 'stop-color': '#ffffff', 'stop-opacity': 0.03 }),
+        h('stop', { offset: 1, 'stop-color': '#ffffff', 'stop-opacity': 0.05 }),
+      ]),
+    ]),
+    h('rect', { ...o, fill: `url(#${id}-pane)` }),
+    h('rect', { x: o.x, y: o.y, width: o.width, height: 0.25, fill: '#ffffff', 'fill-opacity': 0.12 }),
+  ];
+}
+
 interface Refs {
   rows: CellRefs[];
   hands: HandRefs;
@@ -36,8 +77,11 @@ function scene(frame: BilbaoFrame, options: BilbaoOptions, seconds: number, id: 
   const l = layoutOf(options);
   const tech = techOf(options);
   const chars = rowChars(frame);
-  const nodes: VNode[] = [...boxNodes(l.box, 0.9), ...windowNodes(l.window)];
-  l.rows.forEach((row, i) => nodes.push(...railRow(row), ...cellNodes(tech, row.glasses, chars[i] ?? [], options, i * CHARS, refs.rows[i])));
+  const nodes: VNode[] = [...beamNodes(l, id), ...bezelBoxNodes(l.box, BEZEL.corner, BEZEL), ...windowNodes(l.opening)];
+  // The rows show only through the opening.
+  const rows: VNode[] = [];
+  l.rows.forEach((row, i) => rows.push(...railRow(row), ...cellNodes(tech, row.glasses, chars[i] ?? [], options, i * CHARS, refs.rows[i])));
+  nodes.push(h('defs', {}, [h('clipPath', { id: `${id}-opening` }, [h('rect', { ...l.opening })])]), h('g', { 'clip-path': `url(#${id}-opening)` }, rows), ...paneNodes(l, id));
   nodes.push(...clockNodes(l.clock.cx, l.clock.cy, l.clock.r, angles(seconds, options.motion), `${id}-clock`, refs.hands));
   if (l.plate) nodes.push(navilensPlate(l.plate.x, l.plate.y));
   return nodes;

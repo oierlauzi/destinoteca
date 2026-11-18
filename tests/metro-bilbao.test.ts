@@ -16,7 +16,7 @@ import { defaults } from '../src/lib/params';
 import { GLASS } from '../src/lib/replicas/ikusi/modules';
 import { lcdLook, ledLook } from '../src/lib/replicas/ikusi-metro-bilbao/parts';
 import { BRACKET_END, composeRow, fromFlat, ikusiMetroBilbaoAnden, optionsSchema, toFlat, type BilbaoOptions } from '../src/lib/replicas/ikusi-metro-bilbao-anden/def';
-import { BOX, CHARS, CLOCK, layout } from '../src/lib/replicas/ikusi-metro-bilbao-anden/geometry';
+import { BEAM, BOX, CHARS, CLOCK, layout } from '../src/lib/replicas/ikusi-metro-bilbao-anden/geometry';
 import { blank, present } from '../src/lib/replicas/ikusi-metro-bilbao-anden/presenter';
 import { renderToString } from '../src/lib/replicas/ikusi-metro-bilbao-anden/render';
 import { ikusiMetroBilbaoAvisos, optionsSchema as avisosSchema, RUN_GAP, type AvisosOptions } from '../src/lib/replicas/ikusi-metro-bilbao-avisos/def';
@@ -106,13 +106,22 @@ describe('LED character cells', () => {
     const svg = ledCells([at, { x: 7, y: 0 }], ['A', ' '], ikusi7x9, look).map(toString).join('');
     expect(svg.match(new RegExp(`fill="${look.faint}"`, 'g'))).toHaveLength(2);
   });
+
+  it('glow round the lit dots only', () => {
+    const at = { x: 0, y: 0 };
+    const dots = (d: string) => (d.match(/M/g) ?? []).length;
+    const a = ledCellPaths('A', at, ikusi7x9, look);
+    expect(a.glow).toHaveLength(look.glow!.length);
+    for (const layer of a.glow) expect(dots(layer)).toBe(dots(a.lit));
+    expect(ledCellPaths(' ', at, ikusi7x9, look).glow.every((layer) => layer === '')).toBe(true);
+  });
 });
 
 describe('the platform sign of Metro Bilbao', () => {
   it('is registered under its own id, its size following the code beside it', () => {
     expect(getReplica('ikusi-metro-bilbao-anden')).toBe(ikusiMetroBilbaoAnden);
     expect(ikusiMetroBilbaoAnden.size!({ navilens: true }).width).toBeGreaterThan(ikusiMetroBilbaoAnden.viewBox.width);
-    expect(ikusiMetroBilbaoAnden.viewBox.height).toBeCloseTo(BOX.height);
+    expect(ikusiMetroBilbaoAnden.viewBox.height).toBeCloseTo(BEAM.thickness + BEAM.gap + BOX.height);
   });
 
   it('has the clock at one end and the NaviLens code at the other', () => {
@@ -128,6 +137,24 @@ describe('the platform sign of Metro Bilbao', () => {
     expect(right.rows[0]!.glasses[0]!.x - right.box.x).toBeCloseTo(left.rows[0]!.glasses[0]!.x - left.box.x);
   });
 
+  it('hangs from a tube as long as the sign, on posts that stand on the box and the clock', () => {
+    for (const side of ['left', 'right'] as const) {
+      for (const navilens of [false, true]) {
+        const l = layout(side, navilens);
+        expect(l.beam.x).toBe(0);
+        expect(l.beam.width).toBeCloseTo(l.width);
+        const [a, b, clock] = l.posts;
+        expect(a!.y + a!.height).toBeCloseTo(l.box.y);
+        expect(b!.y + b!.height).toBeCloseTo(l.box.y);
+        expect(a!.x + a!.width / 2 - l.box.x).toBeCloseTo(BEAM.inset);
+        expect(l.box.x + l.box.width - (b!.x + b!.width / 2)).toBeCloseTo(BEAM.inset);
+        expect(clock!.x + clock!.width / 2).toBeCloseTo(l.clock.cx);
+        expect(clock!.y + clock!.height).toBeGreaterThan(l.clock.cy - l.clock.r);
+        expect(l.box.y - (l.beam.y + l.beam.height)).toBeCloseTo(BEAM.gap);
+      }
+    }
+  });
+
   it('mounts two rows of 19 characters on rails, one blank module at each end, inside its window', () => {
     const l = layout('left', false);
     expect(l.rows).toHaveLength(2);
@@ -137,6 +164,14 @@ describe('the platform sign of Metro Bilbao', () => {
       expect(row.rail.x).toBeCloseTo(l.window.x);
       expect(row.rail.y + row.rail.height).toBeLessThanOrEqual(l.window.y + l.window.height + 1e-9);
     }
+    // The opening shows the glasses and more room above them, but neither the rail above the first row nor the groove below the last.
+    const first = l.rows[0]!;
+    const last = l.rows[l.rows.length - 1]!;
+    expect(l.opening.y).toBeLessThan(first.glasses[0]!.y - 1);
+    expect(l.opening.y).toBeGreaterThan(first.moduleY);
+    // The bottom groove starts 0.715 below the glass.
+    expect(l.opening.y + l.opening.height).toBeGreaterThan(last.glasses[0]!.y + GLASS.height);
+    expect(l.opening.y + l.opening.height).toBeLessThan(last.glasses[0]!.y + GLASS.height + 0.715);
     // Twice as much box above the rows as below them.
     const above = l.window.y - l.box.y;
     const below = l.box.y + l.box.height - (l.window.y + l.window.height);
