@@ -56,10 +56,9 @@ photos:
   - id: deia-andenes
     src: ./deia-andenes.jpg
     alt: >-
-      Andén subterráneo bajo una bóveda de hormigón, con escaleras a los dos
-      lados. Sobre las vías cuelga un cartel encendido, con un reloj de
-      agujas a su izquierda y el código de colores a su derecha.
-    caption: Con caracteres de LED, el reloj a la izquierda y el código NaviLens a la derecha.
+      Andén subterráneo bajo una bóveda de hormigón, con el cartel encendido
+      sobre las vías, entre el reloj y el código NaviLens.
+    caption: Con caracteres de LED y el código NaviLens.
     author: Deia
     sourceUrl: https://estaticosgn-cdn.deia.eus/clip/99cc7a44-5e5b-4b76-87f2-5ea0a8fd5b01_16-9-discover-aspect-ratio_default_0.jpg
     source: Deia
@@ -67,8 +66,7 @@ photos:
   - id: moyua-1995
     src: ./moyua-1995.jpg
     alt: >-
-      Autoridades en el andén de Moyua junto a una ikurriña; arriba, a la
-      izquierda, un cartel de andén encendido.
+      Autoridades en el andén de Moyua; arriba, un cartel de andén encendido.
     caption: La inauguración del metro en Moyua, en noviembre de 1995.
     date: '1995-11'
     place: Moyua
@@ -79,8 +77,7 @@ photos:
   - id: bilbao-hiria-2023
     src: ./bilbao-hiria-2023.jpg
     alt: >-
-      Cartel de andén encendido colgado de una barra metálica, junto a un
-      poste, visto desde abajo.
+      Cartel de andén encendido, visto desde abajo.
     caption: Con los cristales líquidos, en 2023.
     date: '2023-09'
     author: Bilbao Hiria
@@ -90,9 +87,9 @@ photos:
   - id: navilens-led
     src: ./navilens-led.jpg
     alt: >-
-      Andén con un tren parado bajo una pasarela; arriba, el cartel con el
-      reloj a la izquierda y el código de colores a la derecha.
-    caption: Con caracteres de LED y el código NaviLens.
+      Andén con un tren parado; arriba, el cartel con su reloj y el código
+      NaviLens.
+    caption: Con un tren en la vía.
     author: NaviLens
     sourceUrl: https://www.navilens.com/assets/anden-basauri-etxebarri-3ypQWlO2.jpg
     source: NaviLens
@@ -100,8 +97,7 @@ photos:
   - id: radio-popular-2025
     src: ./radio-popular-2025.jpg
     alt: >-
-      Cartel de andén con caracteres de LED y un reloj de agujas a su
-      izquierda, colgados de la misma barra.
+      Cartel de andén con caracteres de LED y su reloj.
     caption: Con caracteres de LED, en 2025.
     date: '2025-04'
     author: Radio Popular
@@ -126,61 +122,33 @@ stage: stub
 ---
 
 Es el cartel de los andenes de [Metro Bilbao](../../operadores/metro-bilbao/)
-desde que el metro abrió, en noviembre de 1995: uno por vía, colgado de una
-barra sobre el andén. Anuncia los dos próximos trenes, uno en cada fila,
-con el destino a la izquierda y los minutos que faltan a la derecha, en dos
-cifras: «02», «07». Cuando el tren ya está en la vía, los minutos quedan en
-blanco. Delante de los minutos de algunos trenes aparece un número entre
-paréntesis, «(5)».
+desde que el metro abrió, en noviembre de 1995, uno por vía. Anuncia los dos
+próximos trenes, uno en cada fila, con su destino y los minutos que faltan;
+algunos llevan además un número entre paréntesis.
 
-Cada fila tiene 19 caracteres, y cada carácter es un módulo de cristal
-líquido de [Ikusi](../../fabricantes/ikusi/) con su propio cristal; los que
-quedan en blanco siguen brillando, en un pardo anaranjado. Los cristales
-tienen 7 por 9 puntos, como los de los
-[tableros de avisos](../ikusi-metro-bilbao-avisos/), y no los 7 por 11 de
-los paneles de Ikusi de los aeropuertos; sus mayúsculas son gruesas, con
-marcas propias: la S termina en un punto suelto en cada punta, la B tiene
-un pie en cada extremo del trazo vertical y la I es más estrecha que las
-demás. Por encima de las filas, la caja negra deja
-una franja el doble de alta que por debajo.
+Cada fila tiene 19 caracteres, cada uno un módulo de cristal líquido de
+[Ikusi](../../fabricantes/ikusi/) de 7 por 9 puntos. Al lado cuelga un reloj
+de agujas: según *Vía Libre*, cada panel llevaba el suyo. Su esfera, gris muy
+oscuro, se ilumina desde el borde, y las marcas de los minutos van en un aro
+de vinilo negro sobre el cristal. Los hay con el reloj a la izquierda y a la
+derecha.
 
-Al lado cuelga un reloj de agujas, tan grande como alto es el cartel; según
-*Vía Libre*, cada panel llevaba el suyo. La esfera, gris muy oscuro, se
-ilumina desde el borde, y en las fotografías parece a menudo azul; delante,
-un cristal con un aro de vinilo negro y, en él, las marcas blancas de los
-minutos, pegadas a su borde exterior. Los números son blancos, como las
-agujas, y el segundero es rojo y grueso. Los hay con el reloj a la izquierda
-y con el reloj a la derecha.
-
-Después se cambiaron los cristales por módulos de LED del mismo tamaño,
-dentro de la misma caja, que dibujan los mismos caracteres de 7 por 9
-puntos, ahora redondos. Para que no se pierda la cuadrícula de caracteres,
-los módulos en blanco encienden débilmente todos sus puntos. Desde mayo de
-2024 lleva además, en el extremo contrario al reloj, un código NaviLens que
-lee en voz alta lo que anuncia el cartel.
+Más tarde los cristales se cambiaron por módulos de LED del mismo tamaño, que
+dibujan los mismos caracteres. Desde mayo de 2024 lleva, en el extremo
+contrario al reloj, un código NaviLens que lee en voz alta lo que anuncia.
 
 ## Lo que no se sabe
 
-- **Qué significa el número entre paréntesis.** En las fotografías es
-  siempre «(5)», y solo en algunos trenes. Puede que indique los trenes de
-  cinco coches, pero es una suposición; la réplica lo escribe para los
+- **Qué significa el número entre paréntesis.** Puede que indique los trenes
+  de cinco coches, pero es una suposición; la réplica lo escribe para los
   trenes de cinco coches o más.
 - **Cuándo se cambiaron los cristales por LED, y quién lo hizo.** Una
-  fotografía de 2023 los muestra todavía con cristal líquido; las de 2025,
-  con LED. No se sabe si se cambiaron todos.
-- **Qué mostraba el cartel sin trenes**, aparte de avisos como el «Ongi
-  etorri» de la inauguración.
+  fotografía de 2023 los muestra todavía con cristal líquido, y las de 2025,
+  con LED.
 - **Quién hizo el reloj.**
-- **Las medidas.** Las proporciones de la réplica se miden en una
-  fotografía de frente, tomando los módulos por los de Ikusi de Atocha
-  Cercanías.
-- **Los caracteres.** Se han copiado punto por punto, de una fotografía de
-  un cartel con LED, la A, la B, la I, la R, la S, la U, el 0, el 2 y el 7;
-  la E, la T, la X, el 3, el 4, el 5 y los paréntesis se ven en otras, con
-  cristales o con LED, pero no punto por punto. La réplica dibuja el resto
-  en el mismo estilo.
-- **El tamaño de los puntos del cristal.** La réplica toma los cristales tan
-  grandes como los de los otros carteles de Ikusi, con los puntos más
-  separados en vertical que en horizontal, como en los módulos de LED.
+- **Las medidas.** Las proporciones de la réplica se miden en una fotografía
+  de frente, tomando los módulos por los de Ikusi de Atocha Cercanías.
+- **Los caracteres.** Solo algunos se han podido copiar punto por punto de
+  las fotografías; la réplica dibuja el resto en el mismo estilo.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

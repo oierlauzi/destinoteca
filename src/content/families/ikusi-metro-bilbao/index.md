@@ -27,47 +27,38 @@ references:
     note: Los códigos junto a los teleindicadores de andén y de vestíbulo, que leen en voz alta lo que muestran.
 ---
 
-Cuando se abrió [Metro Bilbao](../../operadores/metro-bilbao/), en
-noviembre de 1995, la megafonía y los teleindicadores de sus estaciones
-eran de [Ikusi](../../fabricantes/ikusi/), que los había concebido,
-desarrollado y fabricado en el País Vasco. Un programa de la propia Ikusi
-los gobernaba desde el puesto de mando central, desde donde se
-telemandaban y telecontrolaban, junto a la megafonía, la videovigilancia y
-la interfonía de las estaciones.
+Cuando se abrió [Metro Bilbao](../../operadores/metro-bilbao/), en noviembre
+de 1995, la megafonía y los teleindicadores de sus estaciones eran de
+[Ikusi](../../fabricantes/ikusi/), que los había concebido, desarrollado y
+fabricado. Se gobernaban desde el puesto de mando central con un programa de
+la propia Ikusi.
 
 Todos comparten:
 
-- **Los módulos de cristal líquido de Ikusi**, uno por carácter y montados
-  en fila sobre un carril, como en los
-  [carteles de Atocha Cercanías](../../catalogo/ikusi-anden-atocha/) y los
-  [paneles de los aeropuertos](../../catalogo/ikusi-aeropuertos-aena/), con
-  mayúsculas gruesas en amarillo sobre cristales que brillan, aun en blanco,
-  en un pardo anaranjado. Pero sus cristales tienen 7 por 9 puntos, no 7
-  por 11, y sus letras son propias: la S termina en un punto suelto en cada
-  punta, la B y la N tienen pies, y la I, la T y la N son más estrechas.
+- **Los módulos de cristal líquido de Ikusi**, uno por carácter y montados en
+  fila sobre un carril, como en los
+  [carteles de Atocha Cercanías](../../catalogo/ikusi-anden-atocha/), con
+  caracteres amarillos de 7 por 9 puntos sobre cristales que brillan en un
+  pardo anaranjado.
 - **Una caja negra** con una ventana por la que asoman las filas.
-- **El euskera y el castellano.** Los destinos se escriben con su nombre en
-  euskera, y los avisos, en las dos lenguas.
-- **El código NaviLens.** Desde mayo de 2024 hay junto a cada cartel un
-  código de colores que, leído con el teléfono, dice en voz alta lo que
-  muestra.
+- **El euskera y el castellano.**
+- **El código NaviLens**, junto a cada cartel desde mayo de 2024, que se lee
+  con el teléfono y dice en voz alta lo que muestra el cartel.
 
 ## Los carteles
 
 - El [teleindicador de andén](../../catalogo/ikusi-metro-bilbao-anden/), con
-  los dos próximos trenes de la vía y un reloj de agujas al lado. Más tarde
-  se le pusieron caracteres de LED en lugar de los cristales.
+  los dos próximos trenes de la vía y un reloj de agujas al lado.
 - El [tablero de avisos](../../catalogo/ikusi-metro-bilbao-avisos/) de los
-  vestíbulos, de tres líneas de 35 caracteres.
+  vestíbulos.
 
 ## Lo que no se sabe
 
 - **Si los tableros de avisos son de 1995.** En febrero de 1996 *Vía Libre*
   contaba 53 paneles, todos de dos líneas de 19 caracteres y con reloj, es
-  decir, los de andén; no dice nada de los de tres líneas.
+  decir, los de andén.
 - **Quién gobierna hoy los carteles.** En febrero de 2025 Metro Bilbao
-  adjudicó a Global Dominion Access el mantenimiento de «los
-  teleindicadores modelo Dominion instalados en Metro Bilbao». No se sabe
-  si son estos, ni si Dominion tuvo que ver con los caracteres de LED.
+  adjudicó a Global Dominion Access el mantenimiento de «los teleindicadores
+  modelo Dominion instalados en Metro Bilbao»; no se sabe si son estos.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

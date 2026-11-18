@@ -36,9 +36,8 @@ photos:
   - id: europa-press-2024
     src: ./europa-press-2024.jpg
     alt: >-
-      Tablero negro colgado del techo, visto de frente y desde abajo, con
-      tres filas de caracteres amarillos sobre cristales pardos.
-    caption: Un aviso de retrasos, en euskera y en castellano, en 2024.
+      Tablero negro encendido, colgado del techo.
+    caption: En 2024.
     date: '2024-08'
     author: Europa Press
     sourceUrl: https://s10.s3c.es/imag/_v0/1920x1048/c/d/8/fotonoticia_20240801093101_1920.jpg
@@ -47,8 +46,7 @@ photos:
   - id: nortexpres-2023
     src: ./nortexpres-2023.jpg
     alt: >-
-      Vestíbulo bajo una bóveda de vigas metálicas; arriba, el tablero
-      encendido, con el logotipo de Ikusi en su esquina inferior derecha.
+      Vestíbulo bajo una bóveda; arriba, el tablero encendido.
     caption: Con el logotipo de Ikusi abajo, a la derecha.
     date: '2023-01'
     author: Nortexpres
@@ -58,8 +56,7 @@ photos:
   - id: europa-press-2023
     src: ./europa-press-2023.jpg
     alt: >-
-      Tablero colgado de un techo abovedado, con dos filas de texto y una
-      tercera que entra por la derecha.
+      Tablero encendido colgado de un techo abovedado.
     caption: La tercera fila, mientras corre.
     date: '2023-05'
     author: Europa Press
@@ -69,8 +66,8 @@ photos:
   - id: navilens-vestibulo
     src: ./navilens-vestibulo.jpg
     alt: >-
-      Vestíbulo con tornos de acceso; sobre ellos, el tablero encendido y, a
-      su izquierda, un código de colores en una placa blanca.
+      Vestíbulo con tornos de acceso; sobre ellos, el tablero y el código
+      NaviLens.
     caption: Con el código NaviLens a su izquierda.
     author: NaviLens
     sourceUrl: https://www.navilens.com/assets/vestibulo-deustu-ariz-CtzGzMj6.jpg
@@ -79,8 +76,7 @@ photos:
   - id: deia-vestibulo
     src: ./deia-vestibulo.jpg
     alt: >-
-      Vestíbulo con tornos de acceso bajo una bóveda; arriba, el tablero
-      encendido.
+      Vestíbulo con tornos de acceso; arriba, el tablero encendido.
     caption: Sobre los tornos de un vestíbulo.
     author: Deia
     sourceUrl: https://estaticosgn-cdn.deia.eus/clip/826293d5-a205-44f9-9a93-15eb9f3a86e3_16-9-aspect-ratio_default_0_x932y673.jpg
@@ -97,31 +93,25 @@ stage: stub
 ---
 
 Cuelga en los vestíbulos de [Metro Bilbao](../../operadores/metro-bilbao/),
-sobre los tornos, a la entrada de la pasarela que baja a los andenes. Tiene
-tres filas de 35 caracteres, cada uno un módulo de cristal líquido de
+sobre los tornos. Tiene tres filas de 35 caracteres de cristal líquido de
 [Ikusi](../../fabricantes/ikusi/), como los del
-[cartel de andén](../ikusi-metro-bilbao-anden/), y el logotipo de Ikusi
-impreso en la caja, abajo a la derecha.
+[cartel de andén](../ikusi-metro-bilbao-anden/), y el logotipo de Ikusi en la
+caja.
 
-No anuncia trenes, sino avisos para toda la red: un ascensor averiado,
-retrasos. La primera fila lo dice en euskera y la segunda en castellano,
-«Kaleko igogailua hondatua» y «Ascensor exterior averiado», o «Oharra» y
-«Aviso» sobre un texto más largo. La tercera dice a qué estaciones afecta, o
-hace correr, de carácter en carácter y de derecha a izquierda, un texto que
-no cabe, entre asteriscos, en las dos lenguas una detrás de otra; al
-terminar deja ocho caracteres en blanco y vuelve a empezar.
+No anuncia trenes, sino avisos para toda la red, en euskera en la primera
+fila y en castellano en la segunda. Un texto que no cabe corre por la
+tercera, de carácter en carácter.
 
 Desde mayo de 2024 tiene a un lado un código NaviLens, que sirve para leer el
 aviso en voz alta mediante un teléfono móvil.
 
 ## Lo que no se sabe
 
-- **Desde cuándo están.** Las fotografías que se conocen son de 2023 y
-  2024, y en 1996 *Vía Libre* no los contaba entre los paneles del metro.
+- **Desde cuándo están.** Las fotografías que se conocen son de 2023 y 2024,
+  y en 1996 *Vía Libre* no los contaba entre los paneles del metro.
 - **Qué muestra cuando no hay avisos.**
-- **Cuántos hay**, y si todos están en el mismo lado de los tornos.
-- **Si alguno ha recibido caracteres de LED**, como los carteles de andén.
-- **Las medidas.** Las proporciones de la réplica se estiman en
-  fotografías tomadas desde abajo.
+- **Cuántos hay.**
+- **Las medidas.** Las proporciones de la réplica se estiman en fotografías
+  tomadas desde abajo.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
