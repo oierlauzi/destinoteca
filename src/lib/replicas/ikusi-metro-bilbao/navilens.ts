@@ -8,7 +8,7 @@ import { h, type VNode } from '../../hardware';
  * every replica, and reads as nothing.
  */
 
-/** The plate's side, in centimetres, estimated from photographs. */
+/** The plate's side: about five characters' pitch, in proportion to the signs in photographs. */
 export const PLATE = 35;
 
 const COLORS = ['#6cc4ef', '#f3e23a', '#e6489a', '#141414'];

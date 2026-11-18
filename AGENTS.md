@@ -37,6 +37,10 @@ byte for byte the same; compare their `renderToString` output before and after.
   the "Lo que no se sabe" section. No invented dates: ADIF exists since 2005,
   so no ADIF equipment is dated earlier unless a source proves a refurbished
   older unit.
+- **Proportions, not sizes.** Photographs give proportions only. Never
+  estimate an absolute size (cm, m) from them, in an entry or in a code
+  comment; geometry is measured in units of one of the sign's own parts,
+  such as a character's pitch. Sizes appear only when a source states them.
 - **No over-literal descriptions.** Captions, alt texts and articles do not
   transcribe what a screen shows in a photograph; they say what the picture
   is.
@@ -93,9 +97,10 @@ byte for byte the same; compare their `renderToString` output before and after.
 
 ## Installations
 
-- Measured in centimetres from the wall's top-left corner; an element's
-  height follows from its replica's shape. Sizes are estimates from
-  photographs, and the entry says so.
+- Laid out in centimetres from the wall's top-left corner; an element's
+  height follows from its replica's shape. These are the drawing's units,
+  scaled from proportions measured in photographs, not measured sizes, and
+  the entry says so.
 - Every element is an archive entry; the page links each one, and each entry
   lists the installations it is part of.
 - Boards that carry on from one another share a `serie`.

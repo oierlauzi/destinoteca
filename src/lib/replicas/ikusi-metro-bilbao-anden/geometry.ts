@@ -2,14 +2,14 @@ import { CELL, INSET, LIP, MODULE, rowLayout, type Box, type RowLayout } from '.
 import { PLATE } from '../ikusi-metro-bilbao/navilens';
 
 /*
- * One sign, in centimetres. The proportions are measured on a frontal
- * photograph in units of one character's pitch, and the modules are taken
- * to be Ikusi's own, as on the platform signs of Atocha Cercanías
- * (../ikusi/modules.ts), so the box comes out about 172 cm wide and 48 tall.
+ * One sign, at the scale of Ikusi's modules (../ikusi/modules.ts). The
+ * proportions are measured on a frontal photograph in units of one
+ * character's pitch: the box is about 25 pitches wide and 7 tall.
  * Two rows of 19 characters, 2.24 pitches apart as on Ikusi's airport
  * boards, with one blank module at each end of a row; above the rows the
  * box is twice as deep as below them. The clock is about as wide as the box
- * is tall, and hangs beside it. No sign has been measured.
+ * is tall, and hangs beside it, three quarters of a pitch away. Only the
+ * proportions come from photographs; no sign has been measured.
  */
 
 export const CHARS = 19;

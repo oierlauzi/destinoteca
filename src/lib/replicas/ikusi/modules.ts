@@ -9,9 +9,10 @@ import { IKUSI_COLS, IKUSI_ROWS, h, lcdSize, type LcdModule, type VNode } from '
  * below the glass. Each end of a row is made up with two blank modules of
  * the same width, with no glass.
  *
- * In centimetres. The proportions are measured in photographs, in units of
- * one character's pitch; the pitch itself is a guess, about 6.9 cm for
- * characters about 8.5 cm tall. No module has been measured.
+ * In the units installations are laid out in. Only the proportions come
+ * from photographs, measured in units of one character's pitch; the pitch,
+ * 6.9, sets the scale and is not a measurement. No module has been
+ * measured.
  */
 
 /** From one character to the next. */

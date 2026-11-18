@@ -4,15 +4,16 @@ import { CELL, DOTS, DOTS_7X9, FILLERS, GLASS, INSET, LIP, MODULE, rowLayout, ty
 export { CELL, DOTS, DOTS_7X9, FILLERS, GLASS, INSET, LIP, MODULE, type Box, type RowLayout };
 
 /*
- * One unit, in centimetres. The proportions are measured in the photographs
- * of the two-platform boxes of Atocha Cercanías in units of one character's
- * pitch, and scaled to a guessed real size: about 120 cm wide and 53 cm
- * tall, with characters about 8.5 cm tall. No unit has been measured. In a box, the two
- * units are about three characters apart, with a filler between them. The
- * modules the rows are made of are Ikusi's own (../ikusi/modules.ts).
+ * One unit, at the scale of Ikusi's modules (../ikusi/modules.ts), which
+ * its rows are made of. The proportions are measured in the photographs of
+ * the two-platform boxes of Atocha Cercanías in units of one character's
+ * pitch: the sign is about 17 pitches wide and 7.7 tall. Only the
+ * proportions come from photographs; no unit has been measured. In a box,
+ * the two units are about three characters apart, with a filler between
+ * them.
  */
 
-/** The logo, about 9 cm wide, on the sheet's margin under the end of the red strip. */
+/** The logo, about 1.3 pitches wide, on the sheet's margin under the end of the red strip. */
 export const LOGO_HEIGHT = 3.2;
 
 /** Characters in the destination line, and in the time. */

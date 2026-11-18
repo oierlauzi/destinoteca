@@ -1,13 +1,13 @@
 import { CELL, INSET, LIP, MODULE, rowLayout, type Box, type RowLayout } from '../ikusi/modules';
 
 /*
- * One board, in centimetres, from its top-left corner. The proportions are
+ * One board, from its top-left corner. The proportions are
  * measured on frontal photographs in units of one character's pitch: a row
  * is 2.24 pitches from the next, the header about 7.6 deep, the frame a
  * little under one pitch wide. The character modules are taken to be those
  * of Ikusi's platform signs of Atocha Cercanías (../ikusi/modules.ts), so the
- * whole board is scaled to their guessed pitch of 6.9 cm: a board of 51
- * characters a row comes out about 4 m wide. No board has been measured.
+ * whole board is drawn at their scale. Only the proportions come from the
+ * photographs; no board has been measured.
  */
 
 /** The frame round the front, on the sides and the top. */
@@ -30,7 +30,7 @@ export const CORNER = { rounded: 1.2 * CELL, square: 0.25 };
 /** The clock of the boards that have one: five modules half as large again as those of the rows. */
 export const CLOCK = { scale: 1.5, chars: 5, fillers: 1 };
 
-/** The makers' logo in the bottom band, about 18 cm wide. */
+/** The makers' logo in the bottom band, about 2.4 pitches wide. */
 export const LOGO_HEIGHT = 0.86 * CELL;
 
 /** The three sizes the pictogram and the title have been printed in, as the pictogram's side. */

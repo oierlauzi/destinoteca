@@ -377,9 +377,8 @@ derecha sigue con los vuelos del de la izquierda.
 - **Cuándo se instalaron**, en qué otros aeropuertos hubo y cuántos quedan:
   los de Bilbao ya se han retirado, y de los demás no se sabe. Las
   fotografías van de 2010 a 2023.
-- **Las medidas.** Se estiman a partir de las fotografías, suponiendo que
-  los módulos son del tamaño de los de Atocha; así, un panel de 51
-  caracteres por fila tendría unos 4 m de ancho.
+- **Las medidas.** Las fotografías solo dan las proporciones; ningún panel
+  se ha medido.
 - **Cuántos caracteres tienen las filas de Barajas T2**, y cuántas filas los
   paneles: la fotografía no deja ver los bordes.
 - **Los paneles de llegadas fuera de Canarias**: cómo se reparten sus
