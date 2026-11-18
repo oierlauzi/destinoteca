@@ -33,12 +33,10 @@ installation:
           - { text: INFRAESTRUCTURAS FERROVIARIAS, size: 4.8, color: '#4a5056', align: left }
     - id: salidas-1
       model: mp-electronics-adif-teleindicador
-      params: { color: '#5df08f' }
       serie: salidas
       at: { x: 304, y: 30, width: 300 }
     - id: salidas-2
       model: mp-electronics-adif-teleindicador
-      params: { color: '#5df08f' }
       serie: salidas
       at: { x: 612, y: 30, width: 300 }
     - id: reloj
@@ -89,8 +87,8 @@ stage: stub
 
 En la pared sobre el acceso al nuevo vestíbulo subterráneo de Chamartín
 cuelgan dos [tableros de salidas de MP Electronics](../mp-electronics-adif-teleindicador/),
-uno junto al otro, con las filas en verde; el de la derecha sigue con los
-trenes del de la izquierda. Al lado, un
+uno junto al otro, con los trenes en ámbar y la fila de avisos en rojo; el
+de la derecha sigue con los trenes del de la izquierda. Al lado, un
 [reloj Festina cuadrado](../festina-adif-reloj-cuadrado/).
 
 Debajo van el logotipo de [adif](../../operadores/adif/) y el nombre de la
