@@ -103,21 +103,25 @@ ADMITE». Debajo corre una tercera línea, roja, que unas veces aparece
 encendida de punta a punta y otras con dos o tres palabras. El frente es una
 chapa con tres aberturas, una por fila: por las de los caracteres asoman los
 carriles con sus módulos, y la de la línea roja es mayor que la línea y más
-oscura. En la chapa van impresos el rótulo de la vía y, abajo, bajo el final de la línea
-roja, el logotipo de Ikusi.
+oscura. En la chapa van impresos el rótulo de la vía y, abajo, bajo el final
+de la línea roja, el logotipo de Ikusi.
 
-En marzo de 1992, *Vía Libre* contaba que Ikusi había instalado para Renfe
-los sistemas de información al público de Madrid-Atocha, sin decir de qué
-parte de la estación. Las fotografías que publicaron *Trenes Hoy* y *Vía
-Libre* los muestran en servicio desde 1989 hasta, por lo menos, 1997, y en
-varios andenes. Después los sustituyeron los de PAGE Ibérica.
+Atocha Cercanías se inauguró en 1988, y estos fueron, probablemente, los
+primeros teleindicadores de sus andenes, instalados poco antes de la
+apertura o poco después, entre 1988 y 1989. En marzo de 1992, *Vía Libre*
+contaba que Ikusi había instalado para Renfe los sistemas de información al
+público de Madrid-Atocha, sin decir de qué parte de la estación. Las
+fotografías que publicaron *Trenes Hoy* y *Vía Libre* los muestran en
+servicio desde 1989 hasta, por lo menos, 1997, y en varios andenes. Después
+los sustituyeron los de PAGE Ibérica.
 
 ## Lo que no se sabe
 
 - **Qué muestra la línea roja.** En una fotografía lleva texto, pero no se
   lee; en las demás se ve encendida entera. Tampoco se sabe de qué tecnología
   es.
-- **Cuándo se instalaron y cuándo se retiraron.** La fotografía más antigua
+- **Cuándo se instalaron y cuándo se retiraron.** Que se instalaran con la
+  estación, entre 1988 y 1989, es una suposición: la fotografía más antigua
   que se conoce es de 1989, y la más reciente, de 1997.
 - **Dónde estaban los carteles de una sola vía.** No se conoce ninguna
   fotografía de ellos.

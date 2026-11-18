@@ -141,13 +141,15 @@ los dos, sobre el poste, hay una junta que los separa.
 Cada uno es la imagen en espejo del otro: los rótulos impresos de las vías,
 «VIA 3» y «VIA 4», quedan juntos en el centro, sobre el poste, y la hora de
 cada vía, hacia el extremo de su lado. Así aparecen en todas las fotografías
-que se conocen, entre 1989 y 1997.
+que se conocen, entre 1989 y 1997. Probablemente estaban ahí desde que se
+inauguró la estación, en 1988.
 
 ## Lo que no se sabe
 
 - **Las medidas.** Se estiman a partir de las fotografías: unos 260 cm de
   ancho en total, con una junta de unos 20 cm entre los dos carteles. El
   largo del poste es aproximado.
-- **Cuándo se instalaron y cuándo se retiraron.**
+- **Cuándo se instalaron y cuándo se retiraron.** Que se instalaran con la
+  estación, entre 1988 y 1989, es una suposición.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
