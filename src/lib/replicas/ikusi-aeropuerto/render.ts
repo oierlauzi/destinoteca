@@ -1,4 +1,4 @@
-import { h, ikusiLcd, lcdModules, toDocument, toDom, updateLcd, type LcdLook, type LcdRefs, type VNode } from '../../hardware';
+import { h, ikusiLcd, lcdModules, num, toDocument, toDom, updateLcd, type LcdLook, type LcdRefs, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import { ikusiLogo, ikusiLogoWidth, IKUSI_GREEN } from '../ikusi/ikusi-logo';
 import { CELL, DOTS, railRow } from '../ikusi/modules';
@@ -193,13 +193,38 @@ function frameNodes(options: AirportOptions, shape: BoardShape): VNode[] {
     h('rect', { x: inner.x - 0.4, y: inner.y - 0.4, width: inner.width + 0.8, height: inner.height + 0.8, rx: options.rounded ? 0.6 * CELL : 0, fill: colors.shade }),
     h('rect', { ...inner, rx: options.rounded ? 0.5 * CELL : 0, fill: PANEL }),
   ];
-  if (options.model === 'reloj') {
-    const inset = 0.42 * CELL;
-    nodes.push(h('rect', { x: inset, y: inset, width: width - 2 * inset, height: height - 2 * inset, rx: Math.max(0, rx - inset), fill: 'none', stroke: LINE, 'stroke-width': 0.5 }));
-  }
   const logoWidth = ikusiLogoWidth(LOGO_HEIGHT);
-  nodes.push(ikusiLogo(width - 0.75 * CELL - logoWidth, height - FRAME_BOTTOM / 2 - LOGO_HEIGHT / 2, LOGO_HEIGHT, colors.logo.word, colors.logo.symbol));
+  // On the boards with a yellow line the logo stands further in, and the line is broken for it.
+  const logoX = width - (options.model === 'reloj' ? 2.6 : 0.75) * CELL - logoWidth;
+  const logoMiddle = height - FRAME_BOTTOM / 2;
+  if (options.model === 'reloj') nodes.push(yellowLine(width, logoMiddle, logoX, logoX + logoWidth));
+  nodes.push(ikusiLogo(logoX, logoMiddle - LOGO_HEIGHT / 2, LOGO_HEIGHT, colors.logo.word, colors.logo.symbol));
   return nodes;
+}
+
+/**
+ * The yellow line of the boards with a clock: near the outer edge on the
+ * sides and the top, through the middle of the bottom band, with rounded
+ * corners, and stopping on either side of the logo.
+ */
+function yellowLine(width: number, bottom: number, logoFrom: number, logoTo: number): VNode {
+  const inset = 0.42 * CELL;
+  const r = 0.5 * CELL;
+  const gap = 0.35 * CELL;
+  const arc = (x: number, y: number) => `A${r} ${r} 0 0 1 ${num(x)} ${num(y)}`;
+  const d = [
+    `M${num(logoFrom - gap)} ${num(bottom)}`,
+    `H${num(inset + r)}`,
+    arc(inset, bottom - r),
+    `V${num(inset + r)}`,
+    arc(inset + r, inset),
+    `H${num(width - inset - r)}`,
+    arc(width - inset, inset + r),
+    `V${num(bottom - r)}`,
+    arc(width - inset - r, bottom),
+    `H${num(logoTo + gap)}`,
+  ].join('');
+  return h('path', { d, fill: 'none', stroke: LINE, 'stroke-width': 0.5 });
 }
 
 /** A clock switched off, as in Asturias: no glow behind its glasses. */
