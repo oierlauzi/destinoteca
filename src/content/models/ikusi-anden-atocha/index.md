@@ -97,8 +97,10 @@ otro; el destino se escribe siempre de izquierda a derecha. Los caracteres son
 módulos separados, uno por carácter (también los dos puntos de la hora tienen
 el suyo), montados en fila sobre un carril, como en los
 [paneles de Ikusi de los aeropuertos](../ikusi-aeropuertos-aena/); los extremos de cada fila parecen rellenos con módulos en
-blanco del mismo ancho. Cada cristal brilla en verde con un tono algo
-distinto, más claro u oscuro, también los que quedan en blanco. La línea del
+blanco del mismo ancho. Los caracteres son de un amarillo que tira a ámbar,
+como en los paneles de Canarias y de Asturias, y cada cristal brilla
+débilmente en un verde apagado, con un tono algo distinto, más claro u
+oscuro, también los que quedan en blanco. La línea del
 destino también da avisos: en una fotografía, la de la vía 1 dice «NO
 ADMITE».
 

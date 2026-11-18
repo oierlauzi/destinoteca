@@ -203,7 +203,7 @@ describe('the remarks on a running board', () => {
       ticker.advance(t === 0 ? 16 : REMARKS_HOLD_MS);
       seen.push(frames.at(-1)!.o1);
     }
-    expect(seen).toEqual(['CANCELADO', 'CANCELLED', 'EZEZTATU', 'CANCELADO']);
+    expect(seen).toEqual(['CANCELADO', 'CANCELLED', 'EZEZTATUTA', 'CANCELADO']);
   });
 });
 

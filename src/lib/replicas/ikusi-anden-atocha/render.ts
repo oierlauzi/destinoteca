@@ -2,6 +2,7 @@ import { DotMatrix, MarqueeRun, h, ikusiLcd, lcdModules, roundLed, telenorma5x7,
 import type { Ticker } from '../../player/ticker';
 import type { IkusiFrame, IkusiOptions } from './def';
 import { ikusiLogo } from '../ikusi/ikusi-logo';
+import { IKUSI_GLASSES } from '../ikusi/glass';
 import { railRow } from '../ikusi/modules';
 import { CELL, DOTS, HEIGHT, LINE, LOGO_HEIGHT, STRIP, TIME, TOP_Y, WIDTH, labelSpan, lineModules, lineRow, logoAt, openings, timeModules, timeRow, type Box } from './geometry';
 
@@ -15,15 +16,17 @@ const STRIP_BACK = '#030404';
 const PRINT = '#ebeae3';
 
 /**
- * In the photographs the characters are yellow over the green glow of their
- * glass, and the glasses glow some more than others.
+ * In the photographs the characters are the amber yellow of the airport
+ * boards' amber modules, never lime, over a faint, greyish green glow of
+ * their own, measured on the photographs; the glasses glow some more than
+ * others.
  */
 export const lcdLook = (options: IkusiOptions): LcdLook => ({
   ...DOTS,
-  lit: '#f6ec66',
-  litAged: '#b5d64c',
-  blank: '#3e9558',
-  blankDull: '#163723',
+  lit: IKUSI_GLASSES.ambar.lit,
+  litAged: IKUSI_GLASSES.ambar.litAged,
+  blank: '#4a6a4a',
+  blankDull: '#26332a',
   uneven: options.uneven / 100,
   delamination: options.delamination / 100,
   seed: options.wearSeed,

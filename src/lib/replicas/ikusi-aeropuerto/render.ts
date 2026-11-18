@@ -1,10 +1,11 @@
 import { h, ikusiLcd, lcdModules, num, toDocument, toDom, updateLcd, type LcdLook, type LcdRefs, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import { ikusiLogo, ikusiLogoWidth, IKUSI_GREEN } from '../ikusi/ikusi-logo';
+import { IKUSI_GLASSES } from '../ikusi/glass';
 import { CELL, DOTS, railRow } from '../ikusi/modules';
 import { aenaPictogram, AENA_YELLOW } from './aena-pictograms';
 import { columnLegend, columnSpans, composeRow, layoutOf, legendLines, TITLES, type BoardRow, type Mode, type Regional } from './columns';
-import type { AirportFrame, AirportOptions, FrameColor, GlassTint } from './def';
+import type { AirportFrame, AirportOptions, FrameColor } from './def';
 import { boardRow, boardSize, clockLayout, CLOCK, CORNER, FRAME, FRAME_BOTTOM, glassX, HEADER_BOTTOM, LOGO_HEIGHT, panel, PICTO_SIZES, shapeOf, type BoardShape, type PictoSize } from './geometry';
 
 const FONT = 'Helvetica, Arial, Liberation Sans, sans-serif';
@@ -23,20 +24,8 @@ const FRAMES: Record<FrameColor, { fill: string; rim: string; shade: string; log
   negro: { fill: '#15181c', rim: '#2a2e33', shade: '#0b0c0e', logo: { word: '#c9cbc6', symbol: '#c9cbc6' } },
 };
 
-/**
- * The glow of the glasses, as photographed: green in Bilbao, olive in
- * Valencia, Barcelona and Madrid, amber going to grey in the Canary Islands
- * and Asturias. The characters are yellow everywhere, some going orange as
- * they age.
- */
-const GLASSES: Record<GlassTint, Pick<LcdLook, 'lit' | 'litAged' | 'blank' | 'blankDull'>> = {
-  verde: { lit: '#f6e84e', litAged: '#d8dc4a', blank: '#5c9a34', blankDull: '#34481f' },
-  oliva: { lit: '#f6e84e', litAged: '#e2c846', blank: '#3b4513', blankDull: '#192010' },
-  ambar: { lit: '#f8e64e', litAged: '#eaae40', blank: '#7a6630', blankDull: '#3d3b37' },
-};
-
 export function lcdLook(options: AirportOptions): LcdLook {
-  const tint = GLASSES[options.glass] ?? GLASSES.oliva;
+  const tint = IKUSI_GLASSES[options.glass] ?? IKUSI_GLASSES.oliva;
   return { ...DOTS, ...tint, uneven: options.uneven / 100, delamination: options.delamination / 100, seed: options.wearSeed };
 }
 

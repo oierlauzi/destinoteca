@@ -1,5 +1,6 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
+import type { GlassTint } from '../ikusi/glass';
 import type { ReplicaDef } from '../types';
 import { type BoardRow, type LayoutId, type Mode, type Regional } from './columns';
 import { boardSize, MAX_CELLS, MAX_ROWS, MIN_CELLS, MIN_ROWS, shapeOf, type PictoSize } from './geometry';
@@ -21,7 +22,6 @@ export interface AirportFrame {
 
 export type Model = 'clasico' | 'reloj';
 export type FrameColor = 'gris' | 'plata' | 'negro';
-export type GlassTint = 'verde' | 'oliva' | 'ambar';
 
 export interface AirportOptions {
   mode: Mode;
