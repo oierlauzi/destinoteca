@@ -26,15 +26,13 @@ const sector = (inner: number, outer: number, from: number, to: number): string 
 
 // --- Case and dial ------------------------------------------------------------------
 
-function caseAndDial(options: RelojCercaniasOptions, prefix: string): VNode[] {
+function caseAndDial(prefix: string): VNode[] {
   // The bezel is polished and mirrors what is around it: light and dark bands.
   const bezel: [number, string][] = [[0, '#f4f5f6'], [0.16, '#5d646a'], [0.34, '#e6e9eb'], [0.5, '#3f454a'], [0.66, '#d9dde0'], [0.84, '#61686e'], [1, '#eef0f1']];
-  // The dial is plain white. Unlit, it sits back behind the glass and the
-  // print shades its edge, so that through the slots it shows well below the
-  // white of the bars; lit, it glows.
-  const dial: [number, string][] = options.light
-    ? [[0, '#ffffff'], [0.72, '#fbfbfa'], [1, '#eef0f0']]
-    : [[0, '#f1f0ec'], [0.64, '#e7e6e1'], [0.74, '#c9c8c3'], [1, '#a3a29d']];
+  // The dial is plain white. It sits back behind the glass and the print
+  // shades its edge, so that through the slots it shows well below the white
+  // of the bars.
+  const dial: [number, string][] = [[0, '#f1f0ec'], [0.64, '#e7e6e1'], [0.74, '#c9c8c3'], [1, '#a3a29d']];
   return [
     h('defs', {}, [
       h('linearGradient', { id: `${prefix}-bezel`, x1: 0, y1: 0, x2: 1, y2: 1 }, bezel.map(([offset, color]) => h('stop', { offset, 'stop-color': color }))),
@@ -57,7 +55,7 @@ function caseAndDial(options: RelojCercaniasOptions, prefix: string): VNode[] {
  * slots through which the dial and the tip of the minute hand show. The
  * slot of every fifth minute is grey, but for its inner end.
  */
-function glass(options: RelojCercaniasOptions): VNode[] {
+function glass(): VNode[] {
   const half = (SLOT_SHARE * 6) / 2;
   let bars = '';
   let marks = '';
@@ -67,7 +65,7 @@ function glass(options: RelojCercaniasOptions): VNode[] {
     if (minute % 5 === 0) marks += sector(r(RADII.fiveMinute), R + 0.3, minute * 6 - half, minute * 6 + half);
   }
   return [
-    h('path', { d: bars, fill: options.light ? '#f7f7f4' : '#fbfbf8' }),
+    h('path', { d: bars, fill: '#fbfbf8' }),
     h('path', { d: marks, fill: RING }),
   ];
 }
@@ -108,16 +106,16 @@ export interface HandRefs {
 const rotate = (deg: number): string => `rotate(${num(deg)} ${C} ${C})`;
 
 /** The whole clock in a square of SIZE centred on (C, C). */
-export function clockScene(options: RelojCercaniasOptions, a: Angles, prefix: string, refs?: HandRefs): VNode[] {
+export function clockScene(a: Angles, prefix: string, refs?: HandRefs): VNode[] {
   const ref = (key: keyof HandRefs) => (refs ? (element: SVGElement) => (refs[key] = element) : undefined);
   return [
-    ...caseAndDial(options, prefix),
+    ...caseAndDial(prefix),
     h('g', { filter: `url(#${prefix}-shadow)` }, [
       h('g', { transform: rotate(a.hour) }, [blade(HANDS.hour, RED)], ref('hour')),
       h('g', { transform: rotate(a.minute) }, [blade(HANDS.minute, RED)], ref('minute')),
       h('g', { transform: rotate(a.second) }, [blade(HANDS.second, SECOND), h('circle', { cx: C, cy: num(C - r(HANDS.second.tip)), r: r(HANDS.nib), fill: RED })], ref('second')),
     ]),
-    ...glass(options),
+    ...glass(),
     numerals(),
   ];
 }
@@ -139,7 +137,7 @@ function root(frame: RelojCercaniasFrame, children: VNode[], titleRef?: (element
 }
 
 export function renderToString(frame: RelojCercaniasFrame, options: RelojCercaniasOptions): string {
-  const svg = root(frame, clockScene(options, angles(frameSeconds(frame), options.motion), 'cercanias'));
+  const svg = root(frame, clockScene(angles(frameSeconds(frame), options.motion), 'cercanias'));
   svg.attrs.width = 800;
   svg.attrs.height = 800;
   return toDocument(svg, 'destinoteca · reloj de Cercanías · https://oierlauzi.github.io/destinoteca/');
@@ -173,7 +171,7 @@ export function mount(host: Element, initial: RelojCercaniasOptions, env: { tick
 
   const build = (): void => {
     refs = {};
-    element = toDom(root(frame, clockScene(options, angles(now(), options.motion), prefix, refs), (node) => (title = node)), doc);
+    element = toDom(root(frame, clockScene(angles(now(), options.motion), prefix, refs), (node) => (title = node)), doc);
     element.setAttribute('width', '100%');
     element.style.display = 'block';
     host.replaceChildren(element);

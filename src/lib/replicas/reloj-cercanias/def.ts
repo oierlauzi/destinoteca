@@ -23,15 +23,12 @@ export interface RelojCercaniasFrame {
 }
 
 export interface RelojCercaniasOptions {
-  /** Lit from inside: the dial glows through the slots and the white bars blend into it. */
-  light: boolean;
   motion: 'step' | 'sweep';
   [key: string]: unknown;
 }
 
 export const optionsSchema: ParamSchema = {
   fields: [
-    { key: 'light', urlKey: 'luz', type: 'boolean', label: 'reloj.cercanias.opt.light', help: 'reloj.cercanias.opt.light.help', default: false },
     {
       key: 'motion', urlKey: 'marcha', type: 'select', label: 'reloj.cercanias.opt.motion', default: 'step',
       choices: [

@@ -52,10 +52,4 @@ describe('the Cercanías clock', () => {
     const [one, two] = layout('12');
     expect(one!.x + two!.x + GLYPHS['2']!.width).toBeCloseTo(0);
   });
-
-  it('lights up from inside when asked', () => {
-    const lit = renderToString({}, { ...options, light: true });
-    expect(lit).not.toBe(renderToString({}, options));
-    expect(lit).toContain('stop-color="#ffffff"');
-  });
 });

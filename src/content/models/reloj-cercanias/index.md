@@ -133,10 +133,8 @@ Un aro plateado y estrecho rodea el cristal.
 Unos van en una caja redonda de acero, más o menos honda, fijada de plano a
 la pared. Otros, en una caja cilíndrica con una esfera en cada cara, que
 cuelga de la marquesina del andén o sale de la pared sobre un brazo.
-
-Algunos se iluminan por dentro. Encendida, la esfera brilla a través de las
-ranuras, las barras blancas se confunden con ella y del anillo solo
-destacan las marcas grises de cada cinco minutos.
+Disponen de iluminación (probablemente una tira LED) en el perímetro de la
+esfera.
 
 ## Quién lo hace
 
