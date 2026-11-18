@@ -1,5 +1,6 @@
 import type { SelectionPolicy } from '../../model';
 import type { ParamSchema } from '../../params';
+import { motionField, type HandMotion } from '../clock-hands';
 import type { ReplicaDef } from '../types';
 import { SIZE } from './geometry';
 
@@ -23,19 +24,13 @@ export interface RelojCercaniasFrame {
 }
 
 export interface RelojCercaniasOptions {
-  motion: 'step' | 'sweep';
+  motion: HandMotion;
   [key: string]: unknown;
 }
 
 export const optionsSchema: ParamSchema = {
   fields: [
-    {
-      key: 'motion', urlKey: 'marcha', type: 'select', label: 'reloj.cercanias.opt.motion', default: 'step',
-      choices: [
-        { value: 'step', label: 'reloj.cercanias.motion.step' },
-        { value: 'sweep', label: 'reloj.cercanias.motion.sweep' },
-      ],
-    },
+    motionField(),
   ],
 };
 

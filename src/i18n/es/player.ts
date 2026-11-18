@@ -235,6 +235,13 @@ export const player: Record<string, string> = {
   'adif.frame.row6': 'Fila 6',
   'adif.frame.row7': 'Fila 7',
 
+  // --- Relojes de agujas ---
+  'clock.opt.motion': 'Marcha de las agujas',
+  'clock.opt.motion.help': 'Con impulso de minuto, el segundero da la vuelta en algo menos de un minuto y espera en las 12 a que llegue el impulso del reloj patrón, que hace avanzar el minutero.',
+  'clock.motion.step': 'Segundero a saltos, uno por segundo',
+  'clock.motion.sweep': 'Continua',
+  'clock.motion.ppm': 'Segundero continuo e impulso de minuto',
+
   // --- Reloj Festina de ADIF ---
   'festina.opt.case': 'Caja',
   'festina.case.chrome': 'Redonda, aro pulido',
@@ -246,14 +253,6 @@ export const player: Record<string, string> = {
   'festina.second.blue': 'Azul',
   'festina.second.dark': 'Oscuro',
   'festina.second.none': 'Sin segundero',
-  'festina.opt.motion': 'Marcha del segundero',
-  'festina.motion.step': 'A saltos, uno por segundo',
-  'festina.motion.sweep': 'Continua',
-
-  // --- Reloj de Cercanías ---
-  'reloj.cercanias.opt.motion': 'Marcha del segundero',
-  'reloj.cercanias.motion.step': 'A saltos, uno por segundo',
-  'reloj.cercanias.motion.sweep': 'Continua',
 
   // --- Teleindicadores de andén de MP Electronics para ADIF ---
   'anden.mp.opt.side': 'Lado de la vía',

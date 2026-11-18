@@ -1,5 +1,6 @@
 import type { SelectionPolicy } from '../../model';
 import type { ParamSchema } from '../../params';
+import { motionField, type HandMotion } from '../clock-hands';
 import type { ReplicaDef } from '../types';
 import { SIZE } from './geometry';
 
@@ -25,7 +26,7 @@ export interface FestinaOptions {
   case: 'chrome' | 'dark' | 'square';
   inlays: boolean;
   secondHand: 'blue' | 'dark' | 'none';
-  motion: 'step' | 'sweep';
+  motion: HandMotion;
   /**
    * Whose mark the dial carries. Festina's clocks have the four numerals and
    * Festina's mark; the same clock built into MP Electronics' platform
@@ -54,13 +55,7 @@ export const optionsSchema: ParamSchema = {
         { value: 'none', label: 'festina.second.none' },
       ],
     },
-    {
-      key: 'motion', urlKey: 'marcha', type: 'select', label: 'festina.opt.motion', default: 'step',
-      choices: [
-        { value: 'step', label: 'festina.motion.step' },
-        { value: 'sweep', label: 'festina.motion.sweep' },
-      ],
-    },
+    motionField(),
   ],
 };
 

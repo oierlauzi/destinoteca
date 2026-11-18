@@ -2,7 +2,8 @@ import { h, marqueeWindow, MarqueeRun, mpElectronicsAdif as font, scrolls, textS
 import { RealClock } from '../../model';
 import type { Ticker } from '../../player/ticker';
 import type { FestinaOptions } from '../festina-adif/def';
-import { angles, clockScene, daySeconds, type HandRefs } from '../festina-adif/render';
+import { angles, daySeconds } from '../clock-hands';
+import { clockScene, type HandRefs } from '../festina-adif/render';
 import { columnLegend, type Regional } from '../mp-electronics-adif/labels';
 import { mpLogo } from '../mp-electronics-adif/mp-logo';
 import {
@@ -79,7 +80,7 @@ function legend(x: number, y: number, column: 'time' | 'train' | 'place' | 'plat
 }
 
 function clockOptions(options: AndenOptions, kind: Kind): FestinaOptions {
-  return { case: kind === 'vertical' ? 'dark' : 'chrome', inlays: kind === 'clock' && options.dial !== 'mp', secondHand: 'dark', motion: 'step', dial: options.dial };
+  return { case: kind === 'vertical' ? 'dark' : 'chrome', inlays: kind === 'clock' && options.dial !== 'mp', secondHand: 'dark', motion: options.motion, dial: options.dial };
 }
 
 interface Ids {
@@ -133,7 +134,7 @@ function scene(kind: Kind, frame: AndenFrame, options: AndenOptions, seconds: nu
   );
   if (l.clock) {
     const scale = l.clock.diameter / 236;
-    const a = angles(seconds, 'step');
+    const a = angles(seconds, options.motion);
     nodes.push(
       h('g', { transform: `translate(${l.clock.cx - (CLOCK_SIZE / 2) * scale},${l.clock.cy - (CLOCK_SIZE / 2) * scale}) scale(${scale})` }, clockScene(clockOptions(options, kind), a, `${ids.unlit}-k`, refs?.hands)),
     );
@@ -230,7 +231,7 @@ export function mount(kind: Kind, host: Element, initial: AndenOptions, env: { t
 
   const drawHands = (): void => {
     if (kind === 'plain') return;
-    const a = angles(seconds(), 'step');
+    const a = angles(seconds(), options.motion);
     const key = `${a.hour.toFixed(2)}/${a.minute.toFixed(2)}/${a.second}`;
     if (key === shownHands) return;
     shownHands = key;

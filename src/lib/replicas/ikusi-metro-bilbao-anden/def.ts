@@ -1,6 +1,7 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
 import { wearFields, type Tech, type WearOptions } from '../ikusi-metro-bilbao/parts';
+import { motionField, type HandMotion } from '../clock-hands';
 import type { ReplicaDef } from '../types';
 import { CHARS, sizeOf, type Side } from './geometry';
 
@@ -31,6 +32,8 @@ export interface BilbaoOptions extends WearOptions {
   side: Side;
   tech: Tech;
   navilens: boolean;
+  /** How the clock's hands move. */
+  motion: HandMotion;
   [key: string]: unknown;
 }
 
@@ -121,6 +124,7 @@ export const optionsSchema: ParamSchema = {
       choices: [{ value: 'left', label: 'bilbao.side.left' }, { value: 'right', label: 'bilbao.side.right' }],
     },
     { key: 'navilens', urlKey: 'navilens', type: 'boolean', label: 'bilbao.opt.navilens', help: 'bilbao.opt.navilens.help', default: false, group: 'board' },
+    motionField('board'),
     ...wearFields('defects'),
   ],
 };

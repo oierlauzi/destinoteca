@@ -1,7 +1,7 @@
 import { h, toDocument, toDom, type VNode } from '../../hardware';
 import { RealClock } from '../../model';
 import type { Ticker } from '../../player/ticker';
-import { angles, daySeconds } from '../festina-adif/render';
+import { angles, daySeconds } from '../clock-hands';
 import { railRow } from '../ikusi/modules';
 import { navilensPlate } from '../ikusi-metro-bilbao/navilens';
 import { boxNodes, cellNodes, fold, newCellRefs, updateCells, windowNodes, type CellRefs } from '../ikusi-metro-bilbao/parts';
@@ -38,7 +38,7 @@ function scene(frame: BilbaoFrame, options: BilbaoOptions, seconds: number, id: 
   const chars = rowChars(frame);
   const nodes: VNode[] = [...boxNodes(l.box, 0.9), ...windowNodes(l.window)];
   l.rows.forEach((row, i) => nodes.push(...railRow(row), ...cellNodes(tech, row.glasses, chars[i] ?? [], options, i * CHARS, refs.rows[i])));
-  nodes.push(...clockNodes(l.clock.cx, l.clock.cy, l.clock.r, angles(seconds, 'step'), `${id}-clock`, refs.hands));
+  nodes.push(...clockNodes(l.clock.cx, l.clock.cy, l.clock.r, angles(seconds, options.motion), `${id}-clock`, refs.hands));
   if (l.plate) nodes.push(navilensPlate(l.plate.x, l.plate.y));
   return nodes;
 }
@@ -96,7 +96,7 @@ export function mount(host: Element, initial: BilbaoOptions, env: { ticker: Tick
   };
 
   const drawHands = (): void => {
-    const a = angles(seconds(), 'step');
+    const a = angles(seconds(), options.motion);
     const key = `${a.hour.toFixed(2)}/${a.minute.toFixed(2)}/${a.second}`;
     if (key === shownHands) return;
     shownHands = key;

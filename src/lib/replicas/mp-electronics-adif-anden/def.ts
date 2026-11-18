@@ -1,6 +1,7 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
 import { AMBER, GREEN, RED } from '../mp-electronics-adif/def';
+import { motionField, type HandMotion } from '../clock-hands';
 import type { ReplicaDef } from '../types';
 import { sizeOf, type Kind } from './geometry';
 
@@ -35,6 +36,8 @@ export interface AndenOptions {
   lineScroll: boolean;
   lineSpeed: number;
   dial: 'festina' | 'mp';
+  /** How the clock's hands move; only the models with a clock. */
+  motion: HandMotion;
   deadOn: number;
   deadOff: number;
   deadRows: number;
@@ -69,7 +72,7 @@ function optionsSchema(kind: Kind): ParamSchema {
     fields.push({
       key: 'dial', urlKey: 'esfera', type: 'select', label: 'anden.mp.opt.dial', help: 'anden.mp.opt.dial.help', default: kind === 'vertical' ? 'mp' : 'festina', group: 'board',
       choices: [{ value: 'festina', label: 'anden.mp.dial.festina' }, { value: 'mp', label: 'anden.mp.dial.mp' }],
-    });
+    }, motionField('board'));
   }
   fields.push(
     { key: 'color', type: 'color', label: 'adif.opt.color', default: AMBER, group: 'look', choices: colorChoices },

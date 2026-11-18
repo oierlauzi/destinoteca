@@ -1,6 +1,6 @@
 import { h, num, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
-import { angles, daySeconds, type Angles } from '../festina-adif/render';
+import { angles, daySeconds, type Angles } from '../clock-hands';
 import type { RelojCercaniasFrame, RelojCercaniasOptions } from './def';
 import { C, HANDS, NUMERAL, R, RADII, SIZE, SLOT_SHARE } from './geometry';
 import { layout } from './numerals';

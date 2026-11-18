@@ -1,5 +1,5 @@
 import { h, num, type VNode } from '../../hardware';
-import type { Angles } from '../festina-adif/render';
+import type { Angles } from '../clock-hands';
 
 /*
  * The clock beside each sign: a black drum, and in it a very dark grey dial

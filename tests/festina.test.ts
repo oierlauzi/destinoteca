@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { defaults } from '../src/lib/params';
 import { festinaAdif as def, type FestinaOptions } from '../src/lib/replicas/festina-adif/def';
 import { GLYPHS, PLACES, RECONSTRUCTED, SEEN } from '../src/lib/replicas/festina-adif/numerals';
-import { angles, daySeconds, renderToString } from '../src/lib/replicas/festina-adif/render';
+import { angles, daySeconds } from '../src/lib/replicas/clock-hands';
+import { renderToString } from '../src/lib/replicas/festina-adif/render';
 
 const options = defaults(def.options) as FestinaOptions;
 

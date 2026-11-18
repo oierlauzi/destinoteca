@@ -3,6 +3,7 @@ import type { Ticker } from '../../player/ticker';
 import type { FestinaFrame, FestinaOptions } from './def';
 import { mpMark, mpWord } from '../mp-electronics-adif/mp-logo';
 import { festinaMark, festinaWord } from './festina-logo';
+import { angles, daySeconds, type Angles } from '../clock-hands';
 import { C, R, SIZE } from './geometry';
 import { GLYPHS, PLACES } from './numerals';
 
@@ -117,26 +118,6 @@ function secondHand(color: string): VNode[] {
     h('line', { x1: C, y1: C + r(0.22), x2: C, y2: C - r(0.72), stroke: color, 'stroke-width': r(0.013) }),
     h('circle', { cx: C, cy: C - r(0.765), r: r(0.045), fill: 'none', stroke: color, 'stroke-width': r(0.013) }),
   ];
-}
-
-export interface Angles {
-  hour: number;
-  minute: number;
-  second: number;
-}
-
-/** Where the hands point, in degrees from 12, for a time of day in seconds. */
-export function angles(daySeconds: number, motion: FestinaOptions['motion'] = 'step'): Angles {
-  const s = ((daySeconds % 43200) + 43200) % 43200;
-  const second = motion === 'step' ? Math.floor(s % 60) : s % 60;
-  return { hour: (s / 3600) * 30, minute: ((s / 60) % 60) * 6, second: second * 6 };
-}
-
-/** The wall-clock time of day, in seconds, of an instant in a time zone. */
-export function daySeconds(time: number, zone: string): number {
-  const parts = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZone: zone }).formatToParts(time);
-  const read = (type: string): number => Number(parts.find((p) => p.type === type)?.value ?? 0);
-  return read('hour') * 3600 + read('minute') * 60 + read('second') + (((time % 1000) + 1000) % 1000) / 1000;
 }
 
 const frameSeconds = (frame: FestinaFrame): number =>
