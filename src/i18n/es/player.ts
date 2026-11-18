@@ -250,6 +250,13 @@ export const player: Record<string, string> = {
   'festina.motion.step': 'A saltos, uno por segundo',
   'festina.motion.sweep': 'Continua',
 
+  // --- Reloj de Cercanías ---
+  'reloj.cercanias.opt.light': 'Luz interior encendida',
+  'reloj.cercanias.opt.light.help': 'La esfera se ilumina por dentro y las barras blancas se confunden con las ranuras.',
+  'reloj.cercanias.opt.motion': 'Marcha del segundero',
+  'reloj.cercanias.motion.step': 'A saltos, uno por segundo',
+  'reloj.cercanias.motion.sweep': 'Continua',
+
   // --- Teleindicadores de andén de MP Electronics para ADIF ---
   'anden.mp.opt.side': 'Lado de la vía',
   'anden.mp.opt.side.help': 'Dónde van el número de vía y la franja verde.',
