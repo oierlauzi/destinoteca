@@ -27,8 +27,8 @@ locations:
     status: unknown
     note: Salidas, con los rótulos también en valenciano. Fotografiado hacia 2014.
   - site: es/aeropuerto-de-bilbao
-    status: unknown
-    note: Con marco de aluminio y los rótulos también en euskera, de dos en dos. Fotografiados en 2010 y en 2015.
+    status: retired
+    note: Con marco de aluminio y los rótulos también en euskera, de dos en dos. Fotografiados en 2010 y en 2015; ya retirados.
   - site: es/aeropuerto-de-tenerife-norte
     status: unknown
     note: Con marco de aluminio y los rótulos también en alemán. Fotografiado en 2012.
@@ -376,8 +376,9 @@ derecha sigue con los vuelos del de la izquierda.
 
 ## Lo que no se sabe
 
-- **Cuándo se instalaron**, en qué otros aeropuertos hubo y cuántos quedan.
-  Las fotografías van de 2010 a 2023.
+- **Cuándo se instalaron**, en qué otros aeropuertos hubo y cuántos quedan:
+  los de Bilbao ya se han retirado, y de los demás no se sabe. Las
+  fotografías van de 2010 a 2023.
 - **Las medidas.** Se estiman a partir de las fotografías, suponiendo que
   los módulos son del tamaño de los de Atocha; así, un panel de 51
   caracteres por fila tendría unos 4 m de ancho.
