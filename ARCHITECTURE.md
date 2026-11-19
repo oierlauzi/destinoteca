@@ -97,7 +97,7 @@ services are on show.
 | Source | Kind | Notes |
 | --- | --- | --- |
 | `demo` | simulated | A made-up board that exercises long names, delays, unconfirmed platforms and a dividing train; Cercanías, or long-distance trains (`red=long-distance`) |
-| `mitren` | live | Renfe Cercanías and Rodalies from mitren.app's WebSocket; bundled station list |
+| `mitren` | live | One of mitren.app's feeds over its WebSocket (`op=cercanias\|euskotren\|metro-bilbao`): Renfe Cercanías and Rodalies, Euskotren or Metro Bilbao, each with its own networks, station codes and operator; bundled station list |
 | `manual` | manual | Services typed by hand in model terms, stored in the URL |
 
 **Adding a source:** a folder with `def.ts` and `index.ts`, one line in
@@ -180,13 +180,16 @@ URLs: never rename one.
 `ParamSchema` (`src/lib/params/`) is a declarative list of fields. From one
 schema come the form, the query-string codec and validation. A `switch` field
 is the one kind that is form-only: a checkbox that turns other settings on
-and off together, with no value or URL key of its own. A replica on a
+and off together, with no value or URL key of its own. A `select` may name
+`resets`: settings its choice invalidates, which go back to their defaults
+when the form changes it (the station of a live source, when another
+operator's feed is picked). A replica on a
 page is fully described by a `PlayerConfig` (`src/lib/player/config.ts`):
 
 | Group | Schema | Example keys |
 | --- | --- | --- |
 | Mode | — | `source=demo\|mitren\|manual\|raw` |
-| Source settings | the source's `config` | `station`, `network`, `svc`, `hora` |
+| Source settings | the source's `config` | `op`, `station`, `network`, `svc`, `hora` |
 | Placement | `placementSchema` | `via`, `cycle` |
 | Appearance | the replica's `options` | `dot`, `showoff`, `anim`, `hearts`… |
 | Hand-typed frame | the replica's `frame` | `text`, `min`, `via`, `led` |

@@ -4,21 +4,30 @@ import { decode, encode } from '../src/lib/params';
 import { mitrenDef } from '../src/lib/sources/mitren/def';
 import {
   create,
+  defaultNetwork,
+  FEEDS,
+  feedOf,
   findStation,
+  findStationByName,
+  identityOf,
   lookups,
   mapArrivals,
   mitrenExt,
   nameLadder,
   networkForCode,
+  networksOf,
   remainingStops,
   searchStations,
   stationLookup,
+  stationPlace,
   stationUrl,
   type SocketLike,
 } from '../src/lib/sources/mitren';
 import { DATA_TIMEOUT_MS, PING_MS, REFUSAL_HOLD_MS, SUBSCRIBE_GAP_MS } from '../src/lib/sources/mitren/client';
 import type { SourceStatus } from '../src/lib/sources/types';
 import arrivals from './fixtures/mitren/arrivals_update.json';
+import metroArrivals from './fixtures/mitren/arrivals_metro_bilbao.json';
+import euskotrenArrivals from './fixtures/mitren/arrivals_euskotren.json';
 import trainUpdate from './fixtures/mitren/train_update.json';
 
 const NETWORK = 'madrid_cercanias';
@@ -76,6 +85,72 @@ describe('station list', () => {
   });
 });
 
+describe('feeds', () => {
+  it("groups mitren.app's networks into the three the source offers", () => {
+    expect([...FEEDS]).toEqual(['cercanias', 'euskotren', 'metro-bilbao']);
+    expect(networksOf('metro-bilbao').map((network) => network.id)).toEqual(['bilbao_metro']);
+    expect(networksOf('euskotren').map((network) => network.id)).toEqual([
+      'donostia_euskotren',
+      'bilbao_euskotren',
+      'bilbao_tranbia',
+      'vitoria-gasteiz_tranbia',
+    ]);
+    expect(networksOf('cercanias').length).toBeGreaterThan(15);
+    expect(FEEDS.every((feed) => feedOf(defaultNetwork(feed)) === feed)).toBe(true);
+  });
+
+  it('tells which feed a network belongs to, and reads an unknown one as Cercanías', () => {
+    expect(feedOf('bilbao_metro')).toBe('metro-bilbao');
+    expect(feedOf('bilbao_tranbia')).toBe('euskotren');
+    expect(feedOf('bilbao_aldiriak')).toBe('cercanias');
+    expect(feedOf('nowhere')).toBe('cercanias');
+  });
+
+  it('looks a bare code up inside its own feed', () => {
+    // Metro Bilbao numbers from 1, Euskotren has four digits, Renfe five.
+    expect(networkForCode('10', 'metro-bilbao')).toBe('bilbao_metro');
+    expect(networkForCode('10', 'cercanias')).toBeUndefined();
+    expect(networkForCode('2577', 'euskotren')).toBe('bilbao_euskotren');
+    expect(networkForCode('17000', 'cercanias')).toBe(NETWORK);
+    expect(networkForCode('17000', 'metro-bilbao')).toBeUndefined();
+    // Where two networks of one feed share a code, its default network wins.
+    expect(networkForCode('2581', 'euskotren')).toBe('bilbao_euskotren');
+  });
+
+  it('searches one feed at a time: three operators serve a San Mamés', () => {
+    expect(searchStations('san mames', { feed: 'cercanias' })[0]?.code).toBe('13208');
+    expect(searchStations('san mames', { feed: 'metro-bilbao' })[0]?.code).toBe('10');
+    expect(searchStations('san mames', { feed: 'euskotren' })[0]?.network).toBe('bilbao_tranbia');
+    expect(searchStations('chamartin', { feed: 'metro-bilbao' })).toEqual([]);
+  });
+
+  it('reads a name within the feed of the network that is open', () => {
+    expect(findStationByName('Basauri', 'bilbao_metro')?.code).toBe('51');
+    expect(findStationByName('Basauri', 'bilbao_aldiriak')?.code).toBe('13112');
+    // Another network of the same feed, for a destination off the board.
+    expect(findStationByName('Zazpikaleak/Casco Viejo', 'bilbao_tranbia')?.network).toBe('bilbao_euskotren');
+  });
+
+  it('files a station code under the scheme it belongs to', () => {
+    expect(stationPlace(findStation(NETWORK, '17000')!).codes).toEqual({ adif: '17000' });
+    expect(stationPlace(findStation('bilbao_metro', '10')!).codes).toEqual({ 'metro-bilbao': '10' });
+    expect(stationPlace(findStation('bilbao_euskotren', '2577')!).codes).toEqual({ euskotren: '2577' });
+  });
+
+  it('links to the station on mitren.app under the mode of its network', () => {
+    expect(stationUrl('bilbao_metro', '10')).toBe('https://mitren.app/bilbao/metro/stations/10');
+    expect(stationUrl('bilbao_euskotren', '2577')).toBe('https://mitren.app/bilbao/suburbano/stations/2577');
+    expect(stationUrl('bilbao_tranbia', '1470')).toBe('https://mitren.app/bilbao/tranvia/stations/1470');
+  });
+
+  it('says whose trains a network carries', () => {
+    expect(identityOf('bilbao_metro')).toMatchObject({ mode: 'metro', operator: { name: 'Metro Bilbao' } });
+    expect(identityOf('bilbao_euskotren')).toMatchObject({ mode: 'rail', product: { name: 'Euskotren Trena' } });
+    expect(identityOf('bilbao_tranbia')).toMatchObject({ mode: 'tram', product: { name: 'Euskotren Tranbia' } });
+    expect(identityOf(NETWORK)).toMatchObject({ mode: 'rail', operator: { name: 'Renfe' } });
+  });
+});
+
 describe('station lookup', () => {
   it('is the lookup the config schema names', () => {
     const field = mitrenDef.config.fields.find((f) => f.key === 'station');
@@ -98,6 +173,14 @@ describe('station lookup', () => {
     expect(first?.set).toEqual({ network: 'barcelona_rodalies' });
   });
 
+  it('searches the feed its settings name, and resolves a code within it', () => {
+    const [first] = stationLookup.search('casco viejo', 3, { feed: 'metro-bilbao', network: '' });
+    expect(first).toMatchObject({ value: '6', label: 'Zazpikaleak/Casco Viejo', set: { network: 'bilbao_metro' } });
+    expect(stationLookup.search('chamartin', 3, { feed: 'euskotren', network: '' })).toEqual([]);
+    expect(stationLookup.resolve('10', { feed: 'metro-bilbao', network: '' })?.label).toBe('San Mamés');
+    expect(stationLookup.resolve('10', { feed: 'cercanias', network: '' })).toBeUndefined();
+  });
+
   it('resolves a code with or without its network', () => {
     expect(stationLookup.resolve('17000')?.label).toBe('Chamartín-Clara Campoamor');
     expect(stationLookup.resolve('13200', { network: 'bilbao_aldiriak' })?.label).toBe('Bilbao-Abando-Indalecio Prieto');
@@ -105,18 +188,22 @@ describe('station lookup', () => {
     expect(stationLookup.resolve('')).toBeUndefined();
   });
 
-  it('accepts a bare code it does not list', () => {
+  it('accepts a bare code it does not list, of any feed\'s length', () => {
     expect(stationLookup.accepts?.('99999')).toBe(true);
     expect(stationLookup.accepts?.('9999')).toBe(true);
-    expect(stationLookup.accepts?.('999')).toBe(false);
+    // Metro Bilbao numbers its stations from 1.
+    expect(stationLookup.accepts?.('9')).toBe(true);
+    expect(stationLookup.accepts?.('123456')).toBe(false);
     expect(stationLookup.accepts?.('Chamartín')).toBe(false);
   });
 
   it('round-trips its config through an embed URL, legacy keys included', () => {
     const legacy = decode(mitrenDef.config, new URLSearchParams('station=17000'));
-    expect(legacy).toEqual({ station: '17000', network: '' });
-    const query = encode(mitrenDef.config, { station: '13200', network: 'bilbao_aldiriak' });
+    expect(legacy).toEqual({ feed: 'cercanias', station: '17000', network: '' });
+    const query = encode(mitrenDef.config, { feed: 'cercanias', station: '13200', network: 'bilbao_aldiriak' });
     expect(query.toString()).toBe('station=13200&network=bilbao_aldiriak');
+    const bilbao = encode(mitrenDef.config, { feed: 'metro-bilbao', station: '10', network: 'bilbao_metro' });
+    expect(bilbao.toString()).toBe('op=metro-bilbao&station=10&network=bilbao_metro');
   });
 });
 
@@ -201,6 +288,43 @@ describe('mapArrivals', () => {
     row.identity = { public_number: '21117', technical_id: 'C1-21117' };
     const again = mapArrivals(later, chamartin, NETWORK)!;
     expect(again.map((service) => service.id)).toEqual(services.map((service) => service.id));
+  });
+});
+
+describe('mapArrivals of the other feeds', () => {
+  it('maps a Metro Bilbao board: its own operator, mode and unit numbers', () => {
+    const here = findStation('bilbao_metro', '10');
+    const services = mapArrivals(metroArrivals, here, 'bilbao_metro')!;
+    expect(services).toHaveLength(5);
+    const [first] = services;
+    expect(first).toMatchObject({
+      mode: 'metro',
+      operator: { id: 'metro-bilbao', name: 'Metro Bilbao' },
+      product: { name: 'Metro' },
+      line: { name: 'L2' },
+      destination: { name: 'Basauri', id: 'bilbao_metro/51' },
+    });
+    // No public number on the Metro: the id falls back to the train channel's.
+    expect(first!.number).toBeUndefined();
+    expect(first!.id).toBe('t:515');
+    expect(first!.here?.platform).toEqual({ name: '2', confirmed: true });
+    expect(first!.here?.departure?.estimated).toBe(1795123459000);
+  });
+
+  it('maps a Euskotren board, with the line and the long form of the destination', () => {
+    const here = findStation('bilbao_euskotren', '2577');
+    const services = mapArrivals(euskotrenArrivals, here, 'bilbao_euskotren')!;
+    expect(services).toHaveLength(3);
+    expect(services[0]).toMatchObject({
+      mode: 'rail',
+      operator: { id: 'euskotren', name: 'Euskotren' },
+      product: { name: 'Euskotren Trena' },
+      line: { name: 'E3' },
+      number: '15442420',
+      destination: { name: 'Lezama' },
+    });
+    // Matiko is "Matiko-Bilbao" in full, and a narrow sign may show either.
+    expect(services[1]!.destination).toMatchObject({ name: 'Matiko-Bilbao', names: ['Matiko'] });
   });
 });
 
@@ -317,6 +441,21 @@ describe('session', () => {
   it('looks the network up for a bare station code', () => {
     open({ station: '13200' }).start(handlers);
     expect(FakeSocket.last.url).toBe('wss://mitren.app/api/ws/trains/bilbao_aldiriak?listing=0');
+  });
+
+  it('opens the socket of the feed that is chosen', () => {
+    open({ station: '10', feed: 'metro-bilbao' }).start(handlers);
+    expect(FakeSocket.last.url).toBe('wss://mitren.app/api/ws/trains/bilbao_metro?listing=0');
+    open({ station: '2577', feed: 'euskotren' }).start(handlers);
+    expect(FakeSocket.last.url).toBe('wss://mitren.app/api/ws/trains/bilbao_euskotren?listing=0');
+    // The network named wins over the feed, so an old embed still opens its own.
+    open({ station: '13200', feed: 'metro-bilbao', network: 'bilbao_aldiriak' }).start(handlers);
+    expect(FakeSocket.last.url).toBe('wss://mitren.app/api/ws/trains/bilbao_aldiriak?listing=0');
+  });
+
+  it('falls back to the default network of the feed for a code it does not list', () => {
+    open({ station: '999', feed: 'metro-bilbao' }).start(handlers);
+    expect(FakeSocket.last.url).toBe('wss://mitren.app/api/ws/trains/bilbao_metro?listing=0');
   });
 
   it('subscribes, reports a board, follows trains and lays their calls on', () => {
@@ -546,6 +685,15 @@ describe('session', () => {
 });
 
 describe('definition', () => {
+  it('offers the three feeds, and drops the station when another is picked', () => {
+    const field = mitrenDef.config.fields.find((candidate) => candidate.key === 'feed');
+    expect(field?.type).toBe('select');
+    if (field?.type !== 'select') throw new Error('the feed field is a select');
+    expect(field.choices.map((choice) => choice.value)).toEqual([...FEEDS]);
+    expect(field.default).toBe('cercanias');
+    expect(field.resets).toEqual(['station', 'network']);
+  });
+
   it('describes the source without loading it', async () => {
     expect(mitrenDef).toMatchObject({ id: 'mitren', kind: 'live', label: 'mitren.label' });
     const module = await mitrenDef.load();

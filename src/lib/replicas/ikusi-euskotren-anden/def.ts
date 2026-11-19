@@ -51,6 +51,8 @@ const selection: SelectionPolicy = {
 export const ikusiEuskotrenAnden: ReplicaDef = {
   id: 'ikusi-euskotren-anden',
   viewBox: { width: WIDTH, height: HEIGHT },
+  // A sign of Euskotren: live trains come from Euskotren's own feed.
+  sourceDefaults: { mitren: { feed: 'euskotren' } },
   accepts: 'board',
   needs: { services: 1, calls: false },
   options: optionsSchema,

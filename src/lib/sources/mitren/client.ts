@@ -31,7 +31,7 @@
 import type { BoardSnapshot, Call, Place, Service } from '../../model';
 import type { Needs, SourceEnv, SourceHandlers, SourceInstance } from '../types';
 import { firstStop, mapArrivals, mitrenExt, remainingStops, type MitrenArrivals, type MitrenTrain } from './map';
-import { DEFAULT_NETWORK, findStation, networkForCode, stationPlace, TIME_ZONE, type Station } from './stations';
+import { codeScheme, defaultNetwork, DEFAULT_FEED, feedOf, findStation, isFeed, networkForCode, stationPlace, TIME_ZONE, type Station } from './stations';
 
 export const MITREN_WS = 'wss://mitren.app/api/ws/trains/';
 export const PING_MS = 60000;
@@ -67,8 +67,10 @@ export interface SocketLike {
 export type SocketFactory = new (url: string) => SocketLike;
 
 export interface MitrenConfig {
-  /** Renfe's station code, e.g. `17000`. */
+  /** The station's code within its feed, e.g. Renfe's `17000`. */
   station: string;
+  /** Which feed: `cercanias`, `euskotren` or `metro-bilbao`. Only read to make sense of the code. */
+  feed?: string;
   /** mitren.app's network slug. Looked up from the code when missing. */
   network?: string;
   /** Another server speaking the same protocol. */
@@ -131,8 +133,11 @@ export class MitrenSession implements SourceInstance {
     private readonly deps: MitrenDeps = {},
   ) {
     this.station = String(config.station ?? '').trim();
-    // An old embed names a station and nothing else.
-    this.network = String(config.network ?? '').trim() || networkForCode(this.station) || DEFAULT_NETWORK;
+    // The network is the authority: it says which socket to open and, through
+    // its feed, whose trains these are. An old embed names a station and
+    // nothing else, and a code is only looked up inside its own feed.
+    const feed = isFeed(config.feed) ? config.feed : DEFAULT_FEED;
+    this.network = String(config.network ?? '').trim() || networkForCode(this.station, feed) || defaultNetwork(feed);
     this.url = config.url || `${MITREN_WS}${encodeURIComponent(this.network)}?listing=0`;
     this.here = this.station ? findStation(this.network, this.station) : undefined;
     this.place = this.here
@@ -140,7 +145,7 @@ export class MitrenSession implements SourceInstance {
       : this.station
         ? {
             id: `${this.network}/${this.station}`,
-            codes: { adif: this.station },
+            codes: { [codeScheme(feedOf(this.network))]: this.station },
             name: this.station,
             country: 'es',
             timeZone: TIME_ZONE,

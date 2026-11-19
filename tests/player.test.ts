@@ -6,6 +6,8 @@ import { loadFresh } from '../src/lib/player/fresh';
 import { ReplicaSession, SourceHub } from '../src/lib/player/session';
 import { ManualTicker } from '../src/lib/player/ticker';
 import { andenElectromagnetico as anden } from '../src/lib/replicas/page-iberica-anden-electromagnetico/def';
+import { ikusiEuskotrenAnden as euskotrenAnden } from '../src/lib/replicas/ikusi-euskotren-anden/def';
+import { ikusiMetroBilbaoAnden as metroBilbaoAnden } from '../src/lib/replicas/ikusi-metro-bilbao-anden/def';
 import { present, blank } from '../src/lib/replicas/page-iberica-anden-electromagnetico/presenter';
 import type { Frame, ReplicaImpl } from '../src/lib/replicas/types';
 import { buildSnapshot } from '../src/lib/sources/manual';
@@ -70,6 +72,20 @@ describe('player configuration', () => {
     expect([...writeConfig(anden, config).keys()].sort()).toEqual(['deadoff', 'deadon', 'deadseed', 'hearts']);
     expect(anden.options.fields.find((field) => field.type === 'switch')).toMatchObject({ controls: ['deadOn', 'deadOff'], on: { deadOn: 2, deadOff: 2 } });
   });
+  it('starts a display on the feed its own signs carried', () => {
+    // A sign of the Metro asks the live source for Metro Bilbao, and says so
+    // in its URL only when something else is chosen.
+    const bilbao = readConfig(metroBilbaoAnden, new URLSearchParams('source=mitren'));
+    expect(bilbao.sourceConfig).toMatchObject({ feed: 'metro-bilbao', station: '' });
+    expect([...writeConfig(metroBilbaoAnden, bilbao).keys()]).not.toContain('op');
+    expect(readConfig(euskotrenAnden, new URLSearchParams('source=mitren')).sourceConfig).toMatchObject({ feed: 'euskotren' });
+    expect(readConfig(anden, new URLSearchParams('source=mitren')).sourceConfig).toMatchObject({ feed: 'cercanias' });
+    // What the URL states still wins over the display's own choice.
+    const renfe = readConfig(metroBilbaoAnden, new URLSearchParams('source=mitren&op=cercanias&station=17000'));
+    expect(renfe.sourceConfig).toMatchObject({ feed: 'cercanias', station: '17000' });
+    expect(writeConfig(metroBilbaoAnden, renfe).get('op')).toBe('cercanias');
+  });
+
   it('round-trips', () => {
     for (const query of ['text=HOLA&via=3&speed=20', 'source=demo&via=1%2C2&deadon=2.5', 'source=mitren&station=18000&network=madrid_cercanias&cycle=0']) {
       const config = readConfig(anden, new URLSearchParams(query));

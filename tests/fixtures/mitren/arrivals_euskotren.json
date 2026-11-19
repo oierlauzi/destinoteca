@@ -1,0 +1,205 @@
+{
+ "type": "arrivals_update",
+ "station_id": "2577",
+ "nucleus": "bilbao_euskotren",
+ "transport_name": "Euskotren Trena",
+ "server_epoch": 1795123363,
+ "timestamp": 1795123363360,
+ "arrivals": [
+  {
+   "key": ":sch:20261119:ES:Euskotren:Journey:15442420::ES:Euskotren:Line:8::0",
+   "train_scope": {
+    "city_slug": "bilbao",
+    "mode_slug": "euskotren",
+    "nucleus_slug": "bilbao_euskotren"
+   },
+   "line_scope": {
+    "city_slug": "bilbao",
+    "mode_slug": "euskotren",
+    "nucleus_slug": "bilbao_euskotren"
+   },
+   "line_slug": "E3",
+   "service_instance_id": "sch:20261119:ES:Euskotren:Journey:15442420:",
+   "identity": {
+    "technical_id": "15442420",
+    "trip_id": "ES:Euskotren:Journey:15442420:",
+    "public_number": "15442420",
+    "composition": "15442420",
+    "service_block": null,
+    "public_label": "15442420",
+    "public_label_kind": "unit",
+    "canonical_identifier": "15442420",
+    "scheduled_locator": null
+   },
+   "href": "/bilbao/euskotren/trains/15442420",
+   "route_id": "ES:Euskotren:Line:8:",
+   "visual_route_id": null,
+   "short_name": "E3",
+   "direction_id": "0",
+   "service_date": null,
+   "destination_name": "Lezama",
+   "display_destination_name": "Lezama",
+   "display_destination_direction_semantic": null,
+   "epoch": 1795123680,
+   "eta_seconds": 317,
+   "hhmm": "22:28",
+   "is_realtime": true,
+   "approximate": false,
+   "authority": "trip_update",
+   "presence": null,
+   "is_origin": false,
+   "service_state": "calling",
+   "platform": {
+    "value": "2",
+    "kind": "observed",
+    "confirmed": true,
+    "state": "live",
+    "display": "2",
+    "highlighted": false,
+    "habitual": "2",
+    "exceptional": false,
+    "confidence": null,
+    "pair": null
+   },
+   "line": {
+    "short_name": "E3",
+    "human_short_name": null,
+    "color_bg": "#009fe3",
+    "color_fg": "#fff",
+    "line_icon_url": "/static/img/lines-bilbao/icon-euskotren-e3.svg",
+    "line_icon_alt": "Línea E3 de Euskotren Trena"
+   },
+   "service_color": "#007fc0"
+  },
+  {
+   "key": ":sch:20261119:ES:Euskotren:Journey:15441150::ES:Euskotren:Line:62::1",
+   "train_scope": {
+    "city_slug": "bilbao",
+    "mode_slug": "euskotren",
+    "nucleus_slug": "bilbao_euskotren"
+   },
+   "line_scope": {
+    "city_slug": "bilbao",
+    "mode_slug": "euskotren",
+    "nucleus_slug": "bilbao_euskotren"
+   },
+   "line_slug": "E1",
+   "service_instance_id": "sch:20261119:ES:Euskotren:Journey:15441150:",
+   "identity": {
+    "technical_id": "15441150",
+    "trip_id": "ES:Euskotren:Journey:15441150:",
+    "public_number": "15441150",
+    "composition": "15441150",
+    "service_block": null,
+    "public_label": "15441150",
+    "public_label_kind": "unit",
+    "canonical_identifier": "15441150",
+    "scheduled_locator": null
+   },
+   "href": "/bilbao/euskotren/trains/15441150",
+   "route_id": "ES:Euskotren:Line:62:",
+   "visual_route_id": null,
+   "short_name": "E1",
+   "direction_id": "1",
+   "service_date": null,
+   "destination_name": "Matiko",
+   "display_destination_name": "Matiko",
+   "display_destination_direction_semantic": null,
+   "epoch": 1795125060,
+   "eta_seconds": 1697,
+   "hhmm": "22:51",
+   "is_realtime": true,
+   "approximate": false,
+   "authority": "trip_update",
+   "presence": null,
+   "is_origin": false,
+   "service_state": "calling",
+   "platform": {
+    "value": "2",
+    "kind": "observed",
+    "confirmed": true,
+    "state": "live",
+    "display": "2",
+    "highlighted": false,
+    "habitual": "2",
+    "exceptional": false,
+    "confidence": null,
+    "pair": null
+   },
+   "line": {
+    "short_name": "E1",
+    "human_short_name": null,
+    "color_bg": "#0063a9",
+    "color_fg": "#fff",
+    "line_icon_url": "/static/img/lines-bilbao/icon-euskotren-e1.svg",
+    "line_icon_alt": "Línea E1 de Euskotren Trena"
+   },
+   "service_color": "#007fc0"
+  },
+  {
+   "key": ":sch:20261119:ES:Euskotren:Journey:15440370::ES:Euskotren:Line:10::1",
+   "train_scope": {
+    "city_slug": "bilbao",
+    "mode_slug": "euskotren",
+    "nucleus_slug": "bilbao_euskotren"
+   },
+   "line_scope": {
+    "city_slug": "bilbao",
+    "mode_slug": "euskotren",
+    "nucleus_slug": "bilbao_euskotren"
+   },
+   "line_slug": "E4",
+   "service_instance_id": "sch:20261119:ES:Euskotren:Journey:15440370:",
+   "identity": {
+    "technical_id": "15440370",
+    "trip_id": "ES:Euskotren:Journey:15440370:",
+    "public_number": "15440370",
+    "composition": "15440370",
+    "service_block": null,
+    "public_label": "15440370",
+    "public_label_kind": "unit",
+    "canonical_identifier": "15440370",
+    "scheduled_locator": null
+   },
+   "href": "/bilbao/euskotren/trains/15440370",
+   "route_id": "ES:Euskotren:Line:10:",
+   "visual_route_id": null,
+   "short_name": "E4",
+   "direction_id": "1",
+   "service_date": null,
+   "destination_name": "Matiko",
+   "display_destination_name": "Matiko",
+   "display_destination_direction_semantic": null,
+   "epoch": 1795125960,
+   "eta_seconds": 2597,
+   "hhmm": "23:06",
+   "is_realtime": true,
+   "approximate": false,
+   "authority": "trip_update",
+   "presence": null,
+   "is_origin": false,
+   "service_state": "calling",
+   "platform": {
+    "value": "1",
+    "kind": "observed",
+    "confirmed": true,
+    "state": "live",
+    "display": "1",
+    "highlighted": false,
+    "habitual": "1",
+    "exceptional": false,
+    "confidence": null,
+    "pair": null
+   },
+   "line": {
+    "short_name": "E4",
+    "human_short_name": null,
+    "color_bg": "#2c2664",
+    "color_fg": "#fff",
+    "line_icon_url": "/static/img/lines-bilbao/icon-euskotren-e4.svg",
+    "line_icon_alt": "Línea E4 de Euskotren Trena"
+   },
+   "service_color": "#007fc0"
+  }
+ ]
+}

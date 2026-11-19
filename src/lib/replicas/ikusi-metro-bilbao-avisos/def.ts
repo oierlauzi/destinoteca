@@ -74,8 +74,9 @@ export const ikusiMetroBilbaoAvisos: ReplicaDef = {
   id: 'ikusi-metro-bilbao-avisos',
   viewBox: sizeOf(''),
   size: (options: Values) => sizeOf(plateOf(options)),
-  // The demo's notices come with its long-distance trains.
-  sourceDefaults: { demo: { network: 'long-distance' } },
+  // The demo's notices come with its long-distance trains; live, it hangs in
+  // the Metro, so its feed is Metro Bilbao's.
+  sourceDefaults: { demo: { network: 'long-distance' }, mitren: { feed: 'metro-bilbao' } },
   accepts: 'board',
   needs: { services: 0, calls: false },
   options: optionsSchema,

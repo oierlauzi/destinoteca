@@ -69,6 +69,13 @@ export interface SelectField extends FieldBase {
   default: string;
   choices: Choice[];
   literal?: boolean;
+  /**
+   * Keys of settings that choosing another value puts back to their defaults:
+   * the station of a live source means nothing once another operator's feed
+   * is picked. Only the form does this, so a URL that states both is read as
+   * it is written.
+   */
+  resets?: string[];
 }
 
 /** A value picked by searching, such as a station. The owner supplies the search. */
