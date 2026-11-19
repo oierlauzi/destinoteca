@@ -28,11 +28,11 @@ describe('the hands of a minute-pulse clock', () => {
 describe('every clock with a second hand', () => {
   const clocks = ['festina-adif', 'reloj-cercanias', 'mp-electronics-adif-anden-reloj', 'mp-electronics-adif-anden-vertical', 'ikusi-metro-bilbao-anden'];
 
-  it.each(clocks)('%s offers the same motions under the same URL key, stepping by default', (id) => {
+  it.each(clocks)('%s offers the same motions under the same URL key, minute pulse by default', (id) => {
     const field = settingsOf(getReplica(id)!.options).find((f) => f.key === 'motion') as SelectField;
     expect(field.urlKey).toBe('marcha');
     expect(field.choices.map((c) => c.value)).toEqual(['step', 'sweep', 'ppm']);
-    expect(defaults(getReplica(id)!.options).motion).toBe('step');
+    expect(defaults(getReplica(id)!.options).motion).toBe('ppm');
   });
 
   it.each(clocks)('%s draws its hands where the motion puts them', async (id) => {
@@ -41,7 +41,7 @@ describe('every clock with a second hand', () => {
     const now = Date.UTC(2026, 10, 16, 9, 12, 7, 300);
     const options = defaults(def.options);
     const frame = { ...impl.blank({ now, timeZone: 'Europe/Madrid', services: [], total: 0, notices: [], placement: { platforms: [], cycle: true } }, options), time: now, clock: now, zone: 'Europe/Madrid' };
-    expect(impl.renderToString(frame, { ...options, motion: 'ppm' })).not.toBe(impl.renderToString(frame, options));
+    expect(impl.renderToString(frame, { ...options, motion: 'ppm' })).not.toBe(impl.renderToString(frame, { ...options, motion: 'step' }));
   });
 
   it('leaves the motion off the platform sign without a clock', () => {

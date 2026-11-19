@@ -49,7 +49,7 @@ export function daySeconds(time: number, zone: string): number {
 /** The setting that picks the motion, the same on every clock: `marcha` in embed URLs. */
 export function motionField(group?: string): SelectField {
   return {
-    key: 'motion', urlKey: 'marcha', type: 'select', label: 'clock.opt.motion', help: 'clock.opt.motion.help', default: 'step',
+    key: 'motion', urlKey: 'marcha', type: 'select', label: 'clock.opt.motion', help: 'clock.opt.motion.help', default: 'ppm',
     ...(group ? { group } : {}),
     choices: [
       { value: 'step', label: 'clock.motion.step' },
