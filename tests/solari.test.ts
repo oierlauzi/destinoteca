@@ -151,7 +151,9 @@ describe('Solari train words', () => {
 
 describe('Solari printed plates', () => {
   const frame = (train: string) => fromFlat('largo', { ...defaults(solariLargo.frame as ParamSchema), t1: train, t2: '', t3: '', t4: '', t5: '', t6: '', t7: '', t8: '' });
-  const options = { surround: false, drum: 'hoy', flaps: [], fallback: 'rotulada' as const, animate: false, speed: 14 };
+  // No drum of plates is offered, so the cards a plate test needs go on by hand.
+  const PLATES_2007 = ['TRD@grandes-lineas', 'REGIONAL EXPRES@grandes-lineas', 'ALTARIA@renfe', 'TALGO@renfe', 'INTERCITY@renfe'];
+  const options = { surround: false, drum: DEFAULT_PRESET, flaps: PLATES_2007, fallback: 'rotulada' as const, animate: false, speed: 14 };
   const draw = (train: string, over: Record<string, unknown> = {}) => renderToString('largo', frame(train), { ...options, ...over });
 
   it('is offered on the board the photographs show plates on, and starts lettered', () => {
@@ -163,7 +165,7 @@ describe('Solari printed plates', () => {
   });
 
   it('prints the plate of a product on a pale flap, and letters the word without it', () => {
-    expect(draw('TALGO', { drum: 'rotulado' })).toContain('>TALGO<');
+    expect(draw('TALGO', { flaps: [] })).toContain('>TALGO<');
     const printed = draw('TALGO', { flaps: [flapKey({ text: 'TALGO', identity: 'renfe' })] });
     expect(printed).not.toContain('>TALGO<');
     expect(printed).toContain('>Talgo<');
@@ -172,21 +174,25 @@ describe('Solari printed plates', () => {
 
   it('letters anything the drum has no card for', () => {
     expect(draw('RAP. ARAGON')).toContain('>RAP. ARAGON<');
-    // Talgo stopped running, so today's drum carries no card for it.
-    expect(draw('TALGO')).toContain('>TALGO<');
+    // The drum of 2007 carries no card for a train of long after it.
+    expect(draw('AVLO')).toContain('>AVLO<');
     expect(plateOf(cardFor(drumOf('largo', options), 'RAP. ARAGON'))).toBeUndefined();
   });
 
   it('reads the short forms a board writes, and the names a product was renamed to', () => {
     const drum = drumOf('largo', options);
     expect(cardFor(drum, 'INTCITY')).toBe(cardFor(drum, 'INTERCITY'));
-    expect(cardFor(drum, 'CERC')).toBe(cardFor(drum, 'CERCANIAS'));
+    // A drum built by hand reaches each card by every name its product answers to.
+    const own = [
+      flapKey({ text: 'CERCANIAS', identity: 'renfe' }),
+      flapKey({ text: 'MEDIA DISTANCIA', identity: 'renfe' }),
+      flapKey({ text: 'EUROMED', identity: 'renfe' }),
+    ];
+    const built = drumOf('largo', { ...options, flaps: own });
+    expect(cardFor(built, 'CERC')).toBe(own[0]);
+    expect(cardFor(built, 'MD')).toBe(own[1]);
     // ADIF's own boards print Euromed as «AVE Eur»; the card is the one it carried as renfe Euromed.
-    expect(cardFor(drum, 'AVE EUR')).toBe(cardFor(drum, 'EUROMED'));
-    // Media Distancia became Regional in 2026, so a board of that year has no card
-    // for it and the short form reaches the same nothing as the whole name.
-    const own = [flapKey({ text: 'MEDIA DISTANCIA', identity: 'renfe' })];
-    expect(cardFor(drumOf('largo', { ...options, flaps: own }), 'MD')).toBe(own[0]);
+    expect(cardFor(built, 'AVE EUR')).toBe(own[2]);
   });
 
   it('gives Regional its own R, and leaves Regional Exprés on the Grandes Líneas strokes', () => {
@@ -230,17 +236,17 @@ describe('Solari drums', () => {
     for (const preset of PRESETS) expect(drumOf('largo', options({ drum: preset.id }))[0]).toBe('');
   });
 
-  it('carries only what the 2007 photograph shows, so it cannot turn onto a later train', () => {
-    const drum = drumOf('largo', options({ drum: '2007' }));
-    expect(drum.slice(1).map(textOf).sort()).toEqual(['ALTARIA', 'INTERCITY', 'REGIONAL EXPRES', 'TALGO', 'TRD']);
+  it('carries only the cards it was built with, so it cannot turn onto a later train', () => {
+    const built = ['TRD@grandes-lineas', 'TALGO@renfe'];
+    const drum = drumOf('largo', options({ flaps: built }));
+    expect(drum.slice(1)).toEqual(built);
     // Avlo did not run until long after this board was photographed.
     expect(drum.some((card) => textOf(card) === 'AVLO')).toBe(false);
     expect(drum).toContain(flapKey({ text: 'TRD', identity: 'grandes-lineas' }));
-    expect(drum).toContain(flapKey({ text: 'TALGO', identity: 'renfe' }));
   });
 
   it('letters a train the drum has no card for rather than inventing one', () => {
-    const drum = drumOf('largo', options({ drum: '2007' }));
+    const drum = drumOf('largo', options({ flaps: ['TALGO@renfe'] }));
     expect(cardFor(drum, 'AVLO')).toBe('AVLO');
     expect(plateOf(cardFor(drum, 'AVLO'))).toBeUndefined();
   });
@@ -256,27 +262,28 @@ describe('Solari drums', () => {
     expect(drumOf('largo', options({ drum: '2007', flaps: own })).slice(1)).toEqual(own);
   });
 
-  it('keeps the drum of the tick box this setting began as', () => {
-    // ?logos=1 printed every plate there was; its URLs keep that drum.
-    const legacy = drumOf('largo', options({ logos: true }));
-    expect(legacy.some((card) => textOf(card) === 'AVLO')).toBe(true);
-    expect(drumOf('largo', options({ logos: true, drum: '2007' })).slice(1).map(textOf).sort()).toEqual(['ALTARIA', 'INTERCITY', 'REGIONAL EXPRES', 'TALGO', 'TRD']);
+  it('leaves a drum built by hand alone whatever a URL names', () => {
+    const built = ['AVE@renfe-1992'];
+    expect(drumOf('largo', options({ drum: '2007', flaps: built })).slice(1)).toEqual(built);
+    expect(drumOf('largo', options({ logos: true, flaps: built })).slice(1)).toEqual(built);
   });
 
-  it('loads the drum of 2026 under the word it used to be called', () => {
-    const now = drumOf('largo', options({ drum: '2026' }));
-    expect(drumOf('largo', options({ drum: 'hoy' }))).toEqual(now);
-    expect(now.some((card) => textOf(card) === 'AVLO')).toBe(true);
-    // The board no longer carries what stopped running.
-    expect(now.some((card) => textOf(card) === 'TALGO')).toBe(false);
+  it('offers no drum to load, and turns the lettered one until a drum is built', () => {
+    // The drums of plates were withdrawn for claiming more than is known; the
+    // list is curated by hand, and the form's load buttons follow it.
+    expect(PRESETS).toEqual([]);
+    const lettered = drumOf('largo', options());
+    expect(lettered).toContain('TALGO PENDULAR');
+    // A URL naming a drum no longer offered falls back to that one.
+    expect(drumOf('largo', options({ drum: '2007' }))).toEqual(lettered);
+    expect(drumOf('largo', options({ drum: '2026' }))).toEqual(lettered);
   });
 
   it('keeps each AVE wordmark on a card of its own, oldest first', () => {
     const all = offered('largo');
     expect(all).toContain(flapKey({ text: 'AVE', identity: 'renfe-1992' }));
     expect(all).toContain(flapKey({ text: 'AVE', identity: 'renfe-2022' }));
-    // The drum of 2026 takes the newest drawn for it.
-    expect(drumOf('largo', options({ drum: '2026' }))).toContain(flapKey({ text: 'AVE', identity: 'renfe-2022' }));
+    expect(all.indexOf(flapKey({ text: 'AVE', identity: 'renfe-1992' }))).toBeLessThan(all.indexOf(flapKey({ text: 'AVE', identity: 'renfe-2022' })));
   });
 
   it('reads a card whose identity it does not print as the product\'s newest, and letters what it cannot place', () => {
@@ -289,7 +296,7 @@ describe('Solari drums', () => {
   });
 
   it('leaves a train the drum cannot announce blank when it is asked to', () => {
-    const drum = drumOf('largo', options({ drum: '2007' }));
+    const drum = drumOf('largo', options({ flaps: ['TALGO@renfe'] }));
     expect(cardFor(drum, 'AVLO', 'rotulada')).toBe('AVLO');
     expect(cardFor(drum, 'AVLO', 'blanco')).toBe('');
     expect(plateOf(cardFor(drum, 'AVLO', 'blanco'))).toBeUndefined();

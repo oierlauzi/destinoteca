@@ -59,7 +59,6 @@ export function plateOf(key: string): Logo | undefined {
 export const textOf = (key: string): string => parseFlap(key).text;
 
 const lettered = (...texts: string[]): string[] => texts;
-const printed = (identity: Identity, ...products: string[]): string[] => products.map((text) => flapKey({ text, identity }));
 
 /**
  * What the boards of the seventies and eighties say, read off the
@@ -70,30 +69,6 @@ const ROTULADO: Record<Variant, string[]> = {
   cercanias: lettered('TRANVIA'),
 };
 
-/**
- * The cards the 2007 photograph shows, and only those: five products, in the
- * two identities the board carried side by side that year. Nothing has been
- * added to round it out, so a board set to this drum can say no more than the
- * photograph proves it could.
- */
-const SETENTA_2007 = [...printed('grandes-lineas', 'TRD', 'REGIONAL EXPRES'), ...printed('renfe', 'ALTARIA', 'TALGO', 'INTERCITY')];
-
-/**
- * Every product that has a plate, each in the newest identity drawn for it,
- * leaving out what no longer runs: in 2026 Intercity absorbed Alvia and
- * Media Distancia became Regional. A board like this never existed: it is for
- * reading today's departures on, and the name of the drum says so.
- */
-function running(): string[] {
-  const gone = new Set(['TRD', 'REGIONAL EXPRES', 'GRANDES LINEAS', 'ALTARIA', 'ARCO', 'ESTRELLA', 'TRENHOTEL', 'TREN DE LOS 80', 'TALGO', 'ALVIA', 'MEDIA DISTANCIA']);
-  const out: string[] = [];
-  for (const product of PRODUCT_ORDER) {
-    if (gone.has(product)) continue;
-    const identity = identitiesOf(product).at(-1);
-    if (identity) out.push(flapKey({ text: product, identity }));
-  }
-  return out;
-}
 
 /**
  * The order products are offered in, which is the order they fall on a drum
@@ -111,25 +86,31 @@ export interface Preset {
 }
 
 /**
- * The drums offered. Only the first two are states a photograph of this board
- * shows; the last two are openly anachronistic, boards that never existed,
- * for reading today's departures on. There is no drum for the photograph of
- * 1995: it shows plates in an identity whose artwork has not been drawn here,
- * and the picture is too poor to read them off.
+ * The drums offered for loading, each a state of this board that can be given
+ * whole. None is offered yet, and they are curated by hand rather than
+ * derived: a drum rounded out with guesses, or standing in for its cards with
+ * older drawings, would claim more than is known. The 2007 photograph proves
+ * five cards and says nothing about the rest; the 1995 one shows an identity
+ * whose artwork is not drawn here; and of today's, Renfe's AVE, avlo and AVE
+ * Eur of 2026 are not published as vector.
+ *
+ * To offer one, add `{ id, flaps }` here with `solari.drum.<id>` and
+ * `solari.drum.<id>.note` beside it in the strings. The form's load buttons
+ * appear by themselves.
  */
-export const PRESETS: Preset[] = [
-  { id: 'rotulado', flaps: (variant) => ROTULADO[variant] },
-  { id: '2007', flaps: (variant) => (variant === 'largo' ? SETENTA_2007 : ROTULADO[variant]) },
-  { id: '2026', flaps: (variant) => (variant === 'largo' ? running() : ROTULADO[variant]) },
-];
+export const PRESETS: Preset[] = [];
 
+/**
+ * The drum a board turns when none has been loaded or built by hand: the
+ * lettered words of the seventies and eighties, which the photographs show
+ * whole. Every plate that is drawn can be put on a drum by hand, which claims
+ * nothing about what a board carried.
+ */
 export const DEFAULT_PRESET = 'rotulado';
-/** Drums renamed since: a URL that names one by its old word still loads it. */
-const ALSO_CALLED: Record<string, string> = { hoy: '2026' };
-const presetOf = (id: string): Preset => PRESETS.find((preset) => preset.id === (ALSO_CALLED[id] ?? id)) ?? PRESETS[0]!;
 
-/** The cards a preset carries, for the form to seed a hand-built drum from. */
-export const flapsOfPreset = (id: string, variant: Variant): string[] => presetOf(id).flaps(variant);
+/** The cards a drum carries: a loaded one's, or the default when it names none. */
+export const flapsOfPreset = (id: string, variant: Variant): string[] =>
+  (PRESETS.find((preset) => preset.id === id) ?? { flaps: (v: Variant) => ROTULADO[v] }).flaps(variant);
 
 /** Every card that can be added to a drum by hand, in the order they are offered. */
 export function offered(variant: Variant): string[] {
@@ -139,16 +120,13 @@ export function offered(variant: Variant): string[] {
 }
 
 /**
- * The drum a board is set to: the cards edited by hand when there are any,
- * and otherwise the preset's.
+ * The drum a board is set to: the cards built by hand when there are any, and
+ * otherwise the loaded drum's.
  */
 export function drumOf(variant: Variant, options: Values): string[] {
   const own = options.flaps;
   if (Array.isArray(own) && own.length) return ['', ...own.map(String)];
-  // `logos` is the key of the first version of this setting, a tick box that
-  // printed every plate there was. Its URLs keep that drum.
-  const preset = options.logos === true && (options.drum ?? DEFAULT_PRESET) === DEFAULT_PRESET ? '2026' : String(options.drum ?? DEFAULT_PRESET);
-  return ['', ...presetOf(preset).flaps(variant)];
+  return ['', ...flapsOfPreset(String(options.drum ?? DEFAULT_PRESET), variant)];
 }
 
 /**

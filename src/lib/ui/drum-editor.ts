@@ -110,22 +110,26 @@ export function drumEditor(value: unknown, onChange: (value: unknown, also?: Val
     ]);
     details.addEventListener('toggle', () => (open = details.open));
 
-    root.replaceChildren(
-      // Outside the list, because loading one replaces everything in it.
-      el('div', { class: 'drum-presets' }, [
-        el('span', { class: 'drum-presets-label', text: t('solari.drum.load') }),
-        ...PRESETS.map((preset) =>
-          el('button', {
-            class: 'drum-preset',
-            text: t(`solari.drum.${preset.id}`),
-            attrs: { type: 'button', 'aria-pressed': String(!edited && preset.id === loaded) },
-            on: { click: () => load(preset.id) },
-          }),
-        ),
-      ]),
-      el('p', { class: 'drum-note', text: edited ? t('solari.drum.own') : t(`solari.drum.${loaded}.note`) }),
-      details,
-    );
+    // The drums on offer are curated by hand, and there may be none; the row
+    // that loads them is left out rather than standing empty.
+    const offers = PRESETS.length
+      ? [
+          // Outside the list, because loading one replaces everything in it.
+          el('div', { class: 'drum-presets' }, [
+            el('span', { class: 'drum-presets-label', text: t('solari.drum.load') }),
+            ...PRESETS.map((preset) =>
+              el('button', {
+                class: 'drum-preset',
+                text: t(`solari.drum.${preset.id}`),
+                attrs: { type: 'button', 'aria-pressed': String(!edited && preset.id === loaded) },
+                on: { click: () => load(preset.id) },
+              }),
+            ),
+          ]),
+        ]
+      : [];
+    const note = edited ? t('solari.drum.own') : t(PRESETS.some((preset) => preset.id === loaded) ? `solari.drum.${loaded}.note` : 'solari.drum.default.note');
+    root.replaceChildren(...offers, el('p', { class: 'drum-note', text: note }), details);
   };
 
   draw();

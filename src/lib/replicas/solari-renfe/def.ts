@@ -51,8 +51,9 @@ function optionsSchema(variant: Variant): ParamSchema {
               label: 'solari.opt.drum',
               default: DEFAULT_PRESET,
               hidden: true,
-              // The last is what the drum of 2026 was called when it was called «hoy».
-              choices: [...PRESETS.map((preset) => ({ value: preset.id, label: `solari.drum.${preset.id}` })), { value: 'hoy', label: 'solari.drum.2026' }] as Choice[],
+              // The first is the drum a board turns when none has been loaded;
+              // a URL naming one no longer offered falls back to it.
+              choices: [{ value: DEFAULT_PRESET, label: 'solari.drum.default' }, ...PRESETS.map((preset) => ({ value: preset.id, label: `solari.drum.${preset.id}` }))] as Choice[],
             },
             { key: 'flaps', urlKey: 'paletas', type: 'json', editor: 'drum', label: 'solari.opt.flaps', help: 'solari.opt.flaps.help', default: [] },
             {
