@@ -161,6 +161,11 @@ observaciones tampoco es el mismo en todos.
   en qué año llegó cada estación, ni si alguno es un equipo anterior
   reformado.
 - **En qué otras estaciones hay o hubo.**
+- **Quién hizo cada tablero.** Los que se han fotografiado con placa llevan
+  la de MP Electronics, pero [DSTA](../../pendientes/#dsta), de Tres Cantos,
+  presenta como suyos tableros del mismo aspecto en Sevilla-Santa Justa y dice
+  haber hecho los de Valencia-Joaquín Sorolla en 2010. Puede que una empresa
+  fabricara para la otra, o que DSTA hiciera la integración.
 - **Qué deciden las observaciones**: desde cuántos minutos de retraso se
   avisa, y cuándo se da la hora estimada y cuándo solo el retraso.
 

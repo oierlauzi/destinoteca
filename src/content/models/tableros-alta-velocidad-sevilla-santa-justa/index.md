@@ -90,6 +90,10 @@ placas verdes con el logotipo de adif: «Trenes alta velocidad» encima y
 ## Lo que no se sabe
 
 - **Cuándo se colgaron así.** La fotografía es de enero de 2026.
+- **De quién son los tableros.** Tienen el aspecto de los de MP Electronics,
+  pero [DSTA](../../pendientes/#dsta) presenta como suyos unos tableros de
+  vestíbulo de Santa Justa del mismo diseño. No se ha visto la placa de
+  estos.
 - **Las medidas.** La réplica las estima a partir de la fotografía.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).
