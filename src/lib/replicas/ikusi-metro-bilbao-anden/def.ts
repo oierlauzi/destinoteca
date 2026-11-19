@@ -150,7 +150,7 @@ export const ikusiMetroBilbaoAnden: ReplicaDef = {
   // A sign of the Metro announces the Metro's trains: simulated, Metro
   // Bilbao's network; live, Metro Bilbao's own feed.
   sourceDefaults: { demo: { network: 'metro-bilbao' }, mitren: { feed: 'metro-bilbao' } },
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: ROW_COUNT, calls: false },
   options: optionsSchema,
   frame: frameSchema,

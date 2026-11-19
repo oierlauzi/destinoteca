@@ -54,7 +54,7 @@ export const ikusiEuskotrenAnden: ReplicaDef = {
   // A sign of Euskotren announces its own trains, by their Basque names:
   // simulated, Euskotren's network; live, Euskotren's own feed.
   sourceDefaults: { demo: { network: 'euskotren' }, mitren: { feed: 'euskotren' } },
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: 1, calls: false },
   options: optionsSchema,
   frame: frameSchema,

@@ -102,7 +102,7 @@ const selection: SelectionPolicy = {
 export const pasarelaAtocha: ReplicaDef = {
   id: 'page-iberica-pasarela-atocha',
   viewBox: { width: WIDTH, height: HEIGHT },
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: LINE_COUNT, calls: false },
   options: optionsSchema,
   frame: frameSchema,

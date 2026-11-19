@@ -23,6 +23,13 @@ interface FieldBase {
   group?: string;
   /** Kept in the URL but not offered in the form (set by another field, or legacy). */
   hidden?: boolean;
+  /**
+   * What this setting is about, for a reader that wants only part of a schema:
+   * the kinds of data a source's settings serve (`services`, `time`), so that
+   * a clock is not asked which trains to announce. A setting that says nothing
+   * is about everything, and is always offered. See `onlyAbout`.
+   */
+  about?: readonly string[];
 }
 
 export interface TextField extends FieldBase {
@@ -114,6 +121,7 @@ export interface SwitchField {
   help?: string;
   group?: string;
   hidden?: boolean;
+  about?: readonly string[];
   /** Keys of the settings it drives. */
   controls: string[];
   /** Their values when first switched on. */
@@ -136,6 +144,25 @@ export interface ParamSchema {
 }
 
 export type Values = Record<string, unknown>;
+
+/**
+ * The schema with only the settings a reader of these `topics` can use: those
+ * that say nothing about themselves, and those about one of the topics. A
+ * switch left with nothing to drive goes too, and so does a group left empty.
+ *
+ * Values of the settings left out keep their defaults, and they are neither
+ * asked for in the form nor written to the URL, so a display reads only what
+ * concerns it from a source that knows more.
+ */
+export function onlyAbout(schema: ParamSchema, topics: readonly string[]): ParamSchema {
+  const serves = (about: readonly string[] | undefined): boolean => !about || about.some((topic) => topics.includes(topic));
+  const kept = schema.fields.filter((field) => serves(field.about));
+  const keys = new Set(kept.filter((field) => field.type !== 'switch').map((field) => field.key));
+  const fields = kept.filter((field) => field.type !== 'switch' || field.controls.some((key) => keys.has(key)));
+  if (fields.length === schema.fields.length) return schema;
+  const groups = schema.groups?.filter((group) => fields.some((field) => field.group === group.id));
+  return { ...schema, fields, ...(groups ? { groups } : {}) };
+}
 
 /** The fields of a schema that hold values, leaving out form-only controls. */
 export function settingsOf(schema: ParamSchema): SettingField[] {

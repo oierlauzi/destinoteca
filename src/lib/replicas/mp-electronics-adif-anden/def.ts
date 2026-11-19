@@ -120,7 +120,7 @@ function anden(id: string, kind: Kind): ReplicaDef {
   return {
     id,
     viewBox: sizeOf(kind),
-    accepts: 'board',
+    reads: ['services', 'time'],
     needs: { services: 1, calls: true },
     options: optionsSchema(kind),
     frame: frameSchema,

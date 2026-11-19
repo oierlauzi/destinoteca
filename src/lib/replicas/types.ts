@@ -1,7 +1,7 @@
 import type { SelectionPolicy, View } from '../model';
 import type { ParamSchema, Values } from '../params';
 import type { Ticker } from '../player/ticker';
-import type { Needs } from '../sources/types';
+import type { DataKind, Needs } from '../sources/types';
 
 /**
  * What a display shows at one moment, in its own terms: for a text sign, the
@@ -45,8 +45,13 @@ export interface ReplicaDef {
   size?(options: Values): { width: number; height: number };
   /** Settings of a source that suit this display better than the source's own defaults, by source id. */
   sourceDefaults?: Record<string, Values>;
-  /** `none` is a display that needs no data, such as a clock. */
-  accepts: 'board' | 'none';
+  /**
+   * What this display can show of what a source knows: `services` for one
+   * that announces trains, `time` for the time of day. From it follow the
+   * sources it is offered (a train feed is no use to a clock) and which of
+   * their settings it is asked for.
+   */
+  reads: readonly DataKind[];
   needs: Needs;
   /** Appearance and defects. */
   options: ParamSchema;

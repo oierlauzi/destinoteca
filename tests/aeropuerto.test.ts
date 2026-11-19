@@ -218,7 +218,7 @@ describe('the remarks on a running board', () => {
     const recording = { ...impl, mount: () => ({ setFrame: (frame: Frame) => void frames.push(frame), setOptions: () => {}, destroy: () => {} }) } as ReplicaImpl;
     new ReplicaSession(def, recording, {} as Element, hub, ticker, { options: { ...options, regional: 'eu' }, placement: { platforms: [], cycle: true } });
     let handlers: SourceHandlers | undefined;
-    const source: SourceDef = { id: 'fake', label: '', kind: 'live', config: { fields: [] }, load: async () => ({ create: () => ({ start: (h) => void (handlers = h), stop: () => {} }) }) };
+    const source: SourceDef = { id: 'fake', label: '', kind: 'live', provides: ['services'], config: { fields: [] }, load: async () => ({ create: () => ({ start: (h) => void (handlers = h), stop: () => {} }) }) };
     await hub.setSource(source);
     const gone: Service = { id: 'c', status: 'cancelled', operator: { name: 'Iberia', shortName: 'IB' }, number: '3910', destination: { name: 'Madrid' }, here: { departure: { scheduled: NOW + 600_000 } } };
     handlers!.onSnapshot({ kind: 'board', generatedAt: NOW, services: [gone] });

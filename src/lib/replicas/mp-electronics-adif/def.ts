@@ -173,7 +173,7 @@ const sizeOf = (): { width: number; height: number } => ({ width: BOARD_WIDTH, h
 export const mpElectronicsAdif: ReplicaDef = {
   id: 'mp-electronics-adif',
   viewBox: sizeOf(),
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: ROWS, calls: false },
   options: optionsSchema,
   frame: frameSchema,

@@ -51,12 +51,12 @@ export const EXAMPLE_ROWS: ManualRow[] = [
 
 export const manualConfig: ParamSchema = {
   fields: [
-    { key: 'services', urlKey: 'svc', type: 'json', editor: 'services', label: 'manual.services', default: [] },
-    { key: 'station', urlKey: 'en', type: 'text', label: 'manual.station', default: '', placeholder: 'Madrid-Chamartín' },
-    { key: 'notice', urlKey: 'aviso', type: 'text', label: 'manual.notice', help: 'manual.notice.help', default: '' },
-    { key: 'time', urlKey: 'hora', type: 'text', label: 'manual.time', help: 'manual.time.help', default: '', maxLength: 5, placeholder: 'HH:MM' },
-    { key: 'freeze', urlKey: 'parado', type: 'boolean', label: 'manual.freeze', help: 'manual.freeze.help', default: false },
-    { key: 'countdown', urlKey: 'cuenta', type: 'boolean', label: 'manual.countdown', help: 'manual.countdown.help', default: false },
+    { key: 'services', urlKey: 'svc', type: 'json', editor: 'services', label: 'manual.services', default: [], about: ['services'] },
+    { key: 'station', urlKey: 'en', type: 'text', label: 'manual.station', default: '', placeholder: 'Madrid-Chamartín', about: ['services'] },
+    { key: 'notice', urlKey: 'aviso', type: 'text', label: 'manual.notice', help: 'manual.notice.help', default: '', about: ['services'] },
+    { key: 'time', urlKey: 'hora', type: 'text', label: 'manual.time', help: 'manual.time.help', default: '', maxLength: 5, placeholder: 'HH:MM', about: ['time'] },
+    { key: 'freeze', urlKey: 'parado', type: 'boolean', label: 'manual.freeze', help: 'manual.freeze.help', default: false, about: ['time'] },
+    { key: 'countdown', urlKey: 'cuenta', type: 'boolean', label: 'manual.countdown', help: 'manual.countdown.help', default: false, about: ['services'] },
   ],
 };
 
@@ -65,6 +65,8 @@ export const manualDef: SourceDef = {
   label: 'manual.label',
   description: 'manual.description',
   kind: 'manual',
+  // Trains typed by hand, and the time of day the board lives at.
+  provides: ['services', 'time'],
   config: manualConfig,
   // A couple of kilobytes: shipped with the page rather than fetched on first use.
   load: async () => module,

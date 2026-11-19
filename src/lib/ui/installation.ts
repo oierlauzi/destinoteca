@@ -2,14 +2,13 @@ import { t } from '../../i18n';
 import { memberConfig } from '../installations/layout';
 import { composeSvg } from '../installations/render';
 import type { ReplicaMember, ResolvedInstallation } from '../installations/types';
-import { decode, defaults, encode, type Values } from '../params';
-import { sourceSchema } from '../player/config';
+import { decode, defaults, encode, type ParamSchema, type Values } from '../params';
+import { sourceSchema, type DataReader } from '../player/config';
 import { defineReplicaElement, REPLICA_TAG, type ReplicaElement } from '../player/element';
 import { SourceHub } from '../player/session';
 import { getReplica } from '../replicas/registry';
-import type { ReplicaDef } from '../replicas/types';
 import { EXAMPLE_ROWS } from '../sources/manual/def';
-import { getSource, sources } from '../sources/registry';
+import { getSource, sourcesFor } from '../sources/registry';
 import type { SourceStatus } from '../sources/types';
 import { copyText, download, el, svgToPng, uid } from './dom';
 import { renderForm, type FormContext } from './form';
@@ -34,13 +33,19 @@ interface Mounted {
 
 const editors: FormContext['editors'] = { services: servicesEditor, drum: drumEditor };
 
-/** The display whose settings the source follows: the first board. */
-function leadOf(installation: ResolvedInstallation): ReplicaDef | undefined {
-  for (const member of installation.members) {
+/**
+ * What the displays hung here read between them, and whose settings the source
+ * follows: the first board's, so that a wall of ADIF boards with a clock in
+ * the middle still starts the simulation on long-distance trains.
+ */
+function readerOf(installation: ResolvedInstallation): DataReader {
+  const defs = installation.members.flatMap((member) => {
     const def = member.kind === 'replica' ? getReplica(member.replica) : undefined;
-    if (def?.accepts === 'board') return def;
-  }
-  return undefined;
+    return def ? [def] : [];
+  });
+  const reads = [...new Set(defs.flatMap((def) => def.reads))];
+  const lead = defs.find((def) => def.reads.includes('services')) ?? defs[0];
+  return { reads, sourceDefaults: lead?.sourceDefaults };
 }
 
 /** Brings the displays of an installation to life on one shared hub. */
@@ -49,7 +54,8 @@ function mountDisplays(root: HTMLElement, installation: ResolvedInstallation, ti
   const hub = new SourceHub();
   const elements = new Map<string, ReplicaElement>();
   const members = installation.members.filter((member): member is ReplicaMember => member.kind === 'replica');
-  let source = 'demo';
+  // Until the page says otherwise, the first source that suits what hangs here.
+  let source = sourcesFor(readerOf(installation).reads)[0]?.id ?? '';
   let sourceConfig: Values = {};
 
   for (const member of members) {
@@ -92,17 +98,19 @@ function mountDisplays(root: HTMLElement, installation: ResolvedInstallation, ti
   };
 }
 
-function readSource(lead: ReplicaDef | undefined, query: URLSearchParams): { source: string; config: Values } {
+function readSource(reader: DataReader, query: URLSearchParams): { source: string; config: Values } {
+  const offered = sourcesFor(reader.reads);
   const asked = query.get('source');
-  const id = asked && getSource(asked) ? asked : 'demo';
-  const def = getSource(id)!;
-  return { source: id, config: lead ? decode(sourceSchema(lead, def), query) : decode(def.config, query) };
+  // A source that has nothing these displays can show gives way to the first that has.
+  const def = offered.find((source) => source.id === asked) ?? offered[0];
+  if (!def) return { source: '', config: {} };
+  return { source: def.id, config: decode(sourceSchema(reader, def), query) };
 }
 
-function writeSource(lead: ReplicaDef | undefined, source: string, config: Values): URLSearchParams {
+function writeSource(reader: DataReader, source: string, config: Values): URLSearchParams {
   const query = new URLSearchParams({ source });
   const def = getSource(source);
-  if (def) encode(lead ? sourceSchema(lead, def) : def.config, config, query);
+  if (def) encode(sourceSchema(reader, def), config, query);
   return query;
 }
 
@@ -110,7 +118,7 @@ function writeSource(lead: ReplicaDef | undefined, source: string, config: Value
 export function mountInstallationEmbed(root: HTMLElement): void {
   const installation = JSON.parse(root.dataset.installation ?? '{}') as ResolvedInstallation;
   const mounted = mountDisplays(root, installation, root.dataset.title ?? '');
-  const { source, config } = readSource(leadOf(installation), new URLSearchParams(location.search));
+  const { source, config } = readSource(readerOf(installation), new URLSearchParams(location.search));
   mounted.setSource(source, config);
 }
 
@@ -121,20 +129,17 @@ export function mountInstallation(root: HTMLElement): void {
   const ui = root.querySelector<HTMLElement>('.playground-ui');
   if (!stage || !ui) return;
   const title = root.dataset.title ?? '';
-  const lead = leadOf(installation);
+  const reader = readerOf(installation);
   const mounted = mountDisplays(root, installation, title);
   const query = new URLSearchParams(location.search);
-  let { source, config } = readSource(lead, query);
+  let { source, config } = readSource(reader, query);
   const remembered = new Map<string, Values>([[source, config]]);
   let touched = false;
 
-  const schemaOf = (id: string) => {
-    const def = getSource(id)!;
-    return lead ? sourceSchema(lead, def) : def.config;
-  };
+  const schemaOf = (id: string): ParamSchema => sourceSchema(reader, getSource(id)!);
   const embedUrl = (): string => {
     const url = new URL(root.dataset.embed ?? '', location.href);
-    url.search = writeSource(lead, source, config).toString();
+    url.search = writeSource(reader, source, config).toString();
     return url.toString();
   };
   const embedCode = (): string =>
@@ -183,7 +188,7 @@ export function mountInstallation(root: HTMLElement): void {
       on: {
         click: async () => {
           const url = new URL(location.href);
-          url.search = writeSource(lead, source, config).toString();
+          url.search = writeSource(reader, source, config).toString();
           flash(await copyText(url.toString()));
         },
       },
@@ -196,11 +201,11 @@ export function mountInstallation(root: HTMLElement): void {
     mounted.setSource(source, config);
     embedText.value = embedCode();
     if (fromVisitor) touched = true;
-    if (touched) history.replaceState(null, '', `${location.pathname}?${writeSource(lead, source, config)}${location.hash}`);
+    if (touched) history.replaceState(null, '', `${location.pathname}?${writeSource(reader, source, config)}${location.hash}`);
   };
 
   // --- Data: one tab per source ------------------------------------------------
-  const tabIds = sources.map((s) => s.id);
+  const tabIds = sourcesFor(reader.reads).map((source) => source.id);
   const tablist = el('div', { class: 'tabs', attrs: { role: 'tablist', 'aria-label': t('player.tabs') } });
   const panel = el('div', { class: 'tabpanel', attrs: { role: 'tabpanel', id: uid('panel'), tabindex: 0 } });
   const statusText = el('span');
@@ -240,7 +245,7 @@ export function mountInstallation(root: HTMLElement): void {
   const select = (id: string): void => {
     if (id === source) return;
     let next = remembered.get(id) ?? defaults(schemaOf(id));
-    if (id === 'manual' && !remembered.has(id)) next = { ...next, services: EXAMPLE_ROWS };
+    if (id === 'manual' && reader.reads.includes('services') && !remembered.has(id)) next = { ...next, services: EXAMPLE_ROWS };
     if (id === 'demo') next = { ...next, station: remembered.get('mitren')?.station ?? next.station ?? '' };
     source = id;
     config = next;

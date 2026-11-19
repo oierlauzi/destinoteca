@@ -1,8 +1,8 @@
 import type { Placement } from '../model';
-import { decode, defaults, encode, type ParamSchema, type Values } from '../params';
+import { decode, defaults, encode, onlyAbout, type ParamSchema, type Values } from '../params';
 import type { ReplicaDef } from '../replicas/types';
-import { getSource } from '../sources/registry';
-import type { SourceDef } from '../sources/types';
+import { getSource, sourcesFor } from '../sources/registry';
+import { sharesData, type DataKind, type SourceDef } from '../sources/types';
 
 /**
  * Everything that decides what one replica shows, as it travels in the query
@@ -32,16 +32,32 @@ export const placementSchema: ParamSchema = {
 };
 
 /**
- * A source's settings as this replica wants them by default: a long-distance
- * board starts the demo on long-distance trains. Only defaults change, so a
- * URL that states a value keeps it.
+ * Whoever a source is being read for: one replica, or the displays of an
+ * installation between them. A `ReplicaDef` is one.
  */
-export function sourceSchema(def: ReplicaDef, source: SourceDef): ParamSchema {
-  const overrides = def.sourceDefaults?.[source.id];
-  if (!overrides) return source.config;
+export interface DataReader {
+  /** The kinds of data it can show. */
+  reads: readonly DataKind[];
+  /** Settings of a source that suit it better than the source's own defaults, by source id. */
+  sourceDefaults?: Record<string, Values>;
+}
+
+/** Whether this source knows anything the reader can show. */
+export const sourceFits = (reader: DataReader, source: SourceDef): boolean => sharesData(source.provides, reader.reads);
+
+/**
+ * A source's settings as this reader wants them: only those it can use (a
+ * clock is asked the board's time, not which trains to announce), with the
+ * defaults it prefers (a long-distance board starts the demo on long-distance
+ * trains). Only defaults change, so a URL that states a value keeps it.
+ */
+export function sourceSchema(reader: DataReader, source: SourceDef): ParamSchema {
+  const schema = onlyAbout(source.config, reader.reads);
+  const overrides = reader.sourceDefaults?.[source.id];
+  if (!overrides) return schema;
   return {
-    ...source.config,
-    fields: source.config.fields.map((field) =>
+    ...schema,
+    fields: schema.fields.map((field) =>
       field.type !== 'switch' && field.key in overrides ? ({ ...field, default: overrides[field.key] } as typeof field) : field,
     ),
   };
@@ -62,13 +78,21 @@ const fromPlacement = (placement: Placement): Values => ({ platforms: placement.
 
 /**
  * Which mode a query string asks for. Embeds made for the original replica
- * carry no `source`: those with a station were live, the rest hand-typed.
+ * carry no `source`: those with a station were live, the rest hand-typed. A
+ * source that has nothing this display can show (a train feed named in an
+ * older link to a clock) gives way to the one it would have started on.
  */
 function modeOf(def: ReplicaDef, query: URLSearchParams): string {
+  // What it shows with nothing asked for: its own language where it has one,
+  // else the first source that suits it.
+  const start = (): string => (def.frame ? RAW : (sourcesFor(def.reads)[0]?.id ?? RAW));
   const asked = query.get('source');
-  if (asked && (asked === RAW || getSource(asked))) return asked === RAW && !def.frame ? 'demo' : asked;
-  if (def.accepts === 'board' && query.get('station')) return 'mitren';
-  return def.frame ? RAW : 'demo';
+  if (asked === RAW) return start();
+  const source = asked ? getSource(asked) : undefined;
+  if (source) return sourceFits(def, source) ? source.id : start();
+  const mitren = getSource('mitren');
+  if (mitren && sourceFits(def, mitren) && query.get('station')) return mitren.id;
+  return start();
 }
 
 export function readConfig(def: ReplicaDef, query: URLSearchParams): PlayerConfig {

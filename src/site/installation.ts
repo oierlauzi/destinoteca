@@ -38,7 +38,9 @@ export async function drawMembers(installation: ResolvedInstallation): Promise<M
     const impl = await def.load();
     const options = memberOptions(def, member.params);
     const view = select(snapshot, def.selection(options), { platforms: member.platforms, cycle: false, skip: member.skip }, STILL_AT);
-    const frame = firstFrame(view.services.length || def.accepts === 'none' ? impl.present(view, options) : impl.blank(view, options));
+    // A display that announces no trains (a clock) always has something to show.
+    const shows = view.services.length > 0 || !def.reads.includes('services');
+    const frame = firstFrame(shows ? impl.present(view, options) : impl.blank(view, options));
     drawn.set(member.id, impl.renderToString(frame, options));
   }
   return drawn;

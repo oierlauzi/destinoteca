@@ -59,7 +59,7 @@ const selection: SelectionPolicy = {
 export const andenElectromagnetico: ReplicaDef = {
   id: 'page-iberica-anden-electromagnetico',
   viewBox: { width: 190.87605, height: 81.160835 },
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: 1, calls: true },
   options: optionsSchema,
   frame: frameSchema,

@@ -91,6 +91,10 @@ byte for byte the same; compare their `renderToString` output before and after.
   `textLength`.
 - Fonts read from photographs keep a `SEEN` set and a `RECONSTRUCTED` set, so
   that what was observed stays apart from what was drawn to match.
+- A replica says what it **reads** (`reads`: `services`, `time`). Only the
+  sources that know something it can show are offered for it, and only the
+  settings it can use: a clock gets the device's clock and the manual board's
+  time of day, never a train feed or a list of trains.
 - A new replica is registered in `src/lib/replicas/ids.ts`,
   `src/lib/replicas/registry.ts` and `src/i18n/es/player.ts`, with tests in
   `tests/`.

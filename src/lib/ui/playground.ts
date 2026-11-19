@@ -6,7 +6,7 @@ import type { SessionState } from '../player/session';
 import { getReplica } from '../replicas/registry';
 import type { ReplicaDef } from '../replicas/types';
 import { EXAMPLE_ROWS } from '../sources/manual/def';
-import { getSource, sources } from '../sources/registry';
+import { getSource, sourcesFor } from '../sources/registry';
 import type { SourceStatus } from '../sources/types';
 import { renderDepartures } from './departures';
 import { copyText, download, el, svgToPng, uid } from './dom';
@@ -35,7 +35,10 @@ function initialConfig(def: ReplicaDef, root: HTMLElement): PlayerConfig {
     } catch {
       // A malformed preset is the same as none.
     }
-    if (![...query.keys()].length && def.accepts === 'board') query.set('source', 'demo');
+    // With nothing asked for, the data it starts on: the simulation for a
+    // board, the device's clock for a sign that only tells the time.
+    const first = sourcesFor(def.reads)[0];
+    if (![...query.keys()].length && first) query.set('source', first.id);
   }
   const config = readConfig(def, query);
   // Which dots and cells fail is drawn afresh for each visit, unless the link says which.
@@ -152,7 +155,11 @@ export function mountPlayground(root: HTMLElement): void {
   };
 
   // --- Data: tabs, one per source, plus hand-typed text -----------------------
-  const tabIds = [...(def.accepts === 'board' ? sources.map((source) => source.id) : []), ...(def.frame ? [RAW] : [])];
+  // One tab per source that knows something this display can show, and one
+  // for a frame typed by hand where that is how the sign was driven.
+  const tabIds = [...sourcesFor(def.reads).map((source) => source.id), ...(def.frame ? [RAW] : [])];
+  // A display that announces no trains has no list of them either.
+  const listsServices = def.reads.includes('services');
   const tablist = el('div', { class: 'tabs', attrs: { role: 'tablist', 'aria-label': t('player.tabs') } });
   const panel = el('div', { class: 'tabpanel', attrs: { role: 'tabpanel', id: uid('panel'), tabindex: 0 } });
   const statusText = el('span');
@@ -165,7 +172,7 @@ export function mountPlayground(root: HTMLElement): void {
     statusText.textContent = detail ? `${t(`player.status.${state}`)}: ${t(detail)}` : t(`player.status.${state}`);
   };
   const drawList = (state: SessionState | undefined): void => {
-    if (state) renderDepartures(list, state, def, config.options);
+    if (state && listsServices) renderDepartures(list, state, def, config.options);
   };
 
   let drawing = 0;
@@ -210,9 +217,9 @@ export function mountPlayground(root: HTMLElement): void {
       source.description ? el('p', { class: 'muted', text: t(source.description) }) : null,
       sourceForm.element,
       placement.fields.length ? el('fieldset', {}, [el('legend', { text: t('player.placement') }), placementForm.element]) : null,
-      el('h3', { class: 'list-title', text: t('player.list.label') }),
-      list,
-      el('p', { class: 'muted list-key', text: t('player.list.key') }),
+      listsServices ? el('h3', { class: 'list-title', text: t('player.list.label') }) : null,
+      listsServices ? list : null,
+      listsServices ? el('p', { class: 'muted list-key', text: t('player.list.key') }) : null,
       source.id === 'mitren' ? credit : null,
     ];
     panel.replaceChildren(...parts.filter((part): part is HTMLElement => part !== null));
@@ -223,8 +230,9 @@ export function mountPlayground(root: HTMLElement): void {
     if (id === config.source) return;
     const next = defaultConfig(def, id);
     let sourceConfig = remembered.get(id) ?? next.sourceConfig;
-    // An empty manual board teaches nothing: start from a few trains to edit.
-    if (id === 'manual' && !remembered.has(id)) sourceConfig = { ...sourceConfig, services: EXAMPLE_ROWS };
+    // An empty manual board teaches nothing: start from a few trains to edit,
+    // where the display has somewhere to show them.
+    if (id === 'manual' && listsServices && !remembered.has(id)) sourceConfig = { ...sourceConfig, services: EXAMPLE_ROWS };
     // The demo draws a board per station, so it follows the station picked for the live source.
     if (id === 'demo') sourceConfig = { ...sourceConfig, station: remembered.get('mitren')?.station ?? '' };
     showStatus('idle');

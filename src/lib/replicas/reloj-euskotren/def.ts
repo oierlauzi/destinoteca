@@ -56,7 +56,8 @@ const selection: SelectionPolicy = {
 export const relojEuskotren: ReplicaDef = {
   id: 'reloj-euskotren',
   viewBox: { width: SIZE, height: SIZE },
-  accepts: 'board',
+  // Only the time: a train feed has nothing it can show.
+  reads: ['time'],
   needs: { services: 0, calls: false },
   options: optionsSchema,
   selection: () => selection,

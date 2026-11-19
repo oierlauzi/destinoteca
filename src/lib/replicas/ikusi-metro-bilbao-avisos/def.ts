@@ -78,7 +78,7 @@ export const ikusiMetroBilbaoAvisos: ReplicaDef = {
   // these boards wrote, in Basque, in Spanish and with the stations they
   // concern, and live its feed is Metro Bilbao's.
   sourceDefaults: { demo: { network: 'metro-bilbao' }, mitren: { feed: 'metro-bilbao' } },
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: 0, calls: false },
   options: optionsSchema,
   frame: frameSchema,

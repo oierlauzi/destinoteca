@@ -112,7 +112,7 @@ const selection: SelectionPolicy = {
 export const mpCercanias: ReplicaDef = {
   id: 'mp-electronics-adif-cercanias',
   viewBox: SIZE,
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: ROWS, calls: false },
   options: optionsSchema,
   frame: frameSchema,

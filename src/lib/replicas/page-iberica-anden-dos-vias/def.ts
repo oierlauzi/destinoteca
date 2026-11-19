@@ -94,7 +94,7 @@ const selection: SelectionPolicy = {
 export const andenDosVias: ReplicaDef = {
   id: 'page-iberica-anden-dos-vias',
   viewBox: { width: WIDTH, height: HEIGHT },
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: 24, calls: true },
   options: andenOptionsSchema,
   frame: frameSchema,

@@ -1,6 +1,21 @@
 import type { Attribution, BoardSnapshot, Clock } from '../model';
 import type { Lookup, ParamSchema, Values } from '../params';
 
+/**
+ * A kind of data a source can know and a display can read. It is what decides
+ * which sources suit a display: a board announces trains (`services`), a clock
+ * shows only the time of day (`time`), so a train feed is no use to a clock
+ * and the time can come from anywhere.
+ *
+ * Settings can be tagged with it too (`about` in a ParamSchema field), so that
+ * a source serving a display that reads part of what it knows asks only for
+ * the part that display can use.
+ */
+export type DataKind = 'services' | 'time';
+
+/** Whether what one side offers and the other reads meet at all. */
+export const sharesData = (a: readonly DataKind[], b: readonly DataKind[]): boolean => a.some((kind) => b.includes(kind));
+
 /** `idle` before start, `nodata` when connected but the station sends nothing. */
 export type SourceStatus = 'idle' | 'connecting' | 'live' | 'nodata' | 'error';
 
@@ -53,7 +68,13 @@ export interface SourceDef {
   /** i18n keys. */
   label: string;
   description?: string;
-  kind: 'manual' | 'simulated' | 'live';
+  /** `device` is the viewer's own machine, with nobody to connect to. */
+  kind: 'manual' | 'simulated' | 'live' | 'device';
+  /**
+   * What this source is chosen for. The time a feed reports along the way is
+   * not an offer of `time`: nobody picks a train feed to know the hour.
+   */
+  provides: readonly DataKind[];
   attribution?: Attribution;
   config: ParamSchema;
   load(): Promise<SourceModule>;

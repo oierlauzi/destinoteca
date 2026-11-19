@@ -7,6 +7,7 @@ export const demoDef: SourceDef = {
   label: 'demo.label',
   description: 'demo.description',
   kind: 'simulated',
+  provides: ['services'],
   config: {
     fields: [
       // Seeds the board, so that each station shows its own. Shared with the live source on purpose:

@@ -184,7 +184,7 @@ export const ikusiAeropuerto: ReplicaDef = {
   id: 'ikusi-aeropuerto',
   viewBox: sizeOf({ rows: 12, cells: 51 }),
   size: sizeOf,
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: MAX_ROWS, calls: false },
   options: optionsSchema,
   frame: frameSchema,

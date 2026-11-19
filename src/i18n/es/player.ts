@@ -50,6 +50,16 @@ export const player: Record<string, string> = {
   'player.noscript': 'La réplica interactiva necesita JavaScript. Esta es una imagen fija.',
   'player.stage': 'Réplica interactiva',
 
+  // --- Device clock source ---
+  'device.label': 'Hora del navegador',
+  'device.description': 'Ningún tren: solo la hora, la del aparato en el que estás leyendo esto. Es lo único que necesita un reloj de estación, y lo que muestra un panel cuando no hay nada que anunciar.',
+  'device.zone': 'Hora que marca',
+  'device.zone.help': 'La del navegador o la de la España peninsular, que es la que marcaban estos relojes.',
+  'device.zone.local': 'La del navegador',
+  'device.zone.madrid': 'España peninsular',
+  'device.drift': 'Desvío',
+  'device.drift.help': 'Minutos de adelanto o de retraso, como un reloj al que nadie ha puesto en hora. Arrastra consigo todo lo que muestre la réplica.',
+
   // --- Simulated source ---
   'demo.label': 'Simulación',
   'demo.description': 'Un panel inventado, para probar la réplica sin depender de nadie: nombres largos, retrasos, vías sin confirmar y algún tren que se divide.',

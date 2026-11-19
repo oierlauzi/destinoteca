@@ -11,6 +11,8 @@ export const mitrenDef: SourceDef = {
   label: 'mitren.label',
   description: 'mitren.description',
   kind: 'live',
+  // The feed reports its server's time along the way, but trains are what it is for.
+  provides: ['services'],
   attribution: {
     name: '¿Dónde está mi tren? (mitren.app)',
     url: 'https://mitren.app/',

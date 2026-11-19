@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { FixedClock, StationClock, type BoardSnapshot, type Service, type View } from '../src/lib/model';
-import { decode, defaults, encode, sanitize, type ParamSchema, type Values } from '../src/lib/params';
-import { RAW, readConfig, writeConfig } from '../src/lib/player/config';
+import { decode, defaults, encode, onlyAbout, sanitize, type ParamSchema, type Values } from '../src/lib/params';
+import { RAW, readConfig, sourceSchema, writeConfig } from '../src/lib/player/config';
 import { loadFresh } from '../src/lib/player/fresh';
 import { ReplicaSession, SourceHub } from '../src/lib/player/session';
 import { ManualTicker } from '../src/lib/player/ticker';
@@ -11,6 +11,10 @@ import { ikusiMetroBilbaoAnden as metroBilbaoAnden } from '../src/lib/replicas/i
 import { present, blank } from '../src/lib/replicas/page-iberica-anden-electromagnetico/presenter';
 import type { Frame, ReplicaImpl } from '../src/lib/replicas/types';
 import { buildSnapshot } from '../src/lib/sources/manual';
+import { EXAMPLE_ROWS } from '../src/lib/sources/manual/def';
+import { create as createDevice, localZone } from '../src/lib/sources/device';
+import { getSource, sources, sourcesFor } from '../src/lib/sources/registry';
+import { relojCercanias as reloj } from '../src/lib/replicas/reloj-cercanias/def';
 import { buildDemoBoard, networkOf, NETWORKS } from '../src/lib/sources/demo';
 import { replicas } from '../src/lib/replicas/registry';
 import type { SourceDef, SourceHandlers } from '../src/lib/sources/types';
@@ -42,6 +46,25 @@ describe('settings codec', () => {
     expect(defaults(withSwitch)).toEqual(defaults(schema));
     expect(decode(withSwitch, new URLSearchParams('worn=1&speed=9'))).toEqual({ ...defaults(schema), speed: 9 });
     expect(encode(withSwitch, { ...defaults(schema), speed: 9, worn: true }).toString()).toBe('speed=9');
+  });
+  it('keeps only the settings a reader can use, switches and groups included', () => {
+    const tagged: ParamSchema = {
+      groups: [{ id: 'trains', label: '' }, { id: 'clock', label: '' }],
+      fields: [
+        { type: 'switch', key: 'rough', label: '', controls: ['speed'], on: { speed: 20 } },
+        { key: 'speed', type: 'range', label: '', default: 14, min: 2, max: 30, about: ['services'], group: 'trains' },
+        { key: 'hour', type: 'text', label: '', default: '', about: ['time'], group: 'clock' },
+        { key: 'both', type: 'boolean', label: '', default: false },
+      ],
+    };
+    const forClock = onlyAbout(tagged, ['time']);
+    expect(forClock.fields.map((field) => field.key)).toEqual(['hour', 'both']);
+    expect(forClock.groups?.map((group) => group.id)).toEqual(['clock']);
+    // What was left out keeps its default and stays out of the URL.
+    expect(defaults(forClock)).toEqual({ hour: '', both: false });
+    expect(encode(forClock, { hour: '08:15', both: false, speed: 30 }).toString()).toBe('hour=08%3A15');
+    // A reader of everything gets the schema untouched, switch and all.
+    expect(onlyAbout(tagged, ['services', 'time'])).toBe(tagged);
   });
   it('falls back to defaults on anything unusable, and clamps', () => {
     const query = new URLSearchParams('name=abcdefg&tint=javascript:1&speed=999&rows=%7Bnot-base64');
@@ -95,6 +118,64 @@ describe('player configuration', () => {
   });
 });
 
+describe('what a source knows and a display reads', () => {
+  it('offers a board every source, and a clock only those that know the time', () => {
+    expect(sources.every((source) => source.provides.length > 0)).toBe(true);
+    expect(sourcesFor(anden.reads).map((source) => source.id)).toEqual(['demo', 'mitren', 'device', 'manual']);
+    // No simulated board and no train feed on a clock: they know nothing it can show.
+    expect(sourcesFor(reloj.reads).map((source) => source.id)).toEqual(['device', 'manual']);
+  });
+
+  it('asks a clock only about the time, and a board about everything', () => {
+    const manual = getSource('manual')!;
+    expect(sourceSchema(reloj, manual).fields.map((field) => field.key)).toEqual(['time', 'freeze']);
+    expect(sourceSchema(anden, manual).fields.map((field) => field.key)).toContain('services');
+    // What a clock cannot use never reaches its URL, however it was set.
+    expect([...writeConfig(reloj, { ...readConfig(reloj, new URLSearchParams('source=manual&hora=08%3A15')), sourceConfig: { time: '08:15', services: EXAMPLE_ROWS } }).keys()]).toEqual(['source', 'hora']);
+  });
+
+  it('reads an older link that named a train feed as the clock it is', () => {
+    // Clocks were once offered the simulation; the address still has to mean something.
+    for (const query of ['source=demo&red=air', 'source=mitren&station=17000', 'station=17000']) {
+      const config = readConfig(reloj, new URLSearchParams(query));
+      expect(config.source, query).toBe('device');
+      expect(readConfig(reloj, writeConfig(reloj, config)), query).toEqual(config);
+    }
+    // And a board still reads both as it always did.
+    expect(readConfig(anden, new URLSearchParams('source=demo&red=air')).source).toBe('demo');
+    expect(readConfig(anden, new URLSearchParams('station=17000')).source).toBe('mitren');
+  });
+});
+
+describe('device clock source', () => {
+  const start = (config: Values, now = T0) => {
+    const times: { at: number; frozen?: boolean }[] = [];
+    const boards: BoardSnapshot[] = [];
+    const instance = createDevice(config, { clock: new FixedClock(now) });
+    instance.start({
+      onSnapshot: (snapshot) => void boards.push(snapshot),
+      onStatus: () => {},
+      onTime: (at, frozen) => void times.push({ at, frozen }),
+    });
+    instance.stop();
+    return { times, boards };
+  };
+
+  it('tells the time of the device, in its own zone, and announces no trains', () => {
+    const { times, boards } = start(defaults(getSource('device')!.config));
+    expect(times).toEqual([]);
+    expect(boards).toHaveLength(1);
+    expect(boards[0]).toMatchObject({ generatedAt: T0, services: [], station: { timeZone: localZone() } });
+  });
+
+  it('keeps a chosen time of day, and carries the whole display with its drift', () => {
+    const { times, boards } = start({ zone: 'Europe/Madrid', drift: -2.5 });
+    expect(boards[0]!.station!.timeZone).toBe('Europe/Madrid');
+    expect(times).toEqual([{ at: T0 - 150000, frozen: undefined }]);
+    expect(boards[0]!.generatedAt).toBe(T0 - 150000);
+  });
+});
+
 /** A replica implementation that records what it is asked to show. */
 function recorder(): { impl: ReplicaImpl; frames: Frame[] } {
   const frames: Frame[] = [];
@@ -119,7 +200,7 @@ function fakeSource(): { def: SourceDef; handlers: () => SourceHandlers; focus: 
   const focus: string[][] = [];
   let stops = 0;
   const def: SourceDef = {
-    id: 'fake', label: '', kind: 'live', config: { fields: [] },
+    id: 'fake', label: '', kind: 'live', provides: ['services'], config: { fields: [] },
     load: async () => ({
       create: () => ({
         start: (h) => void (handlers = h),

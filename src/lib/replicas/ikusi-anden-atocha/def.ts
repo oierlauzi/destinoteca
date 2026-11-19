@@ -77,7 +77,7 @@ const selection: SelectionPolicy = {
 export const ikusiAndenAtocha: ReplicaDef = {
   id: 'ikusi-anden-atocha',
   viewBox: { width: WIDTH, height: HEIGHT },
-  accepts: 'board',
+  reads: ['services', 'time'],
   needs: { services: 1, calls: true },
   options: optionsSchema,
   frame: frameSchema,

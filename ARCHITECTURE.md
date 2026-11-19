@@ -89,16 +89,33 @@ There are two clocks and they never mix.
 
 ## Sources
 
-`src/lib/sources/<id>/def.ts` is a light `SourceDef` (id, kind, settings
-schema); `index.ts` is the code, loaded on first use. An instance receives
-`{ onSnapshot, onStatus, onTime }` and may implement `focus()` to learn which
-services are on show.
+`src/lib/sources/<id>/def.ts` is a light `SourceDef` (id, kind, what it
+provides, settings schema); `index.ts` is the code, loaded on first use. An
+instance receives `{ onSnapshot, onStatus, onTime }` and may implement
+`focus()` to learn which services are on show.
 
-| Source | Kind | Notes |
-| --- | --- | --- |
-| `demo` | simulated | A made-up board, one per network (`red=`): Cercanías de Madrid, long and medium distance, an airport's flights, Metro Bilbao, Euskotren. It exercises long names, delays, unconfirmed platforms and gates, a dividing train |
-| `mitren` | live | One of mitren.app's feeds over its WebSocket (`op=cercanias\|euskotren\|metro-bilbao`): Renfe Cercanías and Rodalies, Euskotren or Metro Bilbao, each with its own networks, station codes and operator; bundled station list |
-| `manual` | manual | Services typed by hand in model terms, stored in the URL |
+| Source | Kind | Provides | Notes |
+| --- | --- | --- | --- |
+| `demo` | simulated | services | A made-up board, one per network (`red=`): Cercanías de Madrid, long and medium distance, an airport's flights, Metro Bilbao, Euskotren. It exercises long names, delays, unconfirmed platforms and gates, a dividing train |
+| `mitren` | live | services | One of mitren.app's feeds over its WebSocket (`op=cercanias\|euskotren\|metro-bilbao`): Renfe Cercanías and Rodalies, Euskotren or Metro Bilbao, each with its own networks, station codes and operator; bundled station list |
+| `device` | device | time | The clock of the machine the page is open on, in its own time zone or in the one Spanish stations keep, and as far off as it is told to run (`zona`, `desvio`). No trains: it is what a station clock needs, and what a board shows with nothing to announce |
+| `manual` | manual | services, time | Services typed by hand in model terms, stored in the URL, and the time of day the board lives at |
+
+### What a source knows and a display reads
+
+A source says what it is chosen for (`provides`) and a display what it can
+show of it (`reads`, in its `ReplicaDef`): both are lists of `DataKind`
+(`services`, `time`). Where the two meet, the source is offered for that
+display — so a clock is never offered a train feed, and no board is left
+without one — and the first that fits is what it starts on
+(`sourcesFor`, `sourceFits`).
+
+The same pairing trims the settings: a field of a source's schema may say what
+it is `about`, and `onlyAbout` (in `src/lib/params/`) keeps only what the
+reader can use, so the manual source asks a clock for the time of day and not
+for a list of trains. What is left out keeps its default and stays out of the
+URL. A source named in an older link that the display cannot use gives way to
+the one it would have started on, so those addresses still mean something.
 
 **Adding a source:** a folder with `def.ts` and `index.ts`, one line in
 `src/lib/sources/registry.ts`, and its strings in `src/i18n/es/`. The settings
@@ -121,9 +138,9 @@ trains. The picker still offers the rest.
 
 ## Replicas
 
-`def.ts` is a light `ReplicaDef`: id, intrinsic size, what it needs, its
-selection policy, and two schemas (`options` for appearance, `frame` for what
-it shows). `index.ts` is a `ReplicaImpl`:
+`def.ts` is a light `ReplicaDef`: id, intrinsic size, what it reads and needs,
+its selection policy, and two schemas (`options` for appearance, `frame` for
+what it shows). `index.ts` is a `ReplicaImpl`:
 
 | Method | Does |
 | --- | --- |
@@ -205,7 +222,7 @@ page is fully described by a `PlayerConfig` (`src/lib/player/config.ts`):
 
 | Group | Schema | Example keys |
 | --- | --- | --- |
-| Mode | — | `source=demo\|mitren\|manual\|raw` |
+| Mode | — | `source=demo\|mitren\|device\|manual\|raw` |
 | Source settings | the source's `config` | `op`, `station`, `network`, `svc`, `hora` |
 | Placement | `placementSchema` | `via`, `cycle` |
 | Appearance | the replica's `options` | `dot`, `showoff`, `anim`, `hearts`… |

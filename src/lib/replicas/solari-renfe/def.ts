@@ -161,7 +161,7 @@ function solari(id: string, variant: Variant): ReplicaDef {
     id,
     viewBox: size({}),
     size,
-    accepts: 'board',
+    reads: ['services', 'time'],
     // The Cercanías board shows where each train comes from, which a live source learns from the train's stops.
     needs: { services: DEFAULT_ROWS[variant], calls: variant === 'cercanias' },
     options: optionsSchema(variant),

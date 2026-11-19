@@ -120,7 +120,7 @@ function board(id: string, lines: number, nextArrival: boolean, colon: string, p
   return {
     id,
     viewBox: { width, height },
-    accepts: 'board',
+    reads: ['services', 'time'],
     needs: { services: lines, calls: false },
     options: optionsSchema(colon, platformAlign),
     frame: frameSchema(lines, example),
