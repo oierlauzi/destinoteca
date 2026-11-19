@@ -7,10 +7,11 @@ import { columnLegend, columnSpans, composeRow, flightText, LAYOUTS, layoutOf, s
 import { fromFlat, ikusiAeropuerto as def, toFlat, type AirportFrame, type AirportOptions } from '../src/lib/replicas/ikusi-aeropuerto/def';
 import impl from '../src/lib/replicas/ikusi-aeropuerto/index';
 import { boardRow, boardSize, clockLayout, glassX, HEADER_BOTTOM, shapeOf } from '../src/lib/replicas/ikusi-aeropuerto/geometry';
-import { blank, flightOf, present, REMARKS_HOLD_MS } from '../src/lib/replicas/ikusi-aeropuerto/presenter';
+import { blank, flightOf, gateOf, present, REMARKS_HOLD_MS } from '../src/lib/replicas/ikusi-aeropuerto/presenter';
 import { describe as describeFrame, renderToString, rowChars } from '../src/lib/replicas/ikusi-aeropuerto/render';
 import { CELL, FILLERS } from '../src/lib/replicas/ikusi/modules';
 import { getReplica } from '../src/lib/replicas/registry';
+import { buildDemoBoard, networkOf } from '../src/lib/sources/demo';
 import { FixedClock, StationClock } from '../src/lib/model';
 import { ReplicaSession, SourceHub } from '../src/lib/player/session';
 import { ManualTicker } from '../src/lib/player/ticker';
@@ -164,6 +165,10 @@ describe('the Ikusi airport board', () => {
     expect(frame.rows[1]!.remarks).toBe('CANCELADO');
     expect(frame.clock).toBe('10:00');
     expect(flightOf({ id: 'f', operator: { name: 'Iberia', shortName: 'IB' }, number: '3910' })).toBe('IB 3910');
+    // A gate keeps the area it is in, as the boards print it; one that is only a number is read out of however it arrives.
+    expect(gateOf({ id: 'g', here: { platform: { name: 'C12', confirmed: true } } })).toBe('C12');
+    expect(gateOf({ id: 'g', here: { platform: { name: 'PLATF.(04)' } } })).toBe('4');
+    expect(gateOf({ id: 'g', here: { platform: { name: 'C12', confirmed: false } } })).toBe('');
     const arriving: Service = { ...train, origin: { name: 'Madrid' }, here: { arrival: { scheduled: NOW, estimated: NOW + 4 * 60_000 } } };
     // With nothing to remark, there is nothing to go round: one frame.
     const arrivals = present(view([arriving]), { ...options, mode: 'arrivals' }) as AirportFrame;
@@ -185,6 +190,23 @@ describe('the Ikusi airport board', () => {
     // Through the replica's boundary, each page is a flat frame.
     const flat = impl.present(view([late]), options as never) as { pages: { frame: Record<string, unknown> }[] };
     expect(flat.pages.map((page) => page.frame.o1)).toEqual(['RETRASADO', 'DELAYED', 'RETARDAT']);
+  });
+});
+
+describe('what the simulation puts on it', () => {
+  it('starts on flights, which is what a board of Aena announces', () => {
+    expect(readConfig(def, new URLSearchParams('source=demo')).sourceConfig.network).toBe('air');
+    const flights = buildDemoBoard(networkOf('air'), 3, NOW);
+    const frame = pagesOf(present(view(flights), options))[0]!.frame;
+    const first = frame.rows[0]!;
+    // The airline and the number, a city, a gate with the area it is in and a range of check-in desks.
+    expect(first.flight).toMatch(/^[A-Z0-9]{2,3} \d{4}$/);
+    expect(first.place).toMatch(/^[A-ZÑ./\- ]+$/);
+    expect(first.gate).toMatch(/^[A-Z]\d+$/);
+    expect(first.counter).toMatch(/^\d+-\d+$/);
+    // The one at its gate is boarding, and the board fills every row it has.
+    expect(first.remarks).toBe('EMBARQUE');
+    expect(frame.rows.filter((r) => r.time).length).toBe(shapeOf(options).rows);
   });
 });
 

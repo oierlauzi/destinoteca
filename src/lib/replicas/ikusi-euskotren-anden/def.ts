@@ -51,8 +51,9 @@ const selection: SelectionPolicy = {
 export const ikusiEuskotrenAnden: ReplicaDef = {
   id: 'ikusi-euskotren-anden',
   viewBox: { width: WIDTH, height: HEIGHT },
-  // A sign of Euskotren: live trains come from Euskotren's own feed.
-  sourceDefaults: { mitren: { feed: 'euskotren' } },
+  // A sign of Euskotren announces its own trains, by their Basque names:
+  // simulated, Euskotren's network; live, Euskotren's own feed.
+  sourceDefaults: { demo: { network: 'euskotren' }, mitren: { feed: 'euskotren' } },
   accepts: 'board',
   needs: { services: 1, calls: false },
   options: optionsSchema,

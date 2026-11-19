@@ -1,5 +1,6 @@
 import type { SourceDef } from '../types';
 import * as module from './index';
+import { DEFAULT_NETWORK, NETWORKS } from './networks';
 
 export const demoDef: SourceDef = {
   id: 'demo',
@@ -12,11 +13,10 @@ export const demoDef: SourceDef = {
       // switching between the two keeps the station.
       { key: 'station', type: 'text', label: 'demo.station', default: '', hidden: true },
       {
-        key: 'network', urlKey: 'red', type: 'select', label: 'demo.network', default: 'commuter',
-        choices: [
-          { value: 'commuter', label: 'demo.network.commuter' },
-          { value: 'long-distance', label: 'demo.network.long-distance' },
-        ],
+        // Which network the board stands in for. A replica starts on the one it was built to announce
+        // (`sourceDefaults`), and the rest are offered here.
+        key: 'network', urlKey: 'red', type: 'select', label: 'demo.network', help: 'demo.network.help', default: DEFAULT_NETWORK.id,
+        choices: NETWORKS.map((network) => ({ value: network.id, label: network.label })),
       },
     ],
   },

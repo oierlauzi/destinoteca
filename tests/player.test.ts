@@ -11,7 +11,8 @@ import { ikusiMetroBilbaoAnden as metroBilbaoAnden } from '../src/lib/replicas/i
 import { present, blank } from '../src/lib/replicas/page-iberica-anden-electromagnetico/presenter';
 import type { Frame, ReplicaImpl } from '../src/lib/replicas/types';
 import { buildSnapshot } from '../src/lib/sources/manual';
-import { buildBoard } from '../src/lib/sources/demo';
+import { buildDemoBoard, networkOf, NETWORKS } from '../src/lib/sources/demo';
+import { replicas } from '../src/lib/replicas/registry';
 import type { SourceDef, SourceHandlers } from '../src/lib/sources/types';
 
 const T0 = Date.UTC(2026, 10, 16, 9, 0, 0);
@@ -271,13 +272,66 @@ describe('manual source', () => {
 });
 
 describe('demo source', () => {
-  it('builds the same board for the same seed, soonest first', () => {
-    const board = buildBoard(42, T0);
-    expect(board).toEqual(buildBoard(42, T0));
-    expect(board).toHaveLength(24);
-    const times = board.map((service) => service.here!.departure!.estimated!);
-    expect([...times].sort((a, b) => a - b)).toEqual(times);
-    expect(times[0]).toBeGreaterThan(T0);
+  it('builds the same board for the same seed, soonest first, on every network', () => {
+    for (const network of NETWORKS) {
+      const board = buildDemoBoard(network, 42, T0);
+      expect(board, network.id).toEqual(buildDemoBoard(network, 42, T0));
+      expect(board, network.id).toHaveLength(network.count);
+      const times = board.map((service) => service.here!.departure!.estimated!);
+      expect([...times].sort((a, b) => a - b), network.id).toEqual(times);
+      expect(times[0], network.id).toBeGreaterThan(T0);
+      // Every service goes somewhere, and belongs to the network it was asked for.
+      for (const service of board) {
+        expect(service.destination?.name, network.id).toBeTruthy();
+        expect(service.mode, network.id).toBe(network.mode);
+      }
+    }
+  });
+
+  it('keeps the values of red= in old URLs, and falls back on one it does not know', () => {
+    expect(NETWORKS.map((network) => network.id)).toEqual(['commuter', 'long-distance', 'air', 'metro-bilbao', 'euskotren']);
+    expect(networkOf('nope')).toBe(networkOf('commuter'));
+  });
+
+  it('starts every replica on a network that exists', () => {
+    for (const def of replicas) {
+      const asked = def.sourceDefaults?.demo?.network;
+      if (asked === undefined) continue;
+      expect(NETWORKS.map((network) => network.id), def.id).toContain(asked);
+    }
+  });
+
+  it('gives an airport flights: airlines, numbers, gates and check-in desks', () => {
+    const flights = buildDemoBoard(networkOf('air'), 7, T0);
+    for (const flight of flights) {
+      expect(flight.operator?.shortName).toMatch(/^[A-Z0-9]{2,3}$/);
+      expect(flight.number).toMatch(/^\d{4}$/);
+      expect(flight.here?.platform?.name).toMatch(/^[A-Z]\d+$/);
+      expect(flight.here?.allocations?.[0]).toMatchObject({ kind: 'check-in' });
+      // A flight only departs or only lands: the two times are the same moment.
+      expect(flight.here?.arrival?.scheduled).toBe(flight.here?.departure?.scheduled);
+      // An arrivals board shows it coming from where the departures board sends it.
+      expect(flight.origin?.name).toBe(flight.destination?.name);
+    }
+    // The first one is at its gate, so that the board says EMBARQUE or LLEGADA.
+    expect(flights[0]!.presence).toBe('at-stop');
+    expect(flights.some((flight) => flight.status === 'cancelled')).toBe(true);
+    expect(flights.some((flight) => flight.status === 'delayed')).toBe(true);
+  });
+
+  it('gives Metro Bilbao its two lines, the cars its signs count, and bilingual notices', () => {
+    const network = networkOf('metro-bilbao');
+    const trains = buildDemoBoard(network, 5, T0);
+    expect(new Set(trains.map((train) => train.line?.name))).toEqual(new Set(['L1', 'L2']));
+    expect(trains.some((train) => (train.formation?.cars?.length ?? 0) >= 5)).toBe(true);
+    expect(network.notices?.[0]?.text).toMatchObject({ eu: expect.any(String), es: expect.any(String) });
+  });
+
+  it('gives Euskotren its Basque destinations', () => {
+    const trains = buildDemoBoard(networkOf('euskotren'), 11, T0);
+    const basque = trains.map((train) => train.destination?.localized?.eu?.name ?? train.destination?.name);
+    expect(basque).toContain('Bermeo');
+    expect(basque.some((name) => name === 'Bilbo-Atxuri' || name === 'Donostia-Amara' || name === 'Hendaia')).toBe(true);
   });
 });
 

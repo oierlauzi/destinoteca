@@ -9,7 +9,7 @@ import { BOARD_WIDTH, CELLS, FIELD_X, layout } from '../src/lib/replicas/mp-elec
 import { idleText } from '../src/lib/replicas/mp-electronics-adif/labels';
 import { blank, present, trainText } from '../src/lib/replicas/mp-electronics-adif/presenter';
 import { cellText, renderToString, runsPath } from '../src/lib/replicas/mp-electronics-adif/render';
-import { buildLongDistanceBoard } from '../src/lib/sources/demo/index';
+import { buildDemoBoard, networkOf } from '../src/lib/sources/demo/index';
 
 const options = defaults(def.options) as AdifOptions;
 const NOW = Date.UTC(2026, 10, 16, 9, 0, 0);
@@ -135,7 +135,7 @@ describe('presenter', () => {
   });
 
   it('fills its seven rows, and keeps notices for the wide row', () => {
-    const services = buildLongDistanceBoard(3, NOW);
+    const services = buildDemoBoard(networkOf('long-distance'), 3, NOW);
     const frame = present({ ...view(services), notices: [{ text: 'Acceso a la sala de embarque' }] }, options);
     expect(frame.rows).toHaveLength(7);
     expect(frame.rows.filter((row) => row.time).length).toBe(Math.min(7, services.length));

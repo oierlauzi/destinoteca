@@ -13,6 +13,20 @@ const COUNTER_KINDS = new Set(['check-in', 'checkin', 'counter', 'mostrador']);
 
 const blankRow = (): BoardRow => ({ time: '', place: '', flight: '', counter: '', second: '', gate: '', remarks: '' });
 
+/** A gate written as the area it is in and a number: «A4», «C12», «R54». */
+const AREA_GATE = /^[A-Za-z]{1,2} ?\d{1,3}$/;
+
+/**
+ * The gate, as the boards print it: with its area when the feed gives one
+ * (the later boards even head the column «Zona/Puerta»), and otherwise the
+ * number alone, however it arrived.
+ */
+export function gateOf(service: Service): string {
+  const name = confirmedPlatform(service.here?.platform)?.trim();
+  if (name === undefined) return '';
+  return AREA_GATE.test(name) ? fold(name) : (platformDigits(name) ?? '');
+}
+
 const eventOf = (service: Service, mode: Mode): EventTime | undefined =>
   mode === 'arrivals' ? (service.here?.arrival ?? service.here?.departure) : (service.here?.departure ?? service.here?.arrival);
 
@@ -65,7 +79,7 @@ function row(service: Service, view: View, options: AirportOptions, placeWidth: 
     counter: service.here?.allocations?.find((allocation) => COUNTER_KINDS.has(allocation.kind))?.name ?? '',
     // The boarding time is not known from a timetable; an arrival's expected time is.
     second: mode === 'arrivals' && expected !== undefined ? clockTime(expected, view.timeZone) : '',
-    gate: platformDigits(confirmedPlatform(service.here?.platform)) ?? '',
+    gate: gateOf(service),
     remarks: said ? REMARK_WORDS.es[said] : '',
   };
   return { row: out, remark: said };

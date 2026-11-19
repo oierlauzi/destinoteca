@@ -96,13 +96,28 @@ services are on show.
 
 | Source | Kind | Notes |
 | --- | --- | --- |
-| `demo` | simulated | A made-up board that exercises long names, delays, unconfirmed platforms and a dividing train; Cercanías, or long-distance trains (`red=long-distance`) |
+| `demo` | simulated | A made-up board, one per network (`red=`): Cercanías de Madrid, long and medium distance, an airport's flights, Metro Bilbao, Euskotren. It exercises long names, delays, unconfirmed platforms and gates, a dividing train |
 | `mitren` | live | One of mitren.app's feeds over its WebSocket (`op=cercanias\|euskotren\|metro-bilbao`): Renfe Cercanías and Rodalies, Euskotren or Metro Bilbao, each with its own networks, station codes and operator; bundled station list |
 | `manual` | manual | Services typed by hand in model terms, stored in the URL |
 
 **Adding a source:** a folder with `def.ts` and `index.ts`, one line in
 `src/lib/sources/registry.ts`, and its strings in `src/i18n/es/`. The settings
 form, URL parameters and status display come from the schema.
+
+### The networks of the simulation
+
+Every display was built for one kind of traffic, so the simulation is not
+one board but one per network: `src/lib/sources/demo/networks.ts` is a table
+of what runs on each (the places with their shorter names, the lines, the
+brands or the airlines, the headway, the platforms or the gates, which
+quirks to exercise, what the station announces), and `board.ts` is the one
+generator that reads it. A new network is an entry in the table and no code;
+its id is the value of `red=` in an embed URL, so it is never renamed, and
+one that is not known falls back to the first.
+
+A replica says which network it starts on through `sourceDefaults`, which
+is how an Aena board opens on flights and a Metro Bilbao sign on its own
+trains. The picker still offers the rest.
 
 ## Replicas
 
@@ -164,8 +179,10 @@ legends (`columns.ts`), so every airport's layout runs on the same rows.
 
 A replica whose shape follows its settings declares `size(options)` next
 to its default `viewBox` (the ADIF boards, hung several together); one that
-wants a source started differently declares `sourceDefaults` (the same
-boards start the demo on long-distance trains). The ADIF boards
+wants a source started differently declares `sourceDefaults`, by source id
+(the ADIF boards start the simulation on long-distance trains, an Aena
+board on flights, a Metro Bilbao sign on the Metro's network and on the
+Metro's live feed). The ADIF boards
 (`mp-electronics-adif/`) also show a way to draw tens of thousands of LEDs:
 each panel is a pattern of unlit LEDs under a pattern of lit ones, clipped
 to the runs of lit dots, so a change of text rewrites only those paths.
