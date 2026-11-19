@@ -5,8 +5,8 @@
  * rows) and app/schemas/train_detail.py (a train's stops). Only what is read
  * here is typed; anything else in a message is ignored.
  */
-import type { Call, Place, Platform, Service } from '../../model';
-import { findStation, fold, placeForName, stationLadder, stationPlace, TIME_ZONE, type Station } from './stations';
+import type { Call, Org, Place, Platform, Product, Service } from '../../model';
+import { DEFAULT_FEED, findNetwork, findStation, fold, placeForName, stationLadder, stationPlace, TIME_ZONE, type Station } from './stations';
 
 /** One row of an `arrivals_update`. */
 export interface MitrenRow {
@@ -57,8 +57,46 @@ export function mitrenExt(service: Service): MitrenExt | undefined {
   return service.ext?.['mitren'] as MitrenExt | undefined;
 }
 
-const OPERATOR = { id: 'renfe', name: 'Renfe' } as const;
-const PRODUCT = { id: 'cercanias', name: 'Cercanías', shortName: 'CERC', category: 'commuter' } as const;
+/** Who runs a network's trains, and what the service is called. */
+interface Identity {
+  mode: Service['mode'];
+  operator: Org;
+  product: Product;
+}
+
+/**
+ * By feed, and by `feed/mode` where one operator runs more than one kind of
+ * service: Euskotren's trains and its trams come down the same feed.
+ */
+const IDENTITIES: Record<string, Identity> = {
+  cercanias: {
+    mode: 'rail',
+    operator: { id: 'renfe', name: 'Renfe' },
+    product: { id: 'cercanias', name: 'Cercanías', shortName: 'CERC', category: 'commuter' },
+  },
+  euskotren: {
+    mode: 'rail',
+    operator: { id: 'euskotren', name: 'Euskotren' },
+    product: { id: 'euskotren-trena', name: 'Euskotren Trena', shortName: 'TRENA', category: 'commuter' },
+  },
+  'euskotren/tranvia': {
+    mode: 'tram',
+    operator: { id: 'euskotren', name: 'Euskotren' },
+    product: { id: 'euskotren-tranbia', name: 'Euskotren Tranbia', shortName: 'TRANBIA', category: 'other' },
+  },
+  'metro-bilbao': {
+    mode: 'metro',
+    operator: { id: 'metro-bilbao', name: 'Metro Bilbao' },
+    product: { id: 'metro-bilbao', name: 'Metro', shortName: 'METRO', category: 'other' },
+  },
+};
+
+/** What the services of this network are, mode and all. */
+export function identityOf(network: string): Identity {
+  const net = findNetwork(network);
+  const feed = net?.feed ?? DEFAULT_FEED;
+  return IDENTITIES[`${feed}/${net?.mode ?? ''}`] ?? IDENTITIES[feed] ?? IDENTITIES[DEFAULT_FEED]!;
+}
 
 function mapPlatform(raw: MitrenRow['platform']): Platform | undefined {
   if (!raw) return undefined;
@@ -85,6 +123,7 @@ function mapPlatform(raw: MitrenRow['platform']): Platform | undefined {
 export function mapArrivals(msg: MitrenArrivals, here: Station | undefined, network: string): Service[] | null {
   if (!Array.isArray(msg.arrivals)) return null;
   const ownNames = new Set(here ? stationLadder(here).map(fold) : []);
+  const runs = identityOf(network);
   const taken = new Set<string>();
   const services: Service[] = [];
   for (const row of msg.arrivals) {
@@ -113,9 +152,9 @@ export function mapArrivals(msg: MitrenArrivals, here: Station | undefined, netw
     const at = epoch * 1000;
     const service: Service = {
       id,
-      mode: 'rail',
-      operator: { ...OPERATOR },
-      product: { ...PRODUCT },
+      mode: runs.mode,
+      operator: { ...runs.operator },
+      product: { ...runs.product },
       destination: placeForName(String(destination), network),
       here: {
         activity: ownNames.has(fold(destination)) ? 'terminus' : row.is_origin ? 'origin' : 'calls',

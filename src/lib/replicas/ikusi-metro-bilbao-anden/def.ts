@@ -147,10 +147,11 @@ export const ikusiMetroBilbaoAnden: ReplicaDef = {
   id: 'ikusi-metro-bilbao-anden',
   viewBox: sizeOf('left', false),
   size: (options: Values) => sizeOf(sideOf(options), options.navilens === true),
+  // A sign of the Metro announces the Metro's trains: simulated, Metro
+  // Bilbao's network; live, Metro Bilbao's own feed.
+  sourceDefaults: { demo: { network: 'metro-bilbao' }, mitren: { feed: 'metro-bilbao' } },
   accepts: 'board',
   needs: { services: ROW_COUNT, calls: false },
-  // A sign of Metro Bilbao announces its own trains.
-  sourceDefaults: { demo: { network: 'metro-bilbao' } },
   options: optionsSchema,
   frame: frameSchema,
   selection: () => selection,

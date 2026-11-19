@@ -74,8 +74,10 @@ export const ikusiMetroBilbaoAvisos: ReplicaDef = {
   id: 'ikusi-metro-bilbao-avisos',
   viewBox: sizeOf(''),
   size: (options: Values) => sizeOf(plateOf(options)),
-  // The notices of the simulated Metro Bilbao are the ones these boards wrote: Basque, Spanish, and the stations they concern.
-  sourceDefaults: { demo: { network: 'metro-bilbao' } },
+  // It hangs in the Metro: the simulated Metro Bilbao writes the notices
+  // these boards wrote, in Basque, in Spanish and with the stations they
+  // concern, and live its feed is Metro Bilbao's.
+  sourceDefaults: { demo: { network: 'metro-bilbao' }, mitren: { feed: 'metro-bilbao' } },
   accepts: 'board',
   needs: { services: 0, calls: false },
   options: optionsSchema,
