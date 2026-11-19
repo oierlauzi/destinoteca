@@ -4,6 +4,7 @@ import { defaults, type ParamSchema } from '../src/lib/params';
 import { readConfig, replicaSize, writeConfig } from '../src/lib/player/config';
 import { fromFlat, solariCercanias, solariLargo, toFlat } from '../src/lib/replicas/solari-renfe/def';
 import { layout } from '../src/lib/replicas/solari-renfe/geometry';
+import { PLATE, PLATE_WORDS, plateFor, RECONSTRUCTED, SEEN } from '../src/lib/replicas/solari-renfe/logos';
 import { present } from '../src/lib/replicas/solari-renfe/presenter';
 import { renderToString } from '../src/lib/replicas/solari-renfe/render';
 import { styleOf, wordLines } from '../src/lib/replicas/solari-renfe/words';
@@ -27,7 +28,7 @@ describe('Solari split-flap boards', () => {
     expect(bare.width).toBeLessThan(whole.width);
     expect(bare.height).toBeLessThan(whole.height);
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
-    const options = { surround: false, animate: true, speed: 14 };
+    const options = { surround: false, logos: false, animate: true, speed: 14 };
     expect(renderToString('largo', frame, options)).not.toContain('solari&amp;c. udine');
     expect(renderToString('largo', frame, { ...options, surround: true })).toContain('solari&amp;c. udine');
     expect(solariLargo.options.fields.find((field) => field.key === 'surround')?.hidden).toBe(true);
@@ -55,7 +56,7 @@ describe('Solari split-flap boards', () => {
 
   it('show the dot of a time only with one, and the lamps asked for', () => {
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
-    const svg = renderToString('largo', frame, { surround: true, animate: true, speed: 14 });
+    const svg = renderToString('largo', frame, { surround: true, logos: false, animate: true, speed: 14 });
     // The dot is printed on the hour flap, so only flaps showing an hour have one.
     expect(svg.match(/r="0.6" fill="#f1eee2"/g)).toHaveLength(6);
     expect(svg.match(/fill="#ff5b38"/g)).toHaveLength(1);
@@ -144,5 +145,53 @@ describe('Solari train words', () => {
     expect(extremadura!.x).toBe(talgo!.x);
     expect(talgo!.baseline).toBeLessThan(5);
     expect(extremadura!.baseline).toBeLessThanOrEqual(10);
+  });
+});
+
+describe('Solari printed plates', () => {
+  const frame = (train: string) => fromFlat('largo', { ...defaults(solariLargo.frame as ParamSchema), t1: train, t2: '', t3: '', t4: '', t5: '', t6: '', t7: '', t8: '' });
+  const options = { surround: false, logos: true, animate: false, speed: 14 };
+
+  it('is offered on the board the photographs show plates on, and off by default', () => {
+    const field = solariLargo.options.fields.find((entry) => entry.key === 'logos');
+    expect(field).toMatchObject({ type: 'boolean', urlKey: 'logos', default: false });
+    // The Cercanías board is photographed with lettered flaps only.
+    expect(solariCercanias.options.fields.some((entry) => entry.key === 'logos')).toBe(false);
+  });
+
+  it('prints the plate of a product on a pale flap, and letters the word without it', () => {
+    const lettered = renderToString('largo', frame('TALGO'), { ...options, logos: false });
+    const printed = renderToString('largo', frame('TALGO'), options);
+    expect(lettered).toContain('>TALGO<');
+    expect(printed).not.toContain('>TALGO<');
+    expect(printed).toContain('>Talgo<');
+    expect(printed).toContain(PLATE.slice(1));
+  });
+
+  it('keeps the lettered flap for a product with no plate', () => {
+    const printed = renderToString('largo', frame('RAP. ARAGON'), options);
+    expect(printed).toContain('>RAP. ARAGON<');
+    expect(plateFor('RAP. ARAGON')).toBeUndefined();
+  });
+
+  it('reads the short forms a board writes when a name does not fit', () => {
+    expect(plateFor('INTCITY')).toBe(plateFor('INTERCITY'));
+    expect(plateFor('CERC')).toBe(plateFor('CERCANIAS'));
+    expect(plateFor('MD')).toBe(plateFor('MEDIA DISTANCIA'));
+  });
+
+  it('keeps what a photograph of this board shows apart from what was drawn to match', () => {
+    expect(SEEN.every((key) => plateFor(key))).toBe(true);
+    expect(RECONSTRUCTED).not.toContain('TALGO');
+    expect(RECONSTRUCTED).toContain('AVE');
+  });
+
+  it('turns the flaps through the plates instead of the words', () => {
+    const printed = renderToString('largo', frame('TRD'), options);
+    // The Grandes Líneas strokes the Trd plate carries, in Renfe's own artwork.
+    expect(printed).toContain('#f79817');
+    expect(printed).toContain('#0033a0');
+    expect(PLATE_WORDS).toContain('TRD');
+    expect(PLATE_WORDS[0]).toBe('');
   });
 });

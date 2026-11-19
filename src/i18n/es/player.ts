@@ -289,6 +289,8 @@ export const player: Record<string, string> = {
   'solari.opt.animate.help': 'Cada paleta cae una tras otra hasta mostrar lo que toca.',
   'solari.opt.speed': 'Velocidad de las paletas',
   'solari.opt.surround': 'Marco y título',
+  'solari.opt.logos': 'Paletas de producto con logotipo',
+  'solari.opt.logos.help': 'Como en las fotografías desde los años noventa: la paleta del tren es una placa clara impresa con el logotipo de cada producto. Los productos sin logotipo siguen rotulados.',
   'solari.frame.tren': 'Tren',
   'solari.frame.destino': 'Destino',
   'solari.frame.por': 'Por',

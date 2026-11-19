@@ -21,16 +21,22 @@ export interface SolariFrame {
 export interface SolariOptions {
   /** The light frame with the board's title, or only the dark panel. */
   surround: boolean;
+  /** Train flaps printed with the logo of each product instead of lettered. */
+  logos: boolean;
   animate: boolean;
   speed: number;
   [key: string]: unknown;
 }
 
-function optionsSchema(): ParamSchema {
+function optionsSchema(variant: Variant): ParamSchema {
   return {
     fields: [
       // The frame and title belong to the installation, which turns them off and draws its own.
       { key: 'surround', urlKey: 'marco', type: 'boolean', label: 'solari.opt.surround', default: true, hidden: true },
+      // Only the long-distance board is photographed with printed plates in its train column.
+      ...(variant === 'largo'
+        ? [{ key: 'logos', urlKey: 'logos', type: 'boolean', label: 'solari.opt.logos', help: 'solari.opt.logos.help', default: false } as const]
+        : []),
       { key: 'animate', urlKey: 'anim', type: 'boolean', label: 'solari.opt.animate', help: 'solari.opt.animate.help', default: true },
       { key: 'speed', type: 'range', label: 'solari.opt.speed', default: 14, min: 4, max: 30, step: 1, unit: 'paletas/s' },
     ],
@@ -102,6 +108,8 @@ export function toFlat(frame: SolariFrame): Values {
 
 /** Whether the board is drawn with its frame and title. */
 export const surroundOf = (options: Values): boolean => options.surround !== false;
+/** Whether the train column is printed with each product's logo. */
+export const logosOf = (options: Values): boolean => options.logos === true;
 const rowsOf = (variant: Variant): number => DEFAULT_ROWS[variant];
 
 const selection = (variant: Variant) => (): SelectionPolicy => ({
@@ -126,7 +134,7 @@ function solari(id: string, variant: Variant): ReplicaDef {
     accepts: 'board',
     // The Cercanías board shows where each train comes from, which a live source learns from the train's stops.
     needs: { services: DEFAULT_ROWS[variant], calls: variant === 'cercanias' },
-    options: optionsSchema(),
+    options: optionsSchema(variant),
     frame: frameSchema(variant),
     selection: selection(variant),
     sourceDefaults: variant === 'largo' ? { demo: { network: 'long-distance' } } : undefined,
