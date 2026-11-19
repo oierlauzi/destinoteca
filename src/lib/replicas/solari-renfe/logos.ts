@@ -100,6 +100,18 @@ const OUIGO: Art = {
   ],
 };
 
+/**
+ * The «R» of Regionales, from Renfe's own artwork: the mark of the identity
+ * the 1995 photograph shows on this board, before Grandes Líneas and before
+ * the wordmark of 2005.
+ */
+const REGIONALES: Art = {
+  box: { x: 6.58, y: 4.13, width: 99.48, height: 62.41 },
+  paths: [
+    { d: 'M145.37,86.73L149.44,92.49L153.44,98.15L157.44,103.85L161.44,109.51C162.77,111.41 164.13,113.29 165.44,115.25L149.06,115.25C148.786,115.271 148.522,115.135 148.38,114.9C145.713,111.113 143.073,107.333 140.46,103.56L134.31,94.8C132.477,92.18 130.65,89.563 128.83,86.95C128.707,86.745 128.479,86.625 128.24,86.64L115.18,86.64C115.171,86.75 115.171,86.86 115.18,86.97L115.18,115.21L101.7,115.21L101.7,86.69L75,86.69C81.7,96.21 88.37,105.69 95.11,115.26L78.63,115.26C78.389,115.29 78.149,115.191 78,115L73.69,108.82L68.1,100.82L62.36,92.61L54.58,81.52C54.31,81.13 54.05,80.74 53.77,80.37C53.631,80.218 53.631,79.982 53.77,79.83C54.53,78.76 55.27,77.69 56.02,76.61L60.31,70.47L66.46,61.66C67.68,59.91 68.9,58.15 70.13,56.4L76.18,47.72L78.18,44.9C78.256,44.758 78.41,44.675 78.57,44.69L95,44.69C95.07,44.87 94.93,44.96 94.85,45.08L91.78,49.43L85.29,58.64L78.66,68.04L75.13,73.04C75.09,73.089 75.056,73.142 75.03,73.2C75.004,73.258 75.03,73.2 75.03,73.2L101.63,73.2L101.63,44.6L145.75,44.6C148.486,44.636 151.184,45.246 153.67,46.39C159.958,49.22 164.512,54.914 165.89,61.67C166.249,63.453 166.37,65.275 166.25,67.09C166.054,70.369 165.062,73.551 163.36,76.36C162.261,78.2 160.881,79.857 159.27,81.27C156.96,83.313 154.229,84.822 151.27,85.69C149.459,86.218 147.586,86.511 145.7,86.56L145.37,86.73ZM115.16,73.32L145.33,73.32C145.904,73.322 146.476,73.268 147.04,73.16C148.84,72.847 150.441,71.823 151.48,70.32C152.586,68.781 153.071,66.881 152.84,65C152.696,63.447 152.05,61.983 151,60.83C149.537,59.172 147.421,58.233 145.21,58.26L115.16,58.26L115.16,73.32Z', fill: '#ff6720', transform: 'matrix(0.883228,0,0,0.883228,-40.823,-35.2661)' },
+  ],
+};
+
 // --- Placing ----------------------------------------------------------------------
 
 /** The artwork's ink, `height` tall, its left edge at `x`, centred on `cy`. */
@@ -148,7 +160,7 @@ function nameLines(text: string, room: number, cap: number): string[] {
 }
 
 /** The product's name against the left of its room, fitted to it and never stretched past it. */
-function nameNodes(text: string, x: number, cy: number, room: number, cap: number, font: string, fill: string): VNode[] {
+function nameNodes(text: string, x: number, cy: number, room: number, cap: number, font: string, fill: string, italic = true): VNode[] {
   const lines = nameLines(text, room, cap);
   const height = lines.length > 1 ? cap * SECOND_LINE.cap : cap;
   const step = height * (1 + SECOND_LINE.gap);
@@ -162,7 +174,7 @@ function nameNodes(text: string, x: number, cy: number, room: number, cap: numbe
         y: first + i * step,
         'font-family': font,
         'font-size': size,
-        'font-style': 'italic',
+        ...(italic ? { 'font-style': 'italic' } : { 'font-weight': 'bold' }),
         textLength: Math.min(room, advance(line) * size),
         lengthAdjust: 'spacingAndGlyphs',
         fill,
@@ -204,7 +216,25 @@ function renfe(name: string): Logo {
   };
 }
 
-/** The Grandes/** The Grandes Líneas plate the 2007 photograph still shows: the two strokes, and the product beside them. */
+/** The Grandes/**
+ * The Regionales plate: the «R» and the product beside it in the same orange,
+ * set upright in capitals as the identity's own artwork sets it.
+ */
+function regionales(name: string): Logo {
+  return (x, y, width) => {
+    const cy = y + FLAP.height / 2;
+    const left = x + MARGIN.side;
+    const room = width - 2 * MARGIN.side;
+    const markHeight = (FLAP.height - 2 * MARGIN.top) * 0.74;
+    const nameX = left + widthOf(REGIONALES, markHeight) + GAP;
+    return [
+      place(REGIONALES, left, cy, markHeight),
+      ...nameNodes(name.toUpperCase(), nameX, cy, Math.max(0, left + room - nameX), markHeight * 0.46, SANS, '#ff6720', false),
+    ];
+  };
+}
+
+/** The Grandes Líneas plate the 2007 photograph still shows: the two strokes, and the product beside them. */
 function grandesLineas(name: string): Logo {
   return (x, y, width) => {
     const cy = y + FLAP.height / 2;
@@ -252,7 +282,9 @@ const PLATES: Record<string, Logo> = {
   REGIONAL: renfe('Regional'),
   TALGO: renfe('Talgo'),
   TRENHOTEL: renfe('Trenhotel'),
-  // What the 2007 photograph still shows in the identity before it.
+  // The identity of the 1995 photograph, which Grandes Líneas replaced.
+  REGIONALES: regionales('Regionales'),
+  // What the 2007 photograph still shows in the identity before that one.
   'GRANDES LINEAS': grandesLineas('Grandes Líneas'),
   'REGIONAL EXPRES': grandesLineas('Regional Exprés'),
   TRD: grandesLineas('Trd'),
