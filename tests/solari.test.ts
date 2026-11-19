@@ -180,6 +180,11 @@ describe('Solari printed plates', () => {
     expect(plateFor('MD')).toBe(plateFor('MEDIA DISTANCIA'));
   });
 
+  it('answers to the name a product has been renamed to', () => {
+    // ADIF's own boards print Euromed as «AVE Eur»; the plate is the one it carried as renfe Euromed.
+    expect(plateFor('AVE EUR')).toBe(plateFor('EUROMED'));
+  });
+
   it('keeps what a photograph of this board shows apart from what was drawn to match', () => {
     expect(SEEN.every((key) => plateFor(key))).toBe(true);
     expect(RECONSTRUCTED).not.toContain('TALGO');

@@ -276,8 +276,13 @@ const PLATES: Record<string, Logo> = {
   OUIGO: alone(OUIGO, 1),
 };
 
-/** Short forms a display writes when the whole name does not fit its flaps. */
-const SHORT: Record<string, string> = {
+/**
+ * The other names one of these products answers to: the short forms a display
+ * writes when the whole name does not fit its flaps, and the names a product
+ * has been renamed to since. Euromed is printed «AVE Eur» on ADIF's own
+ * boards; the plate here is the one the product carried as renfe Euromed.
+ */
+const ALSO: Record<string, string> = {
   CERC: 'CERCANIAS',
   ICITY: 'INTERCITY',
   INTCITY: 'INTERCITY',
@@ -286,6 +291,8 @@ const SHORT: Record<string, string> = {
   'REG. EXPRES': 'REGIONAL EXPRES',
   'R. EXPRES': 'REGIONAL EXPRES',
   GL: 'GRANDES LINEAS',
+  'AVE EUR': 'EUROMED',
+  'AVE EUROMED': 'EUROMED',
 };
 
 /** The products a photograph of this board shows a plate for, all of them in the one of 2007. */
@@ -296,7 +303,7 @@ export const RECONSTRUCTED = Object.keys(PLATES).filter((key) => !(SEEN as reado
 /** The plate for what a train flap says, or nothing when the product has none. */
 export function plateFor(text: string): Logo | undefined {
   const key = text.trim().replace(/\s+/g, ' ');
-  return PLATES[key] ?? PLATES[SHORT[key] ?? ''];
+  return PLATES[key] ?? PLATES[ALSO[key] ?? ''];
 }
 
 /** Every value a train flap can turn to when the plates are printed, in the order the flaps fall. */
