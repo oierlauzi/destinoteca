@@ -307,6 +307,7 @@ export const player: Record<string, string> = {
   'solari.identity.regionales': 'Regionales',
   'solari.identity.grandes-lineas': 'Grandes Líneas',
   'solari.identity.renfe': 'renfe, 2005',
+  'solari.identity.neorenfe': 'renfe, 2026',
   'solari.identity.propia': 'logotipo propio',
   'solari.identity.rotulado': 'rotulado',
   'solari.frame.tren': 'Tren',

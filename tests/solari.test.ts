@@ -164,7 +164,7 @@ describe('Solari printed plates', () => {
 
   it('prints the plate of a product on a pale flap, and letters the word without it', () => {
     expect(draw('TALGO', { drum: 'rotulado' })).toContain('>TALGO<');
-    const printed = draw('TALGO');
+    const printed = draw('TALGO', { flaps: [flapKey({ text: 'TALGO', identity: 'renfe' })] });
     expect(printed).not.toContain('>TALGO<');
     expect(printed).toContain('>Talgo<');
     expect(printed).toContain(PLATE.slice(1));
@@ -172,6 +172,8 @@ describe('Solari printed plates', () => {
 
   it('letters anything the drum has no card for', () => {
     expect(draw('RAP. ARAGON')).toContain('>RAP. ARAGON<');
+    // Talgo stopped running, so today's drum carries no card for it.
+    expect(draw('TALGO')).toContain('>TALGO<');
     expect(plateOf(cardFor(drumOf('largo', options), 'RAP. ARAGON'))).toBeUndefined();
   });
 
@@ -189,15 +191,26 @@ describe('Solari printed plates', () => {
     const regional = draw('REGIONAL', { flaps: [flapKey({ text: 'REGIONAL', identity: 'regionales' })] });
     expect(regional).toContain('#ff6720');
     expect(regional).not.toContain('#0033a0');
-    const expres = draw('REGIONAL EXPRES');
+    const expres = draw('REGIONAL EXPRES', { flaps: [flapKey({ text: 'REGIONAL EXPRES', identity: 'grandes-lineas' })] });
     expect(expres).toContain('#0033a0');
     expect(expres).not.toContain('#ff6720');
   });
 
   it('keeps a product that was reprinted in both of its identities', () => {
-    expect(identitiesOf('REGIONAL')).toEqual(['regionales', 'renfe']);
+    expect(identitiesOf('REGIONAL')).toEqual(['regionales', 'renfe', 'neorenfe']);
     expect(plateFor('REGIONAL', 'regionales')).not.toBe(plateFor('REGIONAL', 'renfe'));
     expect(plateFor('TRD', 'renfe')).toBeUndefined();
+  });
+
+  it('prints the identity of 2026 and the Tren de los 80, and says where its drawing stops', () => {
+    // ADIF's boards print these; its own code says the artwork is still raster only.
+    expect(draw('INTERCITY', { flaps: [flapKey({ text: 'INTERCITY', identity: 'neorenfe' })] })).toContain('#5b064b');
+    expect(draw('AVANT', { flaps: [flapKey({ text: 'AVANT', identity: 'neorenfe' })] })).toContain('#00132a');
+    expect(draw('CERCANIAS', { flaps: [flapKey({ text: 'CERCANIAS', identity: 'neorenfe' })] })).toContain('#f4323f');
+    expect(draw('TREN DE LOS 80', { flaps: [flapKey({ text: 'TREN DE LOS 80', identity: 'propia' })] })).toContain(PLATE.slice(1));
+    // Renfe's AVE and avlo of 2026 are not published as vector, so neither has a plate in that identity.
+    expect(identitiesOf('AVE')).toEqual(['propia']);
+    expect(identitiesOf('AVLO')).toEqual(['propia']);
   });
 
   it('keeps what a photograph of this board shows apart from what was drawn to match', () => {

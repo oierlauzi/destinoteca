@@ -168,7 +168,7 @@ interface FlapRefs {
 }
 
 /** The seam where a flap folds: nearly black on a black card, a faint line on a printed plate. */
-const SEAM = { card: '#0e0e0e', plate: '#dad5c6' };
+const SEAM = { card: '#0e0e0e', plate: '#000000' };
 
 function flapNodes(flap: Flap, value: string, refs?: FlapRefs): VNode[] {
   const ref = (key: keyof FlapRefs) => (refs ? (element: SVGElement) => (refs[key] = element) : undefined);
@@ -178,8 +178,15 @@ function flapNodes(flap: Flap, value: string, refs?: FlapRefs): VNode[] {
   ];
   if (refs) nodes.push(h('g', { display: 'none' }, [{ ...halfNodes(flap, 'top', value), ref: ref('leafHalf') }], ref('leaf')));
   const hinge = flap.y + FLAP.height / 2;
-  const seam = cardOf(flap, value, 'top') === PLATE ? SEAM.plate : SEAM.card;
-  nodes.push(h('line', { x1: flap.x, y1: hinge, x2: flap.x + flap.width, y2: hinge, stroke: seam, 'stroke-width': 0.22 }));
+  // On a printed plate the fold is a shadow, faint enough to read over whatever ground it is printed on.
+  const printedPlate = cardOf(flap, value, 'top') === PLATE;
+  nodes.push(
+    h('line', {
+      x1: flap.x, y1: hinge, x2: flap.x + flap.width, y2: hinge,
+      stroke: printedPlate ? SEAM.plate : SEAM.card, 'stroke-width': 0.22,
+      ...(printedPlate ? { 'stroke-opacity': 0.14 } : {}),
+    }),
+  );
   return nodes;
 }
 

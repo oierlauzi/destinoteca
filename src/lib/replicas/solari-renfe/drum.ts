@@ -73,10 +73,16 @@ const ROTULADO: Record<Variant, string[]> = {
  */
 const SETENTA_2007 = [...printed('grandes-lineas', 'TRD', 'REGIONAL EXPRES'), ...printed('renfe', 'ALTARIA', 'TALGO', 'INTERCITY')];
 
-/** Every product that has a plate, each in the newest identity drawn for it. */
-function todos(): string[] {
+/**
+ * Every product that has a plate, each in the newest identity drawn for it,
+ * leaving out what no longer runs. A board like this never existed: it is for
+ * reading today's departures on, and the name of the drum says so.
+ */
+function hoy(): string[] {
+  const gone = new Set(['TRD', 'REGIONAL EXPRES', 'GRANDES LINEAS', 'ALTARIA', 'ARCO', 'ESTRELLA', 'TRENHOTEL', 'TREN DE LOS 80', 'TALGO']);
   const out: string[] = [];
   for (const product of PRODUCT_ORDER) {
+    if (gone.has(product)) continue;
     const identity = identitiesOf(product).at(-1);
     if (identity) out.push(flapKey({ text: product, identity }));
   }
@@ -89,7 +95,7 @@ function todos(): string[] {
  */
 const PRODUCT_ORDER = [
   'TRD', 'REGIONAL EXPRES', 'GRANDES LINEAS', 'REGIONAL', 'ALTARIA', 'TALGO', 'INTERCITY', 'ARCO', 'ESTRELLA', 'TRENHOTEL',
-  'ALVIA', 'AVANT', 'MEDIA DISTANCIA', 'CERCANIAS', 'EUROMED', 'AVE', 'AVLO', 'IRYO', 'OUIGO',
+  'ALVIA', 'AVANT', 'MEDIA DISTANCIA', 'CERCANIAS', 'EUROMED', 'AVE', 'AVLO', 'IRYO', 'OUIGO', 'TREN DE LOS 80',
 ];
 
 export interface Preset {
@@ -100,15 +106,15 @@ export interface Preset {
 
 /**
  * The drums offered. Only the first two are states a photograph of this board
- * shows; `hoy` is openly anachronistic, a board that never existed, for
- * reading today's departures on. There is no drum for the photograph of 1995:
- * it shows plates in an identity whose artwork has not been drawn here, and
- * the picture is too poor to read them off.
+ * shows; the last two are openly anachronistic, boards that never existed,
+ * for reading today's departures on. There is no drum for the photograph of
+ * 1995: it shows plates in an identity whose artwork has not been drawn here,
+ * and the picture is too poor to read them off.
  */
 export const PRESETS: Preset[] = [
   { id: 'rotulado', flaps: (variant) => ROTULADO[variant] },
   { id: '2007', flaps: (variant) => (variant === 'largo' ? SETENTA_2007 : ROTULADO[variant]) },
-  { id: 'hoy', flaps: (variant) => (variant === 'largo' ? todos() : ROTULADO[variant]) },
+  { id: 'hoy', flaps: (variant) => (variant === 'largo' ? hoy() : ROTULADO[variant]) },
 ];
 
 export const DEFAULT_PRESET = 'rotulado';
