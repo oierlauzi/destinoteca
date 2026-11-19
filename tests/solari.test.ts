@@ -77,8 +77,8 @@ describe('Solari split-flap boards', () => {
 
 describe('where Cercanías trains come from', () => {
   it('comes with the simulated trains, with their arrival', async () => {
-    const { buildBoard } = await import('../src/lib/sources/demo/index');
-    const services = buildBoard(4, NOW);
+    const { buildDemoBoard, networkOf } = await import('../src/lib/sources/demo/index');
+    const services = buildDemoBoard(networkOf('commuter'), 4, NOW);
     const through = services.filter((service) => service.here?.activity === 'calls');
     expect(through.length).toBeGreaterThan(0);
     for (const service of through) {

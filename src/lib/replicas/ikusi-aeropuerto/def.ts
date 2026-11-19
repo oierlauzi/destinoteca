@@ -189,7 +189,7 @@ export const ikusiAeropuerto: ReplicaDef = {
   options: optionsSchema,
   frame: frameSchema,
   selection,
-  // Trains with numbers and names of long-distance services read more like flights.
-  sourceDefaults: { demo: { network: 'long-distance' } },
+  // A board of Aena announces flights.
+  sourceDefaults: { demo: { network: 'air' } },
   load: async () => (await import('./index')).default,
 };

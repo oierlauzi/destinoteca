@@ -24,6 +24,8 @@ import { layout as avisosLayout } from '../src/lib/replicas/ikusi-metro-bilbao-a
 import { present as presentNotices } from '../src/lib/replicas/ikusi-metro-bilbao-avisos/presenter';
 import { lineCells, renderToString as renderNotices } from '../src/lib/replicas/ikusi-metro-bilbao-avisos/render';
 import { getReplica } from '../src/lib/replicas/registry';
+import { readConfig } from '../src/lib/player/config';
+import { buildDemoBoard, networkOf } from '../src/lib/sources/demo';
 
 const NOW = Date.UTC(2026, 10, 18, 9, 0, 0);
 const options = defaults(optionsSchema) as BilbaoOptions;
@@ -217,6 +219,24 @@ describe('the platform sign of Metro Bilbao', () => {
     expect(lcd).not.toContain('#6cc4ef');
     const box = ikusiMetroBilbaoAnden.size!({ navilens: true });
     expect(led).toContain(`viewBox="0 0 ${box.width} ${box.height}"`);
+  });
+});
+
+describe('what the simulation puts on them', () => {
+  it('starts the platform sign on Metro Bilbao’s own trains', () => {
+    expect(readConfig(ikusiMetroBilbaoAnden, new URLSearchParams('source=demo')).sourceConfig.network).toBe('metro-bilbao');
+    const trains = buildDemoBoard(networkOf('metro-bilbao'), 3, NOW).filter((service) => service.here?.platform?.name === '1');
+    const rows = present(view(trains), options).rows;
+    // Where it goes, by its Basque name, and the minutes left; five cars go in brackets.
+    expect(rows[0]!.destination).toMatch(/^[A-ZÑ]+$/);
+    expect(rows[0]!.minutes).toMatch(/^\d\d$/);
+    expect(rows.every((row) => row.bracket === '' || row.bracket === '5')).toBe(true);
+  });
+
+  it('starts the notice board on the notices of Metro Bilbao, in Basque and in Spanish', () => {
+    expect(readConfig(ikusiMetroBilbaoAvisos, new URLSearchParams('source=demo')).sourceConfig.network).toBe('metro-bilbao');
+    const notices = networkOf('metro-bilbao').notices ?? [];
+    expect(presentNotices(view([], notices)).lines).toEqual(['Eskailera mekanikoa hondatua', 'Escalera mecánica averiada', '** Deustu / Ariz **']);
   });
 });
 

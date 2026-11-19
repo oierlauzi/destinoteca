@@ -53,6 +53,8 @@ export const ikusiEuskotrenAnden: ReplicaDef = {
   viewBox: { width: WIDTH, height: HEIGHT },
   accepts: 'board',
   needs: { services: 1, calls: false },
+  // A sign of Euskotren announces its own trains, by their Basque names.
+  sourceDefaults: { demo: { network: 'euskotren' } },
   options: optionsSchema,
   frame: frameSchema,
   selection: () => selection,

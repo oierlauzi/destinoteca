@@ -7,6 +7,8 @@ import { CHARS, CORNER, HEIGHT, LINE, PLATE, TEXT, WIDTH, WINDOW, row } from '..
 import { blank, present } from '../src/lib/replicas/ikusi-euskotren-anden/presenter';
 import { renderToString, rowChars } from '../src/lib/replicas/ikusi-euskotren-anden/render';
 import { getReplica } from '../src/lib/replicas/registry';
+import { readConfig } from '../src/lib/player/config';
+import { buildDemoBoard, networkOf } from '../src/lib/sources/demo';
 
 const NOW = Date.UTC(2009, 5, 14, 9, 50, 0);
 const options = defaults(optionsSchema) as EuskotrenOptions;
@@ -85,5 +87,20 @@ describe('the characters read at Atxuri', () => {
     expect(ikusi7x9Rows('D')![1]).toBe('.######');
     expect(ikusi7x9Rows('D')![8]).toBe('######.');
     expect(IKUSI_7X9_SEEN).toContain('D');
+  });
+});
+
+describe('what the simulation puts on it', () => {
+  it('starts on Euskotren’s own trains, named in Basque', () => {
+    expect(readConfig(ikusiEuskotrenAnden, new URLSearchParams('source=demo')).sourceConfig.network).toBe('euskotren');
+    const trains = buildDemoBoard(networkOf('euskotren'), 3, NOW).filter((service) => service.here?.platform?.name === '2');
+    const frame = present(view(trains));
+    expect(frame.time).toMatch(/^\d\d:\d\d$/);
+    expect(frame.text).toMatch(/^[A-ZÑ.\- ]+$/);
+    expect(frame.platform).toBe('2');
+    // Every destination of the network is one of its own ends of line, written as the sign wrote it.
+    const names = networkOf('euskotren').runs.map((run) => (run.eu?.name ?? run.name).toUpperCase());
+    expect(names).toContain('BERMEO');
+    expect(names).toContain('HENDAIA');
   });
 });

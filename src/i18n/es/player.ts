@@ -55,9 +55,13 @@ export const player: Record<string, string> = {
   'demo.description': 'Un panel inventado, para probar la réplica sin depender de nadie: nombres largos, retrasos, vías sin confirmar y algún tren que se divide.',
   'demo.simulated': 'datos simulados',
   'demo.station': 'Estación',
-  'demo.network': 'Trenes',
-  'demo.network.commuter': 'Cercanías',
+  'demo.network': 'Red',
+  'demo.network.help': 'Cada réplica empieza con la red para la que se hizo; las demás están aquí para ver qué muestra con ellas.',
+  'demo.network.commuter': 'Cercanías de Madrid',
   'demo.network.long-distance': 'Larga distancia y media distancia',
+  'demo.network.air': 'Vuelos de un aeropuerto',
+  'demo.network.metro-bilbao': 'Metro Bilbao',
+  'demo.network.euskotren': 'Euskotren',
 
   // --- Manual source ---
   'manual.label': 'Manual',

@@ -149,6 +149,8 @@ export const ikusiMetroBilbaoAnden: ReplicaDef = {
   size: (options: Values) => sizeOf(sideOf(options), options.navilens === true),
   accepts: 'board',
   needs: { services: ROW_COUNT, calls: false },
+  // A sign of Metro Bilbao announces its own trains.
+  sourceDefaults: { demo: { network: 'metro-bilbao' } },
   options: optionsSchema,
   frame: frameSchema,
   selection: () => selection,
