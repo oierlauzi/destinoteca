@@ -80,11 +80,12 @@ const SETENTA_2007 = [...printed('grandes-lineas', 'TRD', 'REGIONAL EXPRES'), ..
 
 /**
  * Every product that has a plate, each in the newest identity drawn for it,
- * leaving out what no longer runs. A board like this never existed: it is for
+ * leaving out what no longer runs: in 2026 Intercity absorbed Alvia and
+ * Media Distancia became Regional. A board like this never existed: it is for
  * reading today's departures on, and the name of the drum says so.
  */
 function running(): string[] {
-  const gone = new Set(['TRD', 'REGIONAL EXPRES', 'GRANDES LINEAS', 'ALTARIA', 'ARCO', 'ESTRELLA', 'TRENHOTEL', 'TREN DE LOS 80', 'TALGO']);
+  const gone = new Set(['TRD', 'REGIONAL EXPRES', 'GRANDES LINEAS', 'ALTARIA', 'ARCO', 'ESTRELLA', 'TRENHOTEL', 'TREN DE LOS 80', 'TALGO', 'ALVIA', 'MEDIA DISTANCIA']);
   const out: string[] = [];
   for (const product of PRODUCT_ORDER) {
     if (gone.has(product)) continue;

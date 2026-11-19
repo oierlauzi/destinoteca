@@ -181,9 +181,12 @@ describe('Solari printed plates', () => {
     const drum = drumOf('largo', options);
     expect(cardFor(drum, 'INTCITY')).toBe(cardFor(drum, 'INTERCITY'));
     expect(cardFor(drum, 'CERC')).toBe(cardFor(drum, 'CERCANIAS'));
-    expect(cardFor(drum, 'MD')).toBe(cardFor(drum, 'MEDIA DISTANCIA'));
     // ADIF's own boards print Euromed as «AVE Eur»; the card is the one it carried as renfe Euromed.
     expect(cardFor(drum, 'AVE EUR')).toBe(cardFor(drum, 'EUROMED'));
+    // Media Distancia became Regional in 2026, so a board of that year has no card
+    // for it and the short form reaches the same nothing as the whole name.
+    const own = [flapKey({ text: 'MEDIA DISTANCIA', identity: 'renfe' })];
+    expect(cardFor(drumOf('largo', { ...options, flaps: own }), 'MD')).toBe(own[0]);
   });
 
   it('gives Regional its own R, and leaves Regional Exprés on the Grandes Líneas strokes', () => {

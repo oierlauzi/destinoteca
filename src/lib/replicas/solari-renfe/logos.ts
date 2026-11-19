@@ -126,17 +126,6 @@ const NEOGALLETA: Art = {
   ],
 };
 
-/** The «renfe» wordmark of 2026, from the company's own artwork, shaped differently from the one of 2005. */
-const NEORENFE: Art = {
-  box: { x: 0, y: 0, width: 287.56, height: 109.92 },
-  paths: [
-    { d: 'M167.949,104.327L166.939,109.92L173.36,109.92C181.497,109.92 187.07,107.174 191.815,103.721C202.112,96.17 203.687,87.003 206.13,75.959C206.13,75.959 210.774,49.993 210.976,48.923C212.874,39.413 212.268,39.413 223.757,39.413L226.604,39.413L227.614,33.8L213.702,33.8C213.702,33.8 216.811,16.153 217.498,12.841C218.77,6.784 221.576,5.593 226.523,5.593L234.701,5.593L235.71,0L229.33,0C221.193,0 215.62,2.746 210.855,6.199C200.558,13.75 199.003,22.917 196.54,33.961L188.927,76.383C188.927,76.383 185.818,93.686 185.172,97.099C184.223,102.146 181.861,103.56 178.428,104.065C177.56,104.186 176.672,104.246 175.783,104.246L167.909,104.347L167.949,104.327Z' },
-    { d: 'M104.933,34.042C97.119,32.911 90.193,33.012 80.845,33.8C67.438,34.931 60.27,40.099 56.959,47.994C55.202,52.315 53.971,57.666 53.526,62.37C52.638,70.931 54.253,78.462 64.934,79.29C79.351,80.401 92.818,80.037 105.034,79.29L105.983,73.677C94.454,74.485 80.421,74.525 72.829,73.677C67.478,73.071 70.426,62.39 70.426,62.39L94.534,62.39C103.661,62.39 111.374,60.29 114.564,51.588C117.694,42.987 115.372,35.556 104.913,34.042L104.933,34.042ZM77.13,42.684C78.785,40.503 80.885,39.574 85.812,39.191C88.679,38.969 89.911,38.989 93.545,39.191C99.804,39.514 102.288,42.825 99.885,49.589C98.028,54.839 94.817,56.797 88.073,56.797L71.517,56.797C73.617,47.59 77.15,42.684 77.15,42.684L77.13,42.684Z' },
-    { d: 'M276.637,34.042C268.823,32.911 261.898,33.012 252.549,33.8C239.143,34.931 231.975,40.099 228.663,47.994C226.907,52.315 225.675,57.666 225.231,62.37C224.343,70.931 225.958,78.462 236.639,79.29C251.055,80.401 264.523,80.037 276.738,79.29L277.687,73.677C266.158,74.485 252.125,74.525 244.534,73.677C239.183,73.071 242.131,62.39 242.131,62.39L266.239,62.39C275.365,62.39 283.078,60.29 286.268,51.588C289.398,42.987 287.076,35.556 276.617,34.042L276.637,34.042ZM248.834,42.684C250.49,40.503 252.59,39.574 257.516,39.191C260.384,38.969 261.615,38.989 265.25,39.191C271.509,39.514 273.992,42.825 271.59,49.589C269.732,54.839 266.522,56.797 259.778,56.797L243.221,56.797C245.321,47.59 248.854,42.684 248.854,42.684L248.834,42.684Z' },
-    { d: 'M167.949,33.8L127.103,33.8L118.905,79.29L136.027,79.29L143.195,39.413L157.167,39.413C169.08,39.413 167.404,43.391 166.213,50.054C165.243,55.424 160.963,79.31 160.963,79.31L178.065,79.31C178.065,79.31 182.163,56.474 183.274,50.336C184.97,40.907 179.942,33.84 167.949,33.84' },
-    { d: 'M54.294,39.413L55.303,33.8L24.976,33.8C12.155,33.8 7.289,38.666 5.835,46.803C5.048,51.164 0,79.29 0,79.29L17.102,79.29C17.102,79.29 21.443,55.021 22.352,50.033C23.401,44.481 25.582,39.393 31.761,39.393L54.273,39.393L54.294,39.413Z' },
-  ],
-};
 
 /** The mark of the Tren de los 80, from Renfe's own artwork. */
 const T80: Art = {
@@ -346,21 +335,6 @@ function neo(name: string, ink: string): Logo {
   };
 }
 
-/** The plates of that identity printed white out of a coloured ground, as Alvia's and Media Distancia's are. */
-function neoGround(name: string, ground: string): Logo {
-  return (x, y, width) => {
-    const cy = y + FLAP.height / 2;
-    const left = x + MARGIN.side;
-    const markHeight = (FLAP.height - 2 * MARGIN.top) * 0.6;
-    const nameX = left + widthOf(NEORENFE, markHeight) + GAP;
-    return [
-      h('rect', { x, y, width, height: FLAP.height, rx: 0.4, fill: ground }),
-      place(NEORENFE, left, cy, markHeight, '#ffffff'),
-      ...nameNodes(name, nameX, cy, Math.max(0, x + width - MARGIN.side - nameX), markHeight * 0.68, SANS, '#ffffff'),
-    ];
-  };
-}
-
 /** Cercanías of that identity: the mark and the C, white out of the red ground. */
 function neoCercanias(): Logo {
   return (x, y, width) => {
@@ -412,7 +386,9 @@ export type Identity = (typeof IDENTITIES)[number];
  */
 const PLATES: Record<string, Partial<Record<Identity, Logo>>> = {
   ALTARIA: { renfe: renfe('Altaria') },
-  ALVIA: { renfe: renfe('Alvia'), neorenfe: neoGround('Alvia', '#870064') },
+  // Intercity absorbed Alvia in 2026 and Media Distancia became Regional, so
+  // neither has a plate in that identity: the one each keeps is of 2005.
+  ALVIA: { renfe: renfe('Alvia') },
   ARCO: { renfe: renfe('Arco') },
   AVANT: { renfe: renfe('Avant'), neorenfe: neo('AVANT', NEO_NAVY) },
   // Renfe's drawing of the AVE and avlo wordmarks of 2026 is not published as
@@ -426,7 +402,7 @@ const PLATES: Record<string, Partial<Record<Identity, Logo>>> = {
   'GRANDES LINEAS': { 'grandes-lineas': grandesLineas('Grandes Líneas') },
   INTERCITY: { renfe: renfe('Intercity'), neorenfe: neo('INTERCITY', NEO_PURPLE) },
   IRYO: { operador: alone(IRYO, 0.74) },
-  'MEDIA DISTANCIA': { renfe: renfe('Media Distancia'), neorenfe: neoGround('Media Distancia', '#870064') },
+  'MEDIA DISTANCIA': { renfe: renfe('Media Distancia') },
   OUIGO: { operador: alone(OUIGO, 1) },
   REGIONAL: { regionales: regionales('Regional'), renfe: renfe('Regional'), neorenfe: neo('REGIONAL', NEO_PURPLE) },
   'REGIONAL EXPRES': { 'grandes-lineas': grandesLineas('Regional Exprés') },
