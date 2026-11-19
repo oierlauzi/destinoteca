@@ -83,7 +83,7 @@ const SETENTA_2007 = [...printed('grandes-lineas', 'TRD', 'REGIONAL EXPRES'), ..
  * leaving out what no longer runs. A board like this never existed: it is for
  * reading today's departures on, and the name of the drum says so.
  */
-function hoy(): string[] {
+function running(): string[] {
   const gone = new Set(['TRD', 'REGIONAL EXPRES', 'GRANDES LINEAS', 'ALTARIA', 'ARCO', 'ESTRELLA', 'TRENHOTEL', 'TREN DE LOS 80', 'TALGO']);
   const out: string[] = [];
   for (const product of PRODUCT_ORDER) {
@@ -119,11 +119,13 @@ export interface Preset {
 export const PRESETS: Preset[] = [
   { id: 'rotulado', flaps: (variant) => ROTULADO[variant] },
   { id: '2007', flaps: (variant) => (variant === 'largo' ? SETENTA_2007 : ROTULADO[variant]) },
-  { id: 'hoy', flaps: (variant) => (variant === 'largo' ? hoy() : ROTULADO[variant]) },
+  { id: '2026', flaps: (variant) => (variant === 'largo' ? running() : ROTULADO[variant]) },
 ];
 
 export const DEFAULT_PRESET = 'rotulado';
-const presetOf = (id: string): Preset => PRESETS.find((preset) => preset.id === id) ?? PRESETS[0]!;
+/** Drums renamed since: a URL that names one by its old word still loads it. */
+const ALSO_CALLED: Record<string, string> = { hoy: '2026' };
+const presetOf = (id: string): Preset => PRESETS.find((preset) => preset.id === (ALSO_CALLED[id] ?? id)) ?? PRESETS[0]!;
 
 /** The cards a preset carries, for the form to seed a hand-built drum from. */
 export const flapsOfPreset = (id: string, variant: Variant): string[] => presetOf(id).flaps(variant);
@@ -144,7 +146,7 @@ export function drumOf(variant: Variant, options: Values): string[] {
   if (Array.isArray(own) && own.length) return ['', ...own.map(String)];
   // `logos` is the key of the first version of this setting, a tick box that
   // printed every plate there was. Its URLs keep that drum.
-  const preset = options.logos === true && (options.drum ?? DEFAULT_PRESET) === DEFAULT_PRESET ? 'hoy' : String(options.drum ?? DEFAULT_PRESET);
+  const preset = options.logos === true && (options.drum ?? DEFAULT_PRESET) === DEFAULT_PRESET ? '2026' : String(options.drum ?? DEFAULT_PRESET);
   return ['', ...presetOf(preset).flaps(variant)];
 }
 

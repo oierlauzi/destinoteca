@@ -1,5 +1,5 @@
 import type { SelectionPolicy } from '../../model';
-import type { Field, ParamSchema, Values } from '../../params';
+import type { Choice, Field, ParamSchema, Values } from '../../params';
 import type { ReplicaDef } from '../types';
 import { DEFAULT_FALLBACK, DEFAULT_PRESET, FALLBACKS, PRESETS } from './drum';
 import { boardBox, DEFAULT_ROWS, layout, type Variant } from './geometry';
@@ -51,7 +51,8 @@ function optionsSchema(variant: Variant): ParamSchema {
               label: 'solari.opt.drum',
               default: DEFAULT_PRESET,
               hidden: true,
-              choices: PRESETS.map((preset) => ({ value: preset.id, label: `solari.drum.${preset.id}` })),
+              // The last is what the drum of 2026 was called when it was called «hoy».
+              choices: [...PRESETS.map((preset) => ({ value: preset.id, label: `solari.drum.${preset.id}` })), { value: 'hoy', label: 'solari.drum.2026' }] as Choice[],
             },
             { key: 'flaps', urlKey: 'paletas', type: 'json', editor: 'drum', label: 'solari.opt.flaps', help: 'solari.opt.flaps.help', default: [] },
             {

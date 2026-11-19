@@ -208,9 +208,9 @@ describe('Solari printed plates', () => {
     expect(draw('AVANT', { flaps: [flapKey({ text: 'AVANT', identity: 'neorenfe' })] })).toContain('#00132a');
     expect(draw('CERCANIAS', { flaps: [flapKey({ text: 'CERCANIAS', identity: 'neorenfe' })] })).toContain('#f4323f');
     expect(draw('TREN DE LOS 80', { flaps: [flapKey({ text: 'TREN DE LOS 80', identity: 'aafm' })] })).toContain(PLATE.slice(1));
-    // Renfe's AVE and avlo of 2026 are not published as vector, so neither has a plate in that identity.
-    expect(identitiesOf('AVE')).toEqual(['marca']);
-    expect(identitiesOf('AVLO')).toEqual(['marca']);
+    // AVE keeps a plate for each of its wordmarks, oldest first; the one of 2026 is not published as vector.
+    expect(identitiesOf('AVE')).toEqual(['renfe-1992', 'renfe-2022']);
+    expect(identitiesOf('AVLO')).toEqual(['renfe']);
   });
 
   it('keeps what a photograph of this board shows apart from what was drawn to match', () => {
@@ -249,7 +249,7 @@ describe('Solari drums', () => {
   });
 
   it('takes a drum built by hand over the preset', () => {
-    const own = [flapKey({ text: 'AVE', identity: 'marca' })];
+    const own = [flapKey({ text: 'AVE', identity: 'renfe-2022' })];
     expect(drumOf('largo', options({ drum: '2007', flaps: own })).slice(1)).toEqual(own);
   });
 
@@ -260,11 +260,27 @@ describe('Solari drums', () => {
     expect(drumOf('largo', options({ logos: true, drum: '2007' })).slice(1).map(textOf).sort()).toEqual(['ALTARIA', 'INTERCITY', 'REGIONAL EXPRES', 'TALGO', 'TRD']);
   });
 
+  it('loads the drum of 2026 under the word it used to be called', () => {
+    const now = drumOf('largo', options({ drum: '2026' }));
+    expect(drumOf('largo', options({ drum: 'hoy' }))).toEqual(now);
+    expect(now.some((card) => textOf(card) === 'AVLO')).toBe(true);
+    // The board no longer carries what stopped running.
+    expect(now.some((card) => textOf(card) === 'TALGO')).toBe(false);
+  });
+
+  it('keeps each AVE wordmark on a card of its own, oldest first', () => {
+    const all = offered('largo');
+    expect(all).toContain(flapKey({ text: 'AVE', identity: 'renfe-1992' }));
+    expect(all).toContain(flapKey({ text: 'AVE', identity: 'renfe-2022' }));
+    // The drum of 2026 takes the newest drawn for it.
+    expect(drumOf('largo', options({ drum: '2026' }))).toContain(flapKey({ text: 'AVE', identity: 'renfe-2022' }));
+  });
+
   it('reads a card whose identity it does not print as the product\'s newest, and letters what it cannot place', () => {
     expect(parseFlap('TRD@grandes-lineas')).toEqual({ text: 'TRD', identity: 'grandes-lineas' });
     // An identity this board never printed for that product, or one an older URL names by a word since changed.
     expect(parseFlap('TRD@renfe')).toEqual({ text: 'TRD', identity: 'grandes-lineas' });
-    expect(parseFlap('AVE@propia')).toEqual({ text: 'AVE', identity: 'marca' });
+    expect(parseFlap('AVE@propia')).toEqual({ text: 'AVE', identity: 'renfe-2022' });
     // Nothing to place it against: the card is lettered, so the URL still says something.
     expect(parseFlap('NADA@renfe')).toEqual({ text: 'NADA@renfe', identity: 'rotulado' });
   });

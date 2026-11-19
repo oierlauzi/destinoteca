@@ -2,6 +2,7 @@ import { t } from '../../i18n';
 import { toDom } from '../hardware';
 import type { Values } from '../params';
 import { DEFAULT_PRESET, flapsOfPreset, offered, parseFlap, PRESETS } from '../replicas/solari-renfe/drum';
+import { identitiesOf } from '../replicas/solari-renfe/logos';
 import { cardPreview } from '../replicas/solari-renfe/render';
 import { el } from './dom';
 
@@ -21,9 +22,15 @@ import { el } from './dom';
  * every card.
  */
 
+/**
+ * What a card is called in the list. The identity comes after the product
+ * only where it tells the cards apart: a product printed in one identity has
+ * nothing to choose between, and naming it there says nothing.
+ */
 const name = (key: string): string => {
   const flap = parseFlap(key);
-  return flap.identity === 'rotulado' ? flap.text : `${flap.text} · ${t(`solari.identity.${flap.identity}`)}`;
+  if (flap.identity === 'rotulado' || identitiesOf(flap.text).length < 2) return flap.text;
+  return `${flap.text} · ${t(`solari.identity.${flap.identity}`)}`;
 };
 
 /** The card as it falls on the board, at the width of the column it belongs to. */
