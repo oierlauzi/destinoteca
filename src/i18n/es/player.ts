@@ -339,6 +339,14 @@ export const player: Record<string, string> = {
   // --- Teleindicador de andén de Ikusi para Euskotren ---
   'euskotren.frame.platform': 'Número de la vía',
 
+  // --- Reloj de Euskotren ---
+  'euskotren.reloj.opt.motion': 'Marcha del minutero',
+  'euskotren.reloj.opt.motion.help': 'Este reloj no tiene segundero. No se sabe cómo avanzaba: a saltos, como el que recibe un impulso cada minuto de un reloj patrón, o de forma continua.',
+  'euskotren.reloj.motion.ppm': 'A saltos, un minuto cada vez',
+  'euskotren.reloj.motion.sweep': 'Continua',
+  'euskotren.reloj.opt.logo': 'Rótulo «EuskoTren»',
+  'euskotren.reloj.opt.logo.help': 'Los que estuvieron en servicio lo llevan. La esfera que conserva el Museo Vasco del Ferrocarril está sin él.',
+
   // --- Teleindicador de andén de cristal líquido de Ikusi ---
   'ikusi.group.board': 'Cartel',
   'ikusi.group.look': 'Aspecto',

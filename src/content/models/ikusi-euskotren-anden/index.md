@@ -21,6 +21,13 @@ countries:
   - es
   - fr
 status: retired
+variants:
+  - id: sin-placa-de-via
+    name: Sin placa de vía
+    description: >-
+      En una estación de un solo andén no hay vía que distinguir, y la caja
+      no lleva la placa con el número: empieza directamente en la fila de
+      caracteres. Así está fotografiado el de Bermeo.
 locations:
   - site: es/atxuri
     status: retired
@@ -28,6 +35,9 @@ locations:
   - site: es/anoeta
     status: retired
     note: Fotografiado en 2006, sobre la vía 1.
+  - site: es/bermeo
+    status: retired
+    note: Sobre el andén único, sin placa de vía.
   - site: fr/hendaia
     status: retired
     note: Fotografiado entre 2009 y 2015, sobre la vía 1.
@@ -66,6 +76,18 @@ photos:
     author: Xabi1980
     sourceUrl: https://commons.wikimedia.org/wiki/File:Euskotren_Anoeta.jpg
     license: cc-by-sa-3.0
+  - id: bermeo
+    src: ./bermeo.jpg
+    alt: >-
+      Andén largo y cubierto, con columnas pintadas de azul y blanco y bancos
+      al fondo; a la izquierda, tras una barandilla, un tren azul y blanco
+      junto a la vía, y en primer término, colgado del techo, un cartel
+      oscuro encendido.
+    caption: El andén único de Bermeo. Este cartel no lleva placa de vía.
+    place: Bermeo
+    author: Juanjo Olaizola Elordi
+    source: 'Juanjo Olaizola Elordi, El ferrocarril de Amorebieta a Bermeo, EuskoTren, p. 174'
+    license: rights-reserved-credited
   - id: hendaia-2009
     src: ./hendaia-2009.jpg
     alt: >-
@@ -97,6 +119,15 @@ photos:
     sourceUrl: https://commons.wikimedia.org/wiki/File:Hendaia-euskotren2.jpg
     license: cc0
 cover: atxuri-2009
+references:
+  - title: El ferrocarril de Amorebieta a Bermeo
+    author: Juanjo Olaizola Elordi
+    publication: EuskoTren
+    date: '2005'
+    note: >-
+      Edición bilingüe en euskera y castellano («Zornotza eta Bermeo arteko
+      trena»). En la página 174, una fotografía del andén de Bermeo con uno
+      de estos carteles, sin placa de vía.
 replica:
   id: ikusi-euskotren-anden
   poster:
@@ -113,7 +144,9 @@ su nombre en euskera.
 
 La caja, de un gris muy oscuro y con las esquinas redondeadas, lleva a la
 izquierda una placa con el número de la vía, en amarillo y rodeado de un
-filete del mismo color. Sobre la fila de caracteres van impresos los
+filete del mismo color. Donde no hay más que un andén, como en Bermeo, no
+hay vía que distinguir: esa placa no está y la caja empieza en la fila de
+caracteres. Sobre ella van impresos los
 rótulos, en euskera y en castellano: «Ordua» y «Hora» sobre la hora, y
 «Norako» y «Destino» sobre el destino, el euskera arriba, en blanco, y el
 castellano debajo, en amarillo. Una línea amarilla corre a lo largo del
@@ -129,8 +162,9 @@ extremo; también los dos puntos de la hora tienen su propio módulo. Los
 caracteres son amarillos, y los cristales brillan débilmente en un verde
 oliva apagado, unos más verdes y otros más pardos.
 
-Las fotografías que se conocen los muestran en Atxuri, en Anoeta y en
-Hendaia, entre 2006 y 2015. Hoy ya no están en servicio. En Derio, sobre un
+Las fotografías que se conocen los muestran en Bermeo, en Atxuri, en Anoeta
+y en Hendaia, desde un libro de 2005 hasta 2015. Hoy ya no están en
+servicio. En Derio, sobre un
 andén entre dos vías, hubo además un
 [cartel de dos filas](../../pendientes/#cartel-de-andén-de-dos-vías-de-euskotren-derio),
 una por vía, que aún no tiene ficha.
@@ -138,7 +172,8 @@ una por vía, que aún no tiene ficha.
 ## Lo que no se sabe
 
 - **Cuándo se instalaron y cuándo se retiraron.** La fotografía más antigua
-  que se conoce es de abril de 2006, y la más reciente, de febrero de 2015.
+  que se conoce es la de Bermeo, publicada sin fecha en un libro de 2005; la
+  más reciente, de febrero de 2015.
 - **En qué otras estaciones estuvieron.**
 - **Qué mostraban cuando no había tren**, y si daban avisos.
 - **Las medidas.** Las proporciones de la réplica se miden en una fotografía

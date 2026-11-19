@@ -13,6 +13,7 @@ import { ikusiMetroBilbaoAvisos } from './ikusi-metro-bilbao-avisos/def';
 import { ikusiEuskotrenAnden } from './ikusi-euskotren-anden/def';
 import { festinaAdif } from './festina-adif/def';
 import { relojCercanias } from './reloj-cercanias/def';
+import { relojEuskotren } from './reloj-euskotren/def';
 import { andenMp, andenMpReloj, andenMpVertical } from './mp-electronics-adif-anden/def';
 import { mpCercanias } from './mp-electronics-adif-cercanias/def';
 import { solariCercanias, solariLargo } from './solari-renfe/def';
@@ -51,6 +52,7 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'ikusi-metro-bilbao-avisos': ikusiMetroBilbaoAvisos,
   'ikusi-euskotren-anden': ikusiEuskotrenAnden,
   'reloj-cercanias': relojCercanias,
+  'reloj-euskotren': relojEuskotren,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {
