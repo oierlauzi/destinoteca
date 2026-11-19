@@ -279,11 +279,10 @@ const PLATES: Record<string, Logo> = {
   EUROMED: renfe('Euromed'),
   INTERCITY: renfe('Intercity'),
   'MEDIA DISTANCIA': renfe('Media Distancia'),
-  REGIONAL: renfe('Regional'),
   TALGO: renfe('Talgo'),
   TRENHOTEL: renfe('Trenhotel'),
   // The identity of the 1995 photograph, which Grandes Líneas replaced.
-  REGIONALES: regionales('Regionales'),
+  REGIONAL: regionales('Regional'),
   // What the 2007 photograph still shows in the identity before that one.
   'GRANDES LINEAS': grandesLineas('Grandes Líneas'),
   'REGIONAL EXPRES': grandesLineas('Regional Exprés'),
@@ -307,6 +306,7 @@ const ALSO: Record<string, string> = {
   INTCITY: 'INTERCITY',
   MD: 'MEDIA DISTANCIA',
   REG: 'REGIONAL',
+  REGIONALES: 'REGIONAL',
   'REG. EXPRES': 'REGIONAL EXPRES',
   'R. EXPRES': 'REGIONAL EXPRES',
   GL: 'GRANDES LINEAS',

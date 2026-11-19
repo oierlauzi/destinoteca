@@ -185,11 +185,12 @@ describe('Solari printed plates', () => {
     expect(plateFor('AVE EUR')).toBe(plateFor('EUROMED'));
   });
 
-  it('gives Regionales its own R, and leaves Regional Exprés on the Grandes Líneas strokes', () => {
+  it('gives Regional its own R, and leaves Regional Exprés on the Grandes Líneas strokes', () => {
     // The 1995 photograph shows the R; the 2007 one shows Regional Exprés still on the strokes.
-    const regionales = renderToString('largo', frame('REGIONALES'), options);
+    const regionales = renderToString('largo', frame('REGIONAL'), options);
     expect(regionales).toContain('#ff6720');
     expect(regionales).not.toContain('#0033a0');
+    expect(plateFor('REGIONALES')).toBe(plateFor('REGIONAL'));
     const expres = renderToString('largo', frame('REGIONAL EXPRES'), options);
     expect(expres).toContain('#0033a0');
     expect(expres).not.toContain('#ff6720');
