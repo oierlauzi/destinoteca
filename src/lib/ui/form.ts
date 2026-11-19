@@ -15,7 +15,8 @@ export interface FormContext {
   editors?: Record<string, JsonEditor>;
 }
 
-export type JsonEditor = (value: unknown, onChange: (value: unknown) => void) => HTMLElement;
+/** `siblings` is the rest of the schema's values, for an editor whose list is seeded by another field. */
+export type JsonEditor = (value: unknown, onChange: (value: unknown) => void, siblings: Values) => HTMLElement;
 
 export interface Form {
   element: HTMLElement;
@@ -294,14 +295,14 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
         const editor = context.editors?.[field.editor];
         if (!editor) return undefined;
         const holder = el('div', { class: 'field is-wide' });
-        const draw = (value: unknown): void => holder.replaceChildren(editor(value, (next) => commit({ [field.key]: next })));
+        const draw = (value: unknown, all: Values): void => holder.replaceChildren(editor(value, (next) => commit({ [field.key]: next }), all));
         let shown = '';
         setters.push((next) => {
           // Redrawing would throw away what is being typed, so only do it for values that came from outside.
           const key = JSON.stringify(next[field.key]);
           if (key === shown || holder.contains(document.activeElement)) return void (shown = key);
           shown = key;
-          draw(next[field.key]);
+          draw(next[field.key], next);
         });
         return holder;
       }

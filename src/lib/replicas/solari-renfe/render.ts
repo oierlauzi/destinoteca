@@ -1,8 +1,9 @@
 import { cp437, h, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { SolariFrame, SolariOptions, SolariRow } from './def';
-import { logosOf, surroundOf } from './def';
-import { PLATE, PLATE_WORDS, plateFor } from './logos';
+import { surroundOf } from './def';
+import { cardFor, drumOf, plateOf, textOf } from './drum';
+import { PLATE } from './logos';
 import { LETTER_MARGIN, LETTER_SIZE, LETTER_SQUEEZE, wordLines } from './words';
 import { boardBox, DEFAULT_ROWS, LEGEND_SIZE, FLAP, FLAP_GAP, layout, HOUR_FLAP, TITLES, type Layout, type Variant } from './geometry';
 
@@ -36,12 +37,6 @@ const CHARS = Array.from(' ABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789-./');
 const DIGITS = Array.from(' 0123456789');
 const HOURS = ['', ...Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'))];
 const PLATFORMS = ['', ...Array.from({ length: 30 }, (_, i) => String(i + 1))];
-/** The words of the train flaps, as far as the photographs show them. */
-const WORDS: Record<Variant, string[]> = {
-  largo: ['', 'TALGO', 'TALGO PENDULAR', 'TALGO EXTREMADURA', 'RAPIDO', 'RAP. ARAGON', 'EXPRESO', 'ELECTROTREN', 'INTERURBANO', 'TER', 'ESTRELLA'],
-  cercanias: ['', 'TRANVIA'],
-};
-
 type FlapKind = 'char' | 'digit' | 'hour' | 'platform' | 'word';
 
 interface Flap {
@@ -64,8 +59,7 @@ interface Lamp {
 }
 
 
-function parts(l: Layout, variant: Variant, logos: boolean): { flaps: Flap[]; lamps: Lamp[] } {
-  const words = logos ? PLATE_WORDS : WORDS[variant];
+function parts(l: Layout, drum: string[]): { flaps: Flap[]; lamps: Lamp[] } {
   const flaps: Flap[] = [];
   const lamps: Lamp[] = [];
   for (let row = 0; row < l.rows; row++) {
@@ -74,7 +68,7 @@ function parts(l: Layout, variant: Variant, logos: boolean): { flaps: Flap[]; la
       const base = { y, row, key: field.key };
       switch (field.kind) {
         case 'word':
-          flaps.push({ ...base, kind: 'word', x: field.x, width: field.width, seq: field.key === 't' ? words : [''], index: 0 });
+          flaps.push({ ...base, kind: 'word', x: field.x, width: field.width, seq: field.key === 't' ? drum : [''], index: 0 });
           break;
         case 'place':
           for (let i = 0; i < 12; i++) flaps.push({ ...base, kind: 'char', x: field.x + i * (FLAP.width + FLAP_GAP), width: FLAP.width, seq: CHARS, index: i });
@@ -99,12 +93,12 @@ function parts(l: Layout, variant: Variant, logos: boolean): { flaps: Flap[]; la
   return { flaps, lamps };
 }
 
-/** What one flap should show for a row of the frame. */
-function flapValue(flap: Flap, row: SolariRow | undefined): string {
+/** What one flap should show for a row of the frame; a train flap turns to a card of its drum. */
+function flapValue(flap: Flap, row: SolariRow | undefined, drum: string[]): string {
   const value = row?.[flap.key] ?? '';
   switch (flap.kind) {
     case 'word':
-      return fold(value).trim();
+      return flap.key === 't' ? cardFor(drum, value) : fold(value).trim();
     case 'char':
       return fold(value).padEnd(12).slice(0, 12)[flap.index] ?? ' ';
     case 'platform':
@@ -126,12 +120,12 @@ const lampsLit = (row: SolariRow | undefined): number => Math.max(0, Math.min(2,
 type Half = 'top' | 'bottom';
 
 /** What is printed on a flap showing `value`, in board coordinates. The dot of an hour is low enough to be on its bottom half only. */
-function printed(flap: Flap, value: string, half: Half, logos: boolean): VNode[] {
+function printed(flap: Flap, value: string, half: Half): VNode[] {
   if (flap.kind === 'word') {
-    const plate = logos && flap.key === 't' ? plateFor(value) : undefined;
+    const plate = flap.key === 't' ? plateOf(value) : undefined;
     if (plate) return plate(flap.x, flap.y, flap.width);
     // Set to a width of its own, so that it fits whatever the font.
-    return wordLines(value, flap.width).map((line) =>
+    return wordLines(flap.key === 't' ? textOf(value) : value, flap.width).map((line) =>
       h('text', { x: flap.x + line.x, y: flap.y + line.baseline, 'font-family': LETTER_FONT, 'font-size': line.size, 'text-anchor': line.anchor, textLength: line.width, lengthAdjust: 'spacingAndGlyphs', fill: INK }, [line.text]),
     );
   }
@@ -150,19 +144,19 @@ function printed(flap: Flap, value: string, half: Half, logos: boolean): VNode[]
 }
 
 /** One half of a flap: its card and whatever of the lettering falls in it. */
-function halfNodes(flap: Flap, half: Half, value: string, logos: boolean): VNode {
+function halfNodes(flap: Flap, half: Half, value: string): VNode {
   const top = half === 'top' ? flap.y : flap.y + FLAP.height / 2;
   const box = { x: flap.x, y: top, width: flap.width, height: FLAP.height / 2 };
-  return h('svg', { ...box, viewBox: `${box.x} ${box.y} ${box.width} ${box.height}`, overflow: 'hidden' }, halfContent(flap, half, value, logos));
+  return h('svg', { ...box, viewBox: `${box.x} ${box.y} ${box.width} ${box.height}`, overflow: 'hidden' }, halfContent(flap, half, value));
 }
 
 /** A train flap with a logo is a printed plate, pale against the black flaps beside it. */
-const cardOf = (flap: Flap, value: string, logos: boolean, half: Half): string =>
-  logos && flap.key === 't' && flap.kind === 'word' && plateFor(value) ? PLATE : half === 'top' ? FLAP_TOP : FLAP_BOTTOM;
+const cardOf = (flap: Flap, value: string, half: Half): string =>
+  flap.key === 't' && flap.kind === 'word' && plateOf(value) ? PLATE : half === 'top' ? FLAP_TOP : FLAP_BOTTOM;
 
-const halfContent = (flap: Flap, half: Half, value: string, logos: boolean): VNode[] => [
-  h('rect', { x: flap.x, y: half === 'top' ? flap.y : flap.y + FLAP.height / 2, width: flap.width, height: FLAP.height / 2, rx: 0.4, fill: cardOf(flap, value, logos, half) }),
-  ...printed(flap, value, half, logos),
+const halfContent = (flap: Flap, half: Half, value: string): VNode[] => [
+  h('rect', { x: flap.x, y: half === 'top' ? flap.y : flap.y + FLAP.height / 2, width: flap.width, height: FLAP.height / 2, rx: 0.4, fill: cardOf(flap, value, half) }),
+  ...printed(flap, value, half),
 ];
 
 interface FlapRefs {
@@ -176,15 +170,15 @@ interface FlapRefs {
 /** The seam where a flap folds: nearly black on a black card, a faint line on a printed plate. */
 const SEAM = { card: '#0e0e0e', plate: '#dad5c6' };
 
-function flapNodes(flap: Flap, value: string, logos: boolean, refs?: FlapRefs): VNode[] {
+function flapNodes(flap: Flap, value: string, refs?: FlapRefs): VNode[] {
   const ref = (key: keyof FlapRefs) => (refs ? (element: SVGElement) => (refs[key] = element) : undefined);
   const nodes: VNode[] = [
-    { ...halfNodes(flap, 'top', value, logos), ref: ref('top') },
-    { ...halfNodes(flap, 'bottom', value, logos), ref: ref('bottom') },
+    { ...halfNodes(flap, 'top', value), ref: ref('top') },
+    { ...halfNodes(flap, 'bottom', value), ref: ref('bottom') },
   ];
-  if (refs) nodes.push(h('g', { display: 'none' }, [{ ...halfNodes(flap, 'top', value, logos), ref: ref('leafHalf') }], ref('leaf')));
+  if (refs) nodes.push(h('g', { display: 'none' }, [{ ...halfNodes(flap, 'top', value), ref: ref('leafHalf') }], ref('leaf')));
   const hinge = flap.y + FLAP.height / 2;
-  const seam = cardOf(flap, value, logos, 'top') === PLATE ? SEAM.plate : SEAM.card;
+  const seam = cardOf(flap, value, 'top') === PLATE ? SEAM.plate : SEAM.card;
   nodes.push(h('line', { x1: flap.x, y1: hinge, x2: flap.x + flap.width, y2: hinge, stroke: seam, 'stroke-width': 0.22 }));
   return nodes;
 }
@@ -229,12 +223,12 @@ const lampNode = (lamp: Lamp, lit: boolean, ref?: (element: SVGElement) => void)
 
 function scene(variant: Variant, frame: SolariFrame, options: SolariOptions, refs?: { flaps: FlapRefs[]; lamps: SVGElement[] }): VNode[] {
   const l = layout(variant, DEFAULT_ROWS[variant]);
-  const logos = logosOf(options);
-  const { flaps, lamps } = parts(l, variant, logos);
+  const drum = drumOf(variant, options);
+  const { flaps, lamps } = parts(l, drum);
   const nodes: VNode[] = [...(surroundOf(options) ? surround(variant, l) : []), ...board(l), ...openings(l)];
   flaps.forEach((flap, i) => {
     const flapRefs = refs ? (refs.flaps[i] = {}) : undefined;
-    nodes.push(...flapNodes(flap, flapValue(flap, frame.rows[flap.row]), logos, flapRefs));
+    nodes.push(...flapNodes(flap, flapValue(flap, frame.rows[flap.row], drum), flapRefs));
   });
   lamps.forEach((lamp, i) => nodes.push(lampNode(lamp, lamp.which < lampsLit(frame.rows[lamp.row]), refs ? (element) => (refs.lamps[i] = element) : undefined)));
   return nodes;
@@ -314,12 +308,12 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
     const top = half === 'top' ? flap.y : flap.y + FLAP.height / 2;
     target.setAttribute('y', String(top));
     target.setAttribute('viewBox', `${flap.x} ${top} ${flap.width} ${FLAP.height / 2}`);
-    target.replaceChildren(...halfContent(flap, half, value, logosOf(options)).map((node) => toDom(node, doc)));
+    target.replaceChildren(...halfContent(flap, half, value).map((node) => toDom(node, doc)));
   };
 
   const build = (): void => {
     const refs = { flaps: [] as FlapRefs[], lamps: [] as SVGElement[] };
-    const shape = parts(layout(variant, DEFAULT_ROWS[variant]), variant, logosOf(options));
+    const shape = parts(layout(variant, DEFAULT_ROWS[variant]), drumOf(variant, options));
     lamps = shape.lamps;
     element = toDom(root(variant, frame, options, scene(variant, frame, options, refs), (node) => (title = node)), doc);
     element.setAttribute('width', '100%');
@@ -327,7 +321,7 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
     host.replaceChildren(element);
     lampRefs = refs.lamps;
     states = shape.flaps.map((flap, i) => {
-      const value = flapValue(flap, frame.rows[flap.row]);
+      const value = flapValue(flap, frame.rows[flap.row], drumOf(variant, options));
       return { flap, refs: refs.flaps[i]!, position: Math.max(0, flap.seq.indexOf(value)), shown: value, target: value, steps: 0, since: 0, phase: 0 };
     });
   };
@@ -385,7 +379,7 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
       frame = next;
       if (title) title.textContent = describe(variant, next);
       for (const state of states) {
-        const target = flapValue(state.flap, next.rows[state.flap.row]);
+        const target = flapValue(state.flap, next.rows[state.flap.row], drumOf(variant, options));
         if (target === state.target) continue;
         state.target = target;
         if (!options.animate) {
@@ -407,7 +401,7 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
       });
     },
     setOptions(next: SolariOptions): void {
-      const reshape = surroundOf(next) !== surroundOf(options) || logosOf(next) !== logosOf(options);
+      const reshape = surroundOf(next) !== surroundOf(options) || drumOf(variant, next).join('\u0000') !== drumOf(variant, options).join('\u0000');
       options = next;
       if (reshape) build();
     },

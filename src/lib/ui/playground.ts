@@ -12,6 +12,7 @@ import { renderDepartures } from './departures';
 import { copyText, download, el, svgToPng, uid } from './dom';
 import { renderForm, type FormContext } from './form';
 import { setupFullscreen } from './fullscreen';
+import { drumEditor } from './drum-editor';
 import { servicesEditor } from './services-editor';
 
 /**
@@ -22,7 +23,7 @@ import { servicesEditor } from './services-editor';
  * source registry, forms from schemas, and everything the visitor sets is one
  * PlayerConfig, which is also exactly what an embed URL carries.
  */
-const editors: FormContext['editors'] = { services: servicesEditor };
+const editors: FormContext['editors'] = { services: servicesEditor, drum: drumEditor };
 
 function initialConfig(def: ReplicaDef, root: HTMLElement): PlayerConfig {
   // A link carrying settings wins; then whatever the catalog entry asks for; then the simulation.
@@ -253,7 +254,7 @@ export function mountPlayground(root: HTMLElement): void {
   }
 
   // --- Appearance ---------------------------------------------------------------
-  const optionsForm = renderForm(def.options, config.options, (options) => apply({ ...config, options }));
+  const optionsForm = renderForm(def.options, config.options, (options) => apply({ ...config, options }), { editors });
   const appearance = el('details', { class: 'appearance' }, [el('summary', { text: t('player.appearance') }), optionsForm.element]);
 
   // --- Data -----------------------------------------------------------------------

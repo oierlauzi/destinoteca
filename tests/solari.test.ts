@@ -4,7 +4,8 @@ import { defaults, type ParamSchema } from '../src/lib/params';
 import { readConfig, replicaSize, writeConfig } from '../src/lib/player/config';
 import { fromFlat, solariCercanias, solariLargo, toFlat } from '../src/lib/replicas/solari-renfe/def';
 import { layout } from '../src/lib/replicas/solari-renfe/geometry';
-import { PLATE, PLATE_WORDS, plateFor, RECONSTRUCTED, SEEN } from '../src/lib/replicas/solari-renfe/logos';
+import { identitiesOf, PLATE, plateFor, RECONSTRUCTED, SEEN } from '../src/lib/replicas/solari-renfe/logos';
+import { cardFor, DEFAULT_PRESET, drumOf, flapKey, offered, parseFlap, plateOf, PRESETS, textOf } from '../src/lib/replicas/solari-renfe/drum';
 import { present } from '../src/lib/replicas/solari-renfe/presenter';
 import { renderToString } from '../src/lib/replicas/solari-renfe/render';
 import { styleOf, wordLines } from '../src/lib/replicas/solari-renfe/words';
@@ -28,7 +29,7 @@ describe('Solari split-flap boards', () => {
     expect(bare.width).toBeLessThan(whole.width);
     expect(bare.height).toBeLessThan(whole.height);
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
-    const options = { surround: false, logos: false, animate: true, speed: 14 };
+    const options = { surround: false, drum: 'rotulado', flaps: [], animate: true, speed: 14 };
     expect(renderToString('largo', frame, options)).not.toContain('solari&amp;c. udine');
     expect(renderToString('largo', frame, { ...options, surround: true })).toContain('solari&amp;c. udine');
     expect(solariLargo.options.fields.find((field) => field.key === 'surround')?.hidden).toBe(true);
@@ -56,7 +57,7 @@ describe('Solari split-flap boards', () => {
 
   it('show the dot of a time only with one, and the lamps asked for', () => {
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
-    const svg = renderToString('largo', frame, { surround: true, logos: false, animate: true, speed: 14 });
+    const svg = renderToString('largo', frame, { surround: true, drum: 'rotulado', flaps: [], animate: true, speed: 14 });
     // The dot is printed on the hour flap, so only flaps showing an hour have one.
     expect(svg.match(/r="0.6" fill="#f1eee2"/g)).toHaveLength(6);
     expect(svg.match(/fill="#ff5b38"/g)).toHaveLength(1);
@@ -150,64 +151,112 @@ describe('Solari train words', () => {
 
 describe('Solari printed plates', () => {
   const frame = (train: string) => fromFlat('largo', { ...defaults(solariLargo.frame as ParamSchema), t1: train, t2: '', t3: '', t4: '', t5: '', t6: '', t7: '', t8: '' });
-  const options = { surround: false, logos: true, animate: false, speed: 14 };
+  const options = { surround: false, drum: 'hoy', flaps: [], animate: false, speed: 14 };
+  const draw = (train: string, over: Record<string, unknown> = {}) => renderToString('largo', frame(train), { ...options, ...over });
 
-  it('is offered on the board the photographs show plates on, and off by default', () => {
-    const field = solariLargo.options.fields.find((entry) => entry.key === 'logos');
-    expect(field).toMatchObject({ type: 'boolean', urlKey: 'logos', default: false });
+  it('is offered on the board the photographs show plates on, and starts lettered', () => {
+    expect(solariLargo.options.fields.find((entry) => entry.key === 'drum')).toMatchObject({ type: 'select', urlKey: 'tambor', default: DEFAULT_PRESET });
+    expect(solariLargo.options.fields.find((entry) => entry.key === 'flaps')).toMatchObject({ type: 'json', urlKey: 'paletas', editor: 'drum' });
+    expect(DEFAULT_PRESET).toBe('rotulado');
     // The Cercanías board is photographed with lettered flaps only.
-    expect(solariCercanias.options.fields.some((entry) => entry.key === 'logos')).toBe(false);
+    expect(solariCercanias.options.fields.some((entry) => entry.key === 'drum')).toBe(false);
   });
 
   it('prints the plate of a product on a pale flap, and letters the word without it', () => {
-    const lettered = renderToString('largo', frame('TALGO'), { ...options, logos: false });
-    const printed = renderToString('largo', frame('TALGO'), options);
-    expect(lettered).toContain('>TALGO<');
+    expect(draw('TALGO', { drum: 'rotulado' })).toContain('>TALGO<');
+    const printed = draw('TALGO');
     expect(printed).not.toContain('>TALGO<');
     expect(printed).toContain('>Talgo<');
     expect(printed).toContain(PLATE.slice(1));
   });
 
-  it('keeps the lettered flap for a product with no plate', () => {
-    const printed = renderToString('largo', frame('RAP. ARAGON'), options);
-    expect(printed).toContain('>RAP. ARAGON<');
-    expect(plateFor('RAP. ARAGON')).toBeUndefined();
+  it('letters anything the drum has no card for', () => {
+    expect(draw('RAP. ARAGON')).toContain('>RAP. ARAGON<');
+    expect(plateOf(cardFor(drumOf('largo', options), 'RAP. ARAGON'))).toBeUndefined();
   });
 
-  it('reads the short forms a board writes when a name does not fit', () => {
-    expect(plateFor('INTCITY')).toBe(plateFor('INTERCITY'));
-    expect(plateFor('CERC')).toBe(plateFor('CERCANIAS'));
-    expect(plateFor('MD')).toBe(plateFor('MEDIA DISTANCIA'));
-  });
-
-  it('answers to the name a product has been renamed to', () => {
-    // ADIF's own boards print Euromed as «AVE Eur»; the plate is the one it carried as renfe Euromed.
-    expect(plateFor('AVE EUR')).toBe(plateFor('EUROMED'));
+  it('reads the short forms a board writes, and the names a product was renamed to', () => {
+    const drum = drumOf('largo', options);
+    expect(cardFor(drum, 'INTCITY')).toBe(cardFor(drum, 'INTERCITY'));
+    expect(cardFor(drum, 'CERC')).toBe(cardFor(drum, 'CERCANIAS'));
+    expect(cardFor(drum, 'MD')).toBe(cardFor(drum, 'MEDIA DISTANCIA'));
+    // ADIF's own boards print Euromed as «AVE Eur»; the card is the one it carried as renfe Euromed.
+    expect(cardFor(drum, 'AVE EUR')).toBe(cardFor(drum, 'EUROMED'));
   });
 
   it('gives Regional its own R, and leaves Regional Exprés on the Grandes Líneas strokes', () => {
     // The 1995 photograph shows the R; the 2007 one shows Regional Exprés still on the strokes.
-    const regionales = renderToString('largo', frame('REGIONAL'), options);
-    expect(regionales).toContain('#ff6720');
-    expect(regionales).not.toContain('#0033a0');
-    expect(plateFor('REGIONALES')).toBe(plateFor('REGIONAL'));
-    const expres = renderToString('largo', frame('REGIONAL EXPRES'), options);
+    const regional = draw('REGIONAL', { flaps: [flapKey({ text: 'REGIONAL', identity: 'regionales' })] });
+    expect(regional).toContain('#ff6720');
+    expect(regional).not.toContain('#0033a0');
+    const expres = draw('REGIONAL EXPRES');
     expect(expres).toContain('#0033a0');
     expect(expres).not.toContain('#ff6720');
   });
 
+  it('keeps a product that was reprinted in both of its identities', () => {
+    expect(identitiesOf('REGIONAL')).toEqual(['regionales', 'renfe']);
+    expect(plateFor('REGIONAL', 'regionales')).not.toBe(plateFor('REGIONAL', 'renfe'));
+    expect(plateFor('TRD', 'renfe')).toBeUndefined();
+  });
+
   it('keeps what a photograph of this board shows apart from what was drawn to match', () => {
-    expect(SEEN.every((key) => plateFor(key))).toBe(true);
+    expect(SEEN.every((key) => identitiesOf(key).length > 0)).toBe(true);
     expect(RECONSTRUCTED).not.toContain('TALGO');
     expect(RECONSTRUCTED).toContain('AVE');
   });
+});
 
-  it('turns the flaps through the plates instead of the words', () => {
-    const printed = renderToString('largo', frame('TRD'), options);
-    // The Grandes Líneas strokes the Trd plate carries, in Renfe's own artwork.
-    expect(printed).toContain('#f79817');
-    expect(printed).toContain('#0033a0');
-    expect(PLATE_WORDS).toContain('TRD');
-    expect(PLATE_WORDS[0]).toBe('');
+describe('Solari drums', () => {
+  const options = (over: Record<string, unknown> = {}) => ({ surround: false, drum: DEFAULT_PRESET, flaps: [], animate: false, speed: 14, ...over });
+
+  it('starts every drum on a blank card', () => {
+    for (const preset of PRESETS) expect(drumOf('largo', options({ drum: preset.id }))[0]).toBe('');
+  });
+
+  it('carries only what the 2007 photograph shows, so it cannot turn onto a later train', () => {
+    const drum = drumOf('largo', options({ drum: '2007' }));
+    expect(drum.slice(1).map(textOf).sort()).toEqual(['ALTARIA', 'INTERCITY', 'REGIONAL EXPRES', 'TALGO', 'TRD']);
+    // Avlo did not run until long after this board was photographed.
+    expect(drum.some((card) => textOf(card) === 'AVLO')).toBe(false);
+    expect(drum).toContain(flapKey({ text: 'TRD', identity: 'grandes-lineas' }));
+    expect(drum).toContain(flapKey({ text: 'TALGO', identity: 'renfe' }));
+  });
+
+  it('letters a train the drum has no card for rather than inventing one', () => {
+    const drum = drumOf('largo', options({ drum: '2007' }));
+    expect(cardFor(drum, 'AVLO')).toBe('AVLO');
+    expect(plateOf(cardFor(drum, 'AVLO'))).toBeUndefined();
+  });
+
+  it('turns the lettered words of the seventies by default', () => {
+    const drum = drumOf('largo', options());
+    expect(drum).toContain('TALGO PENDULAR');
+    expect(drum.every((card) => plateOf(card) === undefined)).toBe(true);
+  });
+
+  it('takes a drum built by hand over the preset', () => {
+    const own = [flapKey({ text: 'AVE', identity: 'propia' })];
+    expect(drumOf('largo', options({ drum: '2007', flaps: own })).slice(1)).toEqual(own);
+  });
+
+  it('keeps the drum of the tick box this setting began as', () => {
+    // ?logos=1 printed every plate there was; its URLs keep that drum.
+    const legacy = drumOf('largo', options({ logos: true }));
+    expect(legacy.some((card) => textOf(card) === 'AVLO')).toBe(true);
+    expect(drumOf('largo', options({ logos: true, drum: '2007' })).slice(1).map(textOf).sort()).toEqual(['ALTARIA', 'INTERCITY', 'REGIONAL EXPRES', 'TALGO', 'TRD']);
+  });
+
+  it('letters a card whose identity this board never printed', () => {
+    expect(parseFlap('TRD@renfe')).toEqual({ text: 'TRD@renfe', identity: 'rotulado' });
+    expect(parseFlap('TRD@grandes-lineas')).toEqual({ text: 'TRD', identity: 'grandes-lineas' });
+  });
+
+  it('offers every card that can be added by hand, each identity of each product', () => {
+    const all = offered('largo');
+    expect(all).toContain(flapKey({ text: 'REGIONAL', identity: 'regionales' }));
+    expect(all).toContain(flapKey({ text: 'REGIONAL', identity: 'renfe' }));
+    expect(all).toContain('TALGO PENDULAR');
+    expect(new Set(all).size).toBe(all.length);
   });
 });

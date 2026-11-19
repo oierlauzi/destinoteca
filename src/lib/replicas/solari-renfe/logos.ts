@@ -1,4 +1,4 @@
-import { h, type VNode } from '../../hardware';
+import { cp437, h, type VNode } from '../../hardware';
 import { FLAP } from './geometry';
 
 /**
@@ -24,18 +24,19 @@ interface Art {
 }
 
 /**
- * The «renfe» wordmark, from the company's own artwork. The same drawing has
- * been printed in more than one purple, so the colour is the caller's and not
- * part of the artwork here.
+ * The «renfe» wordmark, from the company's own artwork: the mark adopted in
+ * 2005, in its own purple, which is the one the plates of the 2007
+ * photograph carry. Renfe's drawing of 2026 is a different file and does not
+ * belong beside product names set in the grey of this identity.
  */
 const RENFE: Art = {
-  box: { x: 0, y: 0, width: 287.56, height: 109.92 },
+  box: { x: 0, y: 0, width: 491.55, height: 184.33 },
   paths: [
-    { d: 'M167.949,104.327L166.939,109.92L173.36,109.92C181.497,109.92 187.07,107.174 191.815,103.721C202.112,96.17 203.687,87.003 206.13,75.959C206.13,75.959 210.774,49.993 210.976,48.923C212.874,39.413 212.268,39.413 223.757,39.413L226.604,39.413L227.614,33.8L213.702,33.8C213.702,33.8 216.811,16.153 217.498,12.841C218.77,6.784 221.576,5.593 226.523,5.593L234.701,5.593L235.71,0L229.33,0C221.193,0 215.62,2.746 210.855,6.199C200.558,13.75 199.003,22.917 196.54,33.961L188.927,76.383C188.927,76.383 185.818,93.686 185.172,97.099C184.223,102.146 181.861,103.56 178.428,104.065C177.56,104.186 176.672,104.246 175.783,104.246L167.909,104.347L167.949,104.327Z' },
-    { d: 'M104.933,34.042C97.119,32.911 90.193,33.012 80.845,33.8C67.438,34.931 60.27,40.099 56.959,47.994C55.202,52.315 53.971,57.666 53.526,62.37C52.638,70.931 54.253,78.462 64.934,79.29C79.351,80.401 92.818,80.037 105.034,79.29L105.983,73.677C94.454,74.485 80.421,74.525 72.829,73.677C67.478,73.071 70.426,62.39 70.426,62.39L94.534,62.39C103.661,62.39 111.374,60.29 114.564,51.588C117.694,42.987 115.372,35.556 104.913,34.042L104.933,34.042ZM77.13,42.684C78.785,40.503 80.885,39.574 85.812,39.191C88.679,38.969 89.911,38.989 93.545,39.191C99.804,39.514 102.288,42.825 99.885,49.589C98.028,54.839 94.817,56.797 88.073,56.797L71.517,56.797C73.617,47.59 77.15,42.684 77.15,42.684L77.13,42.684Z' },
-    { d: 'M276.637,34.042C268.823,32.911 261.898,33.012 252.549,33.8C239.143,34.931 231.975,40.099 228.663,47.994C226.907,52.315 225.675,57.666 225.231,62.37C224.343,70.931 225.958,78.462 236.639,79.29C251.055,80.401 264.523,80.037 276.738,79.29L277.687,73.677C266.158,74.485 252.125,74.525 244.534,73.677C239.183,73.071 242.131,62.39 242.131,62.39L266.239,62.39C275.365,62.39 283.078,60.29 286.268,51.588C289.398,42.987 287.076,35.556 276.617,34.042L276.637,34.042ZM248.834,42.684C250.49,40.503 252.59,39.574 257.516,39.191C260.384,38.969 261.615,38.989 265.25,39.191C271.509,39.514 273.992,42.825 271.59,49.589C269.732,54.839 266.522,56.797 259.778,56.797L243.221,56.797C245.321,47.59 248.854,42.684 248.854,42.684L248.834,42.684Z' },
-    { d: 'M167.949,33.8L127.103,33.8L118.905,79.29L136.027,79.29L143.195,39.413L157.167,39.413C169.08,39.413 167.404,43.391 166.213,50.054C165.243,55.424 160.963,79.31 160.963,79.31L178.065,79.31C178.065,79.31 182.163,56.474 183.274,50.336C184.97,40.907 179.942,33.84 167.949,33.84' },
-    { d: 'M54.294,39.413L55.303,33.8L24.976,33.8C12.155,33.8 7.289,38.666 5.835,46.803C5.048,51.164 0,79.29 0,79.29L17.102,79.29C17.102,79.29 21.443,55.021 22.352,50.033C23.401,44.481 25.582,39.393 31.761,39.393L54.273,39.393L54.294,39.413Z' },
+    { d: 'M0,-8.909C-1.526,-5.757 -3.56,-5.064 -6.223,-4.511C-9.092,-3.927 -12.895,-3.831 -17.077,-4.14C-16.793,-5.869 -16.058,-8.319 -15.509,-9.611C-14.084,-13.021 -11.971,-15.135 -8.035,-16.061C-6.28,-16.459 -4.787,-16.438 -2.678,-16.002C0.423,-15.359 1.38,-11.719 0,-8.909M3.796,-18.683C-1.061,-19.568 -5.515,-19.63 -11.356,-18.835C-19.735,-17.737 -24.294,-14.873 -26.363,-9.912C-27.471,-7.191 -28.239,-3.831 -28.523,-0.872C-29.081,4.507 -28.062,9.429 -21.342,9.983C-12.293,10.721 -5.456,10.545 2.11,9.378L4.623,6.019C-2.515,7.208 -10.622,6.904 -13.327,6.472C-18.707,5.568 -17.396,-0.945 -17.396,-0.945C-12.623,-0.377 -6.84,-0.513 -2.732,-0.945C0.835,-1.283 7.864,-2.175 9.864,-7.648C11.839,-13.058 10.331,-17.457 3.796,-18.683', fill: '#870464', transform: 'matrix(2.66667,0,0,2.66667,162.315,106.934)' },
+    { d: 'M0,-8.909C-1.515,-5.757 -3.545,-5.064 -6.195,-4.511C-9.084,-3.927 -12.899,-3.831 -17.069,-4.14C-16.778,-5.869 -16.05,-8.319 -15.512,-9.611C-14.067,-13.021 -11.969,-15.135 -8.001,-16.061C-6.285,-16.459 -4.767,-16.438 -2.676,-16.002C0.411,-15.359 1.367,-11.719 0,-8.909M3.789,-18.683C-1.016,-19.568 -5.511,-19.63 -11.368,-18.835C-19.718,-17.737 -24.291,-14.873 -26.347,-9.912C-27.477,-7.191 -28.235,-3.831 -28.535,-0.872C-29.067,4.507 -28.045,9.429 -21.337,9.983C-12.282,10.721 -5.452,10.545 2.097,9.378L4.638,6.019C-2.495,7.208 -10.61,6.904 -13.333,6.472C-18.7,5.568 -17.389,-0.945 -17.389,-0.945C-12.618,-0.377 -6.821,-0.513 -2.724,-0.945C0.851,-1.283 7.855,-2.175 9.862,-7.648C11.848,-13.058 10.329,-17.457 3.789,-18.683', fill: '#870464', transform: 'matrix(2.66667,0,0,2.66667,463.082,106.934)' },
+    { d: 'M0,-7.645C0.659,-11.139 2.101,-13.158 5.906,-13.878C9.301,-14.477 15.736,-14.477 19.453,-14.058L21.816,-17.569C16.22,-17.984 6.781,-18.382 1.185,-17.569C-6.795,-16.423 -9.76,-14.742 -10.919,-9.68C-11.564,-6.948 -13.724,6.792 -14.52,10.737L-2.948,10.737C-2.126,6.166 -0.578,-4.513 0,-7.645', fill: '#870464', transform: 'matrix(2.66667,0,0,2.66667,38.72,104.323)' },
+    { d: 'M0,-7.856C-0.982,-2.08 -2.98,8.503 -3.01,8.599C-4.549,15.522 -5.895,21.938 -12.472,26.565C-15.943,28.98 -20.862,30.775 -27.027,30.456L-25.17,27.68C-20.375,27.664 -17.467,23.786 -16.568,21.128C-15.884,19.036 -14.81,14.647 -13.711,8.26L-9.116,-17.273C-7.571,-24.215 -6.48,-30.121 0.085,-34.727C3.581,-37.162 9.497,-38.594 15.495,-38.631L13.403,-35.859C9.058,-35.859 5.993,-33.271 4.644,-30.554C3.662,-28.615 2.587,-23.006 1.654,-17.33L10.39,-17.33L8.318,-14.325C3.618,-14.325 0.778,-12.045 0,-7.856', fill: '#870464', transform: 'matrix(2.66667,0,0,2.66667,362.345,103.016)' },
+    { d: 'M0,-28.703L-25.681,-28.703C-27.02,-20.74 -29.589,-6.922 -30.55,-0.11L-19.845,-0.11C-19.067,-5.396 -16.525,-19.118 -15.376,-25.176L-6.785,-25.176C-3.135,-25.176 -0.434,-22.704 -1.032,-18.493C-1.529,-15.113 -3.057,-7.04 -4.414,0L6.352,0C7.511,-4.811 9.041,-14.472 9.775,-18.326C10.89,-24.17 7.541,-28.703 0,-28.703', fill: '#870464', transform: 'matrix(2.66667,0,0,2.66667,282.802,133.25)' },
   ],
 };
 
@@ -188,8 +189,6 @@ function nameNodes(text: string, x: number, cy: number, room: number, cap: numbe
 
 /** The flap the plate is printed on, pale against the black ones beside it. */
 export const PLATE = '#efece1';
-/** The purple the Renfe mark is printed in, from the company's own artwork. */
-const RENFE_PURPLE = '#870464';
 /** The grey the product names are printed in, from Renfe's own artwork. */
 const NAME_GREY = '#76777b';
 
@@ -210,13 +209,13 @@ function renfe(name: string): Logo {
     const markWidth = widthOf(RENFE, markHeight);
     const nameX = left + markWidth + GAP;
     return [
-      place(RENFE, left, cy, markHeight, RENFE_PURPLE),
+      place(RENFE, left, cy, markHeight),
       ...nameNodes(name, nameX, cy, Math.max(0, left + room - nameX), markHeight * 0.62, SANS, NAME_GREY),
     ];
   };
 }
 
-/** The Grandes/**
+/**
  * The Regionales plate: the «R» and the product beside it in the same orange,
  * set upright in capitals as the identity's own artwork sets it.
  */
@@ -265,33 +264,42 @@ function alone(art: Art, fraction: number): Logo {
 }
 
 /**
- * The plates, by what the flap under them says. Keys are folded as the
- * displays fold text: upper case, accents dropped.
+ * The identities whose plates this board has carried, oldest first.
+ * `rotulado` is no plate at all: the flap is lettered, as the boards of the
+ * seventies and eighties were. The flaps were reprinted piecemeal, so a drum
+ * holds more than one identity at once: in 2007 Trd and Regional Exprés were
+ * still on Grandes Líneas while Altaria, Talgo and Intercity had moved to the
+ * wordmark of 2005.
  */
-const PLATES: Record<string, Logo> = {
-  // Renfe's products named in lettering, in the identity adopted in 2005.
-  ALTARIA: renfe('Altaria'),
-  ALVIA: renfe('Alvia'),
-  ARCO: renfe('Arco'),
-  AVANT: renfe('Avant'),
-  CERCANIAS: renfe('Cercanías'),
-  ESTRELLA: renfe('Estrella'),
-  EUROMED: renfe('Euromed'),
-  INTERCITY: renfe('Intercity'),
-  'MEDIA DISTANCIA': renfe('Media Distancia'),
-  TALGO: renfe('Talgo'),
-  TRENHOTEL: renfe('Trenhotel'),
-  // The identity of the 1995 photograph, which Grandes Líneas replaced.
-  REGIONAL: regionales('Regional'),
-  // What the 2007 photograph still shows in the identity before that one.
-  'GRANDES LINEAS': grandesLineas('Grandes Líneas'),
-  'REGIONAL EXPRES': grandesLineas('Regional Exprés'),
-  TRD: grandesLineas('Trd'),
-  // Products with a wordmark of their own, Renfe's and other operators'.
-  AVE: alone(AVE_WORD, 0.66),
-  AVLO: alone(AVLO_WORD, 0.84),
-  IRYO: alone(IRYO, 0.74),
-  OUIGO: alone(OUIGO, 1),
+export const IDENTITIES = ['rotulado', 'regionales', 'grandes-lineas', 'renfe', 'propia'] as const;
+export type Identity = (typeof IDENTITIES)[number];
+
+/**
+ * The plates, by the product the flap names and the identity it is printed
+ * in. Product keys are folded as the displays fold text: upper case, accents
+ * dropped. A product can appear in more than one identity, because it was
+ * reprinted when the identity changed.
+ */
+const PLATES: Record<string, Partial<Record<Identity, Logo>>> = {
+  ALTARIA: { renfe: renfe('Altaria') },
+  ALVIA: { renfe: renfe('Alvia') },
+  ARCO: { renfe: renfe('Arco') },
+  AVANT: { renfe: renfe('Avant') },
+  AVE: { propia: alone(AVE_WORD, 0.66) },
+  AVLO: { propia: alone(AVLO_WORD, 0.84) },
+  CERCANIAS: { renfe: renfe('Cercanías') },
+  ESTRELLA: { renfe: renfe('Estrella') },
+  EUROMED: { renfe: renfe('Euromed') },
+  'GRANDES LINEAS': { 'grandes-lineas': grandesLineas('Grandes Líneas') },
+  INTERCITY: { renfe: renfe('Intercity') },
+  IRYO: { propia: alone(IRYO, 0.74) },
+  'MEDIA DISTANCIA': { renfe: renfe('Media Distancia') },
+  OUIGO: { propia: alone(OUIGO, 1) },
+  REGIONAL: { regionales: regionales('Regional'), renfe: renfe('Regional') },
+  'REGIONAL EXPRES': { 'grandes-lineas': grandesLineas('Regional Exprés') },
+  TALGO: { renfe: renfe('Talgo') },
+  TRD: { 'grandes-lineas': grandesLineas('Trd') },
+  TRENHOTEL: { renfe: renfe('Trenhotel') },
 };
 
 /**
@@ -319,11 +327,23 @@ export const SEEN = ['ALTARIA', 'INTERCITY', 'REGIONAL EXPRES', 'TALGO', 'TRD'] 
 /** The rest: the same identities applied to products no photograph of this board shows. */
 export const RECONSTRUCTED = Object.keys(PLATES).filter((key) => !(SEEN as readonly string[]).includes(key));
 
-/** The plate for what a train flap says, or nothing when the product has none. */
-export function plateFor(text: string): Logo | undefined {
-  const key = text.trim().replace(/\s+/g, ' ');
-  return PLATES[key] ?? PLATES[ALSO[key] ?? ''];
+/** The name a product is listed under, following the other names it answers to. */
+export function productOf(text: string): string | undefined {
+  const key = cp437.fold(text).trim().replace(/\s+/g, ' ');
+  const named = PLATES[key] ? key : ALSO[key];
+  return named && PLATES[named] ? named : undefined;
 }
 
-/** Every value a train flap can turn to when the plates are printed, in the order the flaps fall. */
-export const PLATE_WORDS: string[] = ['', ...Object.keys(PLATES)];
+/** Every identity a product has a plate in, oldest first. */
+export function identitiesOf(product: string): Identity[] {
+  const plates = PLATES[product];
+  return plates ? IDENTITIES.filter((identity) => plates[identity]) : [];
+}
+
+/** The plate printed for a product in one identity, or nothing when there is none. */
+export function plateFor(product: string, identity: Identity): Logo | undefined {
+  return PLATES[product]?.[identity];
+}
+
+/** Every product with a plate, in the order they are listed. */
+export const PRODUCTS: string[] = Object.keys(PLATES);

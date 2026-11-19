@@ -14,6 +14,7 @@ import type { SourceStatus } from '../sources/types';
 import { copyText, download, el, svgToPng, uid } from './dom';
 import { renderForm, type FormContext } from './form';
 import { setupFullscreen } from './fullscreen';
+import { drumEditor } from './drum-editor';
 import { servicesEditor } from './services-editor';
 
 /**
@@ -31,7 +32,7 @@ interface Mounted {
   toSVG(): string;
 }
 
-const editors: FormContext['editors'] = { services: servicesEditor };
+const editors: FormContext['editors'] = { services: servicesEditor, drum: drumEditor };
 
 /** The display whose settings the source follows: the first board. */
 function leadOf(installation: ResolvedInstallation): ReplicaDef | undefined {

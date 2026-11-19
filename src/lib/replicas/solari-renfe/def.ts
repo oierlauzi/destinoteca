@@ -1,6 +1,7 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
 import type { ReplicaDef } from '../types';
+import { DEFAULT_PRESET, PRESETS } from './drum';
 import { boardBox, DEFAULT_ROWS, layout, type Variant } from './geometry';
 
 /**
@@ -21,8 +22,11 @@ export interface SolariFrame {
 export interface SolariOptions {
   /** The light frame with the board's title, or only the dark panel. */
   surround: boolean;
-  /** Train flaps printed with the logo of each product instead of lettered. */
-  logos: boolean;
+  /** Which drum of cards the train column turns, and the cards of one built by hand. */
+  drum: string;
+  flaps: string[];
+  /** The tick box this setting began as, kept for the URLs that carry it. */
+  logos?: boolean;
   animate: boolean;
   speed: number;
   [key: string]: unknown;
@@ -35,7 +39,20 @@ function optionsSchema(variant: Variant): ParamSchema {
       { key: 'surround', urlKey: 'marco', type: 'boolean', label: 'solari.opt.surround', default: true, hidden: true },
       // Only the long-distance board is photographed with printed plates in its train column.
       ...(variant === 'largo'
-        ? [{ key: 'logos', urlKey: 'logos', type: 'boolean', label: 'solari.opt.logos', help: 'solari.opt.logos.help', default: false } as const]
+        ? ([
+            {
+              key: 'drum',
+              urlKey: 'tambor',
+              type: 'select',
+              label: 'solari.opt.drum',
+              help: 'solari.opt.drum.help',
+              default: DEFAULT_PRESET,
+              choices: PRESETS.map((preset) => ({ value: preset.id, label: `solari.drum.${preset.id}` })),
+            },
+            { key: 'flaps', urlKey: 'paletas', type: 'json', editor: 'drum', label: 'solari.opt.flaps', help: 'solari.opt.flaps.help', default: [] },
+            // The tick box this setting began as: its URLs turn the drum of every plate.
+            { key: 'logos', urlKey: 'logos', type: 'boolean', label: 'solari.opt.logos', default: false, hidden: true },
+          ] as const)
         : []),
       { key: 'animate', urlKey: 'anim', type: 'boolean', label: 'solari.opt.animate', help: 'solari.opt.animate.help', default: true },
       { key: 'speed', type: 'range', label: 'solari.opt.speed', default: 14, min: 4, max: 30, step: 1, unit: 'paletas/s' },
@@ -108,8 +125,6 @@ export function toFlat(frame: SolariFrame): Values {
 
 /** Whether the board is drawn with its frame and title. */
 export const surroundOf = (options: Values): boolean => options.surround !== false;
-/** Whether the train column is printed with each product's logo. */
-export const logosOf = (options: Values): boolean => options.logos === true;
 const rowsOf = (variant: Variant): number => DEFAULT_ROWS[variant];
 
 const selection = (variant: Variant) => (): SelectionPolicy => ({

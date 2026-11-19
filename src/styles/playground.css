@@ -626,3 +626,52 @@
 .data .tabpanel {
   margin-bottom: 8px;
 }
+
+/* --- The drum of a Solari board -------------------------------------------------- */
+
+.drum-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.drum-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9em;
+}
+
+.drum-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drum-card {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 4px 6px 4px 10px;
+  background: var(--paper);
+}
+
+.drum-card-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.drum-card button {
+  flex: none;
+  min-width: 2em;
+}
+
+.drum-add,
+.drum-reset {
+  align-self: flex-start;
+}
