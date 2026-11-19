@@ -17,4 +17,6 @@ la empresa ferroviaria del Gobierno Vasco.
 Sus andenes tuvieron
 [teleindicadores de cristal líquido de Ikusi](../../catalogo/ikusi-euskotren-anden/),
 con el número de la vía en una placa y una fila de caracteres con la hora y
-el destino del próximo tren.
+el destino del próximo tren, y
+[relojes de agujas](../../catalogo/reloj-euskotren/) de esfera blanca y
+cifras azules, con el nombre de la empresa impreso.
