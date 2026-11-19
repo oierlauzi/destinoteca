@@ -204,24 +204,7 @@ function renfe(name: string): Logo {
   };
 }
 
-/**
- * The same plate, with a product that has a drawing of its own in the place
- * of the name. The wordmark is the larger of the two, so the Renfe mark is
- * set smaller here than when it stands beside lettering.
- */
-function renfeWith(art: Art, scale: number): Logo {
-  return (x, y, width) => {
-    const cy = y + FLAP.height / 2;
-    const left = x + MARGIN.side;
-    const markHeight = (FLAP.height - 2 * MARGIN.top) * 0.6;
-    const markWidth = widthOf(RENFE, markHeight);
-    const room = width - 2 * MARGIN.side - markWidth - GAP;
-    const height = Math.min((FLAP.height - 2 * MARGIN.top) * scale, room / (art.box.width / art.box.height));
-    return [place(RENFE, left, cy, markHeight, RENFE_PURPLE), place(art, left + markWidth + GAP, cy, height)];
-  };
-}
-
-/** The Grandes Líneas plate the 2007 photograph still shows: the two strokes, and the product beside them. */
+/** The Grandes/** The Grandes Líneas plate the 2007 photograph still shows: the two strokes, and the product beside them. */
 function grandesLineas(name: string): Logo {
   return (x, y, width) => {
     const cy = y + FLAP.height / 2;
@@ -236,7 +219,11 @@ function grandesLineas(name: string): Logo {
   };
 }
 
-/** An operator whose plate is its own mark alone, centred. */
+/**
+ * A product with a wordmark of its own: that mark alone, centred on the
+ * plate. It is not set beside the company's, which is the lockup for a
+ * product named in lettering.
+ */
 function alone(art: Art, fraction: number): Logo {
   return (x, y, width) => {
     const cy = y + FLAP.height / 2;
@@ -252,13 +239,11 @@ function alone(art: Art, fraction: number): Logo {
  * displays fold text: upper case, accents dropped.
  */
 const PLATES: Record<string, Logo> = {
-  // Renfe's products, in the identity adopted in 2005.
+  // Renfe's products named in lettering, in the identity adopted in 2005.
   ALTARIA: renfe('Altaria'),
   ALVIA: renfe('Alvia'),
   ARCO: renfe('Arco'),
   AVANT: renfe('Avant'),
-  AVE: renfeWith(AVE_WORD, 0.62),
-  AVLO: renfeWith(AVLO_WORD, 0.98),
   CERCANIAS: renfe('Cercanías'),
   ESTRELLA: renfe('Estrella'),
   EUROMED: renfe('Euromed'),
@@ -271,7 +256,9 @@ const PLATES: Record<string, Logo> = {
   'GRANDES LINEAS': grandesLineas('Grandes Líneas'),
   'REGIONAL EXPRES': grandesLineas('Regional Exprés'),
   TRD: grandesLineas('Trd'),
-  // Operators of their own.
+  // Products with a wordmark of their own, Renfe's and other operators'.
+  AVE: alone(AVE_WORD, 0.66),
+  AVLO: alone(AVLO_WORD, 0.84),
   IRYO: alone(IRYO, 0.74),
   OUIGO: alone(OUIGO, 1),
 };
