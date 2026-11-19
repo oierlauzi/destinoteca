@@ -98,10 +98,11 @@ las reales.
 
 ## Lo que no se sabe
 
-- **El ancho exacto de la matriz.** La réplica supone 96 columnas: el mismo
-  paso de punto que los módulos de la versión anterior a lo largo del mismo
-  ancho. Encaja con una de las fotografías, pero en otra el texto ocupa casi
-  toda la matriz, lo que apuntaría a menos columnas.
+- **Cuántas columnas tiene la matriz.** Parece tan ancha como la fila de LED
+  de debajo. La réplica le supone 96 columnas, más o menos el paso de punto
+  de los módulos de la versión anterior a lo largo de ese ancho. Encaja con
+  una de las fotografías, pero en otra el texto ocupa casi toda la matriz, lo
+  que apuntaría a menos columnas.
 - **Qué mostraba la fila de LED.** Está apagada en todas las fotografías.
 - **Cuándo se instalaron y cuándo se retiraron**, y si hubo más en otras estaciones.
 
