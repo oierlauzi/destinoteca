@@ -25,6 +25,12 @@ locations:
   - site: es/busturia-itsasbegi
     status: retired
     note: Sobre un brazo curvo, junto al andén.
+  - site: es/loiola
+    status: retired
+    note: Uno colgado de la marquesina de cada andén.
+  - site: es/elgoibar
+    status: retired
+    note: Sobre un brazo curvo al final del andén; fotografiado en marzo de 2014.
   - site: es/museo-vasco-del-ferrocarril
     status: preserved
     note: >-
@@ -67,6 +73,31 @@ photos:
     author: Juanjo Olaizola Elordi
     source: 'Juanjo Olaizola Elordi, El ferrocarril de Amorebieta a Bermeo, EuskoTren, p. 171'
     license: rights-reserved-credited
+  - id: elgoibar-2014
+    src: ./elgoibar-2014.jpg
+    alt: >-
+      Andén de una estación con el edificio de viajeros a la izquierda y el
+      rótulo «ELGOIBAR» pintado en la fachada. A la derecha, al final del
+      andén, un reloj redondo sobre un brazo curvo; en la fachada, bajo la
+      marquesina, otro reloj más pequeño.
+    caption: El reloj del final del andén de Elgoibar, en marzo de 2014.
+    date: '2014-03-28'
+    place: Elgoibar
+    author: Zarateman
+    sourceUrl: https://commons.wikimedia.org/wiki/File:Elgoibar_-_Estaci%C3%B3n_de_Euskotren_02.JPG
+    license: cc-by-sa-3.0
+  - id: loiola
+    src: ./loiola.jpg
+    alt: >-
+      Dos andenes enfrentados en una estación al aire libre, con bloques de
+      viviendas detrás. A la izquierda, colgado de la marquesina, un reloj
+      redondo; al fondo, un tren azul y blanco, y a la derecha, otro reloj
+      junto a la caseta del ascensor.
+    caption: Los relojes de los dos andenes de Loiola.
+    place: Loiola
+    author: Xabi1980
+    sourceUrl: https://commons.wikimedia.org/wiki/File:Euskotren_Loiola.jpg
+    license: cc-by-sa-3.0
   - id: forotrenes-2013
     src: ./forotrenes-2013.jpg
     alt: >-
@@ -142,10 +173,13 @@ el cuerpo cilíndrico de la caja, y no lleva el rótulo.
 
 ## Dónde estuvo
 
-Las fotografías que se conocen lo muestran en Atxuri, en Busturia-Itsasbegi
-y bajo la marquesina de una estación que no se ha identificado, entre 2005 y
-2014. Hoy ya no está en servicio. El Museo Vasco del Ferrocarril, en
-Azpeitia, conserva al menos una esfera, que publicó como pieza de la semana.
+Las fotografías que se conocen lo muestran en Atxuri, en Busturia-Itsasbegi,
+en Loiola, en Elgoibar y bajo la marquesina de una estación que no se ha
+identificado, entre 2005 y 2014. Cuelga de la marquesina del andén, como en
+Atxuri y en Loiola —donde hay uno en cada andén—, o sale de un poste sobre
+un brazo curvo, como en Busturia-Itsasbegi y en Elgoibar. Hoy ya no está en
+servicio. El Museo Vasco del Ferrocarril, en Azpeitia, conserva al menos una
+esfera, que publicó como pieza de la semana.
 
 ## Lo que no se sabe
 
