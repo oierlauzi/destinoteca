@@ -2,7 +2,7 @@ import { cp437, h, toDocument, toDom, type VNode } from '../../hardware';
 import type { Ticker } from '../../player/ticker';
 import type { SolariFrame, SolariOptions, SolariRow } from './def';
 import { surroundOf } from './def';
-import { cardFor, drumOf, plateOf, textOf } from './drum';
+import { cardFor, drumOf, fallbackOf, plateOf, textOf, type Fallback } from './drum';
 import { PLATE } from './logos';
 import { LETTER_MARGIN, LETTER_SIZE, LETTER_SQUEEZE, wordLines } from './words';
 import { boardBox, DEFAULT_ROWS, LEGEND_SIZE, FLAP, FLAP_GAP, layout, HOUR_FLAP, TITLES, type Layout, type Variant } from './geometry';
@@ -94,11 +94,11 @@ function parts(l: Layout, drum: string[]): { flaps: Flap[]; lamps: Lamp[] } {
 }
 
 /** What one flap should show for a row of the frame; a train flap turns to a card of its drum. */
-function flapValue(flap: Flap, row: SolariRow | undefined, drum: string[]): string {
+function flapValue(flap: Flap, row: SolariRow | undefined, drum: string[], fallback: Fallback): string {
   const value = row?.[flap.key] ?? '';
   switch (flap.kind) {
     case 'word':
-      return flap.key === 't' ? cardFor(drum, value) : fold(value).trim();
+      return flap.key === 't' ? cardFor(drum, value, fallback) : fold(value).trim();
     case 'char':
       return fold(value).padEnd(12).slice(0, 12)[flap.index] ?? ' ';
     case 'platform':
@@ -231,14 +231,37 @@ const lampNode = (lamp: Lamp, lit: boolean, ref?: (element: SVGElement) => void)
 function scene(variant: Variant, frame: SolariFrame, options: SolariOptions, refs?: { flaps: FlapRefs[]; lamps: SVGElement[] }): VNode[] {
   const l = layout(variant, DEFAULT_ROWS[variant]);
   const drum = drumOf(variant, options);
+  const fallback = fallbackOf(options);
   const { flaps, lamps } = parts(l, drum);
   const nodes: VNode[] = [...(surroundOf(options) ? surround(variant, l) : []), ...board(l), ...openings(l)];
   flaps.forEach((flap, i) => {
     const flapRefs = refs ? (refs.flaps[i] = {}) : undefined;
-    nodes.push(...flapNodes(flap, flapValue(flap, frame.rows[flap.row], drum), flapRefs));
+    nodes.push(...flapNodes(flap, flapValue(flap, frame.rows[flap.row], drum, fallback), flapRefs));
   });
   lamps.forEach((lamp, i) => nodes.push(lampNode(lamp, lamp.which < lampsLit(frame.rows[lamp.row]), refs ? (element) => (refs.lamps[i] = element) : undefined)));
   return nodes;
+}
+
+/**
+ * One card of the train drum on its own, for the form that builds a drum by
+ * hand: the flap as it falls on the board, drawn at the size of the column it
+ * belongs to.
+ */
+export function cardPreview(card: string): VNode {
+  const field = layout('largo', 1).fields[0]!;
+  const flap: Flap = { kind: 'word', x: 0, y: 0, width: field.width, seq: [], row: 0, key: 't', index: 0 };
+  // The opening it sits in comes too, so a pale plate has an edge against it.
+  const bezel = 1.1;
+  return h(
+    'svg',
+    { viewBox: `${-bezel} ${-bezel} ${field.width + 2 * bezel} ${FLAP.height + 2 * bezel}`, role: 'img', 'font-family': FONT },
+    [
+      h('title', {}, [textOf(card)]),
+      h('rect', { x: -bezel, y: -bezel, width: field.width + 2 * bezel, height: FLAP.height + 2 * bezel, fill: PANEL_FILL }),
+      h('rect', { x: -0.7, y: -0.7, width: field.width + 1.4, height: FLAP.height + 1.4, rx: 0.9, fill: '#0b0b0b', stroke: '#262726', 'stroke-width': 0.3 }),
+      ...flapNodes(flap, card),
+    ],
+  );
 }
 
 export function describe(variant: Variant, frame: SolariFrame): string {
@@ -328,7 +351,7 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
     host.replaceChildren(element);
     lampRefs = refs.lamps;
     states = shape.flaps.map((flap, i) => {
-      const value = flapValue(flap, frame.rows[flap.row], drumOf(variant, options));
+      const value = flapValue(flap, frame.rows[flap.row], drumOf(variant, options), fallbackOf(options));
       return { flap, refs: refs.flaps[i]!, position: Math.max(0, flap.seq.indexOf(value)), shown: value, target: value, steps: 0, since: 0, phase: 0 };
     });
   };
@@ -386,7 +409,7 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
       frame = next;
       if (title) title.textContent = describe(variant, next);
       for (const state of states) {
-        const target = flapValue(state.flap, next.rows[state.flap.row], drumOf(variant, options));
+        const target = flapValue(state.flap, next.rows[state.flap.row], drumOf(variant, options), fallbackOf(options));
         if (target === state.target) continue;
         state.target = target;
         if (!options.animate) {
@@ -408,7 +431,10 @@ export function mount(variant: Variant, host: Element, initial: SolariOptions, e
       });
     },
     setOptions(next: SolariOptions): void {
-      const reshape = surroundOf(next) !== surroundOf(options) || drumOf(variant, next).join('\u0000') !== drumOf(variant, options).join('\u0000');
+      const reshape =
+        surroundOf(next) !== surroundOf(options) ||
+        fallbackOf(next) !== fallbackOf(options) ||
+        drumOf(variant, next).join('\u0000') !== drumOf(variant, options).join('\u0000');
       options = next;
       if (reshape) build();
     },

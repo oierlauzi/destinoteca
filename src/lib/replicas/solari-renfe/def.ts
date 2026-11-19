@@ -1,7 +1,7 @@
 import type { SelectionPolicy } from '../../model';
 import type { Field, ParamSchema, Values } from '../../params';
 import type { ReplicaDef } from '../types';
-import { DEFAULT_PRESET, PRESETS } from './drum';
+import { DEFAULT_FALLBACK, DEFAULT_PRESET, FALLBACKS, PRESETS } from './drum';
 import { boardBox, DEFAULT_ROWS, layout, type Variant } from './geometry';
 
 /**
@@ -25,6 +25,8 @@ export interface SolariOptions {
   /** Which drum of cards the train column turns, and the cards of one built by hand. */
   drum: string;
   flaps: string[];
+  /** What a flap does with a train the drum has no card for. */
+  fallback: string;
   /** The tick box this setting began as, kept for the URLs that carry it. */
   logos?: boolean;
   animate: boolean;
@@ -40,16 +42,27 @@ function optionsSchema(variant: Variant): ParamSchema {
       // Only the long-distance board is photographed with printed plates in its train column.
       ...(variant === 'largo'
         ? ([
+            // The drum the cards are loaded from. The editor sets it, so it is
+            // not offered on its own; a URL that names one and no cards gets it whole.
             {
               key: 'drum',
               urlKey: 'tambor',
               type: 'select',
               label: 'solari.opt.drum',
-              help: 'solari.opt.drum.help',
               default: DEFAULT_PRESET,
+              hidden: true,
               choices: PRESETS.map((preset) => ({ value: preset.id, label: `solari.drum.${preset.id}` })),
             },
             { key: 'flaps', urlKey: 'paletas', type: 'json', editor: 'drum', label: 'solari.opt.flaps', help: 'solari.opt.flaps.help', default: [] },
+            {
+              key: 'fallback',
+              urlKey: 'sinpaleta',
+              type: 'select',
+              label: 'solari.opt.fallback',
+              help: 'solari.opt.fallback.help',
+              default: DEFAULT_FALLBACK,
+              choices: FALLBACKS.map((id) => ({ value: id, label: `solari.fallback.${id}` })),
+            },
             // The tick box this setting began as: its URLs turn the drum of every plate.
             { key: 'logos', urlKey: 'logos', type: 'boolean', label: 'solari.opt.logos', default: false, hidden: true },
           ] as const)

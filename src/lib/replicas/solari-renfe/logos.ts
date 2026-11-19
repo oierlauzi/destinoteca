@@ -389,7 +389,7 @@ function alone(art: Art, fraction: number): Logo {
  * still on Grandes Líneas while Altaria, Talgo and Intercity had moved to the
  * wordmark of 2005.
  */
-export const IDENTITIES = ['rotulado', 'regionales', 'grandes-lineas', 'renfe', 'neorenfe', 'propia'] as const;
+export const IDENTITIES = ['rotulado', 'regionales', 'grandes-lineas', 'renfe', 'neorenfe', 'marca', 'operador', 'aafm'] as const;
 export type Identity = (typeof IDENTITIES)[number];
 
 /**
@@ -406,21 +406,22 @@ const PLATES: Record<string, Partial<Record<Identity, Logo>>> = {
   // Renfe's drawing of the AVE and avlo wordmarks of 2026 is not published as
   // vector, and ADIF serves it only as a small raster, so the newest plate
   // drawn for them is still the one they carried before.
-  AVE: { propia: alone(AVE_WORD, 0.66) },
-  AVLO: { propia: alone(AVLO_WORD, 0.84) },
+  AVE: { marca: alone(AVE_WORD, 0.66) },
+  AVLO: { marca: alone(AVLO_WORD, 0.84) },
   CERCANIAS: { renfe: renfe('Cercanías'), neorenfe: neoCercanias() },
   ESTRELLA: { renfe: renfe('Estrella') },
   EUROMED: { renfe: renfe('Euromed') },
   'GRANDES LINEAS': { 'grandes-lineas': grandesLineas('Grandes Líneas') },
   INTERCITY: { renfe: renfe('Intercity'), neorenfe: neo('INTERCITY', NEO_PURPLE) },
-  IRYO: { propia: alone(IRYO, 0.74) },
+  IRYO: { operador: alone(IRYO, 0.74) },
   'MEDIA DISTANCIA': { renfe: renfe('Media Distancia'), neorenfe: neoGround('Media Distancia', '#870064') },
-  OUIGO: { propia: alone(OUIGO, 1) },
+  OUIGO: { operador: alone(OUIGO, 1) },
   REGIONAL: { regionales: regionales('Regional'), renfe: renfe('Regional'), neorenfe: neo('REGIONAL', NEO_PURPLE) },
   'REGIONAL EXPRES': { 'grandes-lineas': grandesLineas('Regional Exprés') },
   TALGO: { renfe: renfe('Talgo') },
   TRD: { 'grandes-lineas': grandesLineas('Trd') },
-  'TREN DE LOS 80': { propia: alone(T80, 0.76) },
+  // The Tren de los 80 is the Asociación de Amigos del Ferrocarril de Madrid's, not an operator's product.
+  'TREN DE LOS 80': { aafm: alone(T80, 0.76) },
   TRENHOTEL: { renfe: renfe('Trenhotel') },
 };
 

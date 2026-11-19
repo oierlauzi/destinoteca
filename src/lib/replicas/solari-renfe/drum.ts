@@ -39,9 +39,14 @@ export function parseFlap(key: string): DrumFlap {
   if (at < 0) return { text: key, identity: 'rotulado' };
   const identity = key.slice(at + 1) as Identity;
   const text = key.slice(0, at);
-  // An identity this board has never printed letters its text instead, so an
-  // old or hand-edited URL still says something.
-  return plateFor(text, identity) ? { text, identity } : { text: key, identity: 'rotulado' };
+  if (plateFor(text, identity)) return { text, identity };
+  // The identity is one this board never printed, or one an older URL names
+  // by a word since changed. The product's newest plate is the sensible
+  // reading; failing that the card is lettered, so a URL still says something.
+  const product = productOf(text);
+  const newest = product ? identitiesOf(product).at(-1) : undefined;
+  if (product && newest) return { text: product, identity: newest };
+  return { text: key, identity: 'rotulado' };
 }
 
 /** The plate a card is printed with, or nothing when it is lettered. */
@@ -144,10 +149,24 @@ export function drumOf(variant: Variant, options: Values): string[] {
 }
 
 /**
- * The card a train flap turns to for what a row says: the first on the drum
- * that names the same product, and otherwise the text itself, lettered.
+ * What a flap does with a train the drum has no card for.
+ *
+ * A drum that has no card for a train cannot announce it, so `blanco` leaves
+ * the flap empty, which is what the machine would do. `rotulada` letters the
+ * name instead: a liberty, but it keeps the board readable when it is fed
+ * trains from long after the drum was printed, which is what most visitors
+ * are doing. That is why it is the one offered first.
  */
-export function cardFor(drum: string[], text: string): string {
+export type Fallback = 'rotulada' | 'blanco';
+export const FALLBACKS: Fallback[] = ['rotulada', 'blanco'];
+export const DEFAULT_FALLBACK: Fallback = 'rotulada';
+export const fallbackOf = (options: Values): Fallback => (options.fallback === 'blanco' ? 'blanco' : 'rotulada');
+
+/**
+ * The card a train flap turns to for what a row says: the first on the drum
+ * that names the same product, and otherwise whatever the fallback says.
+ */
+export function cardFor(drum: string[], text: string, fallback: Fallback = DEFAULT_FALLBACK): string {
   const said = cp437.fold(text).trim().replace(/\s+/g, ' ');
   if (!said) return '';
   const product = productOf(said);
@@ -155,5 +174,5 @@ export function cardFor(drum: string[], text: string): string {
     const flap = parseFlap(key);
     if (flap.text === said || (product && flap.text === product)) return key;
   }
-  return said;
+  return fallback === 'blanco' ? '' : said;
 }

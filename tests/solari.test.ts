@@ -29,7 +29,7 @@ describe('Solari split-flap boards', () => {
     expect(bare.width).toBeLessThan(whole.width);
     expect(bare.height).toBeLessThan(whole.height);
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
-    const options = { surround: false, drum: 'rotulado', flaps: [], animate: true, speed: 14 };
+    const options = { surround: false, drum: 'rotulado', flaps: [], fallback: 'rotulada', animate: true, speed: 14 };
     expect(renderToString('largo', frame, options)).not.toContain('solari&amp;c. udine');
     expect(renderToString('largo', frame, { ...options, surround: true })).toContain('solari&amp;c. udine');
     expect(solariLargo.options.fields.find((field) => field.key === 'surround')?.hidden).toBe(true);
@@ -57,7 +57,7 @@ describe('Solari split-flap boards', () => {
 
   it('show the dot of a time only with one, and the lamps asked for', () => {
     const frame = fromFlat('largo', defaults(solariLargo.frame as ParamSchema));
-    const svg = renderToString('largo', frame, { surround: true, drum: 'rotulado', flaps: [], animate: true, speed: 14 });
+    const svg = renderToString('largo', frame, { surround: true, drum: 'rotulado', flaps: [], fallback: 'rotulada', animate: true, speed: 14 });
     // The dot is printed on the hour flap, so only flaps showing an hour have one.
     expect(svg.match(/r="0.6" fill="#f1eee2"/g)).toHaveLength(6);
     expect(svg.match(/fill="#ff5b38"/g)).toHaveLength(1);
@@ -151,7 +151,7 @@ describe('Solari train words', () => {
 
 describe('Solari printed plates', () => {
   const frame = (train: string) => fromFlat('largo', { ...defaults(solariLargo.frame as ParamSchema), t1: train, t2: '', t3: '', t4: '', t5: '', t6: '', t7: '', t8: '' });
-  const options = { surround: false, drum: 'hoy', flaps: [], animate: false, speed: 14 };
+  const options = { surround: false, drum: 'hoy', flaps: [], fallback: 'rotulada' as const, animate: false, speed: 14 };
   const draw = (train: string, over: Record<string, unknown> = {}) => renderToString('largo', frame(train), { ...options, ...over });
 
   it('is offered on the board the photographs show plates on, and starts lettered', () => {
@@ -207,10 +207,10 @@ describe('Solari printed plates', () => {
     expect(draw('INTERCITY', { flaps: [flapKey({ text: 'INTERCITY', identity: 'neorenfe' })] })).toContain('#5b064b');
     expect(draw('AVANT', { flaps: [flapKey({ text: 'AVANT', identity: 'neorenfe' })] })).toContain('#00132a');
     expect(draw('CERCANIAS', { flaps: [flapKey({ text: 'CERCANIAS', identity: 'neorenfe' })] })).toContain('#f4323f');
-    expect(draw('TREN DE LOS 80', { flaps: [flapKey({ text: 'TREN DE LOS 80', identity: 'propia' })] })).toContain(PLATE.slice(1));
+    expect(draw('TREN DE LOS 80', { flaps: [flapKey({ text: 'TREN DE LOS 80', identity: 'aafm' })] })).toContain(PLATE.slice(1));
     // Renfe's AVE and avlo of 2026 are not published as vector, so neither has a plate in that identity.
-    expect(identitiesOf('AVE')).toEqual(['propia']);
-    expect(identitiesOf('AVLO')).toEqual(['propia']);
+    expect(identitiesOf('AVE')).toEqual(['marca']);
+    expect(identitiesOf('AVLO')).toEqual(['marca']);
   });
 
   it('keeps what a photograph of this board shows apart from what was drawn to match', () => {
@@ -221,7 +221,7 @@ describe('Solari printed plates', () => {
 });
 
 describe('Solari drums', () => {
-  const options = (over: Record<string, unknown> = {}) => ({ surround: false, drum: DEFAULT_PRESET, flaps: [], animate: false, speed: 14, ...over });
+  const options = (over: Record<string, unknown> = {}) => ({ surround: false, drum: DEFAULT_PRESET, flaps: [], fallback: 'rotulada', animate: false, speed: 14, ...over });
 
   it('starts every drum on a blank card', () => {
     for (const preset of PRESETS) expect(drumOf('largo', options({ drum: preset.id }))[0]).toBe('');
@@ -249,7 +249,7 @@ describe('Solari drums', () => {
   });
 
   it('takes a drum built by hand over the preset', () => {
-    const own = [flapKey({ text: 'AVE', identity: 'propia' })];
+    const own = [flapKey({ text: 'AVE', identity: 'marca' })];
     expect(drumOf('largo', options({ drum: '2007', flaps: own })).slice(1)).toEqual(own);
   });
 
@@ -260,9 +260,22 @@ describe('Solari drums', () => {
     expect(drumOf('largo', options({ logos: true, drum: '2007' })).slice(1).map(textOf).sort()).toEqual(['ALTARIA', 'INTERCITY', 'REGIONAL EXPRES', 'TALGO', 'TRD']);
   });
 
-  it('letters a card whose identity this board never printed', () => {
-    expect(parseFlap('TRD@renfe')).toEqual({ text: 'TRD@renfe', identity: 'rotulado' });
+  it('reads a card whose identity it does not print as the product\'s newest, and letters what it cannot place', () => {
     expect(parseFlap('TRD@grandes-lineas')).toEqual({ text: 'TRD', identity: 'grandes-lineas' });
+    // An identity this board never printed for that product, or one an older URL names by a word since changed.
+    expect(parseFlap('TRD@renfe')).toEqual({ text: 'TRD', identity: 'grandes-lineas' });
+    expect(parseFlap('AVE@propia')).toEqual({ text: 'AVE', identity: 'marca' });
+    // Nothing to place it against: the card is lettered, so the URL still says something.
+    expect(parseFlap('NADA@renfe')).toEqual({ text: 'NADA@renfe', identity: 'rotulado' });
+  });
+
+  it('leaves a train the drum cannot announce blank when it is asked to', () => {
+    const drum = drumOf('largo', options({ drum: '2007' }));
+    expect(cardFor(drum, 'AVLO', 'rotulada')).toBe('AVLO');
+    expect(cardFor(drum, 'AVLO', 'blanco')).toBe('');
+    expect(plateOf(cardFor(drum, 'AVLO', 'blanco'))).toBeUndefined();
+    // What the drum does carry is unaffected either way.
+    expect(cardFor(drum, 'TALGO', 'blanco')).toBe(flapKey({ text: 'TALGO', identity: 'renfe' }));
   });
 
   it('offers every card that can be added by hand, each identity of each product', () => {
