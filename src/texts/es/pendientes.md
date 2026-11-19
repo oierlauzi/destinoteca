@@ -4,6 +4,69 @@ es. Cada uno dice qué falta. Si lo sabes o tienes una fotografía,
 [abre una incidencia](https://github.com/oierlauzi/destinoteca/issues/new?template=proponer-teleindicador.yml)
 o mira [cómo contribuir](../contribuir/).
 
+## Alba Electrónica
+
+### Tableros de llegadas y salidas de Málaga María Zambrano
+
+Tableros de llegadas de adif con el mismo aspecto que los
+[de MP Electronics](../catalogo/mp-electronics-adif-teleindicador/): cabecera
+verde, siete filas en ámbar con hora, procedencia, tren, vía y observaciones,
+y una fila roja de avisos. Se distinguen porque esa fila de avisos ocupa casi
+todo el ancho del tablero, bajo todas las columnas, en lugar de dejar
+márgenes a los lados. En dos de las fotografías se lee en el marco, abajo a la
+derecha, una placa de «ALBA ELECTRÓNICA». Por los trenes y los avisos (Álora,
+El Chorro-Caminito, Antequera, Ronda) parecen estar en Málaga María Zambrano.
+
+Alba Electrónica, S.A. nació en 1986 para hacer sistemas electrónicos de
+información al público y, según la historia que publica en su
+[web](https://www.alba-electronica.com/), en 2010 instaló sus teleindicadores
+en las principales estaciones del AVE. En 2005 se unió al grupo Postigo, y en
+2020 Fixalia compró sus activos.
+
+**Falta:**
+
+- **Fotografías con autor y fuente.** Las que se conocen no los tienen.
+- **Comprobar la estación**, y si hay tableros de Alba en otras.
+- **Las fechas**: cuándo se instalaron y si siguen en servicio.
+
+## DSTA
+
+### Tableros de vestíbulo y carteles de andén para ADIF y Renfe
+
+DSTA, S.L., de Tres Cantos (Madrid), dice en su
+[ficha de Railway Technology](https://www.railway-technology.com/contractors/signal/dsta/)
+que suministra pantallas de información a la operadora ferroviaria nacional
+desde 2003, que la mayoría de los carteles de Cercanías de España los diseña y
+fabrica ella, y que hizo los carteles de andén «para el servicio de
+Cercanías de las principales ciudades». La misma ficha muestra, como suyo, un
+«tablero de vestíbulo» en Sevilla-Santa Justa: una fila de tableros de salidas
+y llegadas de adif con el mismo aspecto que los
+[de MP Electronics](../catalogo/mp-electronics-adif-teleindicador/), en los que
+el producto y el número del tren se escriben juntos («AVE-02170»).
+
+Describe también unos paneles de andén de ocho líneas, las siete primeras en
+ámbar y la octava bicolor, roja y ámbar, con caracteres de 83,5 mm en 11 × 7 o
+5 × 7 puntos. Coincide con el tablero de MP Electronics de este archivo: siete
+filas, una fila de avisos debajo y letras de 11 puntos de alto.
+Según una
+[nota de prensa](https://www.railway-technology.com/contractors/signal/dsta/pressreleases/press2-97/)
+de enero de 2011, DSTA diseñó, fabricó e instaló la información al viajero de
+la estación de Valencia-Joaquín Sorolla, abierta en diciembre de 2010: 55
+carteles de andén de LED, 23 monitores TFT y cuatro grandes tableros de
+vestíbulo, en castellano, inglés y valenciano.
+
+Los tableros de este diseño que se han fotografiado con placa, como uno de
+Barcelona-Sants, llevan la de MP Electronics. Puede que una de las dos
+empresas fabricara para la otra, o que DSTA hiciera la integración.
+
+**Falta:**
+
+- **Fotografías de las placas** de los tableros de Sevilla-Santa Justa y
+  Valencia-Joaquín Sorolla.
+- **Qué relación hay entre DSTA y MP Electronics**, y quién hizo cada
+  tablero.
+- **Qué carteles de Cercanías son de DSTA.**
+
 ## Ikusi
 
 ### Tablero de salidas de alta velocidad
