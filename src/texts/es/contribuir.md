@@ -21,6 +21,13 @@ Los formularios de GitHub preguntan lo necesario en cada caso:
 - [Aportar una fotografía](https://github.com/oierlauzi/destinoteca/issues/new?template=aportar-fotografia.yml)
 - [Corregir un dato](https://github.com/oierlauzi/destinoteca/issues/new?template=corregir-dato.yml)
 
+## Escribir al mantenedor
+
+Si prefieres no usar GitHub, escribe por correo a
+[olauzirika@gmail.com](mailto:olauzirika@gmail.com) o por mensaje a
+`oierlauzi` en Instagram, X o Bluesky. Basta con contar lo que sabes y
+adjuntar las fotografías, con su autor y de dónde salen.
+
 ## Editar directamente
 
 Al pie de cada ficha hay un enlace «Editar esta página» que abre su archivo en

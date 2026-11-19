@@ -80,6 +80,31 @@ teleindicadores de Cercanías Bilbao eran de Ikusi.
 **Falta:** confirmar el fabricante, fotografías de cerca y en qué otras
 estaciones de Bilbao había.
 
+### Cartel de andén de dos vías de Euskotren, Derio
+
+Sobre el andén de Derio, entre las vías 1 y 2, colgaba un cartel de dos filas
+de los mismos módulos de cristal líquido que los
+[carteles de andén de Ikusi de Euskotren](../catalogo/ikusi-euskotren-anden/),
+21 caracteres por fila, una fila por vía, con la hora y el destino del
+próximo tren. No tiene placa ni rótulos sobre las filas: las vías van
+impresas en amarillo a los lados, el 1 a la derecha de la fila de arriba con
+una flecha hacia la derecha, y el 2 a la izquierda de la de abajo con una
+flecha hacia la izquierda. Lleva el logotipo de Ikusi abajo, a la derecha. Ya
+no está en servicio.
+
+Fotografías: Zarateman,
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Derio_-_Estaci%C3%B3n_de_Euskotren_2.jpg)
+(julio de 2017), y un usuario de
+[Google Maps](https://maps.app.goo.gl/M8M1fC5NYDsJWfgz6), de noche.
+
+**Falta:**
+
+- **Más fotografías**, de cerca y de frente.
+- **En qué otras estaciones** hubo carteles como este.
+- **Cuántos módulos en blanco** hay en cada extremo de las filas: en la
+  fotografía de noche parece haber uno.
+- **Cuándo se instaló y cuándo se retiró.**
+
 ### Otras estaciones
 
 Según *Vía Libre*, Ikusi instaló sistemas de información al público de Renfe

@@ -6,8 +6,9 @@ import { h, num, type VNode } from './svg';
  * Character cells of round LEDs, one small matrix per character, set in a
  * board built for one glass per character. Every dot that is not part of a
  * character glows faintly, in blank cells and in those with a character
- * alike, as a glass glows with nothing written on it. Cells age apart, so
- * neighbours differ a little in brightness.
+ * alike, as a glass glows with nothing written on it. Lit dots can have a
+ * glow round them. Cells age apart, so neighbours differ a little in
+ * brightness.
  *
  * The same font interface as the liquid-crystal modules (lcd-modules.ts),
  * and the same placement: `at` is the top-left corner of the cell.
@@ -31,6 +32,11 @@ export interface LedCellLook {
   /** 0 to 1: how far the cells have drifted apart in brightness. */
   uneven: number;
   seed: number;
+  /**
+   * The glow round each lit dot: halos in its colour, from the outermost,
+   * each a radius and an opacity. Unlit dots have none.
+   */
+  glow?: { radius: number; opacity: number }[];
 }
 
 function rgb(hex: string): [number, number, number] {
@@ -53,28 +59,34 @@ export function ledCellShades(i: number, look: LedCellLook): { lit: string; fain
 /** A circle as a path, so that one path holds many. */
 const disc = (cx: number, cy: number, r: number): string => `M${num(cx - r)} ${num(cy)}a${num(r)} ${num(r)} 0 1 0 ${num(2 * r)} 0a${num(r)} ${num(r)} 0 1 0 ${num(-2 * r)} 0z`;
 
-/** The dots of a character in its cell: the lit ones, and the others. */
-export function ledCellPaths(char: string, at: LcdModule, font: LcdFont, look: LedCellLook): { lit: string; rest: string } {
+/** The dots of a character in its cell: the lit ones, the others, and a halo round the lit ones for each layer of glow. */
+export function ledCellPaths(char: string, at: LcdModule, font: LcdFont, look: LedCellLook): { lit: string; rest: string; glow: string[] } {
   const columns = font.glyph(char);
   const x0 = at.x + (look.width - (font.cols - 1) * look.pitchX) / 2;
   const y0 = at.y + (look.height - (font.rows - 1) * look.pitchY) / 2;
   let lit = '';
   let rest = '';
+  const layers = look.glow ?? [];
+  const glow = layers.map(() => '');
   for (let col = 0; col < font.cols; col++) {
     const bits = columns[col] ?? 0;
     for (let row = 0; row < font.rows; row++) {
       const x = x0 + col * look.pitchX;
       const y = y0 + row * look.pitchY;
-      if (bits & (1 << row)) lit += disc(x, y, look.litRadius);
-      else rest += disc(x, y, look.radius);
+      if (bits & (1 << row)) {
+        lit += disc(x, y, look.litRadius);
+        layers.forEach((layer, i) => (glow[i] += disc(x, y, layer.radius)));
+      } else rest += disc(x, y, look.radius);
     }
   }
-  return { lit, rest };
+  return { lit, rest, glow };
 }
 
 export interface LedCellRefs {
   lit: SVGElement[];
   rest: SVGElement[];
+  /** By layer of glow, then by cell. */
+  glow?: SVGElement[][];
 }
 
 /**
@@ -90,8 +102,12 @@ export function ledCells(cells: LcdModule[], chars: string[], font: LcdFont, loo
     nodes.push(
       h('rect', { x: at.x, y: at.y, width: look.width, height: look.height, fill: look.back }),
       h('path', { d: paths.rest, fill: shades.faint }, [], refs ? (element) => (refs.rest[k] = element) : undefined),
-      h('path', { d: paths.lit, fill: shades.lit }, [], refs ? (element) => (refs.lit[k] = element) : undefined),
     );
+    (look.glow ?? []).forEach((layer, i) => {
+      const keep = refs ? (element: SVGElement) => (((refs.glow ??= [])[i] ??= [])[k] = element) : undefined;
+      nodes.push(h('path', { d: paths.glow[i] ?? '', fill: shades.lit, 'fill-opacity': layer.opacity }, [], keep));
+    });
+    nodes.push(h('path', { d: paths.lit, fill: shades.lit }, [], refs ? (element) => (refs.lit[k] = element) : undefined));
   });
   return nodes;
 }
@@ -102,5 +118,6 @@ export function updateLedCells(refs: LedCellRefs, cells: LcdModule[], chars: str
     const paths = ledCellPaths(chars[k] ?? ' ', at, font, look);
     refs.lit[k]?.setAttribute('d', paths.lit);
     refs.rest[k]?.setAttribute('d', paths.rest);
+    paths.glow.forEach((d, i) => refs.glow?.[i]?.[k]?.setAttribute('d', d));
   });
 }

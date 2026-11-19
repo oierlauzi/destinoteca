@@ -310,6 +310,9 @@ export const player: Record<string, string> = {
   'solari.frame.row11': 'Fila 11',
   'solari.frame.row12': 'Fila 12',
 
+  // --- Teleindicador de andén de Ikusi para Euskotren ---
+  'euskotren.frame.platform': 'Número de la vía',
+
   // --- Teleindicador de andén de cristal líquido de Ikusi ---
   'ikusi.group.board': 'Cartel',
   'ikusi.group.look': 'Aspecto',

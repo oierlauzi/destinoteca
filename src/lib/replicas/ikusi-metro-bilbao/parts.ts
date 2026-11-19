@@ -62,19 +62,25 @@ export const lcdLook = (options: WearOptions): LcdLook => ({
 
 /**
  * The LED modules, as large as the glasses they replaced: 7 × 9 dots,
- * further apart down than across, amber when lit; the others glow faintly,
- * the same in every module, with a character or without.
+ * further apart down than across, amber when lit, with a glow round them;
+ * the others glow faintly, the same in every module, with a character or
+ * without.
  */
 export const ledLook = (options: WearOptions): LedCellLook => ({
   width: GLASS.width,
   height: GLASS.height,
   pitchX: 0.76,
   pitchY: 0.9,
-  litRadius: 0.36,
+  litRadius: 0.4,
   radius: 0.27,
   back: '#120b09',
-  lit: '#ffc244',
-  faint: '#5e3c1a',
+  lit: '#ffd34d',
+  faint: '#3e2812',
+  glow: [
+    { radius: 0.95, opacity: 0.07 },
+    { radius: 0.7, opacity: 0.12 },
+    { radius: 0.52, opacity: 0.2 },
+  ],
   uneven: options.uneven / 100,
   seed: options.wearSeed,
 });
@@ -112,6 +118,20 @@ export function boxNodes(box: Box, corner: number): VNode[] {
   return [
     h('rect', { ...box, rx: corner, fill: BODY }),
     h('rect', { x: box.x + 0.3, y: box.y + 0.3, width: box.width - 0.6, height: box.height - 0.6, rx: Math.max(0, corner - 0.3), fill: 'none', stroke: RIM, 'stroke-width': 0.6 }),
+  ];
+}
+
+/**
+ * A black box whose front is framed by a bezel: a band of black shell,
+ * catching the light at its outer edge, round a panel set into it. `bezel`
+ * gives its depth at the top and at the sides and the foot.
+ */
+export function bezelBoxNodes(box: Box, corner: number, bezel: { top: number; side: number }): VNode[] {
+  const inner = { x: box.x + bezel.side, y: box.y + bezel.top, width: box.width - 2 * bezel.side, height: box.height - bezel.top - bezel.side };
+  return [
+    h('rect', { ...box, rx: corner, fill: '#0b0b0b' }),
+    h('rect', { x: box.x + 0.25, y: box.y + 0.25, width: box.width - 0.5, height: box.height - 0.5, rx: Math.max(0, corner - 0.25), fill: 'none', stroke: RIM, 'stroke-width': 0.5 }),
+    h('rect', { ...inner, rx: Math.max(0.4, corner - bezel.side / 2), fill: BODY, stroke: '#040404', 'stroke-width': 0.4 }),
   ];
 }
 
