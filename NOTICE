@@ -17,7 +17,8 @@ renfe-flipdot-re
 ¿Dónde está mi tren? (dondeestamitren, mitren.app)
   https://github.com/jotaelediaz/dondeestamitren  (Apache-2.0)
   src/lib/sources/mitren/stations.data.json is generated from the station
-  data that project ships, by tools/build_stations.py. The live source
+  data that project ships, by tools/build_stations.py: the networks of
+  Renfe Cercanías, of Euskotren and of Metro Bilbao. The live source
   reads the public WebSocket of its deployment at https://mitren.app/.
 
 Photographs

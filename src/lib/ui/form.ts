@@ -278,7 +278,20 @@ export function renderForm(schema: ParamSchema, initial: Values, onChange: (valu
           });
           return row([input]);
         }
-        const select = el('select', { attrs: { id }, on: { change: () => commit({ [field.key]: select.value }) } });
+        // Settings the choice invalidates go back to their defaults with it,
+        // and their controls are redrawn so that what they show is gone too.
+        const resets = (field.type === 'select' ? (field.resets ?? []) : [])
+          .map((key) => schema.fields.find((other) => other.type !== 'switch' && other.key === key))
+          .filter((other): other is SettingField => other !== undefined);
+        const select = el('select', {
+          attrs: { id },
+          on: {
+            change: () => {
+              commit({ ...Object.fromEntries(resets.map((other) => [other.key, other.default])), [field.key]: select.value });
+              if (resets.length) sync();
+            },
+          },
+        });
         const literal = field.type === 'select' && field.literal;
         const fill = (current: string): void => {
           select.replaceChildren(...choices.map((choice) => el('option', { text: literal ? choice.label : t(choice.label), attrs: { value: choice.value } })));

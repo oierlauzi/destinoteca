@@ -6,7 +6,8 @@ mitren.app's search API sends no CORS header, so a page on GitHub Pages cannot
 ask it for station names. This bakes the names into the site instead, from the
 same data mitren.app itself ships (Apache-2.0, credited in NOTICE):
 
-  app/data/config/nuclei_data.csv              networks, and their city slug
+  app/data/config/nuclei_data.csv              networks, their operator, their
+                                               mode and their city slug
   app/data/custom/station_municipality_boundary.csv
                                                every station per network, with
                                                its name and municipality
@@ -31,10 +32,16 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Only Renfe's suburban networks: those are the ones mitren.app's board socket
-# serves, and the only ones whose station codes are ADIF/Renfe codes.
-OPERATOR = "renfe"
-MODE = "cercanias"
+# The feeds the site offers, in the order it lists them. Each gathers the
+# networks ("nuclei") of one operator: mitren.app's board socket is per
+# network, and a station code only means anything within its own feed, so the
+# three sets are kept apart. Renfe's are the only ones whose codes are
+# ADIF/Renfe codes, so only those take names from ADIF's register.
+FEEDS = [
+    {"id": "cercanias", "operator": "renfe", "modes": ("cercanias",), "adif": True},
+    {"id": "euskotren", "operator": "euskotren", "modes": ("suburbano", "tranvia"), "adif": False},
+    {"id": "metro-bilbao", "operator": "metro_bilbao", "modes": ("metro",), "adif": False},
+]
 
 SMALL_WORDS = {"de", "del", "la", "las", "los", "el", "y", "i", "a", "en", "d", "l"}
 
@@ -59,10 +66,12 @@ def main(root):
     root = Path(root)
     data = root / "app" / "data"
 
-    networks = [
-        row for row in read_csv(data / "config" / "nuclei_data.csv")
-        if row["operator_id"] == OPERATOR and row["transport_mode"] == MODE
-    ]
+    nuclei = read_csv(data / "config" / "nuclei_data.csv")
+    networks = []
+    for feed in FEEDS:
+        for row in nuclei:
+            if row["operator_id"] == feed["operator"] and row["transport_mode"] in feed["modes"]:
+                networks.append(dict(row, feed=feed["id"], adif=feed["adif"]))
 
     by_network = {}
     for row in read_csv(data / "custom" / "station_municipality_boundary.csv"):
@@ -88,7 +97,8 @@ def main(root):
         for code in sorted(set(known) | set(overrides)):
             base = known.get(code, {})
             extra = overrides.get(code, {})
-            name = (extra.get("display_name") or "").strip() or base.get("name") or adif.get(code)
+            fallback = adif.get(code) if net["adif"] else None
+            name = (extra.get("display_name") or "").strip() or base.get("name") or fallback
             if not name:
                 continue
             short = (extra.get("short_name") or "").strip()
@@ -113,7 +123,14 @@ def main(root):
     payload = {
         "source": f"jotaelediaz/dondeestamitren@{commit}",
         "networks": [
-            {"id": n["nucleus_slug"], "name": n["transport_name"], "city": n["city_slug"]}
+            {
+                "id": n["nucleus_slug"],
+                "name": n["transport_name"],
+                "city": n["city_slug"],
+                # The mode slug of its pages on mitren.app, and the feed it belongs to.
+                "mode": n["transport_mode"],
+                "feed": n["feed"],
+            }
             for n in networks
         ],
         "fields": ["network", "code", "name", "short", "mini", "town", "aliases"],
