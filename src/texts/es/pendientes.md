@@ -109,14 +109,6 @@ Fotografía: Docutren,
   para leer el tablero.
 - **El autor de la fotografía** y sus derechos.
 
-### Carteles de andén de Atocha Cercanías
-
-Los [carteles de andén de Ikusi](../catalogo/ikusi-anden-atocha/) ya tienen
-ficha. Una de sus fotografías, la de las vías 2 y 1 con un tren a Ávila, no
-dice dónde se tomó.
-
-**Falta:** saber si es Atocha Cercanías u otra estación.
-
 ### Panel de la pasarela de Atocha Cercanías
 
 En la fotografía que abre el dossier de Cercanías de *Vía Libre* de enero de

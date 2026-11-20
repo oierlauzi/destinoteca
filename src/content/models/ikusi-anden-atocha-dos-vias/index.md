@@ -57,6 +57,7 @@ photos:
       sobre un poste, un cartel de dos mitades con texto en amarillo y, debajo,
       en rojo.
     caption: Vías 2 y 1. En la vía 1, un aviso en lugar del destino.
+    place: Atocha Cercanías
     author: Archivo Renfe
     source: Facebook, compartida por Bvemike
     license: rights-reserved-credited
