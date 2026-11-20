@@ -96,12 +96,12 @@ photos:
   - id: cordoba-central
     src: ./cordoba-central.jpg
     alt: >-
-      Un tren AVE junto al andén de una estación baja y encalada, bajo una
-      marquesina blanca. En el borde derecho de la fotografía, sobre el andén
-      de enfrente, cuelgan un reloj y una pantalla con marco azul.
+      Un tren AVE junto al andén, bajo la marquesina blanca de una estación
+      encalada. Arriba a la derecha, sobre el andén de enfrente, cuelgan un
+      reloj y una pantalla con marco azul.
     caption: >-
-      Córdoba, cuando la estación se rotulaba «Córdoba Central». A la derecha,
-      bajo la marquesina del andén de enfrente, uno de estos conjuntos.
+      Córdoba, cuando la estación se rotulaba «Córdoba Central». Arriba a la
+      derecha, uno de estos conjuntos sobre el andén de enfrente.
     place: Córdoba
     author: Grupo Joly
     sourceUrl: https://static.grupojoly.com/clip/6169ef5a-2494-4902-b5e1-2821bc19e888_4-3-aspect-ratio_default_0.jpg
