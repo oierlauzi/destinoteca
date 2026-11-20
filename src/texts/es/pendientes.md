@@ -265,21 +265,6 @@ y [Crea Madrid Nuevo Norte](https://creamadridnuevonorte.com/app/uploads/2022/03
 
 ## Otros
 
-### Indicadores de andén originales del AVE
-
-Los indicadores que había en los andenes del AVE en sus primeros años.
-
-Fotografías: Docutren,
-[FD_04971](https://archivo.docutren.com/uploads/r/fototeca-2/8/d/9/8d91385dec77db1ffdf07191d95792229df75535e2a01844e3e2c3fb071e7030/FD_04971_141.jpg)
-y
-[FD_06045](https://archivo.docutren.com/uploads/r/fototeca-2/b/f/2/bf29b027a1fc6ed459f7d0e4c8a37d107a1f909033b44aefda10f059dada29fb/FD_06045_141.jpg).
-
-**Falta:**
-
-- **El fabricante** y la tecnología.
-- **En qué estaciones** estaban, y cuándo se retiraron.
-- **El autor de las fotografías** y sus derechos.
-
 ### León
 
 *Trenes Hoy* (n.º 3) da noticia de teleindicadores electrónicos en la
