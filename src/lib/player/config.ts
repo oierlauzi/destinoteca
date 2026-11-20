@@ -1,4 +1,4 @@
-import type { Placement } from '../model';
+import type { Placement, SelectionPolicy } from '../model';
 import { decode, defaults, encode, onlyAbout, type ParamSchema, type Values } from '../params';
 import type { ReplicaDef } from '../replicas/types';
 import { getSource, sourcesFor } from '../sources/registry';
@@ -23,13 +23,21 @@ export interface PlayerConfig {
 
 export const RAW = 'raw';
 
-/** Where the unit hangs. The same for every replica that takes a board. */
-export const placementSchema: ParamSchema = {
-  fields: [
-    { key: 'platforms', urlKey: 'via', type: 'text', label: 'player.placement.platforms', help: 'player.placement.platforms.help', default: '', maxLength: 12 },
-    { key: 'cycle', type: 'boolean', label: 'player.placement.cycle', default: true },
-  ],
-};
+/**
+ * Where the unit hangs. The same for every replica that takes a board, save
+ * for one default: a unit that serves one platform starts by holding its next
+ * train, which is what someone waiting there looks for, and stepping through
+ * the ones behind it is a setting to turn on. A board that serves the whole
+ * station steps through from the start.
+ */
+export function placementSchemaFor(policy: SelectionPolicy): ParamSchema {
+  return {
+    fields: [
+      { key: 'platforms', urlKey: 'via', type: 'text', label: 'player.placement.platforms', help: 'player.placement.platforms.help', default: '', maxLength: 12 },
+      { key: 'cycle', type: 'boolean', label: 'player.placement.cycle', default: policy.platforms !== 'one' },
+    ],
+  };
+}
 
 /**
  * Whoever a source is being read for: one replica, or the displays of an
@@ -98,11 +106,15 @@ function modeOf(def: ReplicaDef, query: URLSearchParams): string {
 export function readConfig(def: ReplicaDef, query: URLSearchParams): PlayerConfig {
   const source = modeOf(def, query);
   const sourceDef = source === RAW ? undefined : getSource(source);
+  // The appearance is read first: what kind of unit this is, and so what its
+  // placement says with nothing asked for, follows from it.
+  const options = decode(def.options, query);
+  const placement = placementSchemaFor(def.selection(options));
   return {
     source,
     sourceConfig: sourceDef ? decode(sourceSchema(def, sourceDef), query) : {},
-    placement: toPlacement(decode(placementSchema, source === RAW ? new URLSearchParams() : query)),
-    options: decode(def.options, query),
+    placement: toPlacement(decode(placement, source === RAW ? new URLSearchParams() : query)),
+    options,
     frame: def.frame ? decode(def.frame, source === RAW ? query : new URLSearchParams()) : {},
   };
 }
@@ -116,7 +128,7 @@ export function writeConfig(def: ReplicaDef, config: PlayerConfig): URLSearchPar
   } else {
     query.set('source', config.source);
     if (sourceDef) encode(sourceSchema(def, sourceDef), config.sourceConfig, query);
-    encode(placementSchema, fromPlacement(config.placement), query);
+    encode(placementSchemaFor(def.selection(config.options)), fromPlacement(config.placement), query);
   }
   encode(def.options, config.options, query);
   return query;
@@ -124,11 +136,12 @@ export function writeConfig(def: ReplicaDef, config: PlayerConfig): URLSearchPar
 
 export function defaultConfig(def: ReplicaDef, source: string): PlayerConfig {
   const sourceDef = source === RAW ? undefined : getSource(source);
+  const options = defaults(def.options);
   return {
     source,
     sourceConfig: sourceDef ? defaults(sourceSchema(def, sourceDef)) : {},
-    placement: { platforms: [], cycle: true },
-    options: defaults(def.options),
+    placement: toPlacement(defaults(placementSchemaFor(def.selection(options)))),
+    options,
     frame: def.frame ? defaults(def.frame) : {},
   };
 }

@@ -4,9 +4,11 @@ export const mitren: Record<string, string> = {
     'Próximos trenes en directo desde mitren.app, de la red que se elija. De Renfe solo los núcleos de Cercanías y Rodalies: no incluye larga ni media distancia.',
   'mitren.field.feed': 'Red',
   'mitren.field.feed.help': 'Cada red tiene su propio listado de estaciones; al cambiarla hay que volver a elegir estación.',
-  'mitren.feed.cercanias': 'Renfe Cercanías y Rodalies',
-  'mitren.feed.euskotren': 'Euskotren (trena y tranbia)',
-  'mitren.feed.metro-bilbao': 'Metro Bilbao',
+  // Each option names where the data comes from: the choice is one of
+  // mitren.app's feeds, not a network the site reads on its own.
+  'mitren.feed.cercanias': 'MiTren · Renfe Cercanías y Rodalies',
+  'mitren.feed.euskotren': 'MiTren · Euskotren (trena y tranbia)',
+  'mitren.feed.metro-bilbao': 'MiTren · Metro Bilbao',
   'mitren.field.station': 'Estación',
   'mitren.field.network': 'Núcleo',
   'mitren.searchPlaceholder': 'Nombre, municipio o código',

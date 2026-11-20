@@ -56,8 +56,12 @@ export function resolveInstallation(input: InstallationInput, entry: (id: string
   return { width: input.size.width, height: input.size.height, background: input.background, members };
 }
 
-/** Where a member hangs: its platforms, and the services the boards before it show. */
-export const memberPlacement = (member: ReplicaMember): Placement => ({ platforms: member.platforms, cycle: true, skip: member.skip });
+/**
+ * Where a member hangs: its platforms, the services the boards before it
+ * show, and whether it steps through the trains behind the next one, which is
+ * the default of the kind of unit it is.
+ */
+export const memberPlacement = (member: ReplicaMember, cycle: boolean): Placement => ({ platforms: member.platforms, cycle, skip: member.skip });
 
 /**
  * A member's whole configuration on a page whose data comes from `source`:
@@ -67,5 +71,5 @@ export function memberConfig(def: ReplicaDef, member: ReplicaMember, source: str
   const q = query(member.params);
   q.set('source', source);
   const config = readConfig(def, q);
-  return { ...config, sourceConfig, placement: memberPlacement(member) };
+  return { ...config, sourceConfig, placement: memberPlacement(member, config.placement.cycle) };
 }

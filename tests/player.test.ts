@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { FixedClock, StationClock, type BoardSnapshot, type Service, type View } from '../src/lib/model';
 import { decode, defaults, encode, onlyAbout, sanitize, type ParamSchema, type Values } from '../src/lib/params';
-import { RAW, readConfig, sourceSchema, writeConfig } from '../src/lib/player/config';
+import { defaultConfig, RAW, readConfig, sourceSchema, writeConfig } from '../src/lib/player/config';
 import { loadFresh } from '../src/lib/player/fresh';
 import { ReplicaSession, SourceHub } from '../src/lib/player/session';
 import { ManualTicker } from '../src/lib/player/ticker';
@@ -15,6 +15,7 @@ import { EXAMPLE_ROWS } from '../src/lib/sources/manual/def';
 import { create as createDevice, localZone } from '../src/lib/sources/device';
 import { getSource, sources, sourcesFor } from '../src/lib/sources/registry';
 import { relojCercanias as reloj } from '../src/lib/replicas/reloj-cercanias/def';
+import { vestibulo4 as vestibulo } from '../src/lib/replicas/page-iberica-vestibulo/def';
 import { buildDemoBoard, networkOf, NETWORKS } from '../src/lib/sources/demo';
 import { replicas } from '../src/lib/replicas/registry';
 import type { SourceDef, SourceHandlers } from '../src/lib/sources/types';
@@ -110,8 +111,24 @@ describe('player configuration', () => {
     expect(writeConfig(metroBilbaoAnden, renfe).get('op')).toBe('cercanias');
   });
 
+  it('holds the next train on a sign of one platform, and steps through on a board of the whole station', () => {
+    // Someone waiting on the platform is looking for its next train, so a
+    // unit bolted to one starts holding it and rotation is a setting to turn
+    // on; a board that announces the whole station steps through from the
+    // start. Either way the URL mentions it only when it differs.
+    expect(readConfig(anden, new URLSearchParams('source=mitren')).placement.cycle).toBe(false);
+    expect(defaultConfig(anden, 'mitren').placement.cycle).toBe(false);
+    expect(readConfig(vestibulo, new URLSearchParams('source=mitren')).placement.cycle).toBe(true);
+    expect(defaultConfig(vestibulo, 'mitren').placement.cycle).toBe(true);
+    const rotating = readConfig(anden, new URLSearchParams('source=mitren&cycle=1'));
+    expect(rotating.placement.cycle).toBe(true);
+    expect(writeConfig(anden, rotating).get('cycle')).toBe('1');
+    expect([...writeConfig(anden, readConfig(anden, new URLSearchParams('source=mitren'))).keys()]).not.toContain('cycle');
+    expect([...writeConfig(vestibulo, readConfig(vestibulo, new URLSearchParams('source=mitren'))).keys()]).not.toContain('cycle');
+  });
+
   it('round-trips', () => {
-    for (const query of ['text=HOLA&via=3&speed=20', 'source=demo&via=1%2C2&deadon=2.5', 'source=mitren&station=18000&network=madrid_cercanias&cycle=0']) {
+    for (const query of ['text=HOLA&via=3&speed=20', 'source=demo&via=1%2C2&deadon=2.5', 'source=mitren&station=18000&network=madrid_cercanias&cycle=0', 'source=mitren&station=18000&cycle=1']) {
       const config = readConfig(anden, new URLSearchParams(query));
       expect(readConfig(anden, writeConfig(anden, config))).toEqual(config);
     }

@@ -1,6 +1,6 @@
 import { t } from '../../i18n';
 import type { Values } from '../params';
-import { defaultConfig, placementSchema, RAW, readConfig, replicaSize, sourceSchema, writeConfig, type PlayerConfig } from '../player/config';
+import { defaultConfig, placementSchemaFor, RAW, readConfig, replicaSize, sourceSchema, writeConfig, type PlayerConfig } from '../player/config';
 import { defineReplicaElement, REPLICA_TAG, type ReplicaElement } from '../player/element';
 import type { SessionState } from '../player/session';
 import { getReplica } from '../replicas/registry';
@@ -199,7 +199,7 @@ export function mountPlayground(root: HTMLElement): void {
     const sourceForm = renderForm(sourceSchema(def, source), config.sourceConfig, (sourceConfig) => apply({ ...config, sourceConfig }), { lookups: module?.lookups, editors });
     const policy = def.selection(config.options);
     const placement = {
-      fields: placementSchema.fields.filter((field) => {
+      fields: placementSchemaFor(policy).fields.filter((field) => {
         if (field.key === 'platforms') return policy.platforms === 'one';
         return policy.window.mode !== 'top';
       }),
