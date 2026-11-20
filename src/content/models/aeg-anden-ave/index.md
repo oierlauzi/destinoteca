@@ -31,6 +31,9 @@ locations:
   - site: es/sevilla-santa-justa
     status: retired
     note: Colgados en alto sobre los andenes.
+  - site: es/cordoba
+    status: retired
+    note: Cuando la estación se rotulaba «Córdoba Central». Colgados bajo la marquesina del andén.
   - placeName: Terminal del AVE de la Expo 92, La Cartuja (Sevilla)
     status: retired
     note: Fotografiados el día del viaje inaugural.
@@ -82,12 +85,27 @@ photos:
     src: ./atocha-dos-ave.jpg
     alt: >-
       Dos trenes AVE blancos en vías contiguas, bajo la estructura de hormigón
-      de la estación. A la derecha, colgados en alto, un reloj y una pantalla
-      encendida con marco azul.
+      de la estación. Arriba, a la derecha, colgados en alto, un reloj y una
+      pantalla encendida con marco azul.
     caption: Madrid-Puerta de Atocha, con dos AVE de la serie 100 en los andenes.
     place: Madrid Puerta de Atocha
-    author: El Cronista
-    source: cronista.com
+    author: El Confidencial
+    sourceUrl: https://f.elconfidencial.com/original/953/25d/11b/95325d11b9f8b9afe5cd9814a220349f.jpg
+    source: elconfidencial.com
+    license: rights-reserved-credited
+  - id: cordoba-central
+    src: ./cordoba-central.jpg
+    alt: >-
+      Un tren AVE junto al andén de una estación baja y encalada, bajo una
+      marquesina blanca. En el borde derecho de la fotografía, sobre el andén
+      de enfrente, cuelgan un reloj y una pantalla con marco azul.
+    caption: >-
+      Córdoba, cuando la estación se rotulaba «Córdoba Central». A la derecha,
+      bajo la marquesina del andén de enfrente, uno de estos conjuntos.
+    place: Córdoba
+    author: Grupo Joly
+    sourceUrl: https://static.grupojoly.com/clip/6169ef5a-2494-4902-b5e1-2821bc19e888_4-3-aspect-ratio_default_0.jpg
+    source: grupojoly.com
     license: rights-reserved-credited
   - id: santa-justa-anden
     src: ./santa-justa-anden.jpg
@@ -118,9 +136,8 @@ Cuando el AVE se estrenó, en 1992, sobre los andenes de la nueva línea de
 Madrid a Sevilla colgaban unos conjuntos de marco azul hechos de dos piezas
 unidas: una pantalla alargada de cristal líquido y, a su lado, un reloj de
 agujas en una caja propia, más pequeña y casi cuadrada. Se han fotografiado en
-Madrid-Puerta de Atocha, en Sevilla-Santa Justa y en la terminal que el AVE
-tuvo en el recinto de la Expo 92, en La Cartuja; las tres estaciones se
-estrenaron con la línea.
+Madrid-Puerta de Atocha, en Sevilla-Santa Justa, en Córdoba y en la terminal
+que el AVE tuvo en el recinto de la Expo 92, en La Cartuja.
 
 Lo único que se sabe de quién los hizo lo dice el propio marco: en la pantalla,
 abajo a la derecha, va impresa la marca [AEG](../../fabricantes/aeg/). No se
@@ -162,8 +179,8 @@ que podría ser de Ikusi y que todavía no tiene ficha.
 ## Lo que no se sabe
 
 - **Cuándo se retiraron**, y qué los sustituyó.
-- **Si los hubo también** en Ciudad Real, Puertollano y Córdoba, las otras
-  estaciones de la línea.
+- **Si los hubo también** en Ciudad Real y en Puertollano, las otras estaciones
+  de la línea.
 - **Qué parte de AEG los fabricó**, y si el reloj es suyo o de otra empresa.
 - **Si la esfera del reloj es también de cristal líquido.** En algunas
   fotografías tiene el mismo fondo retroiluminado que la pantalla.
