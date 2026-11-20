@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { bakeTextLength } from '@/lib/hardware';
 import { getCatalog, type Model } from '@/site/catalog';
 import { installationSvg } from '@/site/installation';
 import { posterSvg as replicaPoster } from '@/site/replica';
@@ -9,6 +10,13 @@ import { href } from '@/site/url';
  * elements for an installation. Each is drawn once per build, and its address
  * carries a fingerprint of the drawing, so that a browser keeping an old
  * copy fetches the new one as soon as it changes, and keeps it otherwise.
+ *
+ * Being a file, it is also read by rasterisers that are not a browser — the
+ * one that makes a thumbnail for image search, librsvg for the social
+ * pictures — and those ignore `textLength`: a train type would overflow its
+ * flap and a stretched station name fall short. So the file is baked, like
+ * the social picture. The replica on the page keeps its own SVG, which the
+ * browser sets exactly.
  */
 const drawn = new Map<string, Promise<string>>();
 
@@ -19,8 +27,8 @@ export function posterSvg(model: Model): Promise<string> {
   if (!svg) {
     svg = (async () => {
       const { replica, installation } = model.data;
-      if (installation) return installationSvg((await getCatalog()).installation(model), model.data.name);
-      if (replica) return replicaPoster(replica.id, { ...replica.params, ...replica.poster });
+      if (installation) return bakeTextLength(await installationSvg((await getCatalog()).installation(model), model.data.name));
+      if (replica) return bakeTextLength(await replicaPoster(replica.id, { ...replica.params, ...replica.poster }));
       throw new Error(`"${model.id}" has nothing to draw a picture with`);
     })();
     drawn.set(model.id, svg);
