@@ -100,29 +100,60 @@ export interface Placed {
   at: number;
 }
 
+/** How wide a run of characters is, with the spacing between them. */
+function runWidth(chars: readonly string[], font: ProportionalFont): number {
+  let width = 0;
+  chars.forEach((char, i) => {
+    const columns = char === ' ' ? font.space : (font.glyph(char)?.length ?? 0);
+    width += columns + (i ? font.spacing : 0);
+  });
+  return width;
+}
+
 /**
  * A line laid out over the cells. Characters follow one another with their
- * own widths; one that would run past the end of its cell starts the next
- * one instead, so that none is drawn across a groove. A blank at the start
- * of a cell is dropped, as a line broken between words would show it.
+ * own widths, and a word that does not fit in what is left of a cell starts
+ * the next one, so that it reads whole; only a word too long for any cell is
+ * broken, and then at the last character that fits. No character is ever
+ * drawn across a groove, and a blank left at the head of a cell is dropped.
  */
 export function layoutLine(text: string, font: ProportionalFont, spec: PanelSpec): Placed[] {
   const room = writeWidth(spec);
   const out: Placed[] = [];
   let cell = 0;
   let at = 0;
-  for (const char of font.fold(text)) {
-    const columns = char === ' ' ? Array.from({ length: font.space }, () => 0) : font.glyph(char);
-    if (!columns) continue;
-    const width = columns.length;
-    if (at + width > room) {
+  // Words, with the blanks that follow them.
+  const words = font.fold(text).match(/\S+\s*|\s+/g) ?? [];
+  for (const word of words) {
+    const chars = Array.from(word.trimEnd());
+    if (chars.length === 0) {
+      at += font.space + font.spacing;
+      continue;
+    }
+    const width = runWidth(chars, font);
+    // A word that fits a cell but not what is left of this one waits for the next.
+    if (at > 0 && at + width > room && width <= room) {
       cell++;
       at = 0;
-      if (cell >= spec.cells) break;
-      if (char === ' ') continue;
     }
-    if (char !== ' ') out.push({ char, cell, at });
-    at += width + font.spacing;
+    if (cell >= spec.cells) break;
+    for (const char of chars) {
+      const columns = font.glyph(char);
+      if (!columns) continue;
+      if (at + columns.length > room) {
+        cell++;
+        at = 0;
+        if (cell >= spec.cells) break;
+      }
+      out.push({ char, cell, at });
+      at += columns.length + font.spacing;
+    }
+    if (cell >= spec.cells) break;
+    at += font.space + font.spacing;
+    if (at >= room) {
+      cell++;
+      at = 0;
+    }
   }
   return out;
 }

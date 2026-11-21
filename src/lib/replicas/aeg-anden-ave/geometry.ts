@@ -20,14 +20,14 @@ import type { PanelSpec } from '../../hardware';
 
 export const CELLS = 5;
 /** Dots across one cell, the groove included. */
-export const CELL_WIDTH = 57;
+export const CELL_WIDTH = 64;
 /** Dots down each row of cells: the top one is taller. */
-export const ROW_HEIGHTS = [25, 20, 20] as const;
+export const ROW_HEIGHTS = [23, 18, 18] as const;
 /** Dots the part of a cell that writes is tall, per row: exactly its face, which fills it. */
 export const WRITE_HEIGHTS = [13, 7, 7] as const;
 
 /** The band of groove around the whole grid, wider than the ones between the cells. */
-export const GLASS_PAD = 2.5;
+export const GLASS_PAD = 11;
 
 export const PITCH = 1;
 /** The characters read thick: the dots nearly touch. */
@@ -50,8 +50,11 @@ export const GLASS_HEIGHT = ROW_HEIGHTS.reduce((a, b) => a + b, 0) + 2 * GLASS_P
 
 /** The frame around the glass, the same on all four sides. */
 export const BEZEL = 9;
-/** The frame's rounded corners. */
-export const RADIUS = 7;
+/** The frame's rounded corners, and the opening's, concentric with them. */
+export const RADIUS = 12;
+export const INNER_RADIUS = RADIUS - BEZEL;
+/** The dark line around the opening, where the frame meets the glass. */
+export const OPENING_LINE = 3;
 
 /** The display's own box. */
 export const BOARD_WIDTH = GLASS_WIDTH + 2 * BEZEL;
@@ -73,6 +76,6 @@ export const WIDTH = BOARD_WIDTH + GAP + CLOCK_WIDTH;
 /** The glass's top-left corner, inside the frame. */
 export const PANEL_AT = { x: BEZEL + GLASS_PAD, y: BEZEL + GLASS_PAD };
 
-/** The maker's mark on the frame, under the right end of the glass. */
+/** The maker's mark on the frame, under the glass and in from its right end. */
 export const MARK_HEIGHT = 3.6;
-export const MARK_RIGHT = BOARD_WIDTH - BEZEL;
+export const MARK_RIGHT = BOARD_WIDTH - BEZEL - 22;

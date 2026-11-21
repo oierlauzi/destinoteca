@@ -61,13 +61,14 @@ describe('the AEG liquid-crystal faces', () => {
 
   it('fits in a cell what the photographs show in one', () => {
     const room = writeWidth(PANEL);
-    // A cell takes «CORDOBA» with room to spare and «TALGO 200» just about, as the photographs show.
+    // A cell takes «CORDOBA» and «TALGO 200» with room to spare, as the photographs show.
     expect(measure('CORDOBA', aegLcdSmall)).toBeLessThanOrEqual(room);
     expect(measure('TALGO 200', aegLcdSmall)).toBeLessThanOrEqual(room);
-    expect(measure('TALGO 2000', aegLcdSmall)).toBeGreaterThan(room);
-    // Six characters of the large face fill a cell: «00:00 VIAJE INAGURAL AVE» ends in the fourth.
-    expect(measure('DESTIN', aegLcdLarge)).toBeLessThanOrEqual(room);
-    expect(measure('DESTINO', aegLcdLarge)).toBeGreaterThan(room);
+    expect(measure('PUERTOLLANO,', aegLcdSmall)).toBeGreaterThan(room);
+    // A cell takes «DESTINO» and «SEVILLA» whole, but not «INAGURAL»: that is how the lines break.
+    expect(measure('DESTINO', aegLcdLarge)).toBeLessThanOrEqual(room);
+    expect(measure('SEVILLA', aegLcdLarge)).toBeLessThanOrEqual(room);
+    expect(measure('INAGURAL', aegLcdLarge)).toBeGreaterThan(room);
   });
 });
 
@@ -184,7 +185,9 @@ describe('the drawing', () => {
   it('puts the time in the first cell and the destination from the second', () => {
     const [top] = written(frame);
     expect(top!.filter((p) => p.cell === 0).map((p) => p.char).join('')).toBe('11:00');
-    expect(top!.filter((p) => p.cell >= 1).map((p) => p.char).join('')).toBe('DESTINOSEVILLASJ');
+    expect(top!.filter((p) => p.cell === 1).map((p) => p.char).join('')).toBe('DESTINO');
+    expect(top!.filter((p) => p.cell === 2).map((p) => p.char).join('')).toBe('SEVILLA');
+    expect(top!.filter((p) => p.cell === 3).map((p) => p.char).join('')).toBe('SJ');
   });
 
   it('switches more dots the more it is told to write', () => {

@@ -4,8 +4,9 @@ import {
 } from '../../hardware';
 import type { AegFrame, AegOptions } from './def';
 import { aegLogo, aegLogoWidth } from '../aeg/aeg-logo';
-import { BEZEL, BOARD_WIDTH, CLOCK_WIDTH, GAP, HEIGHT, MARK_HEIGHT, MARK_RIGHT, PANEL, PANEL_AT, RADIUS, WIDTH } from './geometry';
+import { BEZEL, BOARD_WIDTH, CLOCK_WIDTH, GAP, GLASS_HEIGHT, GLASS_WIDTH, HEIGHT, MARK_HEIGHT, MARK_RIGHT, PANEL, PANEL_AT, WIDTH } from './geometry';
 import { clockBox } from './clock';
+import { frameBack, frameFront } from './frame';
 
 /** The face each row of cells writes in. */
 export const FACES: ProportionalFont[] = [aegLcdLarge, aegLcdSmall, aegLcdSmall];
@@ -13,6 +14,8 @@ export const FACES: ProportionalFont[] = [aegLcdLarge, aegLcdSmall, aegLcdSmall]
 /** The frame, flat: no light is drawn, only the colours the parts are. */
 const FRAME = '#2b3570';
 const FRAME_EDGE = '#1a2149';
+/** The dark line where the frame meets the glass. */
+const OPENING = '#0c0e16';
 const MARK = '#d2d5dc';
 
 /**
@@ -68,11 +71,18 @@ function scene(frame: AegFrame, options: AegOptions, refs?: PanelRefs): VNode[] 
   const clock = left ? 0 : BOARD_WIDTH + GAP;
   return [
     h('g', { transform: `translate(${board},0)` }, [
-      h('rect', { x: 0.3, y: 0.3, width: BOARD_WIDTH - 0.6, height: HEIGHT - 0.6, rx: RADIUS, fill: FRAME, stroke: FRAME_EDGE, 'stroke-width': 0.6 }),
+      frameBack({ x: 0, y: 0, width: BOARD_WIDTH, height: HEIGHT }, FRAME, FRAME_EDGE),
       ...panelNodes(PANEL, look, written(frame), FACES, PANEL_AT, refs),
+      ...frameFront(
+        { x: 0, y: 0, width: BOARD_WIDTH, height: HEIGHT },
+        { x: BEZEL, y: BEZEL, width: GLASS_WIDTH, height: GLASS_HEIGHT },
+        FRAME,
+        FRAME_EDGE,
+        OPENING,
+      ),
       aegLogo(MARK_RIGHT - markWidth, HEIGHT - BEZEL + (BEZEL - MARK_HEIGHT) / 2, MARK_HEIGHT, MARK),
     ]),
-    h('g', { transform: `translate(${clock},0)` }, clockBox(frame.clock ?? '', { frame: FRAME, edge: FRAME_EDGE, face: look.groove, ink: look.ink })),
+    h('g', { transform: `translate(${clock},0)` }, clockBox(frame.clock ?? '', { frame: FRAME, edge: FRAME_EDGE, face: look.groove, ink: look.ink, line: OPENING })),
   ];
 }
 

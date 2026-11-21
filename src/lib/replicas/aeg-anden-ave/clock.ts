@@ -1,5 +1,6 @@
 import { h, num, type VNode } from '../../hardware';
-import { BEZEL, CLOCK_HEIGHT, CLOCK_WIDTH, RADIUS } from './geometry';
+import { BEZEL, CLOCK_HEIGHT, CLOCK_WIDTH, INNER_RADIUS, OPENING_LINE } from './geometry';
+import { frameBack } from './frame';
 
 /*
  * The clock that hung with the display: its own box, a little wider than it
@@ -74,11 +75,11 @@ export function handAngles(time: string): { hour: number; minute: number } | und
 }
 
 /** The clock's box, drawn from its own top-left corner. */
-export function clockBox(time: string, colours: { frame: string; edge: string; face: string; ink: string }): VNode[] {
+export function clockBox(time: string, colours: { frame: string; edge: string; face: string; ink: string; line: string }): VNode[] {
   const at = handAngles(time);
   return [
-    h('rect', { x: 0.3, y: 0.3, width: CLOCK_WIDTH - 0.6, height: CLOCK_HEIGHT - 0.6, rx: RADIUS, fill: colours.frame, stroke: colours.edge, 'stroke-width': 0.6 }),
-    h('rect', { ...DIAL, rx: 2, fill: colours.face }),
+    frameBack({ x: 0, y: 0, width: CLOCK_WIDTH, height: CLOCK_HEIGHT }, colours.frame, colours.edge),
+    h('rect', { ...DIAL, rx: INNER_RADIUS, fill: colours.face, stroke: colours.line, 'stroke-width': OPENING_LINE }),
     ...Array.from({ length: 60 }, (_, i) => mark(i, colours.ink)),
     ...(at ? [hourHand(at.hour, 0.62, 2.8, colours.ink), minuteHand(at.minute, 0.96, 1.2, colours.ink)] : []),
     h('circle', { cx: CENTRE.x, cy: CENTRE.y, r: 1.2, fill: colours.ink }),
