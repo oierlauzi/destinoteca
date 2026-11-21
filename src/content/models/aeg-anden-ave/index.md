@@ -129,6 +129,13 @@ references:
     publication: Docutren
     url: https://archivo.docutren.com/uploads/r/fototeca-2/b/f/2/bf29b027a1fc6ed459f7d0e4c8a37d107a1f909033b44aefda10f059dada29fb/FD_06045_141.jpg
     note: Otra fotografía de lo mismo. Tampoco se ha comprobado.
+replica:
+  id: aeg-anden-ave
+  poster:
+    hora: '11:00'
+    texto: DESTINO Sevilla SJ
+    tren: AVE
+    paradas: CORDOBA
 stage: stub
 ---
 
@@ -145,17 +152,24 @@ conoce ningún reportaje ni nota de prensa de la época que los describa.
 
 ## La pantalla
 
-El cristal se ve dividido en una retícula de cinco módulos de ancho por tres de
-alto, cuyas juntas se notan con la pantalla encendida, y cada fila de módulos
-lleva un renglón de texto. La de arriba es más alta que las otras dos y escribe
-en letras mayores.
+El cristal es una retícula de cinco celdas de ancho por tres de alto, con un
+surco entre unas y otras que se ve escriban o no. Dentro de cada celda se
+escribe en una banda más baja que ella, con un margen arriba y abajo de un
+tono algo distinto. La fila de celdas de arriba es más alta que las otras dos,
+y escribe en letras bastante mayores.
 
-Las letras son de matriz de puntos, oscuras sobre el fondo claro del cristal
-retroiluminado, que sale verdoso o amarillento según la fotografía, y las hay
-mayúsculas y minúsculas.
+Las letras son de matriz de puntos, oscuras sobre el fondo claro del cristal,
+gruesas, y de anchos distintos unas de otras: la I es más estrecha que la M.
+Ninguna se dibuja a caballo de un surco. Las hay mayúsculas y minúsculas: el
+renglón de arriba se escribe de las dos maneras según la fotografía, y los de
+abajo siempre en mayúsculas.
 
 El renglón de arriba anuncia la hora y el destino del tren que va a salir del
-andén; en los de abajo caben el tipo de tren y algún aviso más.
+andén; debajo va el tipo de tren. Cada dato empieza en una celda: la hora ocupa
+la primera y el destino arranca en la segunda; el tipo de tren ocupa la primera
+de su renglón y lo que le sigue arranca en la que deje libre. En una celda
+caben siete caracteres de los pequeños («CORDOBA» llena una) y seis de los
+grandes. El tercer renglón no se ve escrito en ninguna fotografía.
 
 ## El reloj
 
@@ -184,7 +198,12 @@ que podría ser de Ikusi y que todavía no tiene ficha.
 - **Qué parte de AEG los fabricó**, y si el reloj es suyo o de otra empresa.
 - **Si la esfera del reloj es también de cristal líquido.** En algunas
   fotografías tiene el mismo fondo retroiluminado que la pantalla.
-- **Cuántos caracteres cabían** en cada renglón.
+- **Cuántos puntos tiene cada celda.** La réplica los reconstruye a partir de
+  los caracteres que caben en una en las fotografías; los dibujos de las
+  letras no se pueden leer punto a punto en ninguna.
+- **Cómo repartía el texto entre las celdas.** Se ve que una palabra se parte
+  de una celda a la siguiente, pero no por qué regla. La réplica escribe
+  seguido y pasa a la celda siguiente el carácter que no cabe entero.
 - **Si son estos** los indicadores de las dos fotografías de la Fototeca de
   Docutren que se citan abajo.
 - **De quién son las fotografías.** Casi todas se han tomado de medios que las

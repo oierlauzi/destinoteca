@@ -7,6 +7,7 @@ import { andenContinuo } from './page-iberica-anden-continuo/def';
 import { andenSinLed } from './page-iberica-anden-sin-led/def';
 import { andenDosVias } from './page-iberica-anden-dos-vias/def';
 import { ikusiAndenAtocha } from './ikusi-anden-atocha/def';
+import { aegAndenAve } from './aeg-anden-ave/def';
 import { ikusiAeropuerto } from './ikusi-aeropuerto/def';
 import { ikusiMetroBilbaoAnden } from './ikusi-metro-bilbao-anden/def';
 import { ikusiMetroBilbaoAvisos } from './ikusi-metro-bilbao-avisos/def';
@@ -53,6 +54,7 @@ const REGISTRY: Record<ReplicaId, ReplicaDef> = {
   'ikusi-euskotren-anden': ikusiEuskotrenAnden,
   'reloj-cercanias': relojCercanias,
   'reloj-euskotren': relojEuskotren,
+  'aeg-anden-ave': aegAndenAve,
 };
 
 export function getReplica(id: string): ReplicaDef | undefined {

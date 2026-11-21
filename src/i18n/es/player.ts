@@ -362,6 +362,20 @@ export const player: Record<string, string> = {
   'euskotren.reloj.opt.logo.help': 'Los que estuvieron en servicio lo llevan. La esfera que conserva el Museo Vasco del Ferrocarril está sin él.',
 
   // --- Teleindicador de andén de cristal líquido de Ikusi ---
+  // --- AEG, teleindicador de andén del AVE ---
+  'aeg.group.look': 'Aspecto',
+  'aeg.opt.clockSide': 'Lado del reloj',
+  'aeg.opt.clockSide.help': 'La caja del reloj va a un lado o al otro de la pantalla: las fotografías lo muestran de las dos maneras.',
+  'aeg.side.left': 'A la izquierda',
+  'aeg.side.right': 'A la derecha',
+  'aeg.frame.time': 'Hora de salida',
+  'aeg.frame.text': 'Renglón de arriba',
+  'aeg.frame.product': 'Tipo de tren',
+  'aeg.frame.calls': 'Paradas',
+  'aeg.frame.extra': 'Renglón de abajo',
+  'aeg.frame.extra.help': 'Ninguna fotografía lo muestra escrito.',
+  'aeg.frame.clock': 'Reloj',
+
   'ikusi.group.board': 'Cartel',
   'ikusi.group.look': 'Aspecto',
   'ikusi.group.wear': 'Desgaste',
