@@ -22,12 +22,12 @@ export const CELLS = 5;
 /** Dots across one cell, the groove included. */
 export const CELL_WIDTH = 64;
 /** Dots down each row of cells: the top one is taller. */
-export const ROW_HEIGHTS = [23, 18, 18] as const;
+export const ROW_HEIGHTS = [25, 20, 20] as const;
 /** Dots the part of a cell that writes is tall, per row: exactly its face, which fills it. */
 export const WRITE_HEIGHTS = [13, 7, 7] as const;
 
 /** The band of groove around the whole grid, wider than the ones between the cells. */
-export const GLASS_PAD = 11;
+export const GLASS_PAD = 7;
 
 export const PITCH = 1;
 /** The characters read thick: the dots nearly touch. */
@@ -51,7 +51,7 @@ export const GLASS_HEIGHT = ROW_HEIGHTS.reduce((a, b) => a + b, 0) + 2 * GLASS_P
 /** The frame around the glass, the same on all four sides. */
 export const BEZEL = 9;
 /** The frame's rounded corners, and the opening's, concentric with them. */
-export const RADIUS = 12;
+export const RADIUS = 10;
 export const INNER_RADIUS = RADIUS - BEZEL;
 /** The dark line around the opening, where the frame meets the glass. */
 export const OPENING_LINE = 3;
