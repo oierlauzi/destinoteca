@@ -74,5 +74,5 @@ export const WIDTH = BOARD_WIDTH + GAP + CLOCK_WIDTH;
 export const PANEL_AT = { x: BEZEL + GLASS_PAD, y: BEZEL + GLASS_PAD };
 
 /** The maker's mark on the frame, under the right end of the glass. */
-export const MARK_HEIGHT = 2.6;
+export const MARK_HEIGHT = 3.6;
 export const MARK_RIGHT = BOARD_WIDTH - BEZEL;
