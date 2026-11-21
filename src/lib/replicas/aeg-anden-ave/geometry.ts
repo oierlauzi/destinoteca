@@ -50,8 +50,15 @@ export const GLASS_HEIGHT = ROW_HEIGHTS.reduce((a, b) => a + b, 0) + 2 * GLASS_P
 
 /** The frame around the glass, the same on all four sides. */
 export const BEZEL = 9;
-/** The frame's rounded corners, and the opening's, concentric with them. */
-export const RADIUS = 10;
+/**
+ * The frame's rounded corners, and the opening's, concentric with them: the
+ * frame is then of one width all the way round, corners included. The
+ * radius is kept well above the frame's width, so that the opening turns
+ * roundly too; with an opening almost square against a round outer corner,
+ * the frame reads as if it narrowed there, which the photographs do not
+ * show.
+ */
+export const RADIUS = 13;
 export const INNER_RADIUS = RADIUS - BEZEL;
 /** The dark line around the opening, where the frame meets the glass. */
 export const OPENING_LINE = 3;
