@@ -1,21 +1,22 @@
 ---
 import Redirect from '@/components/Redirect.astro';
 import { getCatalog } from '@/site/catalog';
-import { MOVED_TO_BACKLOG } from '@/site/moved';
+import { WITHDRAWN } from '@/site/withdrawn';
 import { pathsWithAliases, type AliasProps } from '@/site/paths';
 import { href } from '@/site/url';
 import ModelView from '@/views/ModelView.astro';
 
 export async function getStaticPaths() {
-  const moved = Object.entries(MOVED_TO_BACKLOG).map(([id, anchor]) => ({
-    params: { id },
-    props: { id, alias: true, to: `${href('pendientes/')}#${anchor}` },
-  }));
-  return [...pathsWithAliases((await getCatalog()).models), ...moved];
+  // A destination may carry an anchor, which the base path goes in front of but not through.
+  const gone = Object.entries(WITHDRAWN).map(([id, to]) => {
+    const [path, anchor] = to.split('#');
+    return { params: { id }, props: { id, alias: true, to: href(path) + (anchor ? `#${anchor}` : '') } };
+  });
+  return [...pathsWithAliases((await getCatalog()).models), ...gone];
 }
 
 type Props = AliasProps & {
-  /** Where a page left behind by an entry moved to «Por documentar» points. */
+  /** Where a page left behind by equipment the archive no longer shows points. */
   to?: string;
 };
 const { id, alias, to } = Astro.props;

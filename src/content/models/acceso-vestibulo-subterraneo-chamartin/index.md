@@ -13,8 +13,6 @@ locations:
     status: in-service
     note: En el acceso al nuevo vestíbulo subterráneo.
 installation:
-  # De momento la pared no se dibuja; su trazado se conserva.
-  drawn: false
   size: { width: 1096, height: 240 }
   # The wall is painted white; a touch of grey keeps it apart from the page.
   background: '#f3f3f1'
@@ -68,15 +66,6 @@ photos:
     sourceUrl: https://www.adifaltavelocidad.es/documents/34745/2301034/Estaci%C3%B3n+Madrid-Chamart%C3%ADn_nuevo+vest%C3%ADbulo+subterr%C3%A1neo_paneles+y+nombre+de+estaci%C3%B3n_DBM_3745.png/9a3051c8-54a7-733d-0644-207a2c766f10
     source: Adif Alta Velocidad
     license: rights-reserved-credited
-  - id: vestibulo-subterraneo
-    src: ./chamartin-vestibulo-inferior.jpg
-    alt: >-
-      Dos tableros de salidas de adif, uno junto al otro, en lo alto de una
-      pared blanca con el nombre de la estación, junto a un reloj cuadrado.
-    place: Madrid-Chamartín-Clara Campoamor
-    author: Oier Lauzirika Zarrabeitia
-    ownWork: true
-    license: cc-by-sa-4.0
 references:
   - title: Estación Madrid-Chamartín, nuevo vestíbulo subterráneo, paneles y nombre de estación
     author: Adif Alta Velocidad
@@ -84,6 +73,9 @@ references:
     note: La fotografía de la pared que se reproduce arriba.
 aliases:
   - salidas-vestibulo-subterraneo-chamartin
+# Fuera del sitio de momento; la ficha se conserva entera y su dirección lleva
+# al tablero de MP Electronics (src/site/withdrawn.ts).
+published: false
 stage: stub
 ---
 

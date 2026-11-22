@@ -8,7 +8,7 @@ import { href } from '@/site/url';
 
 export async function getStaticPaths() {
   const catalog = await getCatalog();
-  return catalog.models.filter((model) => catalog.draws(model)).map((model) => ({ params: { id: model.id } }));
+  return catalog.models.filter((model) => model.data.installation).map((model) => ({ params: { id: model.id } }));
 }
 
 const { id } = Astro.params;

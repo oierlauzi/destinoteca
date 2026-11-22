@@ -58,11 +58,10 @@ carteles de andén de LED, 23 monitores TFT y cuatro grandes tableros de
 vestíbulo, en castellano, inglés y valenciano.
 
 En el acceso a las vías de alta velocidad de Santa Justa se ha leído la placa
-de DSTA en los cuatro tableros que cuelgan sobre los controles de seguridad:
-son los de la instalación
-[Tableros de alta velocidad de Sevilla-Santa Justa](../catalogo/tableros-alta-velocidad-sevilla-santa-justa/),
-que por eso no se atribuyen a MP Electronics. Falta una fotografía que recoja
-la placa.
+de DSTA en los cuatro tableros que cuelgan sobre los controles de seguridad,
+dos de llegadas y dos de salidas con un reloj Festina cuadrado en medio. Por
+eso no se atribuyen a MP Electronics. Falta una fotografía que recoja la
+placa.
 
 Otros tableros de este diseño que se han fotografiado con placa, como uno de
 Barcelona-Sants, llevan la de MP Electronics, y los de Málaga María Zambrano

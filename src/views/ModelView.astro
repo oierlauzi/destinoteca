@@ -113,24 +113,21 @@ const locations = data.locations.map((location) => {
     }
 
     {
-      data.installation &&
-        (catalog.draws(model) ? (
-          <section class="replica" aria-labelledby="replica-title">
-            <h2 id="replica-title" class="visually-hidden">
-              {t('catalog.model.installation')}
-            </h2>
-            <InstallationPlayer id={model.id} title={data.name} installation={catalog.installation(model)} />
-          </section>
-        ) : (
-          <p class="stub-note">{t('catalog.model.installation.undrawn')}</p>
-        ))
+      data.installation && (
+        <section class="replica" aria-labelledby="replica-title">
+          <h2 id="replica-title" class="visually-hidden">
+            {t('catalog.model.installation')}
+          </h2>
+          <InstallationPlayer id={model.id} title={data.name} installation={catalog.installation(model)} />
+        </section>
+      )
     }
 
     {
       elements.length > 0 && (
         <section aria-labelledby="elementos">
           <h2 id="elementos">{t('catalog.model.elements')}</h2>
-          <p class="muted">{t(catalog.draws(model) ? 'catalog.model.elements.help' : 'catalog.model.elements.help.undrawn')}</p>
+          <p class="muted">{t('catalog.model.elements.help')}</p>
           <ModelGrid models={elements} />
         </section>
       )

@@ -241,6 +241,14 @@ Astro content collections under `src/content/`, one folder per entry.
 `src/content.config.ts` holds the schemas; `src/site/catalog.ts` is the only
 way pages read them, and it fails the build on dangling references, duplicate
 ids, unknown replica ids and articles missing required facts.
+
+An entry that says `published: false` is read from its folder and goes no
+further: the catalog keeps it apart from the archive, so no page, listing,
+picture or link of the site knows it, and its elements may name no entry at
+all. What it keeps is its addresses, which are not free to be reused: every id
+and alias it answered needs a line in `src/site/withdrawn.ts`, the one table
+of addresses the archive no longer has an entry for — those of entries moved
+to «Por documentar» among them — each with the page the visitor is sent to.
 `src/lib/catalog/facets.ts` is the single table of organising axes: the
 filterable list and every taxonomy page are generated from it.
 
@@ -263,12 +271,6 @@ source to whoever handed it. Boards in the same `serie` carry on from one
 another through `Placement.skip`. Each element links to its own entry.
 An installation's photographs are listed after an element's own on the
 element's page (`Catalog.photos`), and can be its cover.
-
-An installation the archive cannot show — one whose units it cannot name,
-or whose drawing does not hold up — says `drawn: false`. Its layout stays on
-file but is never resolved: no wall on its page, no embed, no poster, and its
-elements may name no entry at all. The entry, its photographs and its article
-are listed as always.
 
 ### Pictures for social networks
 

@@ -58,8 +58,14 @@ byte for byte the same; compare their `renderToString` output before and after.
   photos too poor, credit missing) goes in the public page
   `src/texts/es/pendientes.md` («Por documentar»), with links and what is
   missing, so readers can fill the gaps. Move it out when it gets an entry.
-  An entry moved back there leaves its id in `src/site/moved.ts`, which
+  An entry moved back there leaves its id in `src/site/withdrawn.ts`, which
   keeps the old address redirecting to its section.
+- An entry the archive should not show, but whose work is worth keeping, says
+  `published: false`: its folder, photographs and article stay on file and
+  nothing of it reaches the site — no page, no card, no listing, and none of
+  its photographs on another entry's page. Every address it answered (its id
+  and its aliases) needs a line in `src/site/withdrawn.ts` saying where the
+  visitor is sent instead.
 
 ## Photographs
 
@@ -111,10 +117,9 @@ byte for byte the same; compare their `renderToString` output before and after.
 - A photograph of an installation goes in the installation only: it also
   shows on the page of each element, whose `cover` can name it.
 - One that cannot be shown — its units are of unknown make, or the drawing
-  does not hold up — keeps its layout and says `drawn: false`: nothing is
-  drawn, there is no embed and no poster, and its elements may then name no
-  entry. That is what to do instead of deleting the entry, or of drawing units
-  with the replica of a maker that is not theirs.
+  does not hold up — is taken off the site with `published: false` (see
+  «Writing the archive»); its elements may then name no entry. Never draw a
+  unit with the replica of a maker that is not known to be its own.
 
 ## Git
 

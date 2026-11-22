@@ -16,7 +16,7 @@ import { resolveInstallation } from '@/lib/installations/layout';
 import type { EntryInput, ResolvedInstallation } from '@/lib/installations/types';
 import { getReplica } from '@/lib/replicas/registry';
 import { isReplicaId } from '@/lib/replicas/ids';
-import { MOVED_TO_BACKLOG } from '@/site/moved';
+import { WITHDRAWN } from '@/site/withdrawn';
 
 /*
  * The one door to the catalog. Pages never call `astro:content` themselves:
@@ -80,6 +80,8 @@ export class Catalog {
     readonly technologies: Technology[],
     readonly sites: Site[],
     currentYear: number,
+    /** Entries kept on file but off the site (`published: false`): never shown, never linked. */
+    readonly withdrawn: Model[] = [],
   ) {
     this.context = { currentYear };
     for (const list of [models, families, manufacturers, operators, technologies, sites]) list.sort(byName);
@@ -173,7 +175,7 @@ export class Catalog {
       countries: [...countries],
       years: data.years,
       status: data.status,
-      hasReplica: data.replica !== undefined || data.installation?.drawn === true,
+      hasReplica: data.replica !== undefined || data.installation !== undefined,
       stage: data.stage,
       photoCount: this.photos(model).length,
       referenceCount: data.references.length,
@@ -195,16 +197,11 @@ export class Catalog {
     return this.models.filter((candidate) => candidate.data.installation?.elements.some((element) => element.model?.id === id));
   }
 
-  /** Where everything of an installation goes. Only one the archive draws has a layout. */
+  /** Where everything of an installation goes. */
   installation(model: Model): ResolvedInstallation {
     const layout = this.layouts.get(model.id);
-    if (!layout) throw new Error(`Catalog: "${model.id}" is not an installation the archive draws`);
+    if (!layout) throw new Error(`Catalog: "${model.id}" is not an installation`);
     return layout;
-  }
-
-  /** Whether an installation is drawn: its wall on the page, its embed and its poster. */
-  draws(model: Model): boolean {
-    return model.data.installation?.drawn === true;
   }
 
   private entryInput = (id: string): EntryInput | undefined => {
@@ -231,7 +228,11 @@ export class Catalog {
       if (element.at.x < 0 || element.at.y < 0 || element.at.x + element.at.width > size.width || element.at.y + height > size.height) {
         report(at, `does not fit in the installation's ${size.width} × ${size.height} cm`);
       }
-      if (!element.model) continue;
+      if (!element.model) {
+        // A unit the archive cannot name has no entry and no panel; only an entry it does not show may hold one.
+        if (!element.panel) report(at, 'is neither an entry of the archive nor a printed panel');
+        continue;
+      }
       const entry = this.models.find((candidate) => candidate.id === element.model!.id);
       if (!entry) {
         report(at, `refers to the entry "${element.model.id}", which does not exist`);
@@ -251,8 +252,6 @@ export class Catalog {
         series.set(element.serie, entry.data.replica.id);
       }
     }
-    // One the archive does not draw is not resolved either: nothing asks for its layout, and it may name no entries.
-    if (!data.installation.drawn) return;
     try {
       const input = { ...data.installation, elements: data.installation.elements.map((element) => ({ ...element, model: element.model?.id })) };
       const layout = resolveInstallation(input, this.entryInput);
@@ -355,11 +354,24 @@ export class Catalog {
     ];
     for (const [name, list] of groups) {
       const ids = list.flatMap((entry) => [entry.id, ...entry.data.aliases]);
-      // A model's former address may also be held by an entry moved to «Por documentar».
-      if (name === 'models') ids.push(...Object.keys(MOVED_TO_BACKLOG));
+      // An address the archive no longer answers with an entry is not free either: it still redirects.
+      if (name === 'models') {
+        const addresses = this.withdrawn.flatMap((entry) => [entry.id, ...entry.data.aliases]);
+        ids.push(...addresses, ...Object.keys(WITHDRAWN).filter((address) => !addresses.includes(address)));
+      }
       for (const id of collisions(ids)) report(name, `"${id}" is used as an id or alias more than once`);
     }
     for (const model of this.models) for (const alias of model.data.aliases) this.modelAliases.set(alias, model.id);
+
+    for (const model of this.withdrawn) {
+      for (const address of [model.id, ...model.data.aliases]) {
+        if (!(address in WITHDRAWN)) report(`models/${model.id}`, `is not published, so "${address}" needs a line in src/site/withdrawn.ts`);
+      }
+    }
+    for (const [address, to] of Object.entries(WITHDRAWN)) {
+      const id = /^catalogo\/([^/]+)\/$/.exec(to)?.[1];
+      if (id && !exists(this.models, id)) report('site/withdrawn.ts', `"${address}" is sent to "${to}", which the archive does not show`);
+    }
 
     for (const model of this.models) {
       const where = `models/${model.id}`;
@@ -409,7 +421,10 @@ export function getCatalog(): Promise<Catalog> {
       getCollection('technologies'),
       getCollection('sites'),
     ]);
-    return new Catalog(models, families, manufacturers, operators, technologies, sites, new Date().getFullYear());
+    // What the archive shows. An entry with `published: false` is read from its folder and goes no further than here.
+    const shown = models.filter((model) => model.data.published);
+    const withdrawn = models.filter((model) => !model.data.published);
+    return new Catalog(shown, families, manufacturers, operators, technologies, sites, new Date().getFullYear(), withdrawn);
   })();
   return loading;
 }

@@ -88,6 +88,15 @@ photos:
     sourceUrl: https://e01-phantom-elmundo.uecdn.es/90003b1470ca7293765f921209945da9/crop/0x0/3072x2048/resize/828/f/jpg/assets/multimedia/imagenes/2026/11/09/17942568096223.jpg
     source: El Mundo
     license: rights-reserved-credited
+  - id: vestibulo-subterraneo
+    src: ./chamartin-vestibulo-inferior.jpg
+    alt: >-
+      Dos tableros de salidas de adif, uno junto al otro, en lo alto de una
+      pared blanca con el nombre de la estación, junto a un reloj cuadrado.
+    place: Madrid-Chamartín-Clara Campoamor
+    author: Oier Lauzirika Zarrabeitia
+    ownWork: true
+    license: cc-by-sa-4.0
 cover: vestibulo-subterraneo
 references:
   - title: Sobre nosotros
@@ -162,9 +171,8 @@ observaciones tampoco es el mismo en todos.
 - **Quién hizo cada tablero.** En las estaciones de adif hay tableros de este
   aspecto de al menos tres empresas. Los que se han fotografiado con placa,
   como uno de Barcelona-Sants, llevan la de MP Electronics; los del acceso a la
-  alta velocidad de
-  [Sevilla-Santa Justa](../tableros-alta-velocidad-sevilla-santa-justa/)
-  llevan la de [DSTA](../../pendientes/#dsta), de Tres Cantos, que además dice
+  alta velocidad de Sevilla-Santa Justa llevan la de
+  [DSTA](../../pendientes/#dsta), de Tres Cantos, que además dice
   haber hecho los de Valencia-Joaquín Sorolla en 2010; y en Málaga María
   Zambrano se lee la de
   [Alba Electrónica](../../pendientes/#alba-electrónica), en tableros que solo

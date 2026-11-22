@@ -168,15 +168,6 @@ const models = defineCollection({
        */
       installation: z
         .object({
-          /**
-           * `false` keeps the wall's layout on file but stops the archive
-           * drawing it: no replica on the page, no embed and no poster. It is
-           * for an installation whose units the archive cannot yet show —
-           * because it does not know whose they are, or because the drawing
-           * does not hold up. Such an installation is not even resolved, so
-           * its elements may name no entry at all.
-           */
-          drawn: z.boolean().default(true),
           size: z.object({ width: z.number().positive(), height: z.number().positive() }),
           /** The wall behind, when it shows between the elements. */
           background: z.string().optional(),
@@ -223,17 +214,23 @@ const models = defineCollection({
                     .optional(),
                 })
                 .refine((e) => e.model === undefined || e.panel === undefined, { error: 'give a model or a panel, not both' })
+                // An element of an entry the archive shows is an entry or a panel; one that is neither is a unit it cannot
+                // name, which only an unpublished entry may hold (checked in src/site/catalog.ts).
                 .refine((e) => e.model !== undefined || e.at.height !== undefined, { error: 'only an entry takes its height from its replica: give at.height' }),
             )
             .min(1),
         })
-        // Only an entry or a printed panel can be drawn; a unit that is neither is a unit the archive cannot name yet.
-        .refine((i) => i.drawn === false || i.elements.every((e) => e.model !== undefined || e.panel !== undefined), {
-          error: 'an element that is neither an entry nor a panel needs drawn: false',
-        })
         .optional(),
       /** Former ids of this entry. Each leaves a redirect behind. */
       aliases: z.array(id).default([]),
+      /**
+       * `false` keeps the entry's folder, photographs and article on file but
+       * takes it off the site altogether: no page, no card, no listing, and
+       * nothing of it on another entry's page. For equipment the archive is
+       * not ready to show. Its address keeps a redirect through
+       * src/site/withdrawn.ts, which every unpublished id must name.
+       */
+      published: z.boolean().default(true),
       stage: z.enum(STAGES).default('stub'),
     }),
 });

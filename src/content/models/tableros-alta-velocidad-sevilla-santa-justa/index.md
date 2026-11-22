@@ -16,14 +16,11 @@ locations:
     status: in-service
     note: Sobre el acceso a las vías de alta velocidad.
 installation:
-  # Los tableros llevan placa de DSTA, que todavía no tiene ficha en el
-  # archivo. Hasta saber quién hizo cada tablero de este diseño, la pared
-  # conserva su trazado pero no se dibuja: hacerlo con la réplica de MP
-  # Electronics sería atribuirles lo que no se sabe.
-  drawn: false
   size: { width: 784, height: 266 }
   background: '#1d1f21'
   elements:
+    # Los cuatro tableros no tienen ficha en el archivo: de ellos queda su
+    # sitio en la pared y las proporciones que se leen en la fotografía.
     - id: llegadas-1
       at: { x: 0, y: 0, width: 300, height: 130.69 }
     - id: llegadas-2
@@ -67,6 +64,11 @@ photos:
     sourceUrl: https://agenttravel.es/Fotos/AVE%20Madrid%20Sevilla%2020ene26.jpg
     source: Agent Travel
     license: rights-reserved-credited
+# Los tableros llevan placa de DSTA, que todavía no tiene ficha en el archivo,
+# así que el archivo no muestra esta instalación: dibujarla con la réplica de
+# MP Electronics sería atribuirles lo que no se sabe. La ficha se conserva
+# entera; su dirección lleva a «Por documentar» (src/site/withdrawn.ts).
+published: false
 stage: stub
 ---
 

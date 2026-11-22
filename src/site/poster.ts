@@ -20,7 +20,7 @@ import { href } from '@/site/url';
  */
 const drawn = new Map<string, Promise<string>>();
 
-export const hasPoster = (model: Model): boolean => model.data.replica !== undefined || model.data.installation?.drawn === true;
+export const hasPoster = (model: Model): boolean => model.data.replica !== undefined || model.data.installation !== undefined;
 
 export function posterSvg(model: Model): Promise<string> {
   let svg = drawn.get(model.id);

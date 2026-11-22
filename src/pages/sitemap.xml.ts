@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { getImage } from 'astro:assets';
 import { FACETS } from '@/lib/catalog';
 import { getCatalog } from '@/site/catalog';
-import { MOVED_TO_BACKLOG } from '@/site/moved';
+import { WITHDRAWN } from '@/site/withdrawn';
 import { fullPhoto } from '@/site/photo';
 import { hasPoster, posterHref } from '@/site/poster';
 import { href } from '@/site/url';
@@ -11,7 +11,7 @@ import { href } from '@/site/url';
  * Every page a search engine should know, for /sitemap.xml: the fixed pages,
  * each entry, and each page an axis gives its values (families, makers,
  * operators, technologies, countries). Pages that only redirect (former ids,
- * entries moved to the backlog), embeds and posters are left out.
+ * equipment the archive no longer shows), embeds and posters are left out.
  *
  * Each entry also carries its pictures, so that image search finds them and
  * shows them with the page that documents them: its photographs, at the
@@ -43,7 +43,7 @@ export const GET: APIRoute = async ({ site }) => {
     const photos = await Promise.all(catalog.photos(model).map((photo) => fullPhoto(photo.src)));
     pictures.set(path, [...(hasPoster(model) ? [await posterHref(model)] : []), ...photos.map((photo) => photo.src)]);
   }
-  for (const id of Object.keys(MOVED_TO_BACKLOG)) {
+  for (const id of Object.keys(WITHDRAWN)) {
     paths.delete(`catalogo/${id}/`);
     pictures.delete(`catalogo/${id}/`);
   }
