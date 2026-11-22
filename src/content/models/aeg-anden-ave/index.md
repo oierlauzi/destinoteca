@@ -173,9 +173,10 @@ grandes. El tercer renglón no se ve escrito en ninguna fotografía.
 
 ## El reloj
 
-La esfera es clara y no lleva números: los minutos van en puntos y las horas en
-trazos más largos, con dos agujas. Comparte el marco azul con la pantalla, pero
-no la caja.
+La esfera es clara y no lleva números: los minutos van en trazos cortos y las
+horas en otros más largos y gruesos. Tiene dos agujas, la de los minutos fina y
+de punta cuadrada y la de las horas más ancha y acabada en punta. Comparte el
+marco azul con la pantalla, pero no la caja.
 
 El orden de las dos piezas cambia de un conjunto a otro: en unas fotografías el
 reloj queda a la derecha de la pantalla y en otras a la izquierda.
@@ -196,8 +197,6 @@ que podría ser de Ikusi y que todavía no tiene ficha.
 - **Si los hubo también** en Ciudad Real y en Puertollano, las otras estaciones
   de la línea.
 - **Qué parte de AEG los fabricó**, y si el reloj es suyo o de otra empresa.
-- **Si la esfera del reloj es también de cristal líquido.** En algunas
-  fotografías tiene el mismo fondo retroiluminado que la pantalla.
 - **Cuántos puntos tiene cada celda.** La réplica los reconstruye a partir de
   los caracteres que caben en una en las fotografías; los dibujos de las
   letras no se pueden leer punto a punto en ninguna.
