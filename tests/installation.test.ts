@@ -59,6 +59,8 @@ describe('installations', () => {
   it('refuse an element the archive cannot draw', () => {
     expect(() => resolveInstallation({ ...wall, elements: [{ id: 'x', model: 'sin-replica', at: { x: 0, y: 0, width: 10 } }] }, entry)).toThrow(/replica/);
     expect(() => resolveInstallation({ ...wall, elements: [{ id: 'x', model: 'reloj', variant: 'azul', at: { x: 0, y: 0, width: 10 } }] }, entry)).toThrow(/variant/);
+    // A unit the archive cannot name belongs to an installation that is not drawn, so it never gets here.
+    expect(() => resolveInstallation({ ...wall, elements: [{ id: 'x', at: { x: 0, y: 0, width: 10, height: 5 } }] }, entry)).toThrow(/archive entry/);
   });
 
   it('nest each display in one SVG file, with ids of its own', () => {

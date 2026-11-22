@@ -53,7 +53,8 @@ variants:
     name: Con el servicio en la cabecera
     description: >-
       «Llegadas: Alta velocidad», con el inglés en una franja más oscura en
-      medio de la cabecera, como en Sevilla-Santa Justa.
+      medio de la cabecera. Se ha fotografiado en Sevilla-Santa Justa, en
+      tableros con placa de DSTA.
     replicaPreset:
       servicio: Alta velocidad
       service: HIGH SPEED
@@ -72,9 +73,6 @@ locations:
     status: in-service
   - site: es/barcelona-sants
     status: in-service
-  - site: es/sevilla-santa-justa
-    status: in-service
-    note: Cuatro tableros con un reloj Festina en medio; véase la instalación.
   - site: es/leon
     status: in-service
     note: Un tablero de llegadas, según la fuente de la fotografía.
@@ -161,11 +159,17 @@ observaciones tampoco es el mismo en todos.
   en qué año llegó cada estación, ni si alguno es un equipo anterior
   reformado.
 - **En qué otras estaciones hay o hubo.**
-- **Quién hizo cada tablero.** Los que se han fotografiado con placa llevan
-  la de MP Electronics, pero [DSTA](../../pendientes/#dsta), de Tres Cantos,
-  presenta como suyos tableros del mismo aspecto en Sevilla-Santa Justa y dice
-  haber hecho los de Valencia-Joaquín Sorolla en 2010. Puede que una empresa
-  fabricara para la otra, o que DSTA hiciera la integración.
+- **Quién hizo cada tablero.** En las estaciones de adif hay tableros de este
+  aspecto de al menos tres empresas. Los que se han fotografiado con placa,
+  como uno de Barcelona-Sants, llevan la de MP Electronics; los del acceso a la
+  alta velocidad de
+  [Sevilla-Santa Justa](../tableros-alta-velocidad-sevilla-santa-justa/)
+  llevan la de [DSTA](../../pendientes/#dsta), de Tres Cantos, que además dice
+  haber hecho los de Valencia-Joaquín Sorolla en 2010; y en Málaga María
+  Zambrano se lee la de
+  [Alba Electrónica](../../pendientes/#alba-electrónica), en tableros que solo
+  se diferencian en la fila de avisos. Puede que unas fabricaran para otras o
+  que alguna hiciera la integración; separar unos de otros está por hacer.
 - **Qué deciden las observaciones**: desde cuántos minutos de retraso se
   avisa, y cuándo se da la hora estimada y cuándo solo el retraso.
 

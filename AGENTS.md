@@ -110,6 +110,11 @@ byte for byte the same; compare their `renderToString` output before and after.
 - Boards that carry on from one another share a `serie`.
 - A photograph of an installation goes in the installation only: it also
   shows on the page of each element, whose `cover` can name it.
+- One that cannot be shown — its units are of unknown make, or the drawing
+  does not hold up — keeps its layout and says `drawn: false`: nothing is
+  drawn, there is no embed and no poster, and its elements may then name no
+  entry. That is what to do instead of deleting the entry, or of drawing units
+  with the replica of a maker that is not theirs.
 
 ## Git
 

@@ -122,8 +122,10 @@ export const catalog: Record<string, string> = {
   'catalog.model.noReplica': 'Este equipo todavía no tiene réplica web.',
   'catalog.model.sameFamily': 'De la familia',
   'catalog.model.installation': 'La instalación',
+  'catalog.model.installation.undrawn': 'De esta instalación no se dibuja el conjunto: lo que se sabe de ella está más abajo, con las fotografías y las fichas de sus elementos.',
   'catalog.model.elements': 'Qué la forma',
   'catalog.model.elements.help': 'Cada elemento tiene su propia ficha en el archivo. Pulsa sobre uno en la instalación o en la lista para ir a ella.',
+  'catalog.model.elements.help.undrawn': 'Cada elemento tiene su propia ficha en el archivo. Pulsa sobre uno para ir a ella.',
   'catalog.model.partOf': 'Forma parte de',
 
   // Photos

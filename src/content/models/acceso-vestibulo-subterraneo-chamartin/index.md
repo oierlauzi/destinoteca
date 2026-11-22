@@ -13,6 +13,8 @@ locations:
     status: in-service
     note: En el acceso al nuevo vestíbulo subterráneo.
 installation:
+  # De momento la pared no se dibuja; su trazado se conserva.
+  drawn: false
   size: { width: 1096, height: 240 }
   # The wall is painted white; a touch of grey keeps it apart from the page.
   background: '#f3f3f1'
@@ -97,6 +99,7 @@ estación, «Madrid-Chamartín - Clara Campoamor», en grandes letras de alumini
 ## Lo que no se sabe
 
 - **Desde cuándo están así.**
-- **Las medidas.** La réplica las estima a partir de las fotografías.
+- **Las medidas.** El trazado de la pared se estima a partir de las
+  proporciones de las fotografías; ninguna fuente las da.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

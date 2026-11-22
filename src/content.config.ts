@@ -168,6 +168,15 @@ const models = defineCollection({
        */
       installation: z
         .object({
+          /**
+           * `false` keeps the wall's layout on file but stops the archive
+           * drawing it: no replica on the page, no embed and no poster. It is
+           * for an installation whose units the archive cannot yet show —
+           * because it does not know whose they are, or because the drawing
+           * does not hold up. Such an installation is not even resolved, so
+           * its elements may name no entry at all.
+           */
+          drawn: z.boolean().default(true),
           size: z.object({ width: z.number().positive(), height: z.number().positive() }),
           /** The wall behind, when it shows between the elements. */
           background: z.string().optional(),
@@ -213,10 +222,14 @@ const models = defineCollection({
                     })
                     .optional(),
                 })
-                .refine((e) => (e.model === undefined) !== (e.panel === undefined), { error: 'give exactly one of model or panel' })
-                .refine((e) => e.panel === undefined || e.at.height !== undefined, { error: 'a panel needs at.height' }),
+                .refine((e) => e.model === undefined || e.panel === undefined, { error: 'give a model or a panel, not both' })
+                .refine((e) => e.model !== undefined || e.at.height !== undefined, { error: 'only an entry takes its height from its replica: give at.height' }),
             )
             .min(1),
+        })
+        // Only an entry or a printed panel can be drawn; a unit that is neither is a unit the archive cannot name yet.
+        .refine((i) => i.drawn === false || i.elements.every((e) => e.model !== undefined || e.panel !== undefined), {
+          error: 'an element that is neither an entry nor a panel needs drawn: false',
         })
         .optional(),
       /** Former ids of this entry. Each leaves a redirect behind. */

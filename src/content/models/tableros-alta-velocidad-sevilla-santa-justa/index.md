@@ -1,10 +1,12 @@
 ---
 name: Tableros de alta velocidad de Sevilla-Santa Justa
 summary: >-
-  Dos tableros de llegadas y dos de salidas de MP Electronics, con un reloj
+  Dos tableros de llegadas y dos de salidas con placa de DSTA, con un reloj
   Festina en medio, sobre el acceso a las vías de alta velocidad de
   Sevilla-Santa Justa.
 kind: installation
+technologies:
+  - led
 operators:
   - ref: adif
     role: owner
@@ -14,21 +16,18 @@ locations:
     status: in-service
     note: Sobre el acceso a las vías de alta velocidad.
 installation:
+  # Los tableros llevan placa de DSTA, que todavía no tiene ficha en el
+  # archivo. Hasta saber quién hizo cada tablero de este diseño, la pared
+  # conserva su trazado pero no se dibuja: hacerlo con la réplica de MP
+  # Electronics sería atribuirles lo que no se sabe.
+  drawn: false
   size: { width: 784, height: 266 }
   background: '#1d1f21'
   elements:
     - id: llegadas-1
-      model: mp-electronics-adif-teleindicador
-      variant: alta-velocidad
-      params: { modo: arrivals }
-      serie: llegadas
-      at: { x: 0, y: 0, width: 300 }
+      at: { x: 0, y: 0, width: 300, height: 130.69 }
     - id: llegadas-2
-      model: mp-electronics-adif-teleindicador
-      variant: alta-velocidad
-      params: { modo: arrivals }
-      serie: llegadas
-      at: { x: 0, y: 134.7, width: 300 }
+      at: { x: 0, y: 134.7, width: 300, height: 130.69 }
     - id: rotulo-trenes
       at: { x: 304, y: 0, width: 176, height: 55.7 }
       panel:
@@ -52,15 +51,9 @@ installation:
           - { text: TRAINS, size: 9, weight: 500 }
         logo: { kind: adif, height: 4 }
     - id: salidas-1
-      model: mp-electronics-adif-teleindicador
-      variant: alta-velocidad
-      serie: salidas
-      at: { x: 484, y: 0, width: 300 }
+      at: { x: 484, y: 0, width: 300, height: 130.69 }
     - id: salidas-2
-      model: mp-electronics-adif-teleindicador
-      variant: alta-velocidad
-      serie: salidas
-      at: { x: 484, y: 134.7, width: 300 }
+      at: { x: 484, y: 134.7, width: 300, height: 130.69 }
 photos:
   - id: reloj-cuatro-tableros-2026
     src: ./reloj-cuatro-tableros-2026.jpg
@@ -78,10 +71,15 @@ stage: stub
 ---
 
 Sobre el acceso a las vías de alta velocidad de Santa Justa cuelgan cuatro
-[tableros de MP Electronics](../mp-electronics-adif-teleindicador/): los de
-llegadas a la izquierda y los de salidas a la derecha. En cada lado, el de
-abajo sigue con los trenes del de arriba. Sus cabeceras nombran el servicio,
-«Alta velocidad».
+tableros de LED de adif: los de llegadas a la izquierda y los de salidas a la
+derecha. En cada lado, el de abajo sigue con los trenes del de arriba. Sus
+cabeceras nombran el servicio, «Alta velocidad».
+
+Tienen el aspecto del
+[panel LED de MP Electronics para ADIF](../mp-electronics-adif-teleindicador/),
+pero llevan placa de [DSTA](../../pendientes/#dsta), de Tres Cantos, que
+presenta como suyos tableros de vestíbulo de esta estación. DSTA todavía no
+tiene ficha en el archivo, así que estos tableros tampoco.
 
 En medio, un [reloj Festina cuadrado](../festina-adif-reloj-cuadrado/), entre dos
 placas verdes con el logotipo de adif: «Trenes alta velocidad» encima y
@@ -90,10 +88,13 @@ placas verdes con el logotipo de adif: «Trenes alta velocidad» encima y
 ## Lo que no se sabe
 
 - **Cuándo se colgaron así.** La fotografía es de enero de 2026.
-- **De quién son los tableros.** Tienen el aspecto de los de MP Electronics,
-  pero [DSTA](../../pendientes/#dsta) presenta como suyos unos tableros de
-  vestíbulo de Santa Justa del mismo diseño. No se ha visto la placa de
-  estos.
-- **Las medidas.** La réplica las estima a partir de la fotografía.
+- **Una fotografía de la placa.** Se ha leído en los tableros, pero no hay
+  ninguna fotografía que lo recoja.
+- **Quién hizo cada tablero de este diseño.** En las estaciones de adif hay
+  tableros de este aspecto con placa de MP Electronics, de DSTA —la de estos—
+  y [de Alba Electrónica](../../pendientes/#alba-electrónica). Distinguirlos
+  está por hacer.
+- **Las medidas.** El trazado de la pared se estima a partir de las
+  proporciones de la fotografía; ninguna fuente las da.
 
 Si tienes fotografías o datos, [puedes aportarlos](../../contribuir/).

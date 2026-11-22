@@ -27,6 +27,8 @@ en las principales estaciones del AVE. En 2005 se unió al grupo Postigo, y en
 
 - **Fotografías con autor y fuente.** Las que se conocen no los tienen.
 - **Comprobar la estación**, y si hay tableros de Alba en otras.
+- **Cómo distinguirlos de los de [DSTA](#dsta) y de MP Electronics**, más allá
+  de la fila de avisos.
 - **Las fechas**: cuándo se instalaron y si siguen en servicio.
 
 ## DSTA
@@ -55,16 +57,25 @@ la estación de Valencia-Joaquín Sorolla, abierta en diciembre de 2010: 55
 carteles de andén de LED, 23 monitores TFT y cuatro grandes tableros de
 vestíbulo, en castellano, inglés y valenciano.
 
-Los tableros de este diseño que se han fotografiado con placa, como uno de
-Barcelona-Sants, llevan la de MP Electronics. Puede que una de las dos
-empresas fabricara para la otra, o que DSTA hiciera la integración.
+En el acceso a las vías de alta velocidad de Santa Justa se ha leído la placa
+de DSTA en los cuatro tableros que cuelgan sobre los controles de seguridad:
+son los de la instalación
+[Tableros de alta velocidad de Sevilla-Santa Justa](../catalogo/tableros-alta-velocidad-sevilla-santa-justa/),
+que por eso no se atribuyen a MP Electronics. Falta una fotografía que recoja
+la placa.
+
+Otros tableros de este diseño que se han fotografiado con placa, como uno de
+Barcelona-Sants, llevan la de MP Electronics, y los de Málaga María Zambrano
+la de [Alba Electrónica](#alba-electrónica). Puede que unas empresas
+fabricaran para otras, o que alguna hiciera la integración.
 
 **Falta:**
 
-- **Fotografías de las placas** de los tableros de Sevilla-Santa Justa y
-  Valencia-Joaquín Sorolla.
-- **Qué relación hay entre DSTA y MP Electronics**, y quién hizo cada
-  tablero.
+- **Una fotografía de la placa** de los tableros de Sevilla-Santa Justa, y de
+  los de Valencia-Joaquín Sorolla.
+- **Qué relación hay entre DSTA, MP Electronics y Alba Electrónica**, y quién
+  hizo cada tablero.
+- **Cómo distinguir sus tableros**, que son casi iguales.
 - **Qué carteles de Cercanías son de DSTA.**
 
 ## Ikusi

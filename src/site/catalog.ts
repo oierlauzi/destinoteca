@@ -173,7 +173,7 @@ export class Catalog {
       countries: [...countries],
       years: data.years,
       status: data.status,
-      hasReplica: data.replica !== undefined || data.installation !== undefined,
+      hasReplica: data.replica !== undefined || data.installation?.drawn === true,
       stage: data.stage,
       photoCount: this.photos(model).length,
       referenceCount: data.references.length,
@@ -195,11 +195,16 @@ export class Catalog {
     return this.models.filter((candidate) => candidate.data.installation?.elements.some((element) => element.model?.id === id));
   }
 
-  /** Where everything of an installation goes. */
+  /** Where everything of an installation goes. Only one the archive draws has a layout. */
   installation(model: Model): ResolvedInstallation {
     const layout = this.layouts.get(model.id);
-    if (!layout) throw new Error(`Catalog: "${model.id}" is not an installation`);
+    if (!layout) throw new Error(`Catalog: "${model.id}" is not an installation the archive draws`);
     return layout;
+  }
+
+  /** Whether an installation is drawn: its wall on the page, its embed and its poster. */
+  draws(model: Model): boolean {
+    return model.data.installation?.drawn === true;
   }
 
   private entryInput = (id: string): EntryInput | undefined => {
@@ -246,6 +251,8 @@ export class Catalog {
         series.set(element.serie, entry.data.replica.id);
       }
     }
+    // One the archive does not draw is not resolved either: nothing asks for its layout, and it may name no entries.
+    if (!data.installation.drawn) return;
     try {
       const input = { ...data.installation, elements: data.installation.elements.map((element) => ({ ...element, model: element.model?.id })) };
       const layout = resolveInstallation(input, this.entryInput);

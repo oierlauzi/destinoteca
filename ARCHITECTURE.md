@@ -264,6 +264,12 @@ another through `Placement.skip`. Each element links to its own entry.
 An installation's photographs are listed after an element's own on the
 element's page (`Catalog.photos`), and can be its cover.
 
+An installation the archive cannot show — one whose units it cannot name,
+or whose drawing does not hold up — says `drawn: false`. Its layout stays on
+file but is never resolved: no wall on its page, no embed, no poster, and its
+elements may name no entry at all. The entry, its photographs and its article
+are listed as always.
+
 ### Pictures for social networks
 
 An entry with a poster is previewed on social networks by a banner
