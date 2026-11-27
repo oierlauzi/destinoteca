@@ -71,7 +71,7 @@ export const aegAndenAve: ReplicaDef = {
   needs: { services: 1, calls: true },
   options: optionsSchema,
   frame: frameSchema,
-  sourceDefaults: { demo: { network: 'long-distance' } },
+  sourceDefaults: { demo: { network: 'long-distance' }, adif: { traffic: 'RL' } },
   selection: () => selection,
   load: async () => (await import('./index')).default,
 };

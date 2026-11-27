@@ -112,6 +112,8 @@ const selection: SelectionPolicy = {
 export const mpCercanias: ReplicaDef = {
   id: 'mp-electronics-adif-cercanias',
   viewBox: SIZE,
+  // A Cercanías sign: ADIF's feed starts on Cercanías trains.
+  sourceDefaults: { adif: { traffic: 'C' } },
   reads: ['services', 'time'],
   needs: { services: ROWS, calls: false },
   options: optionsSchema,

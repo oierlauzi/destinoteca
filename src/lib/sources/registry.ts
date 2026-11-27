@@ -1,3 +1,4 @@
+import { adifDef } from './adif/def';
 import { demoDef } from './demo/def';
 import { deviceDef } from './device/def';
 import { manualDef } from './manual/def';
@@ -12,7 +13,7 @@ import { sharesData, type DataKind, type SourceDef } from './types';
  *
  * To add a source: a folder with `def.ts` and `index.ts`, and a line here.
  */
-export const sources: SourceDef[] = [demoDef, mitrenDef, deviceDef, manualDef];
+export const sources: SourceDef[] = [demoDef, mitrenDef, adifDef, deviceDef, manualDef];
 
 export function getSource(id: string): SourceDef | undefined {
   return sources.find((source) => source.id === id);

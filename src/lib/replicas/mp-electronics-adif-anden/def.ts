@@ -125,7 +125,7 @@ function anden(id: string, kind: Kind): ReplicaDef {
     options: optionsSchema(kind),
     frame: frameSchema,
     selection: (_options: Values) => selection,
-    sourceDefaults: { demo: { network: 'long-distance' } },
+    sourceDefaults: { demo: { network: 'long-distance' }, adif: { traffic: 'RL' } },
     load: async () => (await import('./index')).implementation(kind),
   };
 }

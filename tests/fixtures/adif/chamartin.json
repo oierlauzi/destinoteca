@@ -1,0 +1,2118 @@
+{
+ "station_settings": {
+  "code": "17000",
+  "name": "Madrid Chamartín Clara Campoamor",
+  "languages": [
+   "ESP",
+   "ENG"
+  ],
+  "platforms": {
+   "1": {
+    "platform_start": 42,
+    "platform_end": 445,
+    "track_start": 42,
+    "track_end": 445,
+    "sectors": []
+   },
+   "2": {
+    "platform_start": 42,
+    "platform_end": 440,
+    "track_start": 42,
+    "track_end": 440,
+    "sectors": []
+   },
+   "3": {
+    "platform_start": 42,
+    "platform_end": 440,
+    "track_start": 42,
+    "track_end": 440,
+    "sectors": []
+   },
+   "4": {
+    "platform_start": 42,
+    "platform_end": 440,
+    "track_start": 42,
+    "track_end": 440,
+    "sectors": []
+   },
+   "5": {
+    "platform_start": 42,
+    "platform_end": 440,
+    "track_start": 42,
+    "track_end": 440,
+    "sectors": []
+   },
+   "6": {
+    "platform_start": 42,
+    "platform_end": 440,
+    "track_start": 42,
+    "track_end": 440,
+    "sectors": []
+   },
+   "7": {
+    "platform_start": 42,
+    "platform_end": 440,
+    "track_start": 42,
+    "track_end": 440,
+    "sectors": []
+   },
+   "8": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 32,
+    "track_end": 479,
+    "sectors": []
+   },
+   "9": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 32,
+    "track_end": 255,
+    "sectors": []
+   },
+   "9B": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 260,
+    "track_end": 479,
+    "sectors": []
+   },
+   "10": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 32,
+    "track_end": 255,
+    "sectors": []
+   },
+   "10B": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 260,
+    "track_end": 479,
+    "sectors": []
+   },
+   "11": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 32,
+    "track_end": 479,
+    "sectors": []
+   },
+   "12": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 32,
+    "track_end": 479,
+    "sectors": []
+   },
+   "13": {
+    "platform_start": 32,
+    "platform_end": 479,
+    "track_start": 32,
+    "track_end": 479,
+    "sectors": []
+   },
+   "14": {
+    "platform_start": 0,
+    "platform_end": 509,
+    "track_start": 0,
+    "track_end": 509,
+    "sectors": []
+   },
+   "15": {
+    "platform_start": 0,
+    "platform_end": 509,
+    "track_start": 0,
+    "track_end": 509,
+    "sectors": []
+   },
+   "16": {
+    "platform_start": 40,
+    "platform_end": 689,
+    "track_start": 40,
+    "track_end": 689,
+    "sectors": []
+   },
+   "20": {
+    "platform_start": 40,
+    "platform_end": 510,
+    "track_start": 40,
+    "track_end": 510,
+    "sectors": []
+   },
+   "17": {
+    "platform_start": 40,
+    "platform_end": 689,
+    "track_start": 40,
+    "track_end": 689,
+    "sectors": []
+   },
+   "18": {
+    "platform_start": 40,
+    "platform_end": 689,
+    "track_start": 40,
+    "track_end": 689,
+    "sectors": []
+   },
+   "21": {
+    "platform_start": 40,
+    "platform_end": 510,
+    "track_start": 40,
+    "track_end": 510,
+    "sectors": []
+   },
+   "19": {
+    "platform_start": 40,
+    "platform_end": 689,
+    "track_start": 40,
+    "track_end": 689,
+    "sectors": []
+   },
+   "22": {
+    "platform_start": 97,
+    "platform_end": 510,
+    "track_start": 97,
+    "track_end": 510,
+    "sectors": []
+   },
+   "23": {
+    "platform_start": 97,
+    "platform_end": 510,
+    "track_start": 97,
+    "track_end": 510,
+    "sectors": []
+   },
+   "24": {
+    "platform_start": 97,
+    "platform_end": 510,
+    "track_start": 97,
+    "track_end": 510,
+    "sectors": []
+   },
+   "25": {
+    "platform_start": 97,
+    "platform_end": 510,
+    "track_start": 97,
+    "track_end": 510,
+    "sectors": []
+   }
+  },
+  "data_time": "2026-11-27T21:58:00.7116322Z",
+  "estimated_time_traffics": [
+   "C"
+  ],
+  "countdown_traffics": [
+   "C"
+  ],
+  "sectorization_mode": "none"
+ },
+ "trains": [
+  {
+   "id": "397488",
+   "technical_number_planif": "20326",
+   "technical_number_planif_in": "20326",
+   "technical_number_planif_out": "20326",
+   "technical_number_in": "20326",
+   "technical_number_out": "20326",
+   "status": "running",
+   "commercial_id": [
+    {
+     "numbers": [
+      "20326"
+     ],
+     "product": "C04CERMAD",
+     "show_pic": true,
+     "restricted": "none"
+    }
+   ],
+   "traffic_type": "C",
+   "company": "Renfe",
+   "class_stop": "intermediate",
+   "arrival_time": "2026-11-27T22:29:00+01:00",
+   "departure_time": "2026-11-27T22:30:00+01:00",
+   "platform": "2",
+   "platform_in": "2",
+   "next_on_platform": true,
+   "next_on_platform_in": true,
+   "arrivals_access": [
+    "B",
+    "C"
+   ],
+   "departures_access": [
+    "B",
+    "C"
+   ],
+   "delay_in": 31,
+   "delay_out": 30,
+   "countdown": 2,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announces": [
+    "A"
+   ],
+   "announced": true,
+   "observation": "",
+   "origins": [
+    {
+     "code": "19003",
+     "line": "C04CERMAD"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "37012",
+     "line": "C04CERMAD"
+    }
+   ],
+   "platform_preview": "",
+   "platform_preview_in": "",
+   "journey_stops_origin": [
+    {
+     "code": "19003"
+    },
+    {
+     "code": "19002"
+    },
+    {
+     "code": "19001"
+    },
+    {
+     "code": "17009"
+    },
+    {
+     "code": "17001"
+    }
+   ],
+   "journey_stops_destination": [
+    {
+     "arrival_time": "2026-11-27T22:34:30+01:00",
+     "delay_in": 30,
+     "code": "18002"
+    },
+    {
+     "arrival_time": "2026-11-27T22:38:30+01:00",
+     "delay_in": 29,
+     "code": "18101"
+    },
+    {
+     "arrival_time": "2026-11-27T22:43:00+01:00",
+     "delay_in": 28,
+     "code": "18000"
+    },
+    {
+     "arrival_time": "2026-11-27T22:51:30+01:00",
+     "delay_in": 27,
+     "code": "60100"
+    },
+    {
+     "arrival_time": "2026-11-27T22:55:00+01:00",
+     "delay_in": 26,
+     "code": "37001"
+    },
+    {
+     "arrival_time": "2026-11-27T22:58:00+01:00",
+     "delay_in": 26,
+     "code": "37010"
+    },
+    {
+     "arrival_time": "2026-11-27T23:01:00+01:00",
+     "delay_in": 26,
+     "code": "37002"
+    },
+    {
+     "arrival_time": "2026-11-27T23:04:00+01:00",
+     "delay_in": 26,
+     "code": "37011"
+    },
+    {
+     "arrival_time": "2026-11-27T23:11:30+01:00",
+     "delay_in": 26,
+     "code": "37012"
+    }
+   ],
+   "orientation_out": "left",
+   "composition": [
+    [
+     {
+      "type": "A",
+      "number": "",
+      "length": "224",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "177",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "177",
+      "info": [
+       "accessible"
+      ]
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "177",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "224",
+      "info": []
+     }
+    ],
+    [
+     {
+      "type": "A",
+      "number": "",
+      "length": "224",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "177",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "177",
+      "info": [
+       "accessible"
+      ]
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "177",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "224",
+      "info": []
+     }
+    ]
+   ],
+   "train_length": 1958,
+   "check_in": "none",
+   "stopping_point": 46,
+   "stopping_point_reference": "left"
+  },
+  {
+   "id": "397646",
+   "technical_number_planif": "27203",
+   "technical_number_planif_in": "27203",
+   "technical_number_planif_out": "27203",
+   "technical_number_in": "27203",
+   "technical_number_out": "27203",
+   "status": "scheduled",
+   "commercial_id": [
+    {
+     "numbers": [
+      "27203"
+     ],
+     "product": "C4ACERMAD",
+     "show_pic": true,
+     "restricted": "none"
+    }
+   ],
+   "traffic_type": "C",
+   "company": "Renfe",
+   "class_stop": "intermediate",
+   "arrival_time": "2026-11-28T05:11:00+01:00",
+   "departure_time": "2026-11-28T05:12:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "C",
+    "B"
+   ],
+   "departures_access": [
+    "C",
+    "B"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 374,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "18000",
+     "line": "C4ACERMAD"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "19003",
+     "line": "C4ACERMAD"
+    }
+   ],
+   "platform_preview": "4 · 5",
+   "platform_preview_in": "4 · 5",
+   "journey_stops_origin": [
+    {
+     "code": "18000"
+    },
+    {
+     "code": "18101"
+    },
+    {
+     "code": "18002"
+    }
+   ],
+   "journey_stops_destination": [
+    {
+     "arrival_time": "2026-11-28T05:16:30+01:00",
+     "code": "17001"
+    },
+    {
+     "arrival_time": "2026-11-28T05:21:30+01:00",
+     "code": "17009"
+    },
+    {
+     "arrival_time": "2026-11-28T05:24:30+01:00",
+     "code": "19001"
+    },
+    {
+     "arrival_time": "2026-11-28T05:27:30+01:00",
+     "code": "19002"
+    },
+    {
+     "arrival_time": "2026-11-28T05:30:30+01:00",
+     "code": "19003"
+    }
+   ],
+   "orientation_out": "right",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397513",
+   "technical_number_planif": "75363",
+   "technical_number_planif_in": "75363",
+   "technical_number_planif_out": "75363",
+   "technical_number_in": "75363",
+   "technical_number_out": "75363",
+   "status": "cancelled",
+   "commercial_id": [
+    {
+     "numbers": [
+      "75363"
+     ],
+     "product": "C10CERMAD",
+     "show_pic": true,
+     "restricted": "none"
+    }
+   ],
+   "traffic_type": "C",
+   "company": "Renfe",
+   "class_stop": "destination",
+   "arrival_time": "2026-11-27T23:04:00+01:00",
+   "departure_time": "2026-11-27T23:04:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "B",
+    "C"
+   ],
+   "departures_access": [
+    "B",
+    "C"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 6,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "10005",
+     "line": "C10CERMAD"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "17000",
+     "line": "C10CERMAD"
+    }
+   ],
+   "platform_preview": "6 - 13",
+   "platform_preview_in": "6 - 13",
+   "journey_stops_origin": [
+    {
+     "code": "10005"
+    },
+    {
+     "code": "10007"
+    },
+    {
+     "code": "10010"
+    },
+    {
+     "code": "10002"
+    },
+    {
+     "code": "10001"
+    },
+    {
+     "code": "10000"
+    },
+    {
+     "code": "18005"
+    },
+    {
+     "code": "18004"
+    },
+    {
+     "code": "18003"
+    },
+    {
+     "code": "18000"
+    },
+    {
+     "code": "18001"
+    },
+    {
+     "code": "18002"
+    }
+   ],
+   "journey_stops_destination": [],
+   "orientation_out": "left",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397496",
+   "technical_number_planif": "06205",
+   "technical_number_planif_in": "06205",
+   "technical_number_planif_out": "06205",
+   "technical_number_in": "06205",
+   "technical_number_out": "06205",
+   "status": "running",
+   "commercial_id": [
+    {
+     "numbers": [
+      "06205"
+     ],
+     "product": "IRYO",
+     "show_pic": true,
+     "restricted": "none"
+    }
+   ],
+   "traffic_type": "L",
+   "company": "Iryo",
+   "class_stop": "destination",
+   "arrival_time": "2026-11-27T22:39:20+01:00",
+   "departure_time": "2026-11-27T22:39:20+01:00",
+   "platform": "17",
+   "platform_in": "17",
+   "next_on_platform": true,
+   "next_on_platform_in": true,
+   "arrivals_access": [
+    "A",
+    "A_17"
+   ],
+   "departures_access": [
+    "A",
+    "A_17"
+   ],
+   "delay_in": 45,
+   "delay_out": 45,
+   "countdown": 26,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announces": [
+    "R"
+   ],
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "60911"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "17000"
+    }
+   ],
+   "platform_preview": "",
+   "platform_preview_in": "",
+   "journey_stops_origin": [
+    {
+     "code": "60911"
+    },
+    {
+     "code": "60600"
+    },
+    {
+     "code": "3208"
+    }
+   ],
+   "journey_stops_destination": [],
+   "orientation_out": "left",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397765",
+   "technical_number_planif": "75004",
+   "technical_number_planif_in": "75004",
+   "technical_number_planif_out": "75604",
+   "technical_number_in": "75004",
+   "technical_number_out": "75604",
+   "status": "scheduled",
+   "commercial_id": [
+    {
+     "numbers": [
+      "35432"
+     ],
+     "product": "REG",
+     "show_pic": true,
+     "restricted": "none"
+    },
+    {
+     "numbers": [
+      "75604"
+     ],
+     "product": "C08CERMAD",
+     "show_pic": true,
+     "pic_filename": "C08CERMAD",
+     "restricted": "commercial"
+    }
+   ],
+   "traffic_type": "R",
+   "company": "Renfe",
+   "class_stop": "intermediate",
+   "arrival_time": "2026-11-28T08:06:00+01:00",
+   "departure_time": "2026-11-28T08:08:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "B",
+    "C"
+   ],
+   "departures_access": [
+    "B",
+    "C"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 550,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "10203",
+     "line": "C08CERMAD"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "70200",
+     "line": "C08CERMAD"
+    },
+    {
+     "code": "84101"
+    }
+   ],
+   "platform_preview": "6 - 13",
+   "platform_preview_in": "6 - 13",
+   "journey_stops_origin": [
+    {
+     "code": "10203"
+    },
+    {
+     "code": "10202"
+    },
+    {
+     "code": "10201"
+    },
+    {
+     "code": "10200"
+    },
+    {
+     "code": "10104"
+    },
+    {
+     "code": "10103"
+    },
+    {
+     "code": "10101"
+    },
+    {
+     "code": "10100"
+    },
+    {
+     "code": "97100"
+    },
+    {
+     "code": "97200"
+    },
+    {
+     "code": "97201"
+    }
+   ],
+   "journey_stops_destination": [
+    {
+     "arrival_time": "2026-11-28T08:12:30+01:00",
+     "code": "18002"
+    },
+    {
+     "arrival_time": "2026-11-28T08:16:30+01:00",
+     "code": "18001"
+    },
+    {
+     "arrival_time": "2026-11-28T08:21:00+01:00",
+     "code": "18000"
+    },
+    {
+     "arrival_time": "2026-11-28T08:26:30+01:00",
+     "code": "70002"
+    },
+    {
+     "arrival_time": "2026-11-28T08:28:30+01:00",
+     "code": "70003"
+    },
+    {
+     "arrival_time": "2026-11-28T08:31:30+01:00",
+     "code": "70005"
+    },
+    {
+     "arrival_time": "2026-11-28T08:33:30+01:00",
+     "code": "70109"
+    },
+    {
+     "arrival_time": "2026-11-28T08:36:30+01:00",
+     "code": "70100"
+    },
+    {
+     "arrival_time": "2026-11-28T08:39:30+01:00",
+     "code": "70108"
+    },
+    {
+     "arrival_time": "2026-11-28T08:43:30+01:00",
+     "code": "70101"
+    },
+    {
+     "arrival_time": "2026-11-28T08:48:30+01:00",
+     "code": "70102"
+    },
+    {
+     "arrival_time": "2026-11-28T08:52:30+01:00",
+     "code": "70112"
+    },
+    {
+     "arrival_time": "2026-11-28T08:56:30+01:00",
+     "code": "70111"
+    },
+    {
+     "arrival_time": "2026-11-28T09:01:00+01:00",
+     "code": "70103"
+    },
+    {
+     "arrival_time": "2026-11-28T09:04:30+01:00",
+     "code": "70107"
+    },
+    {
+     "arrival_time": "2026-11-28T09:08:30+01:00",
+     "code": "70104"
+    },
+    {
+     "arrival_time": "2026-11-28T09:13:30+01:00",
+     "code": "70105"
+    },
+    {
+     "arrival_time": "2026-11-28T09:24:00+01:00",
+     "code": "70200"
+    },
+    {
+     "arrival_time": "2026-11-28T10:32:00+01:00",
+     "code": "70302"
+    },
+    {
+     "arrival_time": "2026-11-28T11:27:00+01:00",
+     "code": "84101"
+    }
+   ],
+   "orientation_out": "unknow",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397710",
+   "technical_number_planif": "11085",
+   "technical_number_planif_in": "11085",
+   "technical_number_planif_out": "11085",
+   "technical_number_in": "11085",
+   "technical_number_out": "11085",
+   "status": "running",
+   "commercial_id": [
+    {
+     "numbers": [
+      "04087",
+      "04187"
+     ],
+     "product": "ICITY",
+     "show_pic": true,
+     "restricted": "commercial"
+    }
+   ],
+   "traffic_type": "L",
+   "company": "Renfe",
+   "class_stop": "origin",
+   "arrival_time": "2026-11-28T06:55:00+01:00",
+   "departure_time": "2026-11-28T06:55:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "A"
+   ],
+   "departures_access": [
+    "A"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 477,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "17000"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "13200"
+    },
+    {
+     "code": "11600"
+    }
+   ],
+   "platform_preview": "",
+   "platform_preview_in": "",
+   "journey_stops_origin": [
+    {
+     "code": "17000"
+    }
+   ],
+   "journey_stops_destination": [
+    {
+     "arrival_time": "2026-11-28T07:22:30+01:00",
+     "code": "8004"
+    },
+    {
+     "arrival_time": "2026-11-28T07:59:20+01:00",
+     "code": "10600"
+    },
+    {
+     "arrival_time": "2026-11-28T08:48:00+01:00",
+     "code": "11014"
+    },
+    {
+     "arrival_time": "2026-11-28T09:57:00+01:00",
+     "code": "11200"
+    },
+    {
+     "arrival_time": "2026-11-28T10:38:00+01:00",
+     "code": "11208"
+    },
+    {
+     "arrival_time": "2026-11-28T11:27:00+01:00",
+     "code": "11400"
+    },
+    {
+     "arrival_time": "2026-11-28T11:30:00+01:00",
+     "code": "13106"
+    },
+    {
+     "arrival_time": "2026-11-28T12:05:00+01:00",
+     "code": "13200"
+    },
+    {
+     "arrival_time": "2026-11-28T12:32:00+01:00",
+     "code": "11511"
+    },
+    {
+     "arrival_time": "2026-11-28T13:02:00+01:00",
+     "code": "11600"
+    }
+   ],
+   "orientation_out": "right",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397820",
+   "technical_number_planif": "05092",
+   "technical_number_planif_in": "05092",
+   "technical_number_planif_out": "05092",
+   "technical_number_in": "05092",
+   "technical_number_out": "05092",
+   "status": "running",
+   "commercial_id": [
+    {
+     "numbers": [
+      "05092"
+     ],
+     "product": "AVE",
+     "show_pic": true,
+     "restricted": "none"
+    },
+    {
+     "numbers": [
+      "32601"
+     ],
+     "product": "TURISRF",
+     "show_pic": true,
+     "pic_filename": "TURISRF",
+     "restricted": "origin"
+    },
+    {
+     "numbers": [
+      "34392"
+     ],
+     "product": "AVANT",
+     "show_pic": true,
+     "pic_filename": "AVANT",
+     "restricted": "destination"
+    }
+   ],
+   "traffic_type": "L",
+   "company": "Renfe",
+   "class_stop": "origin",
+   "arrival_time": "2026-11-28T09:00:00+01:00",
+   "departure_time": "2026-11-28T09:00:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "A"
+   ],
+   "departures_access": [
+    "A"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 602,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "Tren Turístico Paleontológico y del Patrimonio de Cuenca.",
+   "origins": [
+    {
+     "code": "17000"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "60911"
+    }
+   ],
+   "platform_preview": "",
+   "platform_preview_in": "",
+   "journey_stops_origin": [
+    {
+     "code": "17000"
+    }
+   ],
+   "journey_stops_destination": [
+    {
+     "arrival_time": "2026-11-28T10:03:20+01:00",
+     "code": "3208"
+    },
+    {
+     "arrival_time": "2026-11-28T10:37:50+01:00",
+     "code": "60600"
+    },
+    {
+     "arrival_time": "2026-11-28T11:30:00+01:00",
+     "code": "60911"
+    }
+   ],
+   "orientation_out": "left",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397790",
+   "technical_number_planif": "05280",
+   "technical_number_planif_in": "05280",
+   "technical_number_planif_out": "05280",
+   "technical_number_in": "05280",
+   "technical_number_out": "05280",
+   "status": "scheduled",
+   "commercial_id": [
+    {
+     "numbers": [
+      "05080"
+     ],
+     "product": "AVE",
+     "show_pic": true,
+     "restricted": "none"
+    },
+    {
+     "numbers": [
+      "34080"
+     ],
+     "product": "AVANT",
+     "show_pic": true,
+     "pic_filename": "AVANT",
+     "restricted": "destination"
+    }
+   ],
+   "traffic_type": "L",
+   "company": "Renfe",
+   "class_stop": "intermediate",
+   "arrival_time": "2026-11-28T08:13:00+01:00",
+   "departure_time": "2026-11-28T08:30:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "A"
+   ],
+   "departures_access": [
+    "A"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 572,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "11014"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "3216"
+    }
+   ],
+   "platform_preview": "",
+   "platform_preview_in": "",
+   "journey_stops_origin": [
+    {
+     "code": "11014"
+    },
+    {
+     "code": "10600"
+    }
+   ],
+   "journey_stops_destination": [
+    {
+     "arrival_time": "2026-11-28T10:24:00+01:00",
+     "code": "3216"
+    }
+   ],
+   "orientation_out": "left",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397874",
+   "technical_number_planif": "06083",
+   "technical_number_planif_in": "06083",
+   "technical_number_planif_out": "06083",
+   "technical_number_in": "06083",
+   "technical_number_out": "06083",
+   "status": "scheduled",
+   "commercial_id": [
+    {
+     "numbers": [
+      "06083"
+     ],
+     "product": "IRYO",
+     "show_pic": true,
+     "restricted": "none"
+    }
+   ],
+   "traffic_type": "L",
+   "company": "Iryo",
+   "class_stop": "destination",
+   "arrival_time": "2026-11-28T10:08:00+01:00",
+   "departure_time": "2026-11-28T10:08:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "A"
+   ],
+   "departures_access": [
+    "A"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 670,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "3216"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "17000"
+    }
+   ],
+   "platform_preview": "",
+   "platform_preview_in": "",
+   "journey_stops_origin": [
+    {
+     "code": "3216"
+    }
+   ],
+   "journey_stops_destination": [],
+   "orientation_out": "left",
+   "check_in": "none",
+   "stopping_point": 0
+  },
+  {
+   "id": "397502",
+   "technical_number_planif": "06603",
+   "technical_number_planif_in": "06603",
+   "technical_number_planif_out": "06603",
+   "technical_number_in": "06603",
+   "technical_number_out": "06603",
+   "status": "running",
+   "commercial_id": [
+    {
+     "numbers": [
+      "06603"
+     ],
+     "product": "OUIGO",
+     "show_pic": true,
+     "restricted": "none"
+    }
+   ],
+   "traffic_type": "L",
+   "company": "Ouigo",
+   "class_stop": "destination",
+   "arrival_time": "2026-11-27T22:53:30+01:00",
+   "departure_time": "2026-11-27T22:53:30+01:00",
+   "platform": "19",
+   "platform_in": "19",
+   "next_on_platform": true,
+   "next_on_platform_in": true,
+   "arrivals_access": [
+    "A",
+    "A_19"
+   ],
+   "departures_access": [
+    "A",
+    "A_19"
+   ],
+   "delay_in": 47,
+   "delay_out": 47,
+   "countdown": 42,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announces": [
+    "R"
+   ],
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "3216"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "17000"
+    }
+   ],
+   "platform_preview": "",
+   "platform_preview_in": "",
+   "journey_stops_origin": [
+    {
+     "code": "3216"
+    }
+   ],
+   "journey_stops_destination": [],
+   "orientation_out": "left",
+   "composition": [
+    [
+     {
+      "type": "A",
+      "number": "",
+      "length": "221",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "8",
+      "length": "218",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "7",
+      "length": "187",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "6",
+      "length": "187",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "187",
+      "info": [
+       "bar"
+      ]
+     },
+     {
+      "type": "A",
+      "number": "4",
+      "length": "187",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "3",
+      "length": "187",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "2",
+      "length": "187",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "1",
+      "length": "218",
+      "info": []
+     },
+     {
+      "type": "A",
+      "number": "",
+      "length": "221",
+      "info": []
+     }
+    ]
+   ],
+   "train_length": 2000,
+   "check_in": "none",
+   "stopping_point": 245,
+   "stopping_point_reference": "left"
+  },
+  {
+   "id": "397800",
+   "technical_number_planif": "75607",
+   "technical_number_planif_in": "75607",
+   "technical_number_planif_out": "27607",
+   "technical_number_in": "75607",
+   "technical_number_out": "27607",
+   "status": "scheduled",
+   "commercial_id": [
+    {
+     "numbers": [
+      "17123"
+     ],
+     "product": "REG",
+     "show_pic": true,
+     "restricted": "none"
+    },
+    {
+     "numbers": [
+      "27607"
+     ],
+     "product": "C8BCIVMAD",
+     "show_pic": true,
+     "pic_filename": "C8BCIVMAD",
+     "restricted": "commercial"
+    }
+   ],
+   "traffic_type": "R",
+   "company": "Renfe",
+   "class_stop": "intermediate",
+   "arrival_time": "2026-11-28T08:43:00+01:00",
+   "departure_time": "2026-11-28T08:45:00+01:00",
+   "platform": "",
+   "platform_in": "",
+   "next_on_platform": false,
+   "next_on_platform_in": false,
+   "arrivals_access": [
+    "C",
+    "B"
+   ],
+   "departures_access": [
+    "C",
+    "B"
+   ],
+   "delay_in": 0,
+   "delay_out": 0,
+   "countdown": 587,
+   "immediate_in": false,
+   "immediate_out": false,
+   "announced": false,
+   "observation": "",
+   "origins": [
+    {
+     "code": "70200",
+     "line": "C8BCERMAD"
+    }
+   ],
+   "destinations": [
+    {
+     "code": "12006",
+     "line": "C8BCERMAD"
+    },
+    {
+     "code": "12100"
+    }
+   ],
+   "platform_preview": "10 · 11",
+   "platform_preview_in": "10 · 11",
+   "journey_stops_origin": [
+    {
+     "code": "70200"
+    },
+    {
+     "code": "70105"
+    },
+    {
+     "code": "70104"
+    },
+    {
+     "code": "70107"
+    },
+    {
+     "code": "70103"
+    },
+    {
+     "code": "70111"
+    },
+    {
+     "code": "70112"
+    },
+    {
+     "code": "70102"
+    },
+    {
+     "code": "70101"
+    },
+    {
+     "code": "70108"
+    },
+    {
+     "code": "70100"
+    },
+    {
+     "code": "70109"
+    },
+    {
+     "code": "70005"
+    },
+    {
+     "code": "70003"
+    },
+    {
+     "code": "70002"
+    },
+    {
+     "code": "18000"
+    },
+    {
+     "code": "18001"
+    },
+    {
+     "code": "18002"
+    }
+   ],
+   "journey_stops_destination": [
+    {
+     "arrival_time": "2026-11-28T09:17:00+01:00",
+     "code": "10200"
+    },
+    {
+     "arrival_time": "2026-11-28T09:20:30+01:00",
+     "code": "12001"
+    },
+    {
+     "arrival_time": "2026-11-28T09:24:30+01:00",
+     "code": "12002"
+    },
+    {
+     "arrival_time": "2026-11-28T09:31:30+01:00",
+     "code": "12004"
+    },
+    {
+     "arrival_time": "2026-11-28T09:36:30+01:00",
+     "code": "12005"
+    },
+    {
+     "arrival_time": "2026-11-28T09:44:00+01:00",
+     "code": "12006"
+    },
+    {
+     "arrival_time": "2026-11-28T09:53:00+01:00",
+     "code": "12007"
+    },
+    {
+     "arrival_time": "2026-11-28T09:59:00+01:00",
+     "code": "12009"
+    },
+    {
+     "arrival_time": "2026-11-28T10:02:30+01:00",
+     "code": "12010"
+    },
+    {
+     "arrival_time": "2026-11-28T10:08:00+01:00",
+     "code": "12011"
+    },
+    {
+     "arrival_time": "2026-11-28T10:11:30+01:00",
+     "code": "12012"
+    },
+    {
+     "arrival_time": "2026-11-28T10:16:30+01:00",
+     "code": "12013"
+    },
+    {
+     "arrival_time": "2026-11-28T10:21:00+01:00",
+     "code": "12014"
+    },
+    {
+     "arrival_time": "2026-11-28T10:30:00+01:00",
+     "code": "12100"
+    }
+   ],
+   "orientation_out": "right",
+   "check_in": "none",
+   "stopping_point": 0
+  }
+ ],
+ "stations": {
+  "3208": {
+   "name": [
+    "Cuenca Fernando Zóbel",
+    "Cuenca Fernando Zóbel",
+    "Cuenca Ferndo. Zóbel"
+   ]
+  },
+  "10007": {
+   "name": [
+    "Majadahonda",
+    "Majadahonda"
+   ]
+  },
+  "10010": {
+   "name": [
+    "El Barrial-Centro Comercial Pozuelo",
+    "El Barrial-Centro Comercial Pozuelo",
+    "El Barrial-Ctro. Comercial Pozuelo",
+    "El Barrial-C. Comercial Pozuelo",
+    "El Barrial-C. Comerc. Pozuelo",
+    "El Barrial-C. Com. Pozuelo",
+    "El Barrial-C. C. Pozuelo",
+    "El Barrial-C.C.Pozuelo"
+   ]
+  },
+  "10100": {
+   "name": [
+    "Pinar de las Rozas",
+    "Pinar de las Rozas"
+   ]
+  },
+  "10201": {
+   "name": [
+    "San Yago",
+    "San Yago"
+   ]
+  },
+  "11600": {
+   "name": [
+    "Irun",
+    "Irun"
+   ]
+  },
+  "10000": {
+   "name": [
+    "Madrid Príncipe Pío",
+    "Madrid Príncipe Pío"
+   ]
+  },
+  "10001": {
+   "name": [
+    "Aravaca",
+    "Aravaca"
+   ]
+  },
+  "10002": {
+   "name": [
+    "Pozuelo",
+    "Pozuelo"
+   ]
+  },
+  "10005": {
+   "name": [
+    "Las Rozas",
+    "Las Rozas"
+   ]
+  },
+  "10101": {
+   "name": [
+    "Las Matas",
+    "Las Matas"
+   ]
+  },
+  "10103": {
+   "name": [
+    "Torrelodones",
+    "Torrelodones"
+   ]
+  },
+  "10104": {
+   "name": [
+    "Galapagar-La Navata",
+    "Galapagar-La Navata"
+   ]
+  },
+  "10200": {
+   "name": [
+    "Villalba de Guadarrama",
+    "Villalba de Guadarrama",
+    "Villalba de Guadarr."
+   ]
+  },
+  "12011": {
+   "name": [
+    "Los Ángeles de San Rafael",
+    "Los Ángeles de San Rafael",
+    "Los Ángeles de S. Rafael",
+    "Los Ángeles S. Rafael"
+   ]
+  },
+  "12012": {
+   "name": [
+    "Otero-Herreros",
+    "Otero-Herreros"
+   ]
+  },
+  "13200": {
+   "name": [
+    "Bilbao Abando-Indalecio Prieto",
+    "Bilbao Abando-Indalecio Prieto",
+    "Bilbao Abando-Indal. Prieto",
+    "Bilbao Abando-I. Prieto",
+    "Bilbao Abando-I. Pr."
+   ]
+  },
+  "18001": {
+   "name": [
+    "Recoletos",
+    "Recoletos"
+   ]
+  },
+  "18002": {
+   "name": [
+    "Nuevos Ministerios",
+    "Nuevos Ministerios"
+   ]
+  },
+  "3216": {
+   "name": [
+    "València Joaquín Sorolla",
+    "València Joaquín Sorolla",
+    "València Joaq. Sorolla"
+   ]
+  },
+  "8004": {
+   "name": [
+    "Segovia Guiomar",
+    "Segovia Guiomar"
+   ]
+  },
+  "12001": {
+   "name": [
+    "Los Negrales",
+    "Los Negrales"
+   ]
+  },
+  "12002": {
+   "name": [
+    "Alpedrete",
+    "Alpedrete"
+   ]
+  },
+  "12004": {
+   "name": [
+    "Collado Mediano",
+    "Collado Mediano"
+   ]
+  },
+  "12005": {
+   "name": [
+    "Los Molinos-Guadarrama",
+    "Los Molinos-Guadarrama",
+    "Los Molinos-Guadarr."
+   ]
+  },
+  "12006": {
+   "name": [
+    "Cercedilla",
+    "Cercedilla"
+   ]
+  },
+  "12007": {
+   "name": [
+    "Tablada",
+    "Tablada"
+   ]
+  },
+  "12009": {
+   "name": [
+    "San Rafael",
+    "San Rafael"
+   ]
+  },
+  "12010": {
+   "name": [
+    "El Espinar",
+    "El Espinar"
+   ]
+  },
+  "12013": {
+   "name": [
+    "Ortigosa del Monte",
+    "Ortigosa del Monte"
+   ]
+  },
+  "12014": {
+   "name": [
+    "Navas de Riofrío-La Losa",
+    "Navas de Riofrío-La Losa",
+    "Navas Riofrío-La Losa"
+   ]
+  },
+  "12100": {
+   "name": [
+    "Segovia",
+    "Segovia"
+   ]
+  },
+  "13106": {
+   "name": [
+    "Laudio/Llodio",
+    "Laudio/Llodio"
+   ]
+  },
+  "18003": {
+   "name": [
+    "Méndez Álvaro",
+    "Méndez Álvaro"
+   ]
+  },
+  "18004": {
+   "name": [
+    "Delicias",
+    "Delicias"
+   ]
+  },
+  "18005": {
+   "name": [
+    "Pirámides",
+    "Pirámides"
+   ]
+  },
+  "18101": {
+   "name": [
+    "Sol",
+    "Sol"
+   ]
+  },
+  "19001": {
+   "name": [
+    "Universidad Pontificia de Comillas",
+    "Universidad Pontificia de Comillas",
+    "Universidad Pontificia Comillas",
+    "Universidad Pontific. Comillas",
+    "Universidad Pontif. Comillas",
+    "Universidad Pontf. Comillas",
+    "Universidad P. Comillas",
+    "Universidad P.Comillas",
+    "Univdad. P. Comillas"
+   ]
+  },
+  "19002": {
+   "name": [
+    "Valdelasfuentes",
+    "Valdelasfuentes"
+   ]
+  },
+  "10202": {
+   "name": [
+    "Las Zorreras-Navalquejigo",
+    "Las Zorreras-Navalquejigo",
+    "Las Zorreras-Navalquej.",
+    "Las Zorreras-Navalq."
+   ]
+  },
+  "10203": {
+   "name": [
+    "El Escorial",
+    "El Escorial"
+   ]
+  },
+  "10600": {
+   "name": [
+    "Valladolid Campo Grande",
+    "Valladolid Campo Grande",
+    "Valladolid C. Grande"
+   ]
+  },
+  "11014": {
+   "name": [
+    "Burgos Rosa Manzano",
+    "Burgos Rosa Manzano"
+   ]
+  },
+  "11200": {
+   "name": [
+    "Miranda de Ebro",
+    "Miranda de Ebro"
+   ]
+  },
+  "11208": {
+   "name": [
+    "Vitoria-Gasteiz",
+    "Vitoria-Gasteiz"
+   ]
+  },
+  "11400": {
+   "name": [
+    "Zumarraga",
+    "Zumarraga"
+   ]
+  },
+  "11511": {
+   "name": [
+    "Donostia/San Sebastián",
+    "Donostia/San Sebastián",
+    "Donostia/S. Sebastián",
+    "Donostia/S.Sebastián"
+   ]
+  },
+  "17000": {
+   "name": [
+    "Madrid Chamartín Clara Campoamor",
+    "Madrid ChamartínClara Campoamor",
+    "Madrid Chamartín Cl. Campoamor",
+    "Madrid Chamartín Cl. Campoam.",
+    "Madrid Chamartín Cl. Camp.",
+    "Madrid Chamartín Cl. C.",
+    "Madrid Chamartín Cl.C."
+   ]
+  },
+  "17001": {
+   "name": [
+    "Fuencarral",
+    "Fuencarral"
+   ]
+  },
+  "17009": {
+   "name": [
+    "Universidad-Cantoblanco",
+    "Universidad-Cantoblanco",
+    "Univdad. Cantoblanco"
+   ]
+  },
+  "18000": {
+   "name": [
+    "Madrid Atocha Cercanías",
+    "Madrid Atocha Cercanías",
+    "Madrid Atocha Cercan."
+   ]
+  },
+  "19003": {
+   "name": [
+    "Alcobendas-San Sebastián de los Reyes",
+    "Alcobendas-San Sebastián de los Reyes",
+    "Alcobendas-S. Sebastián de los Reyes",
+    "Alcobendas-S. Sebastián los Reyes",
+    "Alcobendas-S. Sebastián Reyes",
+    "Alcobendas-S. Sebast. Reyes",
+    "Alcobendas-S. Seb. Reyes",
+    "Alcobendas-S.Seb.Reyes",
+    "Alcobendas-S.S.Reyes"
+   ]
+  },
+  "60100": {
+   "name": [
+    "Villaverde Bajo",
+    "Villaverde Bajo"
+   ]
+  },
+  "60600": {
+   "name": [
+    "Albacete Los Llanos",
+    "Albacete Los Llanos"
+   ]
+  },
+  "60911": {
+   "name": [
+    "Alacant/Alicante Terminal",
+    "Alacant/Alicante Terminal",
+    "Alacant/Alicante Term."
+   ]
+  },
+  "70002": {
+   "name": [
+    "Asamblea de Madrid-Entrevías",
+    "Asamblea de Madrid-Entrevías",
+    "Asamblea Madrid-Entrevías",
+    "Asamblea Madr. Entrevías",
+    "Asamblea M. Entrevías"
+   ]
+  },
+  "70107": {
+   "name": [
+    "Alcalá de Henares Universidad",
+    "Alcalá de Henares Universidad",
+    "Alcalá Henares Universidad",
+    "Alcalá Henares Univdad.",
+    "Alcalá Henares Univ."
+   ]
+  },
+  "37001": {
+   "name": [
+    "Villaverde Alto",
+    "Villaverde Alto"
+   ]
+  },
+  "37002": {
+   "name": [
+    "Getafe Centro",
+    "Getafe Centro"
+   ]
+  },
+  "37010": {
+   "name": [
+    "Las Margaritas",
+    "Las Margaritas"
+   ]
+  },
+  "37011": {
+   "name": [
+    "Getafe Sector 3",
+    "Getafe Sector 3"
+   ]
+  },
+  "37012": {
+   "name": [
+    "Parla",
+    "Parla"
+   ]
+  },
+  "70003": {
+   "name": [
+    "El Pozo",
+    "El Pozo"
+   ]
+  },
+  "70005": {
+   "name": [
+    "Vallecas",
+    "Vallecas"
+   ]
+  },
+  "70100": {
+   "name": [
+    "Vicálvaro",
+    "Vicálvaro"
+   ]
+  },
+  "70101": {
+   "name": [
+    "San Fernando de Henares",
+    "San Fernando de Henares",
+    "S. Fernando de Henares"
+   ]
+  },
+  "70102": {
+   "name": [
+    "Torrejón de Ardoz",
+    "Torrejón de Ardoz"
+   ]
+  },
+  "70103": {
+   "name": [
+    "Alcalá de Henares",
+    "Alcalá de Henares"
+   ]
+  },
+  "70104": {
+   "name": [
+    "Meco",
+    "Meco"
+   ]
+  },
+  "70105": {
+   "name": [
+    "Azuqueca",
+    "Azuqueca"
+   ]
+  },
+  "70108": {
+   "name": [
+    "Coslada",
+    "Coslada"
+   ]
+  },
+  "70109": {
+   "name": [
+    "Santa Eugenia",
+    "Santa Eugenia"
+   ]
+  },
+  "70111": {
+   "name": [
+    "La Garena",
+    "La Garena"
+   ]
+  },
+  "70112": {
+   "name": [
+    "Soto del Henares",
+    "Soto del Henares"
+   ]
+  },
+  "70200": {
+   "name": [
+    "Guadalajara",
+    "Guadalajara"
+   ]
+  },
+  "70302": {
+   "name": [
+    "Sigüenza",
+    "Sigüenza"
+   ]
+  },
+  "84101": {
+   "name": [
+    "Almazán Villa",
+    "Almazán Villa"
+   ]
+  },
+  "97100": {
+   "name": [
+    "Pitis",
+    "Pitis"
+   ]
+  },
+  "97200": {
+   "name": [
+    "Mirasierra Paco de Lucía",
+    "Mirasierra Paco de Lucía",
+    "Mirasierra Paco Lucía"
+   ]
+  },
+  "97201": {
+   "name": [
+    "Ramón y Cajal",
+    "Ramón y Cajal"
+   ]
+  }
+ },
+ "multimedia_info": {
+  "multimedia_version": 27,
+  "product_pic_filenames": {
+   "REG": "REG",
+   "OUIGO": "OUIGO",
+   "C01CERMAD": "C01CERMAD",
+   "C8ACERMAD": "C8ACERMAD",
+   "C8BCERMAD": "C8BCERMAD",
+   "C4ACERMAD": "C4ACERMAD",
+   "C03CERMAD": "C03CERMAD",
+   "C4BCERMAD": "C4BCERMAD",
+   "C10CERMAD": "C10CERMAD",
+   "AVE": "AVE",
+   "IRYO": "IRYO",
+   "C04CERMAD": "C04CERMAD",
+   "ICITY": "ICITY",
+   "AVLO": "AVLO",
+   "AVANT": "AVANT",
+   "C02CERMAD": "C02CERMAD",
+   "CERCAN": "CERCAN",
+   "C07CERMAD": "C07CERMAD",
+   "C08CERMAD": "C08CERMAD"
+  },
+  "line_pic_filenames": {
+   "C02CERMAD": "C02CERMAD",
+   "C8BCERMAD": "C8BCERMAD",
+   "C08CERMAD": "C08CERMAD",
+   "C03CERMAD": "C03CERMAD",
+   "C04CERMAD": "C04CERMAD",
+   "C4ACERMAD": "C4ACERMAD",
+   "C10CERMAD": "C10CERMAD",
+   "C01CERMAD": "C01CERMAD",
+   "C4BCERMAD": "C4BCERMAD",
+   "C8ACERMAD": "C8ACERMAD",
+   "C07CERMAD": "C07CERMAD"
+  },
+  "line_colors": {
+   "C07CERMAD": "#E5232C",
+   "C04CERMAD": "#2D2C86",
+   "C01CERMAD": "#5AAFE4",
+   "C10CERMAD": "#BCCF00",
+   "C03CERMAD": "#962785",
+   "AVE": "#FFFFFF",
+   "C4ACERMAD": "#2D2C86",
+   "IRYO": "#FFFFFF",
+   "C8ACERMAD": "#868584",
+   "C08CERMAD": "#868584",
+   "C4BCERMAD": "#2D2C86",
+   "ICITY": "#FFFFFF",
+   "OUIGO": "#FFFFFF",
+   "REG": "#FFFFFF",
+   "AVANT": "#FFFFFF",
+   "C8BCERMAD": "#868584",
+   "AVLO": "#FFFFFF",
+   "CERCAN": "#FFFFFF",
+   "C02CERMAD": "#00953E"
+  }
+ },
+ "station_alerts": []
+}

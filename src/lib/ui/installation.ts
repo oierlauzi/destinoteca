@@ -237,8 +237,8 @@ export function mountInstallation(root: HTMLElement): void {
     }, { lookups: module?.lookups, editors });
     const credit = el('p', { class: 'credit muted' });
     // Our own dictionary text, with links: the one place markup is set, and never from data.
-    if (def.id === 'mitren') credit.innerHTML = t('mitren.credit');
-    const parts = [status, def.description ? el('p', { class: 'muted', text: t(def.description) }) : null, form.element, def.id === 'mitren' ? credit : null];
+    if (def.credit) credit.innerHTML = t(def.credit);
+    const parts = [status, def.description ? el('p', { class: 'muted', text: t(def.description) }) : null, form.element, def.credit ? credit : null];
     panel.replaceChildren(...parts.filter((part): part is HTMLElement => part !== null));
   };
 
@@ -246,7 +246,7 @@ export function mountInstallation(root: HTMLElement): void {
     if (id === source) return;
     let next = remembered.get(id) ?? defaults(schemaOf(id));
     if (id === 'manual' && reader.reads.includes('services') && !remembered.has(id)) next = { ...next, services: EXAMPLE_ROWS };
-    if (id === 'demo') next = { ...next, station: remembered.get('mitren')?.station ?? next.station ?? '' };
+    if (id === 'demo') next = { ...next, station: remembered.get('mitren')?.station ?? remembered.get('adif')?.station ?? next.station ?? '' };
     source = id;
     config = next;
     apply();

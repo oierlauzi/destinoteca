@@ -65,6 +65,8 @@ export function mountPlayground(root: HTMLElement): void {
   }
   // What was set under each tab is kept while the visitor tries another.
   const remembered = new Map<string, Values>([[config.source, config.sourceConfig]]);
+  // The demo draws a board per station: the one last picked on a live source.
+  const rememberedStation = (): string => String(remembered.get('mitren')?.station ?? remembered.get('adif')?.station ?? '');
   let touched = false;
 
   const embedUrl = (): string => {
@@ -211,7 +213,7 @@ export function mountPlayground(root: HTMLElement): void {
     );
     const credit = el('p', { class: 'credit muted' });
     // Our own dictionary text, with links: the one place markup is set, and never from data.
-    if (source.id === 'mitren') credit.innerHTML = t('mitren.credit');
+    if (source.credit) credit.innerHTML = t(source.credit);
     const parts = [
       status,
       source.description ? el('p', { class: 'muted', text: t(source.description) }) : null,
@@ -220,7 +222,7 @@ export function mountPlayground(root: HTMLElement): void {
       listsServices ? el('h3', { class: 'list-title', text: t('player.list.label') }) : null,
       listsServices ? list : null,
       listsServices ? el('p', { class: 'muted list-key', text: t('player.list.key') }) : null,
-      source.id === 'mitren' ? credit : null,
+      source.credit ? credit : null,
     ];
     panel.replaceChildren(...parts.filter((part): part is HTMLElement => part !== null));
     drawList(replica.session?.state);
@@ -234,7 +236,7 @@ export function mountPlayground(root: HTMLElement): void {
     // where the display has somewhere to show them.
     if (id === 'manual' && listsServices && !remembered.has(id)) sourceConfig = { ...sourceConfig, services: EXAMPLE_ROWS };
     // The demo draws a board per station, so it follows the station picked for the live source.
-    if (id === 'demo') sourceConfig = { ...sourceConfig, station: remembered.get('mitren')?.station ?? '' };
+    if (id === 'demo') sourceConfig = { ...sourceConfig, station: rememberedStation() };
     showStatus('idle');
     list.replaceChildren();
     apply({ ...config, source: id, sourceConfig });

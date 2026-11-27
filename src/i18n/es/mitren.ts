@@ -1,5 +1,5 @@
 export const mitren: Record<string, string> = {
-  'mitren.label': 'Tiempo real',
+  'mitren.label': 'mitren.app',
   'mitren.description':
     'Próximos trenes en directo desde mitren.app, de la red que se elija. De Renfe solo los núcleos de Cercanías y Rodalies: no incluye larga ni media distancia.',
   'mitren.field.feed': 'Red',

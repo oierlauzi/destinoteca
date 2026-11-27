@@ -120,6 +120,8 @@ function board(id: string, lines: number, nextArrival: boolean, colon: string, p
   return {
     id,
     viewBox: { width, height },
+    // A Cercanías sign: ADIF's feed starts on Cercanías trains.
+    sourceDefaults: { adif: { traffic: 'C' } },
     reads: ['services', 'time'],
     needs: { services: lines, calls: false },
     options: optionsSchema(colon, platformAlign),

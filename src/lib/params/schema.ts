@@ -175,6 +175,8 @@ export interface LookupItem {
   label: string;
   detail?: string;
   url?: string;
+  /** i18n key of the text of the link to `url`. */
+  urlLabel?: string;
   /** Other settings to set along with this one (a station brings its network). */
   set?: Values;
 }

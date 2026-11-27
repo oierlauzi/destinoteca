@@ -89,7 +89,7 @@ function lookupControl(field: LookupField, lookup: Lookup | undefined, values: (
     if (!value) return;
     current.append(el('strong', { text: item?.label ?? value }));
     if (item?.detail) current.append(` · ${item.detail}`);
-    if (item?.url) current.append(' · ', el('a', { text: t('mitren.viewOnMitren'), attrs: { href: item.url, target: '_blank', rel: 'noopener noreferrer' } }));
+    if (item?.url) current.append(' · ', el('a', { text: t(item.urlLabel ?? 'player.lookup.view'), attrs: { href: item.url, target: '_blank', rel: 'noopener noreferrer' } }));
   };
   const pick = (index: number): void => {
     const item = items[index];

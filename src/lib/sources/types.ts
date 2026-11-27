@@ -76,6 +76,11 @@ export interface SourceDef {
    */
   provides: readonly DataKind[];
   attribution?: Attribution;
+  /**
+   * i18n key of a line crediting where the data comes from, shown under the
+   * source's settings. It is the site's own text, with links in it.
+   */
+  credit?: string;
   config: ParamSchema;
   load(): Promise<SourceModule>;
 }

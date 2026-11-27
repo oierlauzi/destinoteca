@@ -94,6 +94,8 @@ const selection: SelectionPolicy = {
 export const andenDosVias: ReplicaDef = {
   id: 'page-iberica-anden-dos-vias',
   viewBox: { width: WIDTH, height: HEIGHT },
+  // A Cercanías sign: ADIF's feed starts on Cercanías trains.
+  sourceDefaults: { adif: { traffic: 'C' } },
   reads: ['services', 'time'],
   needs: { services: 24, calls: true },
   options: andenOptionsSchema,

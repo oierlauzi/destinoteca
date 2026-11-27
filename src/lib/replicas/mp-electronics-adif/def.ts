@@ -179,6 +179,6 @@ export const mpElectronicsAdif: ReplicaDef = {
   frame: frameSchema,
   selection,
   // A long-distance board wants long-distance trains.
-  sourceDefaults: { demo: { network: 'long-distance' } },
+  sourceDefaults: { demo: { network: 'long-distance' }, adif: { traffic: 'RL' } },
   load: async () => (await import('./index')).default,
 };

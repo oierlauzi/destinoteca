@@ -59,6 +59,8 @@ const selection: SelectionPolicy = {
 export const andenElectromagnetico: ReplicaDef = {
   id: 'page-iberica-anden-electromagnetico',
   viewBox: { width: 190.87605, height: 81.160835 },
+  // A Cercanías sign: ADIF's feed starts on Cercanías trains.
+  sourceDefaults: { adif: { traffic: 'C' } },
   reads: ['services', 'time'],
   needs: { services: 1, calls: true },
   options: optionsSchema,

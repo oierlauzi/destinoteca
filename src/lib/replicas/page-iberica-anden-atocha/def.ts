@@ -81,6 +81,8 @@ const selection: SelectionPolicy = {
 export const andenAtocha: ReplicaDef = {
   id: 'page-iberica-anden-atocha',
   viewBox: { width: WIDTH, height: HEIGHT },
+  // A Cercanías sign: ADIF's feed starts on Cercanías trains.
+  sourceDefaults: { adif: { traffic: 'C' } },
   reads: ['services', 'time'],
   needs: { services: 1, calls: true },
   options: optionsSchema,

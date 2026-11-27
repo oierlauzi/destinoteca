@@ -10,6 +10,7 @@ export const mitrenDef: SourceDef = {
   id: 'mitren',
   label: 'mitren.label',
   description: 'mitren.description',
+  credit: 'mitren.credit',
   kind: 'live',
   // The feed reports its server's time along the way, but trains are what it is for.
   provides: ['services'],

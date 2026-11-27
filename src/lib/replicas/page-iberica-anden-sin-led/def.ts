@@ -51,6 +51,8 @@ const selection: SelectionPolicy = {
 export const andenSinLed: ReplicaDef = {
   id: 'page-iberica-anden-sin-led',
   viewBox: { width: WIDTH, height: HEIGHT },
+  // A Cercanías sign: ADIF's feed starts on Cercanías trains.
+  sourceDefaults: { adif: { traffic: 'C' } },
   reads: ['services', 'time'],
   // Without the LED row, the calls after this station have nowhere to go.
   needs: { services: 1, calls: false },

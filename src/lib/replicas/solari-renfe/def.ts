@@ -167,7 +167,7 @@ function solari(id: string, variant: Variant): ReplicaDef {
     options: optionsSchema(variant),
     frame: frameSchema(variant),
     selection: selection(variant),
-    sourceDefaults: variant === 'largo' ? { demo: { network: 'long-distance' } } : undefined,
+    sourceDefaults: variant === 'largo' ? { demo: { network: 'long-distance' }, adif: { traffic: 'RL' } } : { adif: { traffic: 'C' } },
     load: async () => (await import('./index')).implementation(variant),
   };
 }

@@ -98,6 +98,7 @@ instance receives `{ onSnapshot, onStatus, onTime }` and may implement
 | --- | --- | --- | --- |
 | `demo` | simulated | services | A made-up board, one per network (`red=`): Cercanías de Madrid, long and medium distance, an airport's flights, Metro Bilbao, Euskotren. It exercises long names, delays, unconfirmed platforms and gates, a dividing train |
 | `mitren` | live | services | One of mitren.app's feeds over its WebSocket (`op=cercanias\|euskotren\|metro-bilbao`): Renfe Cercanías and Rodalies, Euskotren or Metro Bilbao, each with its own networks, station codes and operator; bundled station list |
+| `adif` | live | services | ADIF's own boards, the ones behind info.adif.es, over its SignalR hub: every operator and every kind of train, with calls, platforms, alerts and ADIF's ladders of shorter names; filtered to Cercanías, regional or long distance (`trafico=`); bundled station list |
 | `device` | device | time | The clock of the machine the page is open on, in its own time zone or in the one Spanish stations keep, and as far off as it is told to run (`zona`, `desvio`). No trains: it is what a station clock needs, and what a board shows with nothing to announce |
 | `manual` | manual | services, time | Services typed by hand in model terms, stored in the URL, and the time of day the board lives at |
 
@@ -119,7 +120,28 @@ the one it would have started on, so those addresses still mean something.
 
 **Adding a source:** a folder with `def.ts` and `index.ts`, one line in
 `src/lib/sources/registry.ts`, and its strings in `src/i18n/es/`. The settings
-form, URL parameters and status display come from the schema.
+form, URL parameters and status display come from the schema; a `credit` in
+the definition is printed under them.
+
+### Reaching a feed from a static page
+
+The site has no server, so a live source has to be reachable from the
+visitor's browser on another origin. Neither mitren.app's REST API nor
+info.adif.es sends an Access-Control-Allow-Origin header, so `fetch()` is out;
+both are read over a WebSocket, whose handshake CORS does not cover. ADIF's
+hub is SignalR, whose client library would first POST to `negotiate`: the
+`adif` source skips that and speaks the hub's JSON protocol over a bare
+WebSocket (`src/lib/sources/adif/client.ts` has the exchange). info.adif.es
+also turns away clients that do not look like a browser, which a visitor's
+browser always does; to record boards for tests and station names,
+`tools/capture-adif.mjs` drives Chromium through Playwright, on a page of the
+site's own origin.
+
+ADIF's hub sends a station's whole board again and again, every few seconds
+at a large station (some 470 kB uncompressed at Chamartín), and has no way to
+leave a station's group once joined. The client keeps one subscription, as
+ADIF's own screens do, and does not read again a board that came again
+unchanged; the player stops sources in hidden tabs.
 
 ### The networks of the simulation
 
@@ -222,7 +244,7 @@ page is fully described by a `PlayerConfig` (`src/lib/player/config.ts`):
 
 | Group | Schema | Example keys |
 | --- | --- | --- |
-| Mode | — | `source=demo\|mitren\|device\|manual\|raw` |
+| Mode | — | `source=demo\|mitren\|adif\|device\|manual\|raw` |
 | Source settings | the source's `config` | `op`, `station`, `network`, `svc`, `hora` |
 | Placement | `placementSchema` | `via`, `cycle` |
 | Appearance | the replica's `options` | `dot`, `showoff`, `anim`, `hearts`… |

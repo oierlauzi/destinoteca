@@ -121,7 +121,7 @@ describe('player configuration', () => {
 describe('what a source knows and a display reads', () => {
   it('offers a board every source, and a clock only those that know the time', () => {
     expect(sources.every((source) => source.provides.length > 0)).toBe(true);
-    expect(sourcesFor(anden.reads).map((source) => source.id)).toEqual(['demo', 'mitren', 'device', 'manual']);
+    expect(sourcesFor(anden.reads).map((source) => source.id)).toEqual(['demo', 'mitren', 'adif', 'device', 'manual']);
     // No simulated board and no train feed on a clock: they know nothing it can show.
     expect(sourcesFor(reloj.reads).map((source) => source.id)).toEqual(['device', 'manual']);
   });

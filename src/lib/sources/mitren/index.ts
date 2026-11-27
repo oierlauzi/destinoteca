@@ -29,6 +29,7 @@ function item(station: Station): LookupItem {
     label: station.name,
     detail: [station.town, station.networkName].filter(Boolean).join(' · '),
     url: stationUrl(station.network, station.code),
+    urlLabel: 'mitren.viewOnMitren',
     set: { network: station.network },
   };
 }

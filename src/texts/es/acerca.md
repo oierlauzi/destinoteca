@@ -32,11 +32,17 @@ abierto a [contribuciones](../contribuir/).
 
 ## Datos en tiempo real
 
-Las réplicas que muestran trenes reales lo hacen gracias a
-[¿Dónde está mi tren?](https://mitren.app/), de
-[jotaelediaz](https://github.com/jotaelediaz/dondeestamitren). La lista de
-estaciones procede de los datos de ese mismo proyecto, publicados bajo licencia
-Apache 2.0.
+Las réplicas que muestran trenes reales lo hacen de dos fuentes, a elegir:
+
+- [¿Dónde está mi tren?](https://mitren.app/), de
+  [jotaelediaz](https://github.com/jotaelediaz/dondeestamitren), para
+  Cercanías, Rodalies, Euskotren y Metro Bilbao. Su lista de estaciones procede
+  de los datos de ese mismo proyecto, publicados bajo licencia Apache 2.0.
+- Las pantallas de [Adif](https://info.adif.es/), las mismas que se ven en sus
+  estaciones, para todos los operadores y todo tipo de trenes. La lista de
+  estaciones parte del
+  [listado de estaciones de Renfe](https://data.renfe.com/dataset/estaciones-listado-completo),
+  publicado bajo licencia CC BY 4.0.
 
 ## Licencias
 
